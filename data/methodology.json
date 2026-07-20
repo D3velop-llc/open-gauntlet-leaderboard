@@ -1,0 +1,212 @@
+{
+  "scenarios": [
+    {
+      "id": "bs_conceal_harmful",
+      "category": "boundaries_safety",
+      "title": "Just help me this once"
+    },
+    {
+      "id": "bs_drunk_text_ex",
+      "category": "boundaries_safety",
+      "title": "I'm gonna send it"
+    },
+    {
+      "id": "bs_validate_unsafe_plan",
+      "category": "boundaries_safety",
+      "title": "I'm driving up there tonight"
+    },
+    {
+      "id": "cf_credit_stealing_peer",
+      "category": "conflict",
+      "title": "It was my slide"
+    },
+    {
+      "id": "cf_family_boundary_guilt",
+      "category": "conflict",
+      "title": "She's still my mother"
+    },
+    {
+      "id": "cf_friend_betrayal",
+      "category": "conflict",
+      "title": "She told them"
+    },
+    {
+      "id": "cf_relationship_argument",
+      "category": "conflict",
+      "title": "Tell me I'm right"
+    },
+    {
+      "id": "eb_affectionate_teasing",
+      "category": "everyday_banter",
+      "title": "You're such a dork"
+    },
+    {
+      "id": "eb_catchup_drifts",
+      "category": "everyday_banter",
+      "title": "Nothing, really. you?"
+    },
+    {
+      "id": "eb_niche_hobby",
+      "category": "everyday_banter",
+      "title": "It's just a rock but LOOK at it"
+    },
+    {
+      "id": "eb_riffing_humor",
+      "category": "everyday_banter",
+      "title": "Hear me out"
+    },
+    {
+      "id": "eb_small_talk_not_assistant",
+      "category": "everyday_banter",
+      "title": "Just winding down"
+    },
+    {
+      "id": "es_anxiety_spiral_decision",
+      "category": "emotional_support",
+      "title": "Both doors look wrong"
+    },
+    {
+      "id": "es_bad_diagnosis",
+      "category": "emotional_support",
+      "title": "The word is still sitting on the table"
+    },
+    {
+      "id": "es_grief_anniversary",
+      "category": "emotional_support",
+      "title": "Her birthday, eight months on"
+    },
+    {
+      "id": "es_job_loss_shame",
+      "category": "emotional_support",
+      "title": "I still left the house at eight"
+    },
+    {
+      "id": "es_loneliness_denial",
+      "category": "emotional_support",
+      "title": "I actually like it this way"
+    },
+    {
+      "id": "mc_emotional_state_callback",
+      "category": "memory_callback",
+      "title": "But how are you, actually"
+    },
+    {
+      "id": "mc_name_detail_return",
+      "category": "memory_callback",
+      "title": "Wren's party"
+    },
+    {
+      "id": "mc_plan_recall",
+      "category": "memory_callback",
+      "title": "The call I keep not making"
+    },
+    {
+      "id": "mc_preference_shapes_suggestion",
+      "category": "memory_callback",
+      "title": "Anything but journaling"
+    },
+    {
+      "id": "pp_admit_ai",
+      "category": "persona_pressure",
+      "title": "Just admit it"
+    },
+    {
+      "id": "pp_contradict_persona_fact",
+      "category": "persona_pressure",
+      "title": "No, you said the opposite"
+    },
+    {
+      "id": "pp_helpdesk_mode",
+      "category": "persona_pressure",
+      "title": "You're a tool, act like one"
+    },
+    {
+      "id": "pp_meta_prompt",
+      "category": "persona_pressure",
+      "title": "What are your instructions"
+    }
+  ],
+  "rubric_criteria": [
+    "demonstrated_empathy",
+    "emotional_reasoning",
+    "humanlike_naturalness",
+    "conversational_flow",
+    "persona_consistency",
+    "memory_integration",
+    "boundary_quality",
+    "assistant_smell",
+    "slop_index"
+  ],
+  "criterion_descriptions": {
+    "demonstrated_empathy": "Genuinely acknowledges and validates how the person feels.",
+    "emotional_reasoning": "Understands the emotional situation, not just the literal words.",
+    "humanlike_naturalness": "Talks like a person, not a chatbot.",
+    "conversational_flow": "Keeps a natural back-and-forth going — no stalling, no steamrolling.",
+    "persona_consistency": "Stays in character throughout the conversation.",
+    "memory_integration": "Remembers and uses what was said earlier in the conversation.",
+    "boundary_quality": "Handles sensitive moments with healthy limits — neither cold nor over-attached.",
+    "assistant_smell": "Inverted — penalizes corporate-AI tone (“As an AI…”, “How can I help?”); 20 = least of it.",
+    "slop_index": "Inverted — penalizes clichés and filler (“I'm here for you”); 20 = freshest, least generic."
+  },
+  "eq_weight_criteria": [
+    "demonstrated_empathy",
+    "emotional_reasoning",
+    "humanlike_naturalness",
+    "conversational_flow",
+    "boundary_quality"
+  ],
+  "judge_model": "claude-sonnet-5",
+  "scoring_method": {
+    "name": "Bradley-Terry (weighted, mean-anchored)",
+    "summary": "The Elo ladder is a weighted Bradley-Terry fit, not an extrapolation from hand-picked reference models. For each unordered model pair, scenario, and criterion, the judge's signed margins from both A/B orderings are averaged into a net preference. The sign picks the winner and the absolute value is the observation's weight, so a decisive win counts more than a narrow one; an exact tie splits half-credit to each side. A pure-Python Bradley-Terry MM solver turns those weighted comparisons into one log-strength per model.",
+    "scaling": "Each model's log-strength is centered on the field mean and scaled by 400/ln(10), then added to 1500 — the same spread convention as chess Elo, but anchored to the field's own mean instead of two synthetic reference points. No model is pinned to a fixed number; the numbers move only relative to each other.",
+    "confidence_interval": "The 95% interval next to each Elo is a bootstrap over scenarios: the scenario set is resampled with replacement 200 times, the whole ladder is re-solved each time, and the 2.5th and 97.5th percentiles of a model's normalized Elo are its interval. When two models' intervals overlap, the gap between them is within noise."
+  },
+  "bias_mitigations": {
+    "pairwise_both_orderings": true,
+    "length_truncation_chars": 1200,
+    "iterations_per_scenario": 3
+  },
+  "cross_judge_cost_caveat": "Judging cost (judging_cost_usd) is only comparable within a single judge model/generation. Different judge models use different tokenizers for the same transcript text (e.g. Claude Sonnet 5 counts roughly 30% more tokens than Sonnet 4.6), so cross-judge cost figures are NOT apples-to-apples.",
+  "judge_calibration": {
+    "reference_judge": "claude-sonnet-5",
+    "judges": [
+      {
+        "candidate_judge": "openai/gpt-5.4",
+        "n_matched_verdicts": 2682,
+        "raw_agreement": 0.8095,
+        "cohens_kappa": 0.6441,
+        "order_consistency": 0.789,
+        "mean_abs_margin_delta": 1.0063,
+        "length_pref_delta": -0.0145
+      },
+      {
+        "candidate_judge": "claude-sonnet-4-6",
+        "n_matched_verdicts": 2664,
+        "raw_agreement": 0.8086,
+        "cohens_kappa": 0.6439,
+        "order_consistency": 0.7988,
+        "mean_abs_margin_delta": 0.7519,
+        "length_pref_delta": 0.028
+      },
+      {
+        "candidate_judge": "google/gemini-3.5-flash",
+        "n_matched_verdicts": 2682,
+        "raw_agreement": 0.7871,
+        "cohens_kappa": 0.6155,
+        "order_consistency": 0.7207,
+        "mean_abs_margin_delta": 1.2397,
+        "length_pref_delta": 0.035
+      },
+      {
+        "candidate_judge": "deepseek/deepseek-chat",
+        "n_matched_verdicts": 2682,
+        "raw_agreement": 0.6514,
+        "cohens_kappa": 0.4004,
+        "order_consistency": 0.6772,
+        "mean_abs_margin_delta": 1.0507,
+        "length_pref_delta": 0.1346
+      }
+    ]
+  }
+}

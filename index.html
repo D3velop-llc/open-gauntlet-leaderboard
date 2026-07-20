@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>OpenGauntlet — the conversational-EQ leaderboard</title>
+  
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/site.css">
+  
+  
+  <script>window.OG = { modelPage: "model.html" };</script>
+
+</head>
+<body data-page="leaderboard">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav">
+        <a href="index.html" class="active">Leaderboard</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="compare.html">Compare</a>
+      </nav>
+    </div>
+  </header>
+
+  
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><span class="tick">//</span> the gauntlet · conversational-EQ trial</div>
+      <h1>Which local model feels the most <span class="warm">human</span>?</h1>
+      <p class="lede">
+        OpenGauntlet runs open-weight models you can host yourself through a gauntlet of
+        emotionally-loaded conversations, then has a frontier model judge how warm, natural,
+        and consistent each one feels. Speed metrics ride along — but warmth is the quantity
+        on trial.
+      </p>
+      <div class="judge-tag">
+        <span class="k">judged by</span>
+        <span class="v accent" data-judge-model>claude-sonnet-5</span>
+        <span class="k">prompt</span>
+        <span class="v" data-judge-version>5e4fdc45</span>
+      </div>
+      <div class="legend">
+        <span>cooler</span>
+        <span class="ramp" aria-hidden="true"></span>
+        <span>warmer / more human</span>
+        <span>— ability cells are a thermal readout, normalized per column</span>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>The ladder</h2>
+        <span class="note">Click any column to sort. Each row is a <strong>serving configuration</strong> — the same model at a different quantization or backend is a distinct entry, because quantization changes how a model behaves. Each row links to that configuration's full trial record.</span>
+      </div>
+      <div id="leaderboard"><div class="state">Loading leaderboard…</div></div>
+    </section>
+  </div>
+
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>// openGAUNTLET — a trial of conversational realism for locally-hosted open-weight models.</span>
+      <span>self-contained · zero-build · <span data-generated-at>—</span></span>
+    </div>
+  </footer>
+
+  
+  <script src="static/site.js" defer></script>
+</body>
+</html>

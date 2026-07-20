@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Methodology — OpenGauntlet</title>
+  
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/site.css">
+  
+</head>
+<body data-page="methodology">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav">
+        <a href="index.html">Leaderboard</a>
+        <a href="methodology.html" class="active">Methodology</a>
+        <a href="compare.html">Compare</a>
+      </nav>
+    </div>
+  </header>
+
+  
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow"><span class="tick">//</span> how the trial is run</div>
+      <h1>The <span class="warm">rules</span> of the gauntlet</h1>
+      <p class="lede prose">
+        Every model faces the same fixed scenario pack, is scored on the same nine rubric axes,
+        and is ranked by pairwise judgments from a single judge generation
+        (<strong class="mono" data-judge-model>—</strong>). Below: the scenarios, the criteria,
+        the bias controls, and one important caveat about cost.
+      </p>
+    </section>
+    <section class="block">
+      <div class="card explainer row-in">
+        <h3>In plain terms</h3>
+        <p class="prose">
+          Every model plays out the same <strong>25 short conversations</strong> — a friend
+          venting after a rough day, a tense disagreement, someone testing a boundary — and a
+          top-tier Claude model reads each one and rates it the way a thoughtful person would.
+          Models are also compared <strong>head-to-head</strong> on the same conversation, and
+          those wins become a chess-style Elo rating.
+        </p>
+        <p class="prose">
+          <strong>Same prompt for everyone.</strong> Each model gets the identical instructions
+          (a warm, natural, spoken-voice companion — no lists, no markdown, no "as an AI") and the
+          identical things said to it, word for word. No model gets a tailored prompt; the only
+          thing that varies per model is the low-level chat formatting its software expects — the
+          <em>content</em> is the same for all.
+        </p>
+        <p class="prose">
+          <strong>What this benchmark measures.</strong> OpenGauntlet is a test of
+          <strong>Conversational Language Humanlikeness</strong> — how human a model reads in a
+          written back-and-forth. It scores transcript-level qualities (word choice, warmth,
+          emotional reasoning, flow), <em>not</em> spoken-voice qualities like prosody,
+          intonation, or timing.
+        </p>
+        <p class="prose">
+          <strong>What "good" means here.</strong> The nine axes below reward genuine warmth,
+          understanding the feeling behind the words, sounding like a person, staying in character,
+          remembering what was said earlier, and healthy boundaries — while penalizing corporate-
+          assistant tone and clichés. <strong>Engagement</strong> is judged through
+          <em>conversational flow</em> (does it keep things alive and invite more, without being
+          pushy?), and the voice metrics separately track how often replies end with a question.
+          It rewards <em>natural</em> engagement, not just frequent engagement.
+        </p>
+      </div>
+      <div id="methodology"><div class="state">Loading methodology…</div></div>
+    </section>
+  </div>
+
+
+  <footer class="foot">
+    <div class="wrap">
+      <span>// openGAUNTLET — a trial of conversational realism for locally-hosted open-weight models.</span>
+      <span>self-contained · zero-build · <span data-generated-at>—</span></span>
+    </div>
+  </footer>
+
+  
+  <script src="static/site.js" defer></script>
+</body>
+</html>
