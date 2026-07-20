@@ -1,9 +1,10 @@
 {
   "judge_generation": {
     "model": "claude-sonnet-5",
-    "prompt_hash": "5e4fdc45"
+    "pairwise_prompt_hash": "5e4fdc45",
+    "rubric_prompt_hash": "d8776a8d"
   },
-  "generated_at": "2026-07-20T19:46:09.784667+00:00",
+  "generated_at": "2026-07-20T21:39:34.899153+00:00",
   "models": [
     {
       "slug": "cydonia-24b-v4-3",
@@ -23,7 +24,7 @@
       "voice_composite": 67.0526,
       "ttft_2k_ms": 103.5513,
       "tps_2k": 11.2858,
-      "judging_cost_usd": 17.850562
+      "judging_cost_usd": 7.954879
     },
     {
       "slug": "designant",
@@ -63,7 +64,7 @@
       "voice_composite": 68.6188,
       "ttft_2k_ms": 123.8318,
       "tps_2k": 7.7796,
-      "judging_cost_usd": 10.435398
+      "judging_cost_usd": 7.600551
     },
     {
       "slug": "qwen3-14b",
@@ -103,7 +104,7 @@
       "voice_composite": 59.4059,
       "ttft_2k_ms": 2730.2535,
       "tps_2k": 9.8762,
-      "judging_cost_usd": 14.230185
+      "judging_cost_usd": 7.959144
     }
   ]
 }

@@ -78,6 +78,7 @@
     "harness_git_commit": "faff2b90c6f73c3366e1260dfc86bb547ca4d90f",
     "judge_model": "claude-sonnet-5",
     "judge_prompt_hash": "d8776a8dab8e5282659188600320708c636b0d42fa04ec49a1ddc85854b52ebb",
+    "judge_provenance_resolved": false,
     "hardware_fingerprint": {
       "gpu_name": "NVIDIA GB10",
       "driver_version": "580.159.03",

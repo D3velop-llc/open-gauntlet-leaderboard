@@ -80,12 +80,13 @@ const COLS = [
   { key: "backend", label: "Backend", type: "text" },
   { key: "normalized_elo", label: "Elo (95% CI)", type: "num", heat: true },
   { key: "win_rate", label: "Win rate", type: "num", heat: true },
-  { key: "n_comparisons", label: "Games", type: "num" },
+  { key: "n_comparisons", label: "Comparisons", type: "num",
+    title: "Weighted Bradley-Terry paired comparisons behind this Elo — one per unordered opponent × scenario × criterion, with both A/B orderings averaged. Not distinct matches played (each conversation contributes ~9 per-criterion comparisons), and not the Win-rate denominator." },
   { key: "eq_score", label: "EQ", type: "num", heat: true },
   { key: "humanlike_score", label: "Humanlike", type: "num", heat: true },
   { key: "voice_composite", label: "Voice", type: "num", heat: true },
   { key: "ttft_2k_ms", label: "TTFT 2k (ms)", type: "num" },
-  { key: "tps_2k", label: "tok/s 2k", type: "num" },
+  { key: "tps_2k", label: "words/s 2k", type: "num" },
   { key: "judging_cost_usd", label: "Judge $", type: "num" },
 ];
 
@@ -103,7 +104,7 @@ function renderLeaderboard(models) {
   const thead = el("thead");
   const htr = el("tr");
   for (const c of COLS) {
-    const th = el("th", { class: c.css === "txt" ? "txt" : "", "data-key": c.key },
+    const th = el("th", { class: c.css === "txt" ? "txt" : "", "data-key": c.key, title: c.title },
       c.label, el("span", { class: "arrow", text: "" }));
     htr.appendChild(th);
   }
@@ -128,7 +129,7 @@ function renderLeaderboard(models) {
     else if (c.key === "judging_cost_usd") disp = fmt.usd(v);
     else if (c.key === "normalized_elo") disp = fmt.eloCI(row);
     else if (c.key === "win_rate") disp = fmt.pct(v);
-    else if (c.key === "n_comparisons") disp = fmt.int(v);   // games count: n=0 reads as unranked
+    else if (c.key === "n_comparisons") disp = fmt.int(v);   // comparison count: n=0 reads as unranked
     else disp = fmt.n1(v);
 
     const td = el("td", {}, disp);
@@ -199,8 +200,10 @@ async function initLeaderboard() {
     const jg = data.judge_generation || {};
     const nameEls = document.querySelectorAll("[data-judge-model]");
     nameEls.forEach((n) => { n.textContent = jg.model || "—"; });
-    const pv = document.querySelector("[data-judge-version]");
-    if (pv) pv.textContent = jg.prompt_hash || "—";
+    const pw = document.querySelector("[data-pairwise-hash]");
+    if (pw) pw.textContent = jg.pairwise_prompt_hash || "—";
+    const rb = document.querySelector("[data-rubric-hash]");
+    if (rb) rb.textContent = jg.rubric_prompt_hash || "—";
     const gen = document.querySelector("[data-generated-at]");
     if (gen && data.generated_at) gen.textContent = new Date(data.generated_at).toISOString().replace("T", " ").slice(0, 16) + " UTC";
     if (!data.models || !data.models.length) { fail(mount, "No models have completed a run yet."); return; }
@@ -211,7 +214,7 @@ async function initLeaderboard() {
 /* ============================ MODEL DETAIL =============================== */
 function critCard(criteria) {
   const card = el("div", { class: "card" }, el("h3", { text: "Rubric criteria" }),
-    el("p", { class: "sub", text: "Mean score per criterion (0–20). The whisker spans ±1 std across scenarios & iterations." }));
+    el("p", { class: "sub", text: "Mean score per criterion (0–20). The whisker spans ±1 std of iteration-to-iteration noise, averaged over scenarios (it excludes scenario-to-scenario spread)." }));
   for (const c of criteria) {
     const mean = c.mean, std = Math.sqrt(Math.max(0, c.variance || 0));
     const pct = (v) => Math.max(0, Math.min(100, (v / 20) * 100));
@@ -245,8 +248,11 @@ function reproBlock(repro, voiceComposite) {
   const kv = el("dl", { class: "kv" });
   const add = (k, v) => { kv.appendChild(el("dt", { text: k })); kv.appendChild(el("dd", { text: v == null || v === "" ? "—" : String(v) })); };
   add("harness_git_commit", repro.harness_git_commit);
-  add("judge_model", repro.judge_model);
-  add("judge_prompt_hash", repro.judge_prompt_hash);
+  // when the run row lacked judge fields, the export backfills them from the resolved rubric
+  // generation — flag that so "verify" never implies the harness itself recorded them.
+  const jsuffix = repro.judge_provenance_resolved ? " (resolved from stored verdicts)" : "";
+  add("judge_model", repro.judge_model == null ? null : String(repro.judge_model) + jsuffix);
+  add("judge_prompt_hash", repro.judge_prompt_hash == null ? null : String(repro.judge_prompt_hash) + jsuffix);
   add("voice_composite", fmt.n2(voiceComposite));
   const hw = repro.hardware_fingerprint || {};
   for (const k in hw) add("hw." + k, hw[k]);
@@ -346,11 +352,11 @@ async function initModel() {
       el("div", { class: "charts" },
         el("div", { class: "chart-card" }, el("h3", { text: "Time to first token" }), el("p", { class: "sub", text: "TTFT median (ms) vs prompt size" }),
           el("div", { class: "chart-scroll" }, el("div", { class: "chart-box" }, cTtft))),
-        el("div", { class: "chart-card" }, el("h3", { text: "Decode speed" }), el("p", { class: "sub", text: "tokens/sec median vs prompt size" }),
+        el("div", { class: "chart-card" }, el("h3", { text: "Decode speed" }), el("p", { class: "sub", text: "words/sec median vs prompt size" }),
           el("div", { class: "chart-scroll" }, el("div", { class: "chart-box" }, cTps)))));
     mount.appendChild(perf);
     perfChart(cTtft, curve, "ttft_ms_median", "#4aa8d8", "ms");
-    perfChart(cTps, curve, "decode_tps_median", "#f2a65a", "tok/s");
+    perfChart(cTps, curve, "decode_tps_median", "#f2a65a", "words/s");
 
     // reproducibility
     mount.appendChild(el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }), el("h2", { text: "Provenance" })));
@@ -411,7 +417,7 @@ async function initMethodology() {
     const addbm = (k, v) => { bmList.appendChild(el("dt", { text: k })); bmList.appendChild(el("dd", { text: String(v) })); };
     addbm("pairwise both orderings", bm.pairwise_both_orderings ? "yes (A/B and B/A, averaged)" : "no");
     addbm("length truncation (chars)", bm.length_truncation_chars);
-    addbm("iterations per scenario", bm.iterations_per_scenario);
+    addbm("iterations per scenario (replication)", bm.iterations_per_scenario);
 
     const sm = m.scoring_method || {};
     const scoring = el("div", { class: "body" },
@@ -430,9 +436,10 @@ async function initMethodology() {
     const children = [
       el("div", { class: "grid-2 row-in" },
         el("div", { class: "card" }, el("h3", { text: "Rubric criteria" }),
-          el("p", { class: "sub", text: "Nine 0–20 axes — each judged per reply. The ember-marked ones feed the EQ composite." }), critList),
+          el("p", { class: "sub", text: "Nine 0–20 axes — each scored once per conversation. The ember-marked ones feed the EQ composite." }), critList),
         el("div", { class: "card" }, el("h3", { text: "Bias mitigations" }),
-          el("p", { class: "sub", text: "How the judge pass guards against ordering & length bias." }), bmList)),
+          el("p", { class: "sub", text: "How the judge pass guards against ordering and length bias — plus how much each result is replicated." }), bmList,
+          el("p", { class: "note", text: "The pairwise Elo ladder (the headline ranking) uses a single iteration — iteration 0 — per model per scenario, so the extra iterations add no replication to the ranking; they only reduce sampling noise in the rubric aggregates (EQ / Humanlike), which score every iteration." }))),
       el("div", { class: "card", style: "margin-top:22px" }, el("h3", { text: `How the Elo ladder is scored — ${sm.name || "Bradley-Terry"}` }),
         el("p", { class: "sub", text: "Weighted head-to-head comparisons, mean-anchored to 1500, with bootstrap confidence intervals." }), scoring),
     ];
@@ -460,6 +467,27 @@ function cmpMetricRow(label, a, b, fmtFn, higherWins) {
     el("span", { class: "k", text: label }),
     el("span", { class: "v" + (aWin ? " win" : ""), text: fmtFn(a) }),
     el("span", { class: "v" + (bWin ? " win" : ""), text: fmtFn(b) }));
+}
+
+/* Normalized-Elo compare row: renders each side with its bootstrap CI (as the leaderboard does)
+   and WITHHOLDS the "stronger" ember when the two 95% intervals overlap — the methodology's own
+   within-noise test — so the compare page never asserts a winner the leaderboard calls a tie. A
+   winner is marked only when both intervals are present and disjoint. */
+function cmpEloRow(ra, rb) {
+  const av = ra.normalized_elo == null ? null : Number(ra.normalized_elo);
+  const bv = rb.normalized_elo == null ? null : Number(rb.normalized_elo);
+  let aWin = false, bWin = false;
+  if (av != null && bv != null && av !== bv) {
+    const haveCI = ra.elo_ci_low != null && ra.elo_ci_high != null &&
+                   rb.elo_ci_low != null && rb.elo_ci_high != null;
+    const overlap = haveCI &&
+      Number(ra.elo_ci_low) <= Number(rb.elo_ci_high) && Number(rb.elo_ci_low) <= Number(ra.elo_ci_high);
+    if (!overlap) { aWin = av > bv; bWin = !aWin; }
+  }
+  return el("div", { class: "cmp-metric" },
+    el("span", { class: "k", text: "Normalized Elo (95% CI)" }),
+    el("span", { class: "v" + (aWin ? " win" : ""), text: fmt.eloCI(ra) }),
+    el("span", { class: "v" + (bWin ? " win" : ""), text: fmt.eloCI(rb) }));
 }
 
 /* head-to-head pairwise judge verdict for the selected pair (spec §12). Reads the
@@ -534,13 +562,13 @@ async function initCompare() {
     const [da, db] = await Promise.all([detail(sa), detail(sb)]);
 
     const headline = el("div", { class: "card row-in" }, el("h3", { text: "Headline metrics" }),
-      el("p", { class: "sub" }, el("b", { text: ra.display_name }), " (left) vs ", el("b", { text: rb.display_name }), " (right) — ember marks the stronger value."));
-    headline.appendChild(cmpMetricRow("Normalized Elo", ra.normalized_elo, rb.normalized_elo, fmt.n1, true));
+      el("p", { class: "sub" }, el("b", { text: ra.display_name }), " (left) vs ", el("b", { text: rb.display_name }), " (right) — ember marks the stronger value (Elo shows no ember when the two 95% intervals overlap)."));
+    headline.appendChild(cmpEloRow(ra, rb));
     headline.appendChild(cmpMetricRow("EQ composite", ra.eq_score, rb.eq_score, fmt.n1, true));
     headline.appendChild(cmpMetricRow("Humanlike", ra.humanlike_score, rb.humanlike_score, fmt.n1, true));
     headline.appendChild(cmpMetricRow("Voice", ra.voice_composite, rb.voice_composite, fmt.n1, true));
     headline.appendChild(cmpMetricRow("TTFT 2k (ms, lower better)", ra.ttft_2k_ms, rb.ttft_2k_ms, fmt.n1, false));
-    headline.appendChild(cmpMetricRow("tok/s 2k", ra.tps_2k, rb.tps_2k, fmt.n1, true));
+    headline.appendChild(cmpMetricRow("words/s 2k", ra.tps_2k, rb.tps_2k, fmt.n1, true));
 
     // key must match Python's f"{lo}|{hi}" from sorted((a,b)); JS default string sort and
     // Python's codepoint sort agree for the project's ASCII slug convention.
