@@ -67,6 +67,7 @@ a { color: var(--ember); text-decoration: none; }
 a:hover { color: var(--ember-bright); }
 
 .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+.wrap-wide { max-width: 1500px; }   /* the ladder gets room — no clipped columns on wide screens */
 
 /* ---- mono / data voice -------------------------------------------------- */
 .mono, .metric, .eyebrow, .slug, code, kbd, th, .num {
@@ -191,6 +192,7 @@ a:hover { color: var(--ember-bright); }
   border: none;
   background: transparent;
   padding: 6px 4px 0;
+  width: 100%; max-width: 440px; margin-inline: auto;   /* centered in the hero column */
 }
 .vs-title {
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em;
@@ -214,16 +216,9 @@ a:hover { color: var(--ember-bright); }
   position: absolute; left: 21px; width: 2px; transform: translateX(-50%);
   background: rgba(255, 201, 126, 0.55); border-radius: 2px;
 }
-.vs-whisker::before, .vs-whisker::after {
-  content: ""; position: absolute; left: 50%; transform: translateX(-50%);
-  width: 8px; height: 1.5px; background: rgba(255, 201, 126, 0.6);
-}
-.vs-whisker::before { top: 0; }
-.vs-whisker::after { bottom: 0; }
-.vs-htick {                         /* horizontal tick at the exact Elo position */
-  position: absolute; left: 24px; width: 13px; height: 2px;
-  background: var(--ink-dim); transform: translateY(50%);
-}
+/* no end caps and no separate position tick — the dot and the bright whisker
+   core carry the meaning; extra marks read as stray dashes at a glance */
+.vs-htick { display: none; }
 .vs-leader {                        /* connects a nudged label back to its dot */
   position: absolute; left: 37px; width: 1.5px; transform: translateX(-50%);
   background: rgba(255, 255, 255, 0.16); border-radius: 1px;
@@ -280,7 +275,12 @@ details.disclose .d-body {
   border-radius: var(--radius);
   background: var(--surface);
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-3) transparent;
 }
+.table-scroll::-webkit-scrollbar { height: 8px; }
+.table-scroll::-webkit-scrollbar-thumb { background: var(--surface-3); border-radius: 4px; }
+.table-scroll::-webkit-scrollbar-thumb:hover { background: var(--border-2); }
 table.lb {
   border-collapse: separate; border-spacing: 0;
   width: 100%; min-width: 940px;
@@ -479,6 +479,7 @@ pre.snap {
 .pill-list li.weighted { border-color: rgba(245, 163, 75, 0.4); color: var(--ember); background: var(--ember-dim); }
 /* explainer card (plain-terms methodology intro) */
 .explainer { margin-bottom: 22px; }
+.explainer .prose { max-width: none; }
 .explainer .prose p { margin: 0 0 12px; font-size: 14px; line-height: 1.65; max-width: none; }
 .explainer .prose p:last-child { margin-bottom: 0; }
 
@@ -543,7 +544,7 @@ select.pick {
 }
 select.pick:focus-visible { outline: 2px solid var(--ember); outline-offset: 2px; }
 .cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; }
-.cmp-metric { display: grid; grid-template-columns: 1fr 5.5em 5.5em; align-items: baseline; gap: 8px 20px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+.cmp-metric { display: grid; grid-template-columns: 1fr minmax(8.5em, auto) minmax(8.5em, auto); align-items: baseline; gap: 8px 20px; padding: 9px 0; border-bottom: 1px solid var(--border); }
 .cmp-metric .k { font-family: var(--font-sans); font-size: 13px; color: var(--ink-dim); }
 .cmp-metric .v { font-family: var(--font-mono); font-size: 14px; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
 .cmp-metric .v.win { color: var(--ember); }

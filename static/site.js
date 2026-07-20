@@ -29,7 +29,7 @@ const fmt = {
   n2: (v) => (v == null ? "—" : Number(v).toFixed(2)),
   n3: (v) => (v == null ? "—" : Number(v).toFixed(3)),
   int: (v) => (v == null ? "—" : Math.round(Number(v)).toLocaleString()),
-  usd: (v) => (v == null ? "—" : "$" + Number(v).toFixed(4)),
+  usd: (v) => (v == null ? "—" : "$" + Number(v).toFixed(2)),
   pct: (v) => (v == null ? "—" : (Number(v) * 100).toFixed(0) + "%"),
   pct1: (v) => (v == null ? "—" : (Number(v) * 100).toFixed(1) + "%"),
   ppDelta: (v) => (v == null ? "—" : (Number(v) < 0 ? "" : "+") + (Number(v) * 100).toFixed(1) + "pp"),
@@ -289,7 +289,6 @@ function renderVerdictStrip(models) {
     ai++;
     const m = it.m, wr = m.win_rate;
     plot.appendChild(anim(el("div", { class: "vs-whisker", style: `bottom:${it.yLo}%;height:${Math.max(0, it.yHi - it.yLo)}%` })));
-    plot.appendChild(anim(el("div", { class: "vs-htick", style: `bottom:${it.yElo}%` })));
     // leader line bridging the dot's true position to the nudged label
     const loY = Math.min(it.yElo, it.yLabel), gap = Math.abs(it.yLabel - it.yElo);
     if (gap > 0.4) plot.appendChild(anim(el("div", { class: "vs-leader", style: `bottom:${loY}%;height:${gap}%` })));
@@ -684,8 +683,10 @@ async function initCompare() {
     models.forEach((m, i) => s.appendChild(el("option", { value: m.slug, selected: (m.slug === def) ? "selected" : null }, `${m.display_name} · ${m.slug}`)));
     return s;
   };
-  const selA = mkSelect(models[0].slug);
-  const selB = mkSelect(models[Math.min(1, models.length - 1)].slug);
+  // default to the two strongest ranked models — the most informative first view
+  const ranked = [...models].sort((a, b) => (b.normalized_elo ?? -Infinity) - (a.normalized_elo ?? -Infinity));
+  const selA = mkSelect(ranked[0].slug);
+  const selB = mkSelect((ranked[1] || ranked[0]).slug);
   const pickers = el("div", { class: "pickers" }, selA, el("span", { class: "vs", text: "VS" }), selB);
   const out = el("div", { id: "cmp-out" });
   mount.replaceChildren(pickers, out);
