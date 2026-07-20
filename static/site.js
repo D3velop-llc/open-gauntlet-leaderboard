@@ -66,29 +66,41 @@ function warmth(t) {
   return [lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u)];
 }
 function heatText(rgb) {
+  // cells paint the ramp at 0.72 alpha over the dark surface — judge contrast
+  // against the EFFECTIVE luminance of that blend, not the raw ramp color
   const lum = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
-  return lum > 150 ? "#17110a" : "#E8EAF0";
+  const eff = 0.72 * lum + 0.28 * 20;
+  return eff > 132 ? "#17110a" : "#E8EAF0";
 }
 
 /* ============================ LEADERBOARD ================================= */
 const ABILITY = new Set(["normalized_elo", "win_rate", "eq_score", "humanlike_score", "voice_composite"]);
 const COLS = [
-  { key: "rank", label: "#", css: "txt" },
-  { key: "model", label: "Model", css: "txt", type: "text" },
-  { key: "params", label: "Params", type: "text" },
-  { key: "quant", label: "Quant", type: "text" },
-  { key: "backend", label: "Backend", type: "text" },
-  { key: "normalized_elo", label: "Elo (95% CI)", type: "num", heat: true },
-  { key: "win_rate", label: "Win rate", type: "num", heat: true },
+  { key: "rank", label: "#", css: "txt", group: "configuration" },
+  { key: "model", label: "Model", css: "txt", type: "text", group: "configuration" },
+  { key: "params", label: "Params", type: "text", group: "configuration" },
+  { key: "quant", label: "Quant", type: "text", group: "configuration" },
+  { key: "backend", label: "Backend", type: "text", group: "configuration" },
+  { key: "normalized_elo", label: "Elo (95% CI)", type: "num", heat: true, group: "judge verdicts" },
+  { key: "win_rate", label: "Win rate", type: "num", heat: true, group: "judge verdicts" },
   { key: "n_comparisons", label: "Comparisons", type: "num",
     title: "Weighted Bradley-Terry paired comparisons behind this Elo — one per unordered opponent × scenario × criterion, with both A/B orderings averaged. Not distinct matches played (each conversation contributes ~9 per-criterion comparisons), and not the Win-rate denominator." },
-  { key: "eq_score", label: "EQ", type: "num", heat: true },
-  { key: "humanlike_score", label: "Humanlike", type: "num", heat: true },
-  { key: "voice_composite", label: "Voice", type: "num", heat: true },
-  { key: "ttft_2k_ms", label: "TTFT 2k (ms)", type: "num" },
-  { key: "tps_2k", label: "words/s 2k", type: "num" },
-  { key: "judging_cost_usd", label: "Judge $", type: "num" },
+  { key: "eq_score", label: "EQ", type: "num", heat: true, group: "judge verdicts" },
+  { key: "humanlike_score", label: "Humanlike", type: "num", heat: true, group: "judge verdicts" },
+  { key: "voice_composite", label: "Voice", type: "num", heat: true, group: "measured locally" },
+  { key: "ttft_2k_ms", label: "TTFT 2k (ms)", type: "num", group: "measured locally" },
+  { key: "tps_2k", label: "words/s 2k", type: "num", group: "measured locally" },
+  { key: "judging_cost_usd", label: "Judge $", type: "num", group: "spend" },
 ];
+// n_comparisons keeps its group via position — patch it explicitly for clarity
+for (const c of COLS) if (c.key === "n_comparisons") c.group = "judge verdicts";
+// mark group starts once so header AND body cells can draw the boundary rule
+for (let i = 1; i < COLS.length; i++) COLS[i].gstart = COLS[i].group !== COLS[i - 1].group;
+const GROUP_TITLES = {
+  "judge verdicts": "Scored by the reference judge (see the judging note above)",
+  "measured locally": "Deterministic local measurement — no judge involved",
+  "spend": "LLM-judging spend for this model under the displayed generation",
+};
 
 function columnRange(models, key) {
   const vals = models.map((m) => m[key]).filter((v) => v != null).map(Number);
@@ -102,9 +114,22 @@ function renderLeaderboard(models) {
 
   const modelPage = (window.OG && window.OG.modelPage) || "model.html";
   const thead = el("thead");
+  // provenance group row: which columns the judge scored vs measured locally
+  const gtr = el("tr", { class: "grp" });
+  for (let i = 0; i < COLS.length; ) {
+    let j = i;
+    while (j < COLS.length && COLS[j].group === COLS[i].group) j++;
+    const g = COLS[i].group;
+    const th = el("th", { title: GROUP_TITLES[g] || "", class: (i > 0 ? "gstart" : "") + (g === "judge verdicts" ? " judged" : "") },
+      g === "configuration" ? "" : g);
+    th.colSpan = j - i;
+    gtr.appendChild(th);
+    i = j;
+  }
+  thead.appendChild(gtr);
   const htr = el("tr");
   for (const c of COLS) {
-    const th = el("th", { class: c.css === "txt" ? "txt" : "", "data-key": c.key, title: c.title },
+    const th = el("th", { class: (c.css === "txt" ? "txt" : "") + (c.gstart ? " gstart" : ""), "data-key": c.key, title: c.title },
       c.label, el("span", { class: "arrow", text: "" }));
     htr.appendChild(th);
   }
@@ -140,7 +165,7 @@ function renderLeaderboard(models) {
         td.className = "heat";
         const t = r.max === r.min ? 0.62 : (Number(v) - r.min) / (r.max - r.min);
         const rgb = warmth(t);
-        td.style.background = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+        td.style.background = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.72)`;
         td.style.color = heatText(rgb);
       }
     } else if (c.key === "judging_cost_usd") td.className = "dim";
@@ -151,7 +176,11 @@ function renderLeaderboard(models) {
     tbody.replaceChildren();
     rows.forEach((row, i) => {
       const tr = el("tr");
-      for (const c of COLS) tr.appendChild(cell(c, row));
+      for (const c of COLS) {
+        const td = cell(c, row);
+        if (c.gstart) td.classList.add("gstart");
+        tr.appendChild(td);
+      }
       tr.firstChild.textContent = String(i + 1);   // rank = position in current order
       tbody.appendChild(tr);
     });
@@ -254,24 +283,27 @@ function renderVerdictStrip(models) {
   if (overflow > 0) for (const it of sorted) it.yLabel = Math.max(3, it.yLabel - overflow);
 
   const plot = el("div", { class: "vs-plot" }, el("div", { class: "vs-rail" }));
+  let ai = 0;                       // stagger index for the one orchestrated load moment
+  const anim = (node) => { node.classList.add("vs-in"); node.style.setProperty("--i", String(ai)); return node; };
   for (const it of items) {
+    ai++;
     const m = it.m, wr = m.win_rate;
-    plot.appendChild(el("div", { class: "vs-whisker", style: `bottom:${it.yLo}%;height:${Math.max(0, it.yHi - it.yLo)}%` }));
-    plot.appendChild(el("div", { class: "vs-htick", style: `bottom:${it.yElo}%` }));
+    plot.appendChild(anim(el("div", { class: "vs-whisker", style: `bottom:${it.yLo}%;height:${Math.max(0, it.yHi - it.yLo)}%` })));
+    plot.appendChild(anim(el("div", { class: "vs-htick", style: `bottom:${it.yElo}%` })));
     // leader line bridging the dot's true position to the nudged label
     const loY = Math.min(it.yElo, it.yLabel), gap = Math.abs(it.yLabel - it.yElo);
-    if (gap > 0.4) plot.appendChild(el("div", { class: "vs-leader", style: `bottom:${loY}%;height:${gap}%` }));
+    if (gap > 0.4) plot.appendChild(anim(el("div", { class: "vs-leader", style: `bottom:${loY}%;height:${gap}%` })));
     const dot = el("div", { class: "vs-dot" + (wr == null ? " cold" : ""), style: `bottom:${it.yElo}%` });
     if (wr != null) {
       const blur = 6 + Number(wr) * 20, alpha = 0.35 + Number(wr) * 0.5;
       dot.style.boxShadow = `0 0 ${blur.toFixed(1)}px rgba(245,163,75,${alpha.toFixed(2)})`;
     }
-    plot.appendChild(dot);
-    plot.appendChild(el("a", {
+    plot.appendChild(anim(dot));
+    plot.appendChild(anim(el("a", {
       class: "vs-label", href: `${modelPage}?slug=${encodeURIComponent(m.slug)}`, style: `bottom:${it.yLabel}%`,
     },
       el("span", { class: "nm", text: m.display_name }),
-      el("span", { class: "el", text: String(Math.round(Number(m.normalized_elo))) })));
+      el("span", { class: "el", text: String(Math.round(Number(m.normalized_elo))) }))));
   }
 
   mount.replaceChildren(

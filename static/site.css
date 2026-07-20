@@ -30,8 +30,11 @@
   --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo,
                Consolas, "Liberation Mono", monospace;
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  /* serif = the NARRATIVE voice: reserved for the emotional/editorial register
+     (headline, section heads). mono measures; sans explains; serif feels. */
+  --font-serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
 
-  --radius: 12px;
+  --radius: 6px;
   --maxw: 1240px;
 
   /* ---- type scale ------------------------------------------------------- */
@@ -120,15 +123,17 @@ a:hover { color: var(--ember-bright); }
 /* ================================ HERO =================================== */
 .hero { padding: 72px 0 24px; position: relative; }
 .hero h1 {
-  font-family: var(--font-sans);
-  font-weight: 800;
+  font-family: var(--font-serif);
+  font-weight: 700;
   font-size: var(--fs-hero);
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
   margin: 16px 0 0;
-  max-width: 16ch;
+  max-width: 17ch;
 }
 .hero h1 .warm {
+  font-style: italic;
+  padding-right: 0.05em;              /* italic overhang guard */
   color: transparent;
   background: linear-gradient(96deg, var(--ember-bright), var(--ember) 58%, #d98338);
   -webkit-background-clip: text; background-clip: text;
@@ -182,12 +187,10 @@ a:hover { color: var(--ember-bright); }
 /* The signature element: a vertical thermal rail plotting each model on the
    normalized-Elo axis. Built entirely from leaderboard.json in site.js. */
 .verdict-strip {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background:
-    radial-gradient(120% 80% at 12% 0%, rgba(245, 163, 75, 0.05), transparent 60%),
-    var(--surface);
-  padding: 18px 20px 16px;
+  /* de-carded: the rail floats on the night background, glow bleeding into the dark */
+  border: none;
+  background: transparent;
+  padding: 6px 4px 0;
 }
 .vs-title {
   font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em;
@@ -205,7 +208,7 @@ a:hover { color: var(--ember-bright); }
 .vs-rail {
   position: absolute; left: 18px; top: 0; bottom: 0; width: 6px; border-radius: 4px;
   background: linear-gradient(to top, var(--cold) 0%, #6b533f 46%, var(--ember) 78%, var(--ember-bright) 100%);
-  box-shadow: 0 0 22px rgba(245, 163, 75, 0.12);
+  box-shadow: 0 0 34px rgba(245, 163, 75, 0.16), 0 0 90px rgba(245, 163, 75, 0.07);
 }
 .vs-whisker {                       /* CI extent as a bright core on the rail */
   position: absolute; left: 21px; width: 2px; transform: translateX(-50%);
@@ -247,8 +250,8 @@ a.vs-label:hover .nm { color: var(--ember); }
 section.block { padding: 8px 0 72px; }
 .section-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px; margin: 8px 0 16px; }
 .section-head h2 {
-  font-family: var(--font-sans); font-weight: 750;
-  font-size: var(--fs-h2); letter-spacing: -0.02em; margin: 0;
+  font-family: var(--font-serif); font-weight: 650;
+  font-size: 1.55rem; letter-spacing: -0.012em; margin: 0;
 }
 .section-head .idx { font-family: var(--font-mono); color: var(--ember); font-size: 13px; }
 .note { color: var(--muted); font-size: 13px; max-width: 72ch; }
@@ -297,6 +300,15 @@ table.lb thead th {
   user-select: none;
 }
 table.lb thead th.txt { text-align: left; }
+/* provenance group row — encodes which columns the judge scored vs local measurement */
+table.lb thead tr.grp th {
+  cursor: default; text-align: left;
+  font-size: 9.5px; letter-spacing: 0.2em; color: var(--muted);
+  padding: 9px 13px 3px; border-bottom: none; background: var(--surface-2);
+}
+table.lb thead tr.grp th:hover { color: var(--muted); }
+table.lb thead tr.grp th.judged { color: var(--ember); }
+table.lb th.gstart, table.lb td.gstart { border-left: 1px solid var(--border); }
 table.lb thead th:hover { color: var(--ink); }
 table.lb thead th .arrow { color: var(--ember); opacity: 0; margin-left: 4px; font-size: 10px; }
 table.lb thead th[aria-sort] .arrow { opacity: 1; }
@@ -609,4 +621,9 @@ footer.foot .wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16p
 @media (prefers-reduced-motion: no-preference) {
   .row-in { animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
   @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  /* the strip warms up once on load: each model's marks fade in, staggered.
+     Fade-only — the strip's elements position themselves with transforms,
+     which an animated transform would clobber. */
+  .vs-plot .vs-in { animation: warmup-fade 0.55s ease-out both; animation-delay: calc(var(--i, 0) * 80ms); }
+  @keyframes warmup-fade { from { opacity: 0; } to { opacity: 1; } }
 }
