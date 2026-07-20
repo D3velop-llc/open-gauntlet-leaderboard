@@ -57,8 +57,8 @@ function fail(mount, msg) {
   mount.replaceChildren(el("div", { class: "state err" }, msg));
 }
 
-/* ---- thermal ramp: cool slate (low) → ember (high) ---------------------- */
-const H0 = [32, 38, 47], H1 = [122, 79, 38], H2 = [242, 166, 90];
+/* ---- thermal ramp: cold slate (low) → ember (high) — matches the verdict rail palette --- */
+const H0 = [46, 61, 92], H1 = [107, 83, 63], H2 = [245, 163, 75];
 const lerp = (a, b, t) => Math.round(a + (b - a) * t);
 function warmth(t) {
   t = Math.max(0, Math.min(1, t));
@@ -67,7 +67,7 @@ function warmth(t) {
 }
 function heatText(rgb) {
   const lum = 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
-  return lum > 150 ? "#17110a" : "#f3f1ea";
+  return lum > 150 ? "#17110a" : "#E8EAF0";
 }
 
 /* ============================ LEADERBOARD ================================= */
@@ -193,20 +193,104 @@ function renderLeaderboard(models) {
   return el("div", { class: "table-scroll row-in" }, table);
 }
 
+/* ---- judging story: a human sentence, not a hash badge ------------------ */
+function renderJudgingStrip(judgeModel, summary) {
+  const strip = document.querySelector("[data-judging-strip]");
+  if (!strip) return;
+  strip.replaceChildren(
+    document.createTextNode("Scored by "),
+    el("span", { "data-judge-model": "", text: judgeModel || "—" }),
+    document.createTextNode(" under a frozen prompt"));
+  if (summary && summary.n_judges) {
+    const pct = Math.round(Number(summary.max_agreement) * 100);
+    strip.append(
+      document.createTextNode(" · cross-checked by a "),
+      el("a", { href: "methodology.html#judge-cross-check", text: `${summary.n_judges}-judge panel` }),
+      document.createTextNode(` (up to ${pct}% agreement).`));
+  } else {
+    strip.append(document.createTextNode("."));
+  }
+}
+
+/* ---- Warmth Verdict Strip: the signature element ------------------------ */
+/* A vertical thermal rail plotting each model on the normalized-Elo axis. Each model gets a
+   horizontal tick + glowing dot at its Elo, a CI whisker spanning ci_low..ci_high along the
+   rail, and a label linking to its page. Glow intensity scales with win_rate. Pure DOM+CSS. */
+function renderVerdictStrip(models) {
+  const mount = document.getElementById("verdict-strip");
+  if (!mount) return;
+  const modelPage = (window.OG && window.OG.modelPage) || "model.html";
+  const pts = (models || []).filter((m) => m.normalized_elo != null);
+  if (!pts.length) { mount.replaceChildren(el("div", { class: "state", text: "No ranked models yet." })); return; }
+
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+  const nz = (v, f) => (v != null ? Number(v) : Number(f));
+
+  // axis domain: min(ci_low) − 40 … max(ci_high) + 40, falling back to the point Elo w/o a CI
+  let dmin = Infinity, dmax = -Infinity;
+  for (const m of pts) {
+    dmin = Math.min(dmin, nz(m.elo_ci_low, m.normalized_elo));
+    dmax = Math.max(dmax, nz(m.elo_ci_high, m.normalized_elo));
+  }
+  dmin -= 40; dmax += 40;
+  const span = dmax - dmin || 1;
+  const pos = (v) => clamp01((Number(v) - dmin) / span) * 100;
+
+  const items = pts.map((m) => ({
+    m,
+    yElo: pos(m.normalized_elo),
+    yLo: pos(nz(m.elo_ci_low, m.normalized_elo)),
+    yHi: pos(nz(m.elo_ci_high, m.normalized_elo)),
+  }));
+
+  // declutter single-line labels in %-space: nudge apart to a minimum gap (sized for the
+  // shorter 300px mobile rail so it holds at every height), then shift down if they overflow.
+  // A leader line ties each nudged label back to its exact-position dot.
+  const MIN_GAP = 6.5;
+  const sorted = [...items].sort((a, b) => a.yElo - b.yElo);
+  let last = -Infinity;
+  for (const it of sorted) { it.yLabel = Math.max(it.yElo, last + MIN_GAP); last = it.yLabel; }
+  const overflow = last - 94;
+  if (overflow > 0) for (const it of sorted) it.yLabel = Math.max(3, it.yLabel - overflow);
+
+  const plot = el("div", { class: "vs-plot" }, el("div", { class: "vs-rail" }));
+  for (const it of items) {
+    const m = it.m, wr = m.win_rate;
+    plot.appendChild(el("div", { class: "vs-whisker", style: `bottom:${it.yLo}%;height:${Math.max(0, it.yHi - it.yLo)}%` }));
+    plot.appendChild(el("div", { class: "vs-htick", style: `bottom:${it.yElo}%` }));
+    // leader line bridging the dot's true position to the nudged label
+    const loY = Math.min(it.yElo, it.yLabel), gap = Math.abs(it.yLabel - it.yElo);
+    if (gap > 0.4) plot.appendChild(el("div", { class: "vs-leader", style: `bottom:${loY}%;height:${gap}%` }));
+    const dot = el("div", { class: "vs-dot" + (wr == null ? " cold" : ""), style: `bottom:${it.yElo}%` });
+    if (wr != null) {
+      const blur = 6 + Number(wr) * 20, alpha = 0.35 + Number(wr) * 0.5;
+      dot.style.boxShadow = `0 0 ${blur.toFixed(1)}px rgba(245,163,75,${alpha.toFixed(2)})`;
+    }
+    plot.appendChild(dot);
+    plot.appendChild(el("a", {
+      class: "vs-label", href: `${modelPage}?slug=${encodeURIComponent(m.slug)}`, style: `bottom:${it.yLabel}%`,
+    },
+      el("span", { class: "nm", text: m.display_name }),
+      el("span", { class: "el", text: String(Math.round(Number(m.normalized_elo))) })));
+  }
+
+  mount.replaceChildren(
+    el("div", { class: "vs-title" }, el("span", { class: "tick", text: "// " }), "normalized Elo · warmth axis"),
+    el("div", { class: "vs-axis top" }, el("span", { text: "warmer" }), el("span", { class: "val", text: "≈ " + Math.round(dmax) })),
+    plot,
+    el("div", { class: "vs-axis bottom" }, el("span", { text: "cooler" }), el("span", { class: "val", text: "≈ " + Math.round(dmin) })));
+}
+
 async function initLeaderboard() {
   const mount = $("#leaderboard");
   try {
     const data = await getJSON("data/leaderboard.json");
     const jg = data.judge_generation || {};
-    const nameEls = document.querySelectorAll("[data-judge-model]");
-    nameEls.forEach((n) => { n.textContent = jg.model || "—"; });
-    const pw = document.querySelector("[data-pairwise-hash]");
-    if (pw) pw.textContent = jg.pairwise_prompt_hash || "—";
-    const rb = document.querySelector("[data-rubric-hash]");
-    if (rb) rb.textContent = jg.rubric_prompt_hash || "—";
     const gen = document.querySelector("[data-generated-at]");
     if (gen && data.generated_at) gen.textContent = new Date(data.generated_at).toISOString().replace("T", " ").slice(0, 16) + " UTC";
-    if (!data.models || !data.models.length) { fail(mount, "No models have completed a run yet."); return; }
+    renderJudgingStrip(jg.model, data.judge_calibration_summary);
+    if (!data.models || !data.models.length) { renderVerdictStrip([]); fail(mount, "No models have completed a run yet."); return; }
+    renderVerdictStrip(data.models);
     mount.replaceChildren(renderLeaderboard(data.models));
   } catch (e) { fail(mount, "Could not load leaderboard.json — " + e.message); }
 }
@@ -298,7 +382,7 @@ function perfChart(canvas, curve, field, color, unit) {
   if (typeof Chart === "undefined") { canvas.replaceWith(el("div", { class: "state", text: "chart unavailable" })); return; }
   const pts = curve.filter((r) => r[field] != null);
   if (!pts.length) { canvas.replaceWith(el("div", { class: "state", text: "no perf samples" })); return; }
-  const grid = "#2c2c2a", muted = "#75808f";
+  const grid = "rgba(255,255,255,0.07)", muted = "#8A93A6";
   new Chart(canvas, {
     type: "line",
     data: {
@@ -315,8 +399,8 @@ function perfChart(canvas, curve, field, color, unit) {
       plugins: {
         legend: { display: false },
         tooltip: {
-          backgroundColor: "#1b212c", borderColor: "rgba(255,255,255,0.12)", borderWidth: 1,
-          titleColor: "#f3f1ea", bodyColor: "#a6afbd", padding: 10,
+          backgroundColor: "#171C28", borderColor: "rgba(255,255,255,0.13)", borderWidth: 1,
+          titleColor: "#E8EAF0", bodyColor: "#AEB6C6", padding: 10,
           callbacks: { title: (it) => `${it[0].label} prompt tokens`, label: (it) => ` ${Number(it.raw).toFixed(1)} ${unit}` },
         },
       },
@@ -355,8 +439,8 @@ async function initModel() {
         el("div", { class: "chart-card" }, el("h3", { text: "Decode speed" }), el("p", { class: "sub", text: "words/sec median vs prompt size" }),
           el("div", { class: "chart-scroll" }, el("div", { class: "chart-box" }, cTps)))));
     mount.appendChild(perf);
-    perfChart(cTtft, curve, "ttft_ms_median", "#4aa8d8", "ms");
-    perfChart(cTps, curve, "decode_tps_median", "#f2a65a", "words/s");
+    perfChart(cTtft, curve, "ttft_ms_median", "#4AA8D8", "ms");
+    perfChart(cTps, curve, "decode_tps_median", "#F5A34B", "words/s");
 
     // reproducibility
     mount.appendChild(el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }), el("h2", { text: "Provenance" })));
@@ -390,10 +474,11 @@ function calibrationCard(jc) {
     el("thead", {}, el("tr", {},
       el("th", { text: "Judge" }), el("th", { text: "Agreement" }), el("th", { text: "Kappa" }),
       el("th", { text: "Order-consistency" }), el("th", { text: "Length-pref Δ" }))), tb);
-  return el("div", { class: "card", style: "margin-top:22px" },
+  return el("div", { class: "card", id: "judge-cross-check", style: "margin-top:22px" },
     el("h3", { text: "Judge cross-check" }),
     el("p", { class: "sub", text: `Candidate judges replayed the same blinded pairs, with the same prompt, that ${jc.reference_judge} scored — the table shows how closely each reproduced its verdicts.` }),
-    el("div", { class: "table-scroll" }, table));
+    el("div", { class: "table-scroll" }, table),
+    el("p", { class: "read-guide", text: "0.6+ kappa = substantial agreement; the panel replays a blinded sample — it audits the reference judge, it does not score the ladder." }));
 }
 
 async function initMethodology() {
@@ -420,7 +505,15 @@ async function initMethodology() {
     addbm("iterations per scenario (replication)", bm.iterations_per_scenario);
 
     const sm = m.scoring_method || {};
-    const scoring = el("div", { class: "body" },
+    // three-step scoring sequence — the 1-2-3 ordering is meaningful here
+    const steps = el("div", { class: "steps" },
+      el("div", { class: "step" }, el("span", { class: "n", text: "01" }), el("span", { class: "lbl", text: "net preference" }),
+        el("div", { class: "txt", text: "Both A/B orderings of every scenario × criterion are averaged into one signed margin — the sign picks the winner, its size is the weight." })),
+      el("div", { class: "step" }, el("span", { class: "n", text: "02" }), el("span", { class: "lbl", text: "Bradley-Terry fit" }),
+        el("div", { class: "txt", text: "A weighted Bradley-Terry solver turns all those paired comparisons into a single strength score per model." })),
+      el("div", { class: "step" }, el("span", { class: "n", text: "03" }), el("span", { class: "lbl", text: "Elo + interval" }),
+        el("div", { class: "txt", text: "Strengths are mean-centered on 1500 (the chess spread) and bootstrapped over scenarios for the 95% interval." })));
+    const scoringProse = el("div", { class: "scoring-prose" },
       el("p", { class: "prose", text: sm.summary || "" }),
       el("p", { class: "prose", text: sm.scaling || "" }),
       el("p", { class: "prose", text: sm.confidence_interval || "" }));
@@ -434,14 +527,19 @@ async function initMethodology() {
       el("thead", {}, el("tr", {}, el("th", { text: "id" }), el("th", { text: "category" }), el("th", { text: "title" }))), tb);
 
     const children = [
-      el("div", { class: "grid-2 row-in" },
-        el("div", { class: "card" }, el("h3", { text: "Rubric criteria" }),
-          el("p", { class: "sub", text: "Nine 0–20 axes — each scored once per conversation. The ember-marked ones feed the EQ composite." }), critList),
-        el("div", { class: "card" }, el("h3", { text: "Bias mitigations" }),
-          el("p", { class: "sub", text: "How the judge pass guards against ordering and length bias — plus how much each result is replicated." }), bmList,
-          el("p", { class: "note", text: "The pairwise Elo ladder (the headline ranking) uses a single iteration — iteration 0 — per model per scenario, so the extra iterations add no replication to the ranking; they only reduce sampling noise in the rubric aggregates (EQ / Humanlike), which score every iteration." }))),
+      // merged rubric + bias controls — one card, two balanced halves (no orphan card)
+      el("div", { class: "card row-in" }, el("h3", { text: "Rubric & bias controls" }),
+        el("div", { class: "split-card" },
+          el("div", { class: "half" },
+            el("div", { class: "half-title", text: "Rubric criteria" }),
+            el("p", { class: "sub", text: "Nine 0–20 axes — each scored once per conversation. The ember-marked ones feed the EQ composite." }), critList),
+          el("div", { class: "half" },
+            el("div", { class: "half-title", text: "Bias controls" }),
+            el("p", { class: "sub", text: "How the judge pass guards against ordering and length bias — plus how much each result is replicated." }), bmList,
+            el("p", { class: "note", text: "The pairwise Elo ladder (the headline ranking) uses a single iteration — iteration 0 — per model per scenario, so the extra iterations add no replication to the ranking; they only reduce sampling noise in the rubric aggregates (EQ / Humanlike), which score every iteration." })))),
+      // how the Elo ladder is scored — three-step sequence + the full data-driven prose
       el("div", { class: "card", style: "margin-top:22px" }, el("h3", { text: `How the Elo ladder is scored — ${sm.name || "Bradley-Terry"}` }),
-        el("p", { class: "sub", text: "Weighted head-to-head comparisons, mean-anchored to 1500, with bootstrap confidence intervals." }), scoring),
+        steps, scoringProse),
     ];
     // judge cross-check panel — only when the export carried it with a non-empty judges array
     const calib = calibrationCard(m.judge_calibration);
@@ -452,6 +550,12 @@ async function initMethodology() {
         el("h2", { text: `Scenario pack (${(m.scenarios || []).length})` })),
       el("div", { class: "table-scroll" }, table));
     mount.replaceChildren(...children);
+    // the cross-check card is rendered async, so honor a deep link (hero → #judge-cross-check)
+    // only after it exists in the DOM.
+    if (location.hash && /^#[\w-]+$/.test(location.hash)) {
+      const target = document.getElementById(location.hash.slice(1));
+      if (target) target.scrollIntoView({ block: "start" });
+    }
   } catch (e) { fail(mount, "Could not load methodology.json — " + e.message); }
 }
 
@@ -515,7 +619,8 @@ function pairwiseVerdictCard(pairEntry, ra, rb, bySlug) {
   card.appendChild(el("p", { class: "note", text: "Margin-weighted judge-preference games (a decisive win counts more than a narrow one). This is the direct head-to-head — the Elo ladder ranks across every opponent and can order two models differently." }));
   for (const v of pairEntry.scenarios) {
     const w = v.overall.winner;
-    const verdict = w == null ? "tie" : `${name(w)} +${Number(v.overall.margin).toFixed(1)}`;
+    const isTie = w == null;
+    const verdict = isTie ? "tie" : `${name(w)} +${Number(v.overall.margin).toFixed(1)}`;
     const chips = el("div", { class: "crit-chips" });
     for (const c of (v.per_criterion || [])) {
       const cw = c.winner;
@@ -523,7 +628,8 @@ function pairwiseVerdictCard(pairEntry, ra, rb, bySlug) {
         text: `${c.criterion.replace(/_/g, " ")}: ${cw == null ? "tie" : name(cw) + " +" + Number(c.margin).toFixed(1)}` }));
     }
     card.appendChild(el("div", { class: "verdict-row" },
-      el("div", { class: "vh" }, el("span", { class: "scn", text: v.scenario_id }), el("span", { class: "vv", text: verdict })),
+      el("span", { class: "scn", text: v.scenario_id }),
+      el("span", { class: "vv" + (isTie ? " tie" : ""), text: verdict }),
       chips));
   }
   return card;

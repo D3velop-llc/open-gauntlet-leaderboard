@@ -29,13 +29,8 @@
     },
     {
       "criterion": "humanlike_naturalness",
-      "mean": 12.4324,
-      "variance": 1.8933
-    },
-    {
-      "criterion": "humanlike_naturalness,",
-      "mean": 15.0,
-      "variance": 0.0
+      "mean": 12.4667,
+      "variance": 1.9022
     },
     {
       "criterion": "memory_integration",

@@ -14,13 +14,8 @@
     },
     {
       "criterion": "conversational_flow",
-      "mean": 14.0,
-      "variance": 3.0267
-    },
-    {
-      "criterion": "conversational_flow,",
-      "mean": 12.0,
-      "variance": 0.0
+      "mean": 13.9733,
+      "variance": 2.9067
     },
     {
       "criterion": "demonstrated_empathy",

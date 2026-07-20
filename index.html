@@ -27,28 +27,21 @@
 
   
   <div class="wrap">
-    <section class="hero">
-      <div class="eyebrow"><span class="tick">//</span> the gauntlet · conversational-EQ trial</div>
-      <h1>Which local model feels the most <span class="warm">human</span>?</h1>
-      <p class="lede">
-        OpenGauntlet runs open-weight models you can host yourself through a gauntlet of
-        emotionally-loaded conversations, then has a frontier model judge how warm, natural,
-        and consistent each one feels. Speed metrics ride along — but warmth is the quantity
-        on trial.
-      </p>
-      <div class="judge-tag">
-        <span class="k">judged by</span>
-        <span class="v accent" data-judge-model>claude-sonnet-5</span>
-        <span class="k">pairwise</span>
-        <span class="v" data-pairwise-hash>5e4fdc45</span>
-        <span class="k">rubric</span>
-        <span class="v" data-rubric-hash>d8776a8d</span>
+    <section class="hero hero-split">
+      <div class="hero-left">
+        <div class="eyebrow"><span class="tick">//</span> the gauntlet · conversational-EQ trial</div>
+        <h1>Which local model feels the most <span class="warm">human</span>?</h1>
+        <p class="lede">
+          Open-weight models you can host yourself run a gauntlet of emotionally-loaded
+          conversations, and a frontier model judges how human each one reads. Speed rides
+          along — warmth is the quantity on trial.
+        </p>
+        <p class="judging-strip" data-judging-strip>
+          Scored by <span data-judge-model>claude-sonnet-5</span> under a frozen prompt.
+        </p>
       </div>
-      <div class="legend">
-        <span>cooler</span>
-        <span class="ramp" aria-hidden="true"></span>
-        <span>warmer / more human</span>
-        <span>— ability cells are a thermal readout, normalized per column</span>
+      <div class="hero-right">
+        <div id="verdict-strip" class="verdict-strip"><div class="state">Loading the warmth axis…</div></div>
       </div>
     </section>
 
@@ -56,7 +49,17 @@
       <div class="section-head">
         <span class="idx">//</span>
         <h2>The ladder</h2>
-        <span class="note">Click any column to sort. Each row is a <strong>serving configuration</strong> — the same model at a different quantization or backend is a distinct entry, because quantization changes how a model behaves. Each row links to that configuration's full trial record.</span>
+        <span class="note">Click any column to sort. Each row is a <strong>serving configuration</strong> — a model at one quantization and backend.</span>
+      </div>
+      <details class="disclose">
+        <summary><span class="caret">▸</span> Why each row is a serving configuration</summary>
+        <div class="d-body">The same model at a different quantization or backend is a distinct entry, because quantization changes how a model behaves. Each row links to that configuration's full trial record.</div>
+      </details>
+      <div class="legend">
+        <span>cooler</span>
+        <span class="ramp" aria-hidden="true"></span>
+        <span>warmer / more human</span>
+        <span>— ability cells are a thermal readout, normalized per column</span>
       </div>
       <div id="leaderboard"><div class="state">Loading leaderboard…</div></div>
     </section>
@@ -65,8 +68,13 @@
 
   <footer class="foot">
     <div class="wrap">
-      <span>// openGAUNTLET — a trial of conversational realism for locally-hosted open-weight models.</span>
-      <span>self-contained · zero-build · <span data-generated-at>—</span></span>
+      <span class="foot-brand">// openGAUNTLET — a trial of conversational realism for locally-hosted open-weight models.</span>
+      <nav class="foot-nav">
+        <a href="index.html">Leaderboard</a><span class="sep">·</span>
+        <a href="methodology.html">Methodology</a><span class="sep">·</span>
+        <a href="compare.html">Compare</a>
+      </nav>
+      <span class="foot-prov">pairwise 5e4fdc45 · rubric d8776a8d · <span data-generated-at>2026-07-20 22:30 UTC</span></span>
     </div>
   </footer>
 

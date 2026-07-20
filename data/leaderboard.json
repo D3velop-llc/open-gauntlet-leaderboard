@@ -4,7 +4,7 @@
     "pairwise_prompt_hash": "5e4fdc45",
     "rubric_prompt_hash": "d8776a8d"
   },
-  "generated_at": "2026-07-20T21:39:34.899153+00:00",
+  "generated_at": "2026-07-20T22:30:56.813497+00:00",
   "models": [
     {
       "slug": "cydonia-24b-v4-3",
@@ -19,8 +19,8 @@
       "elo_ci_high": 1773.4815875814315,
       "n_comparisons": 900,
       "win_rate": 0.6567310383431291,
-      "eq_score": 66.7085,
-      "humanlike_score": 62.1622,
+      "eq_score": 66.7427,
+      "humanlike_score": 62.3333,
       "voice_composite": 67.0526,
       "ttft_2k_ms": 103.5513,
       "tps_2k": 11.2858,
@@ -59,7 +59,7 @@
       "elo_ci_high": 1889.173023279131,
       "n_comparisons": 900,
       "win_rate": 0.7279596977329975,
-      "eq_score": 67.7333,
+      "eq_score": 67.7067,
       "humanlike_score": 60.6,
       "voice_composite": 68.6188,
       "ttft_2k_ms": 123.8318,
@@ -99,12 +99,16 @@
       "elo_ci_high": 1624.6714831984389,
       "n_comparisons": 900,
       "win_rate": 0.5068569829275119,
-      "eq_score": 63.591,
+      "eq_score": 63.6267,
       "humanlike_score": 54.1333,
       "voice_composite": 59.4059,
       "ttft_2k_ms": 2730.2535,
       "tps_2k": 9.8762,
       "judging_cost_usd": 7.959144
     }
-  ]
+  ],
+  "judge_calibration_summary": {
+    "n_judges": 4,
+    "max_agreement": 0.8095
+  }
 }
