@@ -102,8 +102,12 @@ const GROUP_TITLES = {
   "spend": "LLM-judging spend for this model under the displayed generation",
 };
 
+// Heat ranges are computed from RANKED models only. A provisional model's score comes from a
+// partial, non-random slice of its corpus, so letting it set an endpoint would rescale every
+// other model's cell against a number that doesn't mean the same thing.
 function columnRange(models, key) {
-  const vals = models.map((m) => m[key]).filter((v) => v != null).map(Number);
+  const pool = models.filter((m) => m.ranked !== false);
+  const vals = (pool.length ? pool : models).map((m) => m[key]).filter((v) => v != null).map(Number);
   if (!vals.length) return null;
   return { min: Math.min(...vals), max: Math.max(...vals) };
 }
@@ -139,10 +143,25 @@ function renderLeaderboard(models) {
   function cell(c, row) {
     if (c.key === "rank") return el("td", { class: "rank" }, "");           // filled after sort
     if (c.key === "model") {
-      return el("td", { class: "model" },
+      const td = el("td", { class: "model" },
         el("a", { href: `${modelPage}?slug=${encodeURIComponent(row.slug)}`, text: row.display_name }),
         el("span", { class: "slug", text: row.slug }),
         el("span", { class: "cfg", text: [row.quant, row.backend].filter(Boolean).join(" · ") || "—" }));
+      // A model is provisional when its judging is incomplete — it still appears (hiding it
+      // would be its own kind of dishonesty) but must never read as a finished measurement.
+      if (row.ranked === false) {
+        const pct = row.rubric_coverage == null ? null : Math.round(row.rubric_coverage * 100);
+        td.appendChild(el("span", {
+          class: "chip prov",
+          title: pct == null
+            ? "Judging incomplete — not ranked."
+            : `Judging incomplete: ${pct}% of this model's rubric cells were scored `
+              + `(${row.rubric_scored}/${row.rubric_expected}). Scores are computed from a `
+              + `partial, non-random subset and are not comparable to fully-judged models.`,
+          text: pct == null ? "provisional" : `provisional · ${pct}%`,
+        }));
+      }
+      return td;
     }
     if (c.key === "params") return el("td", { class: "dim" }, fmt.params(row));
     if (c.key === "quant") return el("td", {}, row.quant ? el("span", { class: "chip", text: row.quant }) : "—");
@@ -162,8 +181,10 @@ function renderLeaderboard(models) {
       const r = ranges[c.key];
       if (v == null || !r) { td.className = "heat empty"; }
       else {
-        td.className = "heat";
-        const t = r.max === r.min ? 0.62 : (Number(v) - r.min) / (r.max - r.min);
+        td.className = "heat" + (row.ranked === false ? " prov" : "");
+        // Clamp: a provisional value can fall outside the ranked-only range.
+        const raw = r.max === r.min ? 0.62 : (Number(v) - r.min) / (r.max - r.min);
+        const t = Math.max(0, Math.min(1, raw));
         const rgb = warmth(t);
         td.style.background = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.72)`;
         td.style.color = heatText(rgb);
@@ -174,14 +195,17 @@ function renderLeaderboard(models) {
 
   function paint(rows) {
     tbody.replaceChildren();
-    rows.forEach((row, i) => {
-      const tr = el("tr");
+    let rank = 0;
+    rows.forEach((row) => {
+      const tr = el("tr", { class: row.ranked === false ? "provisional" : "" });
       for (const c of COLS) {
         const td = cell(c, row);
         if (c.gstart) td.classList.add("gstart");
         tr.appendChild(td);
       }
-      tr.firstChild.textContent = String(i + 1);   // rank = position in current order
+      // Provisional models do not occupy a rank — numbering them would assert a standing
+      // their incomplete judging cannot support.
+      tr.firstChild.textContent = row.ranked === false ? "—" : String(++rank);
       tbody.appendChild(tr);
     });
   }
@@ -189,6 +213,9 @@ function renderLeaderboard(models) {
   let sortKey = "normalized_elo", sortDir = -1;   // default: strongest on top
   function applySort() {
     const rows = [...models].sort((a, b) => {
+      // Provisional rows always sink, whatever the active sort — they are not participants
+      // in the ordering, they are appended context.
+      if ((a.ranked === false) !== (b.ranked === false)) return a.ranked === false ? 1 : -1;
       let x = a[sortKey], y = b[sortKey];
       if (sortKey === "model") { x = a.display_name; y = b.display_name; }
       if (sortKey === "params") { x = a.params_total_b; y = b.params_total_b; }
@@ -249,7 +276,9 @@ function renderVerdictStrip(models) {
   const mount = document.getElementById("verdict-strip");
   if (!mount) return;
   const modelPage = (window.OG && window.OG.modelPage) || "model.html";
-  const pts = (models || []).filter((m) => m.normalized_elo != null);
+  // The ladder plots the ranking. A provisional model has no standing in it — including it
+  // would draw an incomplete measurement as a peer of the fully-judged ones.
+  const pts = (models || []).filter((m) => m.normalized_elo != null && m.ranked !== false);
   if (!pts.length) { mount.replaceChildren(el("div", { class: "state", text: "No ranked models yet." })); return; }
 
   const clamp01 = (x) => Math.max(0, Math.min(1, x));
