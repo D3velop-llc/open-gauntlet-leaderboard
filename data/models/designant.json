@@ -4,48 +4,48 @@
   "criteria": [
     {
       "criterion": "assistant_smell",
-      "mean": 5.1944,
-      "variance": 4.3675
+      "mean": 4.7297,
+      "variance": 4.5111
     },
     {
       "criterion": "boundary_quality",
-      "mean": 7.0833,
-      "variance": 7.4551
+      "mean": 7.5811,
+      "variance": 8.6056
     },
     {
       "criterion": "conversational_flow",
-      "mean": 6.1944,
-      "variance": 4.7543
+      "mean": 6.1892,
+      "variance": 5.9656
     },
     {
       "criterion": "demonstrated_empathy",
-      "mean": 8.5278,
-      "variance": 4.8547
+      "mean": 8.2568,
+      "variance": 5.1556
     },
     {
       "criterion": "emotional_reasoning",
-      "mean": 7.25,
-      "variance": 4.0598
+      "mean": 7.1216,
+      "variance": 4.8044
     },
     {
       "criterion": "humanlike_naturalness",
-      "mean": 5.5833,
-      "variance": 3.3248
+      "mean": 5.2568,
+      "variance": 3.9511
     },
     {
       "criterion": "memory_integration",
-      "mean": 9.25,
-      "variance": 12.4295
+      "mean": 8.4189,
+      "variance": 11.0144
     },
     {
       "criterion": "persona_consistency",
-      "mean": 7.0833,
-      "variance": 10.2415
+      "mean": 6.3784,
+      "variance": 10.3211
     },
     {
       "criterion": "slop_index",
-      "mean": 4.75,
-      "variance": 1.7436
+      "mean": 4.6892,
+      "variance": 2.72
     }
   ],
   "category_breakdown": [
@@ -59,18 +59,26 @@
     },
     {
       "category": "emotional_support",
-      "mean_score_0_20": 6.2222
+      "mean_score_0_20": 5.037
     },
     {
       "category": "everyday_banter",
       "mean_score_0_20": 6.5635
+    },
+    {
+      "category": "memory_callback",
+      "mean_score_0_20": 7.8889
+    },
+    {
+      "category": "persona_pressure",
+      "mean_score_0_20": 6.1944
     }
   ],
   "reproducibility": {
     "harness_git_commit": "f355777738b1994c15f26bf97dd5c1915e0cfc7d",
     "judge_model": "claude-sonnet-5",
     "judge_prompt_hash": "d8776a8dab8e5282659188600320708c636b0d42fa04ec49a1ddc85854b52ebb",
-    "judge_provenance_resolved": true,
+    "judge_provenance_resolved": false,
     "hardware_fingerprint": {
       "gpu_name": "NVIDIA GB10",
       "driver_version": "580.159.03",
