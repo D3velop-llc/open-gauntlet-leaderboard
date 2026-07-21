@@ -68,6 +68,20 @@
           pushy?), and the voice metrics separately track how often replies end with a question.
           It rewards <em>natural</em> engagement, not just frequent engagement.
         </p>
+        <p class="prose">
+          <strong>What the Brevity column is — and is not.</strong> It is a locally-measured
+          composite of three things: the share of replies falling in a 20–80 word window, the
+          share free of markdown, and type–token ratio. Measured against this corpus it tracks
+          reply <em>length</em> almost exactly — a correlation of <strong>−0.93</strong> between
+          a model's mean reply length and its Brevity score. That is largely mechanical: the
+          word-window term penalises long replies by construction, type–token ratio rises as
+          texts get shorter regardless of quality (r = −0.78 here), and the markdown term varies
+          by under 2.5 points across models, so it carries almost no signal. Read this column as
+          <em>“writes short, unadorned replies”</em> — not as a verdict on prose quality. A model
+          that writes long, descriptive prose will score low here by definition, and that is a
+          description of its register, not a defect. It was previously labelled “Voice”, which
+          invited exactly the wrong reading; the underlying measurement is unchanged.
+        </p>
       </div>
       <div id="methodology"><div class="state">Loading methodology…</div></div>
     </section>
@@ -83,7 +97,7 @@
         <a href="methodology.html">Methodology</a><span class="sep">·</span>
         <a href="compare.html">Compare</a>
       </nav>
-      <span class="foot-prov">pairwise 5e4fdc45 · rubric d8776a8d · <span data-generated-at>2026-07-21 00:34 UTC</span></span>
+      <span class="foot-prov">pairwise 5e4fdc45 · rubric d8776a8d · <span data-generated-at>2026-07-21 00:46 UTC</span></span>
     </div>
   </footer>
 

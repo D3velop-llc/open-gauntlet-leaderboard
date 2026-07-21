@@ -74,7 +74,6 @@ function heatText(rgb) {
 }
 
 /* ============================ LEADERBOARD ================================= */
-const ABILITY = new Set(["normalized_elo", "win_rate", "eq_score", "humanlike_score", "voice_composite"]);
 const COLS = [
   { key: "rank", label: "#", css: "txt", group: "configuration" },
   { key: "model", label: "Model", css: "txt", type: "text", group: "configuration" },
@@ -87,7 +86,16 @@ const COLS = [
     title: "Weighted Bradley-Terry paired comparisons behind this Elo — one per unordered opponent × scenario × criterion, with both A/B orderings averaged. Not distinct matches played (each conversation contributes ~9 per-criterion comparisons), and not the Win-rate denominator." },
   { key: "eq_score", label: "EQ", type: "num", heat: true, group: "judge verdicts" },
   { key: "humanlike_score", label: "Humanlike", type: "num", heat: true, group: "judge verdicts" },
-  { key: "voice_composite", label: "Voice", type: "num", heat: true, group: "measured locally" },
+  // Named "Brevity", not "Voice": measured on the live corpus, this composite correlates
+  // -0.93 (per-model) with mean reply length. Two of its three terms are length proxies
+  // (sweet-spot% penalises long replies; type-token ratio rises mechanically as texts
+  // shorten, r=-0.78) and the third (markdown-free%) varies 0.00-2.48 across models, i.e.
+  // contributes no signal. Calling it "Voice" invited reading a long-form model as having
+  // worse prose when the column only knows that it writes more.
+  { key: "voice_composite", label: "Brevity", type: "num", heat: true, group: "measured locally",
+    title: "Brevity/concision composite: % of replies in the 20-80 word window, % free of "
+         + "markdown, and type-token ratio. Strongly length-driven (r=-0.93 vs mean reply "
+         + "length across models) — read it as 'writes short', NOT as prose quality." },
   { key: "ttft_2k_ms", label: "TTFT 2k (ms)", type: "num", group: "measured locally" },
   { key: "tps_2k", label: "words/s 2k", type: "num", group: "measured locally" },
   { key: "judging_cost_usd", label: "Judge $", type: "num", group: "spend" },
@@ -734,7 +742,7 @@ async function initCompare() {
     headline.appendChild(cmpEloRow(ra, rb));
     headline.appendChild(cmpMetricRow("EQ composite", ra.eq_score, rb.eq_score, fmt.n1, true));
     headline.appendChild(cmpMetricRow("Humanlike", ra.humanlike_score, rb.humanlike_score, fmt.n1, true));
-    headline.appendChild(cmpMetricRow("Voice", ra.voice_composite, rb.voice_composite, fmt.n1, true));
+    headline.appendChild(cmpMetricRow("Brevity", ra.voice_composite, rb.voice_composite, fmt.n1, true));
     headline.appendChild(cmpMetricRow("TTFT 2k (ms, lower better)", ra.ttft_2k_ms, rb.ttft_2k_ms, fmt.n1, false));
     headline.appendChild(cmpMetricRow("words/s 2k", ra.tps_2k, rb.tps_2k, fmt.n1, true));
 
