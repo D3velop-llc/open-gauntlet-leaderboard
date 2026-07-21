@@ -155,7 +155,7 @@
     "conversational_flow",
     "boundary_quality"
   ],
-  "judge_model": "claude-sonnet-5",
+  "judge_model": "openai/gpt-5.4",
   "scoring_method": {
     "name": "Bradley-Terry (weighted, mean-anchored)",
     "summary": "The Elo ladder is a weighted Bradley-Terry fit, not an extrapolation from hand-picked reference models. For each unordered model pair, scenario, and criterion, the judge's signed margins from both A/B orderings are averaged into a net preference. The sign picks the winner and the absolute value is the observation's weight, so a decisive win counts more than a narrow one; an exact tie splits half-credit to each side. A pure-Python Bradley-Terry MM solver turns those weighted comparisons into one log-strength per model.",
@@ -169,44 +169,53 @@
   },
   "cross_judge_cost_caveat": "Judging cost (judging_cost_usd) is only comparable within a single judge model/generation. Different judge models use different tokenizers for the same transcript text (e.g. Claude Sonnet 5 counts roughly 30% more tokens than Sonnet 4.6), so cross-judge cost figures are NOT apples-to-apples.",
   "judge_calibration": {
-    "reference_judge": "claude-sonnet-5",
-    "reference_order_consistency": 0.7755,
+    "reference_judge": "openai/gpt-5.4",
+    "reference_order_consistency": 0.7862,
     "judges": [
       {
-        "candidate_judge": "openai/gpt-5.4",
+        "candidate_judge": "openai/gpt-5.6-luna",
         "n_matched_verdicts": 2682,
-        "raw_agreement": 0.8095,
-        "cohens_kappa": 0.6441,
-        "order_consistency": 0.789,
-        "mean_abs_margin_delta": 1.0063,
-        "length_pref_delta": -0.0145
+        "raw_agreement": 0.8486,
+        "cohens_kappa": 0.7024,
+        "order_consistency": 0.756,
+        "mean_abs_margin_delta": 0.8203,
+        "length_pref_delta": 0.0436
       },
       {
         "candidate_judge": "claude-sonnet-4-6",
         "n_matched_verdicts": 2664,
-        "raw_agreement": 0.8086,
-        "cohens_kappa": 0.6439,
+        "raw_agreement": 0.8375,
+        "cohens_kappa": 0.6808,
         "order_consistency": 0.7988,
-        "mean_abs_margin_delta": 0.7519,
-        "length_pref_delta": 0.028
+        "mean_abs_margin_delta": 0.7939,
+        "length_pref_delta": 0.039
+      },
+      {
+        "candidate_judge": "claude-sonnet-5",
+        "n_matched_verdicts": 8892,
+        "raw_agreement": 0.797,
+        "cohens_kappa": 0.6185,
+        "order_consistency": 0.7755,
+        "mean_abs_margin_delta": 1.0382,
+        "length_pref_delta": 0.0029
       },
       {
         "candidate_judge": "google/gemini-3.5-flash",
         "n_matched_verdicts": 2682,
-        "raw_agreement": 0.7871,
-        "cohens_kappa": 0.6155,
+        "raw_agreement": 0.7752,
+        "cohens_kappa": 0.5746,
         "order_consistency": 0.7207,
-        "mean_abs_margin_delta": 1.2397,
-        "length_pref_delta": 0.035
+        "mean_abs_margin_delta": 0.9459,
+        "length_pref_delta": 0.0457
       },
       {
         "candidate_judge": "deepseek/deepseek-chat",
         "n_matched_verdicts": 2682,
-        "raw_agreement": 0.6514,
-        "cohens_kappa": 0.4004,
+        "raw_agreement": 0.6383,
+        "cohens_kappa": 0.3575,
         "order_consistency": 0.6772,
-        "mean_abs_margin_delta": 1.0507,
-        "length_pref_delta": 0.1346
+        "mean_abs_margin_delta": 1.5011,
+        "length_pref_delta": 0.1454
       }
     ]
   }
