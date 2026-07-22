@@ -87,6 +87,21 @@ function vramLabel(row) {
   return gb == null ? "—" : `~${gb} GB`;
 }
 
+// Human-readable "how it's compressed · what runs it" sub-label. Never prints the raw "unknown"
+// quant (which reads as broken data): a safetensors model with no quant code is full precision,
+// and nvfp4/fp8 are recovered from the slug — same precision logic the VRAM estimate uses.
+function cfgLabel(row) {
+  const q = (row.quant || "").toString();
+  const s = (row.slug || "").toString().toLowerCase();
+  let prec;
+  if (q && q.toLowerCase() !== "unknown") prec = q;                 // GGUF quant code, keep it
+  else if (s.includes("nvfp4") || s.includes("-fp4")) prec = "NVFP4 (4-bit)";
+  else if (s.includes("fp8")) prec = "FP8 (8-bit)";
+  else prec = "full precision";
+  const engine = { vllm: "vLLM", sglang: "SGLang", "llama.cpp": "llama.cpp" }[row.backend] || row.backend;
+  return [prec, engine].filter(Boolean).join(" · ");
+}
+
 async function getJSON(path) {
   const r = await fetch(path);
   if (!r.ok) throw new Error(`${path} → ${r.status}`);
@@ -204,7 +219,7 @@ function renderLeaderboard(models) {
       const td = el("td", { class: "model" },
         el("a", { href: `${modelPage}?slug=${encodeURIComponent(row.slug)}`, text: row.display_name }),
         el("span", { class: "slug", text: row.slug }),
-        el("span", { class: "cfg", text: [row.quant, row.backend].filter(Boolean).join(" · ") || "—" }));
+        el("span", { class: "cfg", text: cfgLabel(row) }));
       // A model is provisional when its judging is incomplete — it still appears (hiding it
       // would be its own kind of dishonesty) but must never read as a finished measurement.
       if (row.ranked === false) {
@@ -434,15 +449,26 @@ function renderVerdictStrip(models) {
     yHi: pos(nz(m.elo_ci_high, m.normalized_elo)),
   }));
 
-  // declutter single-line labels in %-space: nudge apart to a minimum gap (sized for the
-  // shorter 300px mobile rail so it holds at every height), then shift down if they overflow.
-  // A leader line ties each nudged label back to its exact-position dot.
+  // declutter single-line labels in %-space: nudge apart to a minimum gap, then shift down if
+  // they overflow. A leader line ties each nudged label back to its exact-position dot.
+  // The gap is ADAPTIVE: with many models a fixed 6.5% needs more than the rail has, so the
+  // overflow shift used to push the bottom labels into the axis caption (they collided and
+  // garbled — "pantheon" over "designant"). Sizing the gap to fit all n labels in the usable
+  // band [BOT, TOP] guarantees no overflow, so nothing gets shoved off either end.
+  const TOP = 94, BOT = 4;                       // leave room for the axis captions above/below
   const MIN_GAP = 6.5;
   const sorted = [...items].sort((a, b) => a.yElo - b.yElo);
   let last = -Infinity;
   for (const it of sorted) { it.yLabel = Math.max(it.yElo, last + MIN_GAP); last = it.yLabel; }
-  const overflow = last - 94;
-  if (overflow > 0) for (const it of sorted) it.yLabel = Math.max(3, it.yLabel - overflow);
+  // If the labels can't all sit near their dots without overflowing the rail — which happens
+  // when a tight cluster (e.g. 6 models within a few Elo) needs more vertical room than exists,
+  // or simply with many models — a shift-and-clamp used to stack the bottom labels on top of
+  // each other (they garbled). Fall back to spreading ALL labels EVENLY; the leader line still
+  // ties each to its true position. This is collision-free for any number of models.
+  if (last > TOP) {
+    const gap = (TOP - BOT) / Math.max(1, sorted.length - 1);
+    sorted.forEach((it, i) => { it.yLabel = BOT + i * gap; });
+  }
 
   const plot = el("div", { class: "vs-plot" }, el("div", { class: "vs-rail" }));
   let ai = 0;                       // stagger index for the one orchestrated load moment
