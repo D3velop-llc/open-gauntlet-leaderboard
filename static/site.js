@@ -70,8 +70,11 @@ function gbPerB(row) {
   if (q.includes("fp8") || s.includes("fp8")) return 1.00;
   if (q.includes("q3") || q.includes("iq3")) return 0.48;
   if (q.includes("q2") || q.includes("iq2")) return 0.38;
-  // No quant code and a safetensors/vllm backend → the weights are full precision (bf16).
-  if ((q === "" || q === "unknown" || q == null) && (row.backend === "vllm")) return 2.0;
+  // No quant code and a container backend (vLLM or SGLang) → a safetensors model at full
+  // precision (bf16). Both serve the same uncompressed weights; keying only on "vllm" left
+  // every SGLang model without a memory estimate ("—").
+  if ((q === "" || q === "unknown" || q == null)
+      && (row.backend === "vllm" || row.backend === "sglang")) return 2.0;
   if (q.includes("fp16") || q.includes("bf16") || q.includes("f16")) return 2.0;
   return null;  // genuinely unknown — do not guess
 }
