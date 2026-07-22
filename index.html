@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>OpenGauntlet — the conversational-EQ leaderboard</title>
+  <title>OpenGauntlet — the best local AI for natural chat</title>
   
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="static/site.css">
@@ -29,54 +29,58 @@
   <div class="wrap">
     <section class="hero hero-split">
       <div class="hero-left">
-        <div class="eyebrow"><span class="tick">//</span> the gauntlet · conversational-EQ trial</div>
+        <div class="eyebrow"><span class="tick">//</span> free, open models you run yourself</div>
         <h1>Which local model feels the most <span class="warm">human</span>?</h1>
         <p class="lede">
-          Open-weight models you can host yourself run a gauntlet of emotionally-loaded
-          conversations, and a frontier model judges how human each one reads. Speed rides
-          along — warmth is the quantity on trial.
+          These are open models you can run on your own computer — for free — ranked on how
+          human and natural they sound in real chat. Each one goes through the same 25 emotional
+          conversations, and a top commercial AI grades how human every reply sounds. We measure
+          speed and size too, so you can see what runs on your machine.
         </p>
         <p class="judging-strip" data-judging-strip>
-          Scored by <span data-judge-model>openai/gpt-5.4</span> under a frozen prompt.
+          Graded by <span data-judge-model>gpt-5.4</span>, using the same instructions for every model.
         </p>
       </div>
       <div class="hero-right">
-        <div id="verdict-strip" class="verdict-strip"><div class="state">Loading the warmth axis…</div></div>
+        <div id="verdict-strip" class="verdict-strip"><div class="state">Loading…</div></div>
       </div>
     </section>
   </div>
 
   <div class="wrap wrap-wide">
+    <div id="pick-card"></div>
     <section class="block">
       <div class="section-head">
         <span class="idx">//</span>
-        <h2>The ladder</h2>
-        <span class="note">Click any column to sort. Each row is a <strong>serving configuration</strong> — a model at one quantization and backend.</span>
+        <h2>The leaderboard</h2>
+        <span class="note">Every model, sortable — click any column heading to sort by it.</span>
       </div>
+      <div id="tie-banner"></div>
       <details class="disclose">
-        <summary><span class="caret">▸</span> Why each row is a serving configuration</summary>
-        <div class="d-body">The same model at a different quantization or backend is a distinct entry, because quantization changes how a model behaves. Each row links to that configuration's full trial record.</div>
+        <summary><span class="caret">▸</span> Why some rows are the same model twice</summary>
+        <div class="d-body">Each row is one way of running a model. The same model compressed differently, or run with different software, is a separate row because it behaves differently. Each row links to its full record.</div>
       </details>
       <div class="legend">
-        <span>cooler</span>
+        <span>less human</span>
         <span class="ramp" aria-hidden="true"></span>
-        <span>warmer / more human</span>
-        <span>— ability cells are a thermal readout, normalized per column</span>
+        <span>more human</span>
+        <span>— color ranks each model <em>within its own column</em>; don't compare colors across different columns.</span>
       </div>
-      <div id="leaderboard"><div class="state">Loading leaderboard…</div></div>
+      <div id="leaderboard"><div class="state">Loading…</div></div>
     </section>
   </div>
 
 
   <footer class="foot">
     <div class="wrap">
-      <span class="foot-brand">// openGAUNTLET — a trial of conversational realism for locally-hosted open-weight models.</span>
+      <span class="foot-brand">OpenGauntlet — a test of how human self-hosted open models sound in chat.</span>
       <nav class="foot-nav">
         <a href="index.html">Leaderboard</a><span class="sep">·</span>
-        <a href="methodology.html">Methodology</a><span class="sep">·</span>
+        <a href="methodology.html">How it works</a><span class="sep">·</span>
         <a href="compare.html">Compare</a>
       </nav>
-      <span class="foot-prov">pairwise 5e4fdc45 · rubric d8776a8d · <span data-generated-at>2026-07-21 17:23 UTC</span></span>
+      
+      <span class="foot-prov">Updated <span data-generated-at>2026-07-22 12:47 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
     </div>
   </footer>
 

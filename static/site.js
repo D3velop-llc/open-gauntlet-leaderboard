@@ -39,13 +39,53 @@ const fmt = {
     if (row.elo_ci_low == null || row.elo_ci_high == null) return String(base);
     return `${base} (${Math.round(Number(row.elo_ci_low))}–${Math.round(Number(row.elo_ci_high))})`;
   },
-  params: (row) => {
+  score100: (v) => (v == null ? "—" : Math.round(Number(v)) + " /100"),
+  secs: (v) => (v == null ? "—" : (Number(v) / 1000).toFixed(1) + "s"),  // ms → "1.6s"
+  wps: (v) => (v == null ? "—" : Math.round(Number(v)) + "/s"),
+  size: (row) => {
     if (row.params_total_b == null) return "—";
     const t = row.params_total_b;
-    if (row.params_active_b != null && row.params_active_b !== t) return `${t}B / ${row.params_active_b}B`;
+    // MoE: "26B (uses 4B/reply)" — the active count explains SPEED, not memory (all weights
+    // sit in VRAM), so it is phrased so a reader never mistakes it for a smaller footprint.
+    if (row.params_active_b != null && row.params_active_b !== t) return `${t}B (uses ${row.params_active_b}B/reply)`;
     return `${t}B`;
   },
 };
+
+/* ---- honest "can I run it?" estimate --------------------------------------
+   The single most-asked question from a non-technical reader. VRAM is estimated from the
+   model's REAL precision, never a guess: GGUF quant codes and slug hints (nvfp4/fp8) give
+   bits-per-weight; a safetensors model with no quant is genuinely full precision (bf16).
+   MoE uses TOTAL params — every expert's weights occupy memory even if only some run per
+   token. Returns null when precision truly can't be determined, so the cell shows "—"
+   rather than a fabricated number (the failure mode a review flagged: labelling a 4-bit
+   model "full precision" and telling a user they need an 80GB card for a 26GB model). */
+function gbPerB(row) {
+  const q = (row.quant || "").toString().toLowerCase();
+  const s = (row.slug || "").toString().toLowerCase();
+  if (q.includes("q4") || s.includes("nvfp4") || s.includes("-fp4") || q.includes("nvfp4")) return 0.60;
+  if (q.includes("q5")) return 0.70;
+  if (q.includes("q6")) return 0.82;
+  if (q.includes("q8")) return 1.06;
+  if (q.includes("fp8") || s.includes("fp8")) return 1.00;
+  if (q.includes("q3") || q.includes("iq3")) return 0.48;
+  if (q.includes("q2") || q.includes("iq2")) return 0.38;
+  // No quant code and a safetensors/vllm backend → the weights are full precision (bf16).
+  if ((q === "" || q === "unknown" || q == null) && (row.backend === "vllm")) return 2.0;
+  if (q.includes("fp16") || q.includes("bf16") || q.includes("f16")) return 2.0;
+  return null;  // genuinely unknown — do not guess
+}
+function vramGB(row) {
+  const per = gbPerB(row);
+  if (per == null || row.params_total_b == null) return null;
+  const raw = row.params_total_b * per * 1.15 + 1.5;   // +15% runtime, +~1.5GB KV cache
+  const tiers = [8, 12, 16, 24, 32, 48, 64, 80, 96, 128];
+  return tiers.find((t) => t >= raw) || Math.ceil(raw / 16) * 16;
+}
+function vramLabel(row) {
+  const gb = vramGB(row);
+  return gb == null ? "—" : `~${gb} GB`;
+}
 
 async function getJSON(path) {
   const r = await fetch(path);
@@ -74,40 +114,50 @@ function heatText(rgb) {
 }
 
 /* ============================ LEADERBOARD ================================= */
+// Plain-language columns for a non-technical reader. Everything is scannable without a glossary;
+// the deeper stats (paired-comparison counts, judging cost, quant codes, the Bradley-Terry math)
+// live on the Methodology and per-model pages, not here. Order answers, left to right: which
+// model, how big, can I run it, how human, then the two speed numbers.
 const COLS = [
-  { key: "rank", label: "#", css: "txt", group: "configuration" },
-  { key: "model", label: "Model", css: "txt", type: "text", group: "configuration" },
-  { key: "params", label: "Params", type: "text", group: "configuration" },
-  { key: "quant", label: "Quant", type: "text", group: "configuration" },
-  { key: "backend", label: "Backend", type: "text", group: "configuration" },
-  { key: "normalized_elo", label: "Elo (95% CI)", type: "num", heat: true, group: "judge verdicts" },
-  { key: "win_rate", label: "Win rate", type: "num", heat: true, group: "judge verdicts" },
-  { key: "n_comparisons", label: "Comparisons", type: "num",
-    title: "Weighted Bradley-Terry paired comparisons behind this Elo — one per unordered opponent × scenario × criterion, with both A/B orderings averaged. Not distinct matches played (each conversation contributes ~9 per-criterion comparisons), and not the Win-rate denominator." },
-  { key: "eq_score", label: "EQ", type: "num", heat: true, group: "judge verdicts" },
-  { key: "humanlike_score", label: "Humanlike", type: "num", heat: true, group: "judge verdicts" },
-  // Named "Brevity", not "Voice": measured on the live corpus, this composite correlates
-  // -0.93 (per-model) with mean reply length. Two of its three terms are length proxies
-  // (sweet-spot% penalises long replies; type-token ratio rises mechanically as texts
-  // shorten, r=-0.78) and the third (markdown-free%) varies 0.00-2.48 across models, i.e.
-  // contributes no signal. Calling it "Voice" invited reading a long-form model as having
-  // worse prose when the column only knows that it writes more.
-  { key: "voice_composite", label: "Brevity", type: "num", heat: true, group: "measured locally",
-    title: "Brevity/concision composite: % of replies in the 20-80 word window, % free of "
-         + "markdown, and type-token ratio. Strongly length-driven (r=-0.93 vs mean reply "
-         + "length across models) — read it as 'writes short', NOT as prose quality." },
-  { key: "ttft_2k_ms", label: "TTFT 2k (ms)", type: "num", group: "measured locally" },
-  { key: "tps_2k", label: "words/s 2k", type: "num", group: "measured locally" },
-  { key: "judging_cost_usd", label: "Judge $", type: "num", group: "spend" },
+  { key: "rank", label: "#", css: "txt", group: "" },
+  { key: "model", label: "Model", css: "txt", type: "text", group: "" },
+  { key: "size", label: "Size", type: "text", group: "",
+    title: "How big the model is, in billions of parameters. Smaller is easier to run. "
+         + "'26B (uses 4B/reply)' means it's a big model that only activates part of itself "
+         + "each reply — that makes it faster, but it still needs the full size in memory." },
+  { key: "vram", label: "Runs on", type: "text", group: "",
+    title: "Rough graphics-card memory (VRAM) needed to run it. Under ~12 GB fits most gaming "
+         + "GPUs; 24 GB needs a high-end card; 48 GB+ is server-class. Estimated from the "
+         + "model's compression — treat as a ballpark. '—' = couldn't estimate." },
+  { key: "normalized_elo", label: "Human score", type: "num", heat: true, group: "How it scored",
+    title: "How human the model sounds, as a chess-style rating — higher is better, no maximum. "
+         + "The range in parentheses is our margin of error: if two models' ranges overlap, "
+         + "treat them as tied." },
+  { key: "win_rate", label: "Win rate", type: "num", heat: true, group: "How it scored",
+    title: "How often the judge picked this model over another one in a head-to-head chat." },
+  { key: "eq_score", label: "Emotional IQ", type: "num", heat: true, group: "How it scored",
+    title: "Does it read the emotion and respond with real empathy? Judge's rating out of 100." },
+  { key: "humanlike_score", label: "Humanlike", type: "num", heat: true, group: "How it scored",
+    title: "Does it sound like a person instead of a corporate bot? Judge's rating out of 100." },
+  // Reply length is STYLE, not quality — deliberately no heat coloring and never part of the
+  // ranking. (The underlying composite correlates -0.93 with mean reply length, so coloring it
+  // would wrongly paint a long-form model as "worse".) For a companion/roleplay app a reader
+  // may WANT longer replies, so it's presented neutrally.
+  { key: "voice_composite", label: "Reply length", type: "num", group: "How it scored",
+    title: "Higher = shorter, punchier replies. This is STYLE, not quality, and is NOT part of "
+         + "the ranking — for a companion or roleplay app you may prefer longer replies." },
+  { key: "ttft_2k_ms", label: "Wait for 1st word", type: "num", group: "Speed",
+    title: "How long before it starts replying to a long (~2,000-word) prompt. Lower is better. "
+         + "'—' = not speed-tested yet." },
+  { key: "tps_2k", label: "Speed", type: "num", group: "Speed",
+    title: "How fast it writes once it starts, in words per second. Higher is faster. "
+         + "'—' = not speed-tested yet." },
 ];
-// n_comparisons keeps its group via position — patch it explicitly for clarity
-for (const c of COLS) if (c.key === "n_comparisons") c.group = "judge verdicts";
 // mark group starts once so header AND body cells can draw the boundary rule
 for (let i = 1; i < COLS.length; i++) COLS[i].gstart = COLS[i].group !== COLS[i - 1].group;
 const GROUP_TITLES = {
-  "judge verdicts": "Scored by the reference judge (see the judging note above)",
-  "measured locally": "Deterministic local measurement — no judge involved",
-  "spend": "LLM-judging spend for this model under the displayed generation",
+  "How it scored": "How a top commercial AI (GPT-5.4) graded each model — same test for all.",
+  "Speed": "Measured on this machine — no AI judge involved.",
 };
 
 // Heat ranges are computed from RANKED models only. A provisional model's score comes from a
@@ -171,17 +221,16 @@ function renderLeaderboard(models) {
       }
       return td;
     }
-    if (c.key === "params") return el("td", { class: "dim" }, fmt.params(row));
-    if (c.key === "quant") return el("td", {}, row.quant ? el("span", { class: "chip", text: row.quant }) : "—");
-    if (c.key === "backend") return el("td", { class: "dim" }, row.backend || "—");
+    if (c.key === "size") return el("td", { class: "dim" }, fmt.size(row));
+    if (c.key === "vram") return el("td", { class: "dim" }, vramLabel(row));
 
     const v = row[c.key];
     let disp;
-    if (c.key === "ttft_2k_ms") disp = fmt.n1(v);
-    else if (c.key === "judging_cost_usd") disp = fmt.usd(v);
+    if (c.key === "ttft_2k_ms") disp = fmt.secs(v);
+    else if (c.key === "tps_2k") disp = fmt.wps(v);
     else if (c.key === "normalized_elo") disp = fmt.eloCI(row);
     else if (c.key === "win_rate") disp = fmt.pct(v);
-    else if (c.key === "n_comparisons") disp = fmt.int(v);   // comparison count: n=0 reads as unranked
+    else if (c.key === "eq_score" || c.key === "humanlike_score") disp = fmt.score100(v);
     else disp = fmt.n1(v);
 
     const td = el("td", {}, disp);
@@ -197,7 +246,7 @@ function renderLeaderboard(models) {
         td.style.background = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.72)`;
         td.style.color = heatText(rgb);
       }
-    } else if (c.key === "judging_cost_usd") td.className = "dim";
+    }
     return td;
   }
 
@@ -226,7 +275,8 @@ function renderLeaderboard(models) {
       if ((a.ranked === false) !== (b.ranked === false)) return a.ranked === false ? 1 : -1;
       let x = a[sortKey], y = b[sortKey];
       if (sortKey === "model") { x = a.display_name; y = b.display_name; }
-      if (sortKey === "params") { x = a.params_total_b; y = b.params_total_b; }
+      if (sortKey === "size") { x = a.params_total_b; y = b.params_total_b; }
+      if (sortKey === "vram") { x = vramGB(a); y = vramGB(b); }
       const xn = x == null, yn = y == null;
       if (xn && yn) return 0;
       if (xn) return 1;                    // nulls sink to the bottom
@@ -247,7 +297,7 @@ function renderLeaderboard(models) {
     if (key === "rank") return;
     th.addEventListener("click", () => {
       if (sortKey === key) sortDir *= -1;
-      else { sortKey = key; sortDir = (key === "model" || key === "ttft_2k_ms" || key === "judging_cost_usd") ? 1 : -1; }
+      else { sortKey = key; sortDir = (key === "model" || key === "ttft_2k_ms" || key === "size" || key === "vram") ? 1 : -1; }
       applySort();
     });
   });
@@ -257,20 +307,86 @@ function renderLeaderboard(models) {
   return el("div", { class: "table-scroll row-in" }, table);
 }
 
+/* ---- "which should I pick?" — honest guidance, no fabricated superlatives ----
+   The reviewers' #1 ask was a plain recommendation. But the top models are a statistical tie
+   and most have no speed data, so naming a single "fastest"/"easiest" winner would be a
+   fabricated superlative (a review caught the synthesis crowning the SLOWEST model as fastest,
+   off one measured straggler). So we state the tie honestly and hand the reader the ONE
+   dimension we can compute reliably for the whole tier — memory footprint — plus how to read
+   the table. `topTier` = every ranked model whose score range overlaps the leader's. */
+function topTier(models) {
+  const ranked = (models || []).filter((m) => m.ranked !== false && m.normalized_elo != null);
+  if (!ranked.length) return [];
+  const leader = ranked.reduce((a, b) => (b.normalized_elo > a.normalized_elo ? b : a));
+  const floor = leader.elo_ci_low != null ? leader.elo_ci_low : leader.normalized_elo;
+  return ranked.filter((m) => (m.elo_ci_high != null ? m.elo_ci_high : m.normalized_elo) >= floor)
+               .sort((a, b) => b.normalized_elo - a.normalized_elo);
+}
+function renderPickCard(models) {
+  const mount = document.getElementById("pick-card");
+  if (!mount) return;
+  const tier = topTier(models);
+  if (tier.length < 2) { mount.remove(); return; }
+  // The only dimension computable for the whole tier: memory footprint. Speed is missing for
+  // most, so we do NOT name a "fastest" — we say so plainly instead.
+  const withVram = tier.filter((m) => vramGB(m) != null);
+  const lightest = withVram.length ? withVram.reduce((a, b) => (vramGB(b) < vramGB(a) ? b : a)) : null;
+  const modelPage = (window.OG && window.OG.modelPage) || "model.html";
+  const link = (m) => el("a", { href: `${modelPage}?slug=${encodeURIComponent(m.slug)}`, text: m.display_name });
+
+  const kids = [
+    el("h2", { class: "pick-h", text: "Which should I pick?" }),
+    el("p", { class: "pick-lead" },
+      `The top ${tier.length} models all score about the same — the test can't tell them apart, `
+      + `so any of them is a safe pick. Choose by what fits your computer:`),
+  ];
+  const ul = el("ul", { class: "pick-list" });
+  if (lightest) {
+    ul.appendChild(el("li", {},
+      el("strong", { text: "Lightest to run: " }), link(lightest),
+      document.createTextNode(` — needs the least memory (${vramLabel(lightest)}) of the top group.`)));
+  }
+  ul.appendChild(el("li", {},
+    el("strong", { text: "Want the top score: " }), link(tier[0]),
+    document.createTextNode(" — but it's barely ahead, so don't overthink it.")));
+  ul.appendChild(el("li", { class: "pick-note" },
+    "Speed isn't measured for every top model yet — check the “Speed” columns and pick one "
+    + "that's been tested if that matters to you. All of these are open-weight and free to run yourself."));
+  kids.push(ul);
+  mount.replaceChildren(el("div", { class: "pick" }, ...kids));
+}
+function renderTieBanner(models) {
+  const mount = document.getElementById("tie-banner");
+  if (!mount) return;
+  const tier = topTier(models);
+  if (tier.length < 2) { mount.remove(); return; }
+  // Honest wording: state that the top group can't be separated, WITHOUT drawing a hard line
+  // that implies the next model down is definitively worse (its range often overlaps too — the
+  // whole ladder is a gradient). The CI whiskers on the verdict rail carry the visual nuance.
+  mount.replaceChildren(el("p", { class: "tie-note" },
+    el("strong", { text: `The top ${tier.length} are a tie, not a ranking. ` }),
+    `Their scores are close enough that we can't say any one is really better — treat #1 through `
+    + `#${tier.length} as equally good and choose on size and speed. Models just below them are `
+    + `often close too, so read the whole board as a gradient, not exact places.`));
+}
+
 /* ---- judging story: a human sentence, not a hash badge ------------------ */
 function renderJudgingStrip(judgeModel, summary) {
   const strip = document.querySelector("[data-judging-strip]");
   if (!strip) return;
+  // Show a clean model name (drop the "openai/" provider prefix) and say what "same prompt for
+  // everyone" means in plain words instead of "frozen prompt".
+  const cleanName = (judgeModel || "—").replace(/^[a-z0-9_-]+\//i, "");
   strip.replaceChildren(
-    document.createTextNode("Scored by "),
-    el("span", { "data-judge-model": "", text: judgeModel || "—" }),
-    document.createTextNode(" under a frozen prompt"));
+    document.createTextNode("Graded by "),
+    el("span", { "data-judge-model": "", text: cleanName }),
+    document.createTextNode(", using the exact same instructions for every model"));
   if (summary && summary.n_judges) {
     const pct = Math.round(Number(summary.max_agreement) * 100);
     strip.append(
-      document.createTextNode(" · cross-checked by a "),
-      el("a", { href: "methodology.html#judge-cross-check", text: `${summary.n_judges}-judge panel` }),
-      document.createTextNode(` (up to ${pct}% agreement).`));
+      document.createTextNode(" · double-checked by a "),
+      el("a", { href: "methodology.html#judge-cross-check", text: `panel of ${summary.n_judges} AIs` }),
+      document.createTextNode(` that agreed up to ${pct}% of the time.`));
   } else {
     strip.append(document.createTextNode("."));
   }
@@ -343,10 +459,10 @@ function renderVerdictStrip(models) {
   }
 
   mount.replaceChildren(
-    el("div", { class: "vs-title" }, el("span", { class: "tick", text: "// " }), "normalized Elo · warmth axis"),
-    el("div", { class: "vs-axis top" }, el("span", { text: "warmer" }), el("span", { class: "val", text: "≈ " + Math.round(dmax) })),
+    el("div", { class: "vs-title" }, el("span", { class: "tick", text: "// " }), "How human each model sounds"),
+    el("div", { class: "vs-axis top" }, el("span", { text: "more human" }), el("span", { class: "val", text: "≈ " + Math.round(dmax) })),
     plot,
-    el("div", { class: "vs-axis bottom" }, el("span", { text: "cooler" }), el("span", { class: "val", text: "≈ " + Math.round(dmin) })));
+    el("div", { class: "vs-axis bottom" }, el("span", { text: "less human" }), el("span", { class: "val", text: "≈ " + Math.round(dmin) })));
 }
 
 async function initLeaderboard() {
@@ -359,6 +475,8 @@ async function initLeaderboard() {
     renderJudgingStrip(jg.model, data.judge_calibration_summary);
     if (!data.models || !data.models.length) { renderVerdictStrip([]); fail(mount, "No models have completed a run yet."); return; }
     renderVerdictStrip(data.models);
+    renderPickCard(data.models);
+    renderTieBanner(data.models);
     mount.replaceChildren(renderLeaderboard(data.models));
   } catch (e) { fail(mount, "Could not load leaderboard.json — " + e.message); }
 }

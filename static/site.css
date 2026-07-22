@@ -184,6 +184,40 @@ a:hover { color: var(--ember-bright); }
   background: linear-gradient(90deg, var(--cold), #7a5a3c 55%, var(--ember));
 }
 
+/* ====================== "WHICH SHOULD I PICK?" CARD ===================== */
+/* The first thing a non-technical reader needs: a plain recommendation. Prominent, warm-accented
+   card above the table. Honest — leads with the tie, guides by memory footprint, no fake winner. */
+.pick {
+  background: var(--surface);
+  border: 1px solid var(--border-2);
+  border-left: 3px solid var(--ember);
+  border-radius: var(--radius);
+  padding: 20px 24px; margin: 0 0 28px;
+}
+.pick-h {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 22px; margin: 0 0 8px; color: var(--ink);
+}
+.pick-lead { color: var(--ink-dim); margin: 0 0 14px; font-size: 15px; line-height: 1.5; }
+.pick-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.pick-list li { color: var(--ink-dim); font-size: 15px; line-height: 1.5; padding-left: 18px; position: relative; }
+.pick-list li::before { content: "→"; position: absolute; left: 0; color: var(--ember); }
+.pick-list li strong { color: var(--ink); }
+.pick-list li a { color: var(--ember); text-decoration: none; border-bottom: 1px solid rgba(245,163,75,0.4); }
+.pick-list li a:hover { border-bottom-color: var(--ember); }
+.pick-list li.pick-note { padding-left: 18px; font-size: 13px; color: var(--muted); }
+.pick-list li.pick-note::before { content: "·"; }
+
+/* Tie banner: states the top group is indistinguishable, without a hard visual cliff. */
+.tie-note {
+  background: rgba(245, 163, 75, 0.07);
+  border: 1px solid rgba(245, 163, 75, 0.22);
+  border-radius: var(--radius);
+  padding: 12px 16px; margin: 0 0 16px;
+  color: var(--ink-dim); font-size: 14px; line-height: 1.5;
+}
+.tie-note strong { color: var(--ember-bright); }
+
 /* ====================== WARMTH VERDICT STRIP ============================= */
 /* The signature element: a vertical thermal rail plotting each model on the
    normalized-Elo axis. Built entirely from leaderboard.json in site.js. */

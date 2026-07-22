@@ -170,7 +170,7 @@
   "cross_judge_cost_caveat": "Judging cost (judging_cost_usd) is only comparable within a single judge model/generation. Different judge models use different tokenizers for the same transcript text (e.g. Claude Sonnet 5 counts roughly 30% more tokens than Sonnet 4.6), so cross-judge cost figures are NOT apples-to-apples.",
   "judge_calibration": {
     "reference_judge": "openai/gpt-5.4",
-    "reference_order_consistency": 0.7736,
+    "reference_order_consistency": 0.7717,
     "judges": [
       {
         "candidate_judge": "openai/gpt-5.6-luna",
