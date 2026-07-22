@@ -115,7 +115,23 @@
       "notes": "first run hashes the GGUF (file_sha256: auto); pin a literal to skip"
     }
   },
-  "perf_curve": [],
+  "perf_curve": [
+    {
+      "prompt_tokens": 512,
+      "ttft_ms_median": 761.532,
+      "decode_tps_median": 10.666
+    },
+    {
+      "prompt_tokens": 2048,
+      "ttft_ms_median": 2705.1079,
+      "decode_tps_median": 10.6017
+    },
+    {
+      "prompt_tokens": 8192,
+      "ttft_ms_median": 10707.5823,
+      "decode_tps_median": 10.2362
+    }
+  ],
   "voice": {
     "composite": null,
     "per_transcript": []

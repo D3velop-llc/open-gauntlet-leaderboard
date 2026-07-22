@@ -4,7 +4,7 @@
     "pairwise_prompt_hash": "5e4fdc45",
     "rubric_prompt_hash": "d8776a8d"
   },
-  "generated_at": "2026-07-22T12:47:39.229529+00:00",
+  "generated_at": "2026-07-22T15:22:48.065587+00:00",
   "models": [
     {
       "slug": "cydonia-24b-v4-3",
@@ -77,8 +77,8 @@
       "rubric_coverage": 1.0,
       "run_status": "judged",
       "ranked": true,
-      "ttft_2k_ms": null,
-      "tps_2k": null,
+      "ttft_2k_ms": 2669.0121,
+      "tps_2k": 9.91,
       "judging_cost_usd": 3.042687
     },
     {
@@ -102,8 +102,8 @@
       "rubric_coverage": 1.0,
       "run_status": "judged",
       "ranked": true,
-      "ttft_2k_ms": null,
-      "tps_2k": null,
+      "ttft_2k_ms": 271.171,
+      "tps_2k": 7.2327,
       "judging_cost_usd": 2.625093
     },
     {
@@ -127,8 +127,8 @@
       "rubric_coverage": 1.0,
       "run_status": "judged",
       "ranked": true,
-      "ttft_2k_ms": null,
-      "tps_2k": null,
+      "ttft_2k_ms": 149.5779,
+      "tps_2k": 21.5782,
       "judging_cost_usd": 2.768933
     },
     {
@@ -152,8 +152,8 @@
       "rubric_coverage": 1.0,
       "run_status": "judged",
       "ranked": true,
-      "ttft_2k_ms": null,
-      "tps_2k": null,
+      "ttft_2k_ms": 2726.9707,
+      "tps_2k": 9.5974,
       "judging_cost_usd": 3.02193
     },
     {
@@ -202,8 +202,8 @@
       "rubric_coverage": 1.0,
       "run_status": "judged",
       "ranked": true,
-      "ttft_2k_ms": null,
-      "tps_2k": null,
+      "ttft_2k_ms": 2705.1079,
+      "tps_2k": 10.6017,
       "judging_cost_usd": 3.207448
     },
     {
@@ -227,8 +227,8 @@
       "rubric_coverage": 1.0,
       "run_status": "judged",
       "ranked": true,
-      "ttft_2k_ms": null,
-      "tps_2k": null,
+      "ttft_2k_ms": 381.9352,
+      "tps_2k": 32.7167,
       "judging_cost_usd": 2.757135
     },
     {
@@ -327,8 +327,8 @@
       "rubric_coverage": 1.0,
       "run_status": "judged",
       "ranked": true,
-      "ttft_2k_ms": null,
-      "tps_2k": null,
+      "ttft_2k_ms": 570.6029,
+      "tps_2k": 28.0481,
       "judging_cost_usd": 2.763758
     },
     {

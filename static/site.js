@@ -327,10 +327,13 @@ function renderPickCard(models) {
   if (!mount) return;
   const tier = topTier(models);
   if (tier.length < 2) { mount.remove(); return; }
-  // The only dimension computable for the whole tier: memory footprint. Speed is missing for
-  // most, so we do NOT name a "fastest" — we say so plainly instead.
   const withVram = tier.filter((m) => vramGB(m) != null);
   const lightest = withVram.length ? withVram.reduce((a, b) => (vramGB(b) < vramGB(a) ? b : a)) : null;
+  // Name a "fastest" pick ONLY when EVERY tier member has been speed-tested — otherwise one
+  // measured straggler could win the superlative by default (a review caught exactly that).
+  const withSpeed = tier.filter((m) => m.tps_2k != null);
+  const fastest = withSpeed.length === tier.length
+    ? withSpeed.reduce((a, b) => (b.tps_2k > a.tps_2k ? b : a)) : null;
   const modelPage = (window.OG && window.OG.modelPage) || "model.html";
   const link = (m) => el("a", { href: `${modelPage}?slug=${encodeURIComponent(m.slug)}`, text: m.display_name });
 
@@ -346,12 +349,18 @@ function renderPickCard(models) {
       el("strong", { text: "Lightest to run: " }), link(lightest),
       document.createTextNode(` — needs the least memory (${vramLabel(lightest)}) of the top group.`)));
   }
+  if (fastest) {
+    ul.appendChild(el("li", {},
+      el("strong", { text: "Fastest: " }), link(fastest),
+      document.createTextNode(` — writes about ${Math.round(fastest.tps_2k)} words/second, quickest of the top group.`)));
+  }
   ul.appendChild(el("li", {},
     el("strong", { text: "Want the top score: " }), link(tier[0]),
     document.createTextNode(" — but it's barely ahead, so don't overthink it.")));
   ul.appendChild(el("li", { class: "pick-note" },
-    "Speed isn't measured for every top model yet — check the “Speed” columns and pick one "
-    + "that's been tested if that matters to you. All of these are open-weight and free to run yourself."));
+    fastest ? "All of these are open-weight and free to run yourself."
+            : "Speed isn't measured for every top model yet — check the “Speed” columns if that "
+              + "matters. All of these are open-weight and free to run yourself."));
   kids.push(ul);
   mount.replaceChildren(el("div", { class: "pick" }, ...kids));
 }

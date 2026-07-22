@@ -116,7 +116,23 @@
       "notes": "set launch_cmd to your vLLM/docker serve command before running"
     }
   },
-  "perf_curve": [],
+  "perf_curve": [
+    {
+      "prompt_tokens": 512,
+      "ttft_ms_median": 240.8543,
+      "decode_tps_median": 28.0586
+    },
+    {
+      "prompt_tokens": 2048,
+      "ttft_ms_median": 570.6029,
+      "decode_tps_median": 28.0481
+    },
+    {
+      "prompt_tokens": 8192,
+      "ttft_ms_median": 1869.5249,
+      "decode_tps_median": 26.4403
+    }
+  ],
   "voice": {
     "composite": null,
     "per_transcript": []
