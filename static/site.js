@@ -136,6 +136,23 @@ function heatText(rgb) {
 // the deeper stats (paired-comparison counts, judging cost, quant codes, the Bradley-Terry math)
 // live on the Methodology and per-model pages, not here. Order answers, left to right: which
 // model, how big, can I run it, how human, then the two speed numbers.
+
+/* Single source of truth: internal rubric key → human label, family group, and tooltip.
+   The data layer keys everything by `key`; the UI shows `label`/`family`. A test asserts
+   these keys exactly match RUBRIC_CRITERIA so the two can never drift. Order matches
+   RUBRIC_CRITERIA. */
+const CRITERIA = [
+  { key: "demonstrated_empathy",  label: "Empathy",            family: "Emotional IQ",     tip: "Does it truly get how you feel?" },
+  { key: "emotional_reasoning",   label: "Emotional insight",  family: "Emotional IQ",     tip: "Does it read the situation right?" },
+  { key: "humanlike_naturalness", label: "Sounds human",       family: "Conversation",     tip: "Like a person, not a bot" },
+  { key: "conversational_flow",   label: "Conversation flow",  family: "Conversation",     tip: "Natural back-and-forth" },
+  { key: "persona_consistency",   label: "Stays in character", family: "Memory & persona", tip: "Consistent personality" },
+  { key: "memory_integration",    label: "Remembers",          family: "Memory & persona", tip: "Recalls what you said earlier" },
+  { key: "boundary_quality",      label: "Handles boundaries", family: "Boundaries",       tip: "Navigates hard/unsafe asks well" },
+  { key: "assistant_smell",       label: "Not robotic",        family: "Conversation",     tip: "Avoids 'As an AI…' corporate tone" },
+  { key: "slop_index",            label: "Fresh writing",      family: "Conversation",     tip: "Avoids clichés and filler" },
+];
+
 const COLS = [
   { key: "rank", label: "#", css: "txt", group: "" },
   { key: "model", label: "Model", css: "txt", type: "text", group: "" },
@@ -188,18 +205,41 @@ function columnRange(models, key) {
   return { min: Math.min(...vals), max: Math.max(...vals) };
 }
 
-function renderLeaderboard(models) {
+// Heat range over an arbitrary accessor (the synthetic criterion column reads row.criteria[key]).
+function columnRangeBy(models, get) {
+  const pool = models.filter((m) => m.ranked !== false);
+  const vals = (pool.length ? pool : models).map(get).filter((v) => v != null).map(Number);
+  if (!vals.length) return null;
+  return { min: Math.min(...vals), max: Math.max(...vals) };
+}
+
+function renderLeaderboard(models, rankKey = null) {
+  const crit = rankKey ? CRITERIA.find((c) => c.key === rankKey) : null;
+  // In criterion mode: replace the "Human score" (Elo) column with a column showing this
+  // criterion's 0-100 score, and drop the head-to-head Win-rate column. Everything else
+  // (Size, Runs on, Emotional IQ, Humanlike, speed) stays. `criterion` is a synthetic column.
+  const cols = !crit ? COLS : COLS
+    .filter((c) => c.key !== "win_rate")
+    .map((c) => c.key === "normalized_elo"
+      ? { key: "criterion", label: crit.label, type: "num", heat: true,
+          group: "How it scored", title: crit.tip, gstart: c.gstart }
+      : c);
+
   const ranges = {};
-  for (const c of COLS) if (c.heat) ranges[c.key] = columnRange(models, c.key);
+  for (const c of cols) if (c.heat) {
+    ranges[c.key] = c.key === "criterion"
+      ? columnRangeBy(models, (m) => (m.criteria ? m.criteria[rankKey] : null))
+      : columnRange(models, c.key);
+  }
 
   const modelPage = (window.OG && window.OG.modelPage) || "model.html";
   const thead = el("thead");
   // provenance group row: which columns the judge scored vs measured locally
   const gtr = el("tr", { class: "grp" });
-  for (let i = 0; i < COLS.length; ) {
+  for (let i = 0; i < cols.length; ) {
     let j = i;
-    while (j < COLS.length && COLS[j].group === COLS[i].group) j++;
-    const g = COLS[i].group;
+    while (j < cols.length && cols[j].group === cols[i].group) j++;
+    const g = cols[i].group;
     const th = el("th", { title: GROUP_TITLES[g] || "", class: (i > 0 ? "gstart" : "") + (g === "judge verdicts" ? " judged" : "") },
       g === "configuration" ? "" : g);
     th.colSpan = j - i;
@@ -208,7 +248,7 @@ function renderLeaderboard(models) {
   }
   thead.appendChild(gtr);
   const htr = el("tr");
-  for (const c of COLS) {
+  for (const c of cols) {
     const th = el("th", { class: (c.css === "txt" ? "txt" : "") + (c.gstart ? " gstart" : ""), "data-key": c.key, title: c.title },
       c.label, el("span", { class: "arrow", text: "" }));
     htr.appendChild(th);
@@ -242,6 +282,20 @@ function renderLeaderboard(models) {
     if (c.key === "size") return el("td", { class: "dim" }, fmt.size(row));
     if (c.key === "vram") return el("td", { class: "dim" }, vramLabel(row));
 
+    if (c.key === "criterion") {
+      const v = rankKey ? (row.criteria ? row.criteria[rankKey] : null) : null;
+      const td = el("td", {}, v == null ? "—" : fmt.score100(v));
+      const r = ranges.criterion;
+      if (v != null && r) {
+        const raw = r.max === r.min ? 0.62 : (Number(v) - r.min) / (r.max - r.min);
+        const rgb = warmth(Math.max(0, Math.min(1, raw)));
+        td.className = "heat" + (row.ranked === false ? " prov" : "");
+        td.style.background = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.72)`;
+        td.style.color = heatText(rgb);
+      } else td.className = "heat empty";
+      return td;
+    }
+
     const v = row[c.key];
     let disp;
     if (c.key === "ttft_2k_ms") disp = fmt.secs(v);
@@ -273,7 +327,7 @@ function renderLeaderboard(models) {
     let rank = 0;
     rows.forEach((row) => {
       const tr = el("tr", { class: row.ranked === false ? "provisional" : "" });
-      for (const c of COLS) {
+      for (const c of cols) {
         const td = cell(c, row);
         if (c.gstart) td.classList.add("gstart");
         tr.appendChild(td);
@@ -285,13 +339,14 @@ function renderLeaderboard(models) {
     });
   }
 
-  let sortKey = "normalized_elo", sortDir = -1;   // default: strongest on top
+  let sortKey = rankKey ? "criterion" : "normalized_elo", sortDir = -1;   // default: strongest on top
   function applySort() {
     const rows = [...models].sort((a, b) => {
       // Provisional rows always sink, whatever the active sort — they are not participants
       // in the ordering, they are appended context.
       if ((a.ranked === false) !== (b.ranked === false)) return a.ranked === false ? 1 : -1;
       let x = a[sortKey], y = b[sortKey];
+      if (sortKey === "criterion") { x = a.criteria ? a.criteria[rankKey] : null; y = b.criteria ? b.criteria[rankKey] : null; }
       if (sortKey === "model") { x = a.display_name; y = b.display_name; }
       if (sortKey === "size") { x = a.params_total_b; y = b.params_total_b; }
       if (sortKey === "vram") { x = vramGB(a); y = vramGB(b); }
@@ -381,6 +436,55 @@ function renderPickCard(models) {
               + "matters. All of these are open-weight and free to run yourself."));
   kids.push(ul);
   mount.replaceChildren(el("div", { class: "pick" }, ...kids));
+}
+/* "Rank by" pills: Overall (default) plus each criterion, grouped by family. Clicking a pill
+   re-renders the board in that mode and hides the Overall-only chrome (tie banner + pick card),
+   which describe the head-to-head Elo tie and would mislead under a per-criterion sort. */
+function renderRankBy(models) {
+  const mount = document.getElementById("rank-by");
+  if (!mount) return;
+  const lb = document.getElementById("leaderboard");
+  const tie = document.getElementById("tie-banner");
+  const pick = document.getElementById("pick-card");
+
+  let active = null;                                   // null = Overall
+  const pills = [];
+  const setMode = (rankKey, pill) => {
+    active = rankKey;
+    pills.forEach((p) => p.classList.toggle("on", p === pill));
+    lb.replaceChildren(renderLeaderboard(models, rankKey));
+    const crit = rankKey ? CRITERIA.find((c) => c.key === rankKey) : null;
+    // Overall-only chrome off in criterion mode; a plain note on instead.
+    if (tie) tie.style.display = crit ? "none" : "";
+    if (pick) pick.style.display = crit ? "none" : "";
+    note.textContent = crit
+      ? `Ranked by ${crit.label} — the judge's 0–100 rating on this one quality. Small gaps aren't meaningful.`
+      : "";
+    note.style.display = crit ? "" : "none";
+  };
+
+  const bar = el("div", { class: "rankby" }, el("span", { class: "rankby-lbl", text: "Rank by:" }));
+  const overall = el("button", { class: "pill on", type: "button" }, "Overall");
+  overall.addEventListener("click", () => setMode(null, overall));
+  pills.push(overall);
+  bar.appendChild(overall);
+
+  // group the criterion pills by family, in CRITERIA order, each family with a muted label
+  const seen = [];
+  for (const c of CRITERIA) if (!seen.includes(c.family)) seen.push(c.family);
+  for (const fam of seen) {
+    const grp = el("span", { class: "rankby-grp" }, el("span", { class: "rankby-fam", text: fam }));
+    for (const c of CRITERIA.filter((x) => x.family === fam)) {
+      const p = el("button", { class: "pill", type: "button", title: c.tip }, c.label);
+      p.addEventListener("click", () => setMode(c.key, p));
+      pills.push(p);
+      grp.appendChild(p);
+    }
+    bar.appendChild(grp);
+  }
+  const note = el("p", { class: "rankby-note" });
+  note.style.display = "none";
+  mount.replaceChildren(bar, note);
 }
 function renderTieBanner(models) {
   const mount = document.getElementById("tie-banner");
@@ -515,6 +619,7 @@ async function initLeaderboard() {
     renderVerdictStrip(data.models);
     renderPickCard(data.models);
     renderTieBanner(data.models);
+    renderRankBy(data.models);
     mount.replaceChildren(renderLeaderboard(data.models));
   } catch (e) { fail(mount, "Could not load leaderboard.json — " + e.message); }
 }

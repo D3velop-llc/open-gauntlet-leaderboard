@@ -208,6 +208,18 @@ a:hover { color: var(--ember-bright); }
 .pick-list li.pick-note { padding-left: 18px; font-size: 13px; color: var(--muted); }
 .pick-list li.pick-note::before { content: "·"; }
 
+/* ---- "Rank by" pill control ---- */
+.rankby { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 14px;
+  font-family: var(--font-mono); font-size: 12px; }
+.rankby-lbl { color: var(--muted); letter-spacing: 0.04em; margin-right: 4px; }
+.rankby-grp { display: inline-flex; align-items: center; gap: 6px; }
+.rankby-fam { color: var(--muted); font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; margin-left: 6px; }
+.pill { background: var(--surface-3); color: var(--ink-dim); border: 1px solid var(--border);
+  border-radius: 999px; padding: 3px 11px; cursor: pointer; font: inherit; }
+.pill:hover { border-color: var(--border-2); color: var(--ink); }
+.pill.on { background: var(--ember); color: #17110a; border-color: var(--ember); }
+.rankby-note { color: var(--ink-dim); font-size: 13px; margin: 0 0 14px; }
+
 /* Tie banner: states the top group is indistinguishable, without a hard visual cliff. */
 .tie-note {
   background: rgba(245, 163, 75, 0.07);
