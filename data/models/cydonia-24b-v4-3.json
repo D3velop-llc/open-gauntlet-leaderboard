@@ -133,6 +133,7 @@
   ],
   "voice": {
     "composite": 67.0526,
+    "avg_reply_words": 87,
     "per_transcript": [
       {
         "transcript_id": 226,

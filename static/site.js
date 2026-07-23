@@ -175,11 +175,10 @@ const COLS = [
   { key: "humanlike_score", label: "Humanlike", type: "num", heat: true, group: "How it scored",
     title: "Does it sound like a person instead of a corporate bot? Judge's rating out of 100." },
   // Reply length is STYLE, not quality — deliberately no heat coloring and never part of the
-  // ranking. (The underlying composite correlates -0.93 with mean reply length, so coloring it
-  // would wrongly paint a long-form model as "worse".) For a companion/roleplay app a reader
-  // may WANT longer replies, so it's presented neutrally.
-  { key: "voice_composite", label: "Reply length", type: "num", group: "How it scored",
-    title: "Higher = shorter, punchier replies. This is STYLE, not quality, and is NOT part of "
+  // ranking. It shows the ACTUAL average words per assistant reply; a companion/roleplay app
+  // reader may WANT longer replies, so it's presented neutrally (no "better"/"worse").
+  { key: "avg_reply_words", label: "Reply length", type: "num", group: "How it scored",
+    title: "Average words per assistant reply. This is STYLE, not quality, and is NOT part of "
          + "the ranking — for a companion or roleplay app you may prefer longer replies." },
   { key: "ttft_2k_ms", label: "Wait for 1st word", type: "num", group: "Speed",
     title: "How long before it starts replying to a long (~2,000-word) prompt. Lower is better. "
@@ -303,6 +302,7 @@ function renderLeaderboard(models, rankKey = null) {
     else if (c.key === "normalized_elo") disp = fmt.eloCI(row);
     else if (c.key === "win_rate") disp = fmt.pct(v);
     else if (c.key === "eq_score" || c.key === "humanlike_score") disp = fmt.score100(v);
+    else if (c.key === "avg_reply_words") disp = fmt.int(v);
     else disp = fmt.n1(v);
 
     const td = el("td", {}, disp);
@@ -657,7 +657,7 @@ function categoryCard(cats) {
   return card;
 }
 
-function reproBlock(repro, voiceComposite) {
+function reproBlock(repro, avgReplyWords) {
   const kv = el("dl", { class: "kv" });
   const add = (k, v) => { kv.appendChild(el("dt", { text: k })); kv.appendChild(el("dd", { text: v == null || v === "" ? "—" : String(v) })); };
   add("harness_git_commit", repro.harness_git_commit);
@@ -666,7 +666,7 @@ function reproBlock(repro, voiceComposite) {
   const jsuffix = repro.judge_provenance_resolved ? " (resolved from stored verdicts)" : "";
   add("judge_model", repro.judge_model == null ? null : String(repro.judge_model) + jsuffix);
   add("judge_prompt_hash", repro.judge_prompt_hash == null ? null : String(repro.judge_prompt_hash) + jsuffix);
-  add("voice_composite", fmt.n2(voiceComposite));
+  add("avg_reply_words", avgReplyWords == null ? null : fmt.int(avgReplyWords));
   const hw = repro.hardware_fingerprint || {};
   for (const k in hw) add("hw." + k, hw[k]);
   const body = el("div", { class: "body" }, kv);
@@ -773,7 +773,7 @@ async function initModel() {
 
     // reproducibility
     mount.appendChild(el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }), el("h2", { text: "Provenance" })));
-    mount.appendChild(reproBlock(d.reproducibility || {}, (d.voice || {}).composite));
+    mount.appendChild(reproBlock(d.reproducibility || {}, (d.voice || {}).avg_reply_words));
 
     // transcripts
     const samples = d.sample_transcripts || [];
@@ -792,6 +792,17 @@ function calibrationCard(jc) {
   const rows = (jc && jc.judges) || [];
   if (!rows.length) return null;
   const tb = el("tbody");
+  // The reference judge itself: show its OWN order-consistency (it self-flips too), with the
+  // agreement/kappa/length cells blanked — a judge can't meaningfully agree with itself. Marked
+  // ".ref" so it reads as the yardstick, not a candidate. Omitted if the value is missing
+  // (pre-migration methodology.json).
+  if (jc.reference_order_consistency != null)
+    tb.appendChild(el("tr", { class: "ref" },
+      el("td", { class: "id", text: `${jc.reference_judge} (reference · the yardstick)` }),
+      el("td", { text: "—" }),
+      el("td", { text: "—" }),
+      el("td", { text: fmt.pct1(jc.reference_order_consistency) }),
+      el("td", { text: "—" })));
   for (const j of rows)
     tb.appendChild(el("tr", {},
       el("td", { class: "id", text: j.candidate_judge }),
@@ -889,10 +900,10 @@ async function initMethodology() {
 }
 
 /* ============================== COMPARE ================================== */
-function cmpMetricRow(label, a, b, fmtFn, higherWins) {
+function cmpMetricRow(label, a, b, fmtFn, higherWins, neutral) {
   const av = a == null ? null : Number(a), bv = b == null ? null : Number(b);
   let aWin = false, bWin = false;
-  if (av != null && bv != null && av !== bv) {
+  if (!neutral && av != null && bv != null && av !== bv) {
     const aBetter = higherWins ? av > bv : av < bv;
     aWin = aBetter; bWin = !aBetter;
   }
@@ -1003,7 +1014,7 @@ async function initCompare() {
     headline.appendChild(cmpEloRow(ra, rb));
     headline.appendChild(cmpMetricRow("EQ composite", ra.eq_score, rb.eq_score, fmt.n1, true));
     headline.appendChild(cmpMetricRow("Humanlike", ra.humanlike_score, rb.humanlike_score, fmt.n1, true));
-    headline.appendChild(cmpMetricRow("Brevity", ra.voice_composite, rb.voice_composite, fmt.n1, true));
+    headline.appendChild(cmpMetricRow("Reply length", ra.avg_reply_words, rb.avg_reply_words, fmt.int, false, true));
     headline.appendChild(cmpMetricRow("TTFT 2k (ms, lower better)", ra.ttft_2k_ms, rb.ttft_2k_ms, fmt.n1, false));
     headline.appendChild(cmpMetricRow("words/s 2k", ra.tps_2k, rb.tps_2k, fmt.n1, true));
 

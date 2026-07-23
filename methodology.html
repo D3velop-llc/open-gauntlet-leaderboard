@@ -70,18 +70,23 @@
           It rewards <em>natural</em> engagement, not just frequent engagement.
         </p>
         <p class="prose">
-          <strong>What the Brevity column is — and is not.</strong> It is a locally-measured
-          composite of three things: the share of replies falling in a 20–80 word window, the
-          share free of markdown, and type–token ratio. Measured against this corpus it tracks
-          reply <em>length</em> almost exactly — a correlation of <strong>−0.93</strong> between
-          a model's mean reply length and its Brevity score. That is largely mechanical: the
-          word-window term penalises long replies by construction, type–token ratio rises as
-          texts get shorter regardless of quality (r = −0.78 here), and the markdown term varies
-          by under 2.5 points across models, so it carries almost no signal. Read this column as
-          <em>“writes short, unadorned replies”</em> — not as a verdict on prose quality. A model
-          that writes long, descriptive prose will score low here by definition, and that is a
-          description of its register, not a defect. It was previously labelled “Voice”, which
-          invited exactly the wrong reading; the underlying measurement is unchanged.
+          <strong>What the Reply length column is — and is not.</strong> It is simply the
+          <em>average number of words per reply</em>, measured locally over this
+          corpus. It is shown for <strong>style, not quality</strong>, and is never part of the
+          ranking: for a companion or roleplay app you may actively prefer longer, more
+          descriptive replies, while for a quick assistant you may prefer short ones. A model
+          that writes long prose scoring “high” here is a description of its register, not a
+          defect — so the column carries no heat coloring and no “better”/“worse”.
+        </p>
+        <p class="prose">
+          <strong>Why our rankings can differ from other benchmarks.</strong> OpenGauntlet scores
+          <em>conversational humanlikeness</em> — everyday chat, emotional support, conflict,
+          staying in character, remembering what was said, and handling boundaries. It does not
+          test the theory-of-mind / perspective-taking tasks that a benchmark like
+          <strong>EQ-Bench 3</strong> emphasizes. Those measure a genuinely different construct,
+          so a model can top EQ-Bench 3 and still land mid-pack here (or the reverse). When our
+          order diverges from another leaderboard's, that is the two benchmarks measuring
+          different things — not a defect in either.
         </p>
       </div>
       <div id="methodology"><div class="state">Loading methodology…</div></div>
@@ -99,7 +104,7 @@
         <a href="compare.html">Compare</a>
       </nav>
       
-      <span class="foot-prov">Updated <span data-generated-at>2026-07-23 00:31 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
+      <span class="foot-prov">Updated <span data-generated-at>2026-07-23 04:03 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
     </div>
   </footer>
 

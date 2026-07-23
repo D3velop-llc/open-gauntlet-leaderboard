@@ -114,9 +114,26 @@
       "notes": "first run hashes the GGUF (file_sha256: auto); pin a literal to skip; serve with LD_LIBRARY_PATH=/home/imprynt/models/llama.cpp-b9893/build-gpu/bin; the on-PATH llama-server is broken (stale libs)"
     }
   },
-  "perf_curve": [],
+  "perf_curve": [
+    {
+      "prompt_tokens": 512,
+      "ttft_ms_median": 21.3221,
+      "decode_tps_median": 56.3534
+    },
+    {
+      "prompt_tokens": 2048,
+      "ttft_ms_median": 25.334,
+      "decode_tps_median": 54.6403
+    },
+    {
+      "prompt_tokens": 8192,
+      "ttft_ms_median": 40.257,
+      "decode_tps_median": 46.3638
+    }
+  ],
   "voice": {
     "composite": 57.067,
+    "avg_reply_words": 164,
     "per_transcript": [
       {
         "transcript_id": 301,
