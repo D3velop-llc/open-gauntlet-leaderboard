@@ -4,7 +4,7 @@
     "pairwise_prompt_hash": "5e4fdc45",
     "rubric_prompt_hash": "d8776a8d"
   },
-  "generated_at": "2026-07-25T16:35:45.266336+00:00",
+  "generated_at": "2026-07-25T17:29:21.903042+00:00",
   "models": [
     {
       "slug": "anubis-mini-8b",
@@ -1189,10 +1189,29 @@
           ]
         },
         "rtx-5090": {
-          "state": "not_measured",
-          "ttft_2k_ms": null,
-          "tps_2k": null,
-          "curve": []
+          "state": "measured",
+          "ttft_2k_ms": 14.8005,
+          "tps_2k": 99.2278,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 12.627,
+              "decode_tps_median": 101.5499
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 14.8005,
+              "decode_tps_median": 99.2278
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 21.4693,
+              "decode_tps_median": 90.5571
+            }
+          ]
         },
         "rtx-5080": {
           "state": "measured",
@@ -1455,10 +1474,29 @@
           ]
         },
         "rtx-5090": {
-          "state": "not_measured",
-          "ttft_2k_ms": null,
-          "tps_2k": null,
-          "curve": []
+          "state": "measured",
+          "ttft_2k_ms": 13.1672,
+          "tps_2k": 126.9371,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 117.8724,
+              "decode_tps_median": 136.766
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 13.1672,
+              "decode_tps_median": 126.9371
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 21.2705,
+              "decode_tps_median": 116.4729
+            }
+          ]
         },
         "rtx-5080": {
           "state": "measured",

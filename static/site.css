@@ -412,6 +412,15 @@ td.heat.prov::after {
 }
 td.dim { color: var(--muted); }
 
+/* Precision column. The dot is a scanning aid only — the word beside it carries the meaning,
+   so this never encodes the full/quantized distinction in colour alone. Full precision reads
+   slightly brighter because it is the uncompressed original, NOT because it scores better. */
+td.prec { white-space: nowrap; }
+td.prec .prec-dot { margin-right: 5px; font-size: 9px; vertical-align: 1px; }
+td.prec-full { color: var(--ink-dim); }
+td.prec-full .prec-dot { color: var(--cool); }
+td.prec-quantized .prec-dot { color: var(--muted); }
+
 /* thermal ability cells — background set inline by JS via warmth(t) */
 td.heat {
   position: relative;

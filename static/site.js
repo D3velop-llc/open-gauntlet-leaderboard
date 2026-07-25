@@ -93,22 +93,34 @@ function vramLabel(row) {
 // Human-readable "how it's compressed · what runs it" sub-label. Never prints the raw "unknown"
 // quant (which reads as broken data): a safetensors model with no quant code is full precision,
 // and nvfp4/fp8 are recovered from the slug — same precision logic the VRAM estimate uses.
-function cfgLabel(row) {
+// How this model's precision is named for a reader. Keyed off the PRECISION, not off where we
+// learned it: configs now carry an explicit quant (BF16 / NVFP4) where they used to say
+// "unknown", and without the first two cases that backfill would silently retitle
+// "full precision" -> "BF16" for every safetensors model and "NVFP4 (4-bit)" -> "NVFP4".
+function precisionName(row) {
   const q = (row.quant || "").toString();
   const s = (row.slug || "").toString().toLowerCase();
   const ql = q.toLowerCase();
-  let prec;
-  // Reader-facing wording is keyed off the PRECISION, not off where we learned it. Configs now
-  // carry an explicit quant (BF16 / NVFP4) where they used to say "unknown", and without these
-  // two cases that backfill would silently retitle "full precision" -> "BF16" for every
-  // safetensors model and "NVFP4 (4-bit)" -> "NVFP4".
-  if (ql === "bf16" || ql === "f16" || ql === "fp16") prec = "full precision";
-  else if (ql.includes("nvfp4") || s.includes("nvfp4") || s.includes("-fp4")) prec = "NVFP4 (4-bit)";
-  else if (ql.includes("fp8") || s.includes("fp8")) prec = "FP8 (8-bit)";
-  else if (q && ql !== "unknown") prec = q;                         // GGUF quant code, keep it
-  else prec = "full precision";
+  if (ql === "bf16" || ql === "f16" || ql === "fp16") return "full precision";
+  if (ql.includes("nvfp4") || s.includes("nvfp4") || s.includes("-fp4")) return "NVFP4 (4-bit)";
+  if (ql.includes("fp8") || s.includes("fp8")) return "FP8 (8-bit)";
+  if (q && ql !== "unknown") return q;                              // GGUF quant code, keep it
+  return "full precision";
+}
+
+// Compressed or not, as ONE class for the filter and the sort. Derived from gbPerB() — the same
+// bits-per-weight the VRAM estimate uses — so this column can never disagree with the memory
+// figure sitting next to it. null when precision is genuinely undeterminable; that must show as
+// "—" rather than being bucketed into either group.
+function precisionClass(row) {
+  const per = gbPerB(row);
+  if (per == null) return null;
+  return per >= 1.5 ? "full" : "quantized";   // bf16/f16 = 2.0; q8_0 = 1.06; fp8 = 1.00
+}
+
+function cfgLabel(row) {
   const engine = { vllm: "vLLM", sglang: "SGLang", "llama.cpp": "llama.cpp" }[row.backend] || row.backend;
-  return [prec, engine].filter(Boolean).join(" · ");
+  return [precisionName(row), engine].filter(Boolean).join(" · ");
 }
 
 async function getJSON(path) {
@@ -170,6 +182,15 @@ const COLS = [
     title: "Rough graphics-card memory (VRAM) needed to run it. Under ~12 GB fits most gaming "
          + "GPUs; 24 GB needs a high-end card; 48 GB+ is server-class. Estimated from the "
          + "model's compression — treat as a ballpark. '—' = couldn't estimate." },
+  // Sorts by actual bits-per-weight (gbPerB), so clicking it groups full precision together AND
+  // orders the compressed tier Q8 -> Q6 -> Q5 -> Q4 rather than alphabetically by quant code.
+  { key: "precision", label: "Precision", type: "text", group: "",
+    title: "Whether these are the model's original weights (full precision) or a compressed "
+         + "copy — quantizing shrinks a model so it runs faster in less memory, at some cost "
+         + "to quality. Heads up on reading the ranking: on this board every full-precision "
+         + "model also happens to be a newer architecture served by vLLM/SGLang, and every "
+         + "compressed one is a llama.cpp community fine-tune. Those two things move together "
+         + "here, so the score gap between the groups can't be pinned on precision alone." },
   { key: "normalized_elo", label: "Human score", type: "num", heat: true, group: "How it scored",
     title: "How human the model sounds, as a chess-style rating — higher is better, no maximum. "
          + "The range in parentheses is our margin of error: if two models' ranges overlap, "
@@ -210,6 +231,11 @@ const GROUP_TITLES = {
    screen can never move because of a hardware switch. */
 let activeHardware = "dgx-spark";
 let currentSpeedRefresh = () => {};
+// Precision filter: "all" | "full" | "quantized". Unlike the hardware selector (display-only),
+// this one removes rows, so it re-runs the sort — `currentRowsRefresh` is set by whichever
+// leaderboard table is mounted, same closure trick as currentSpeedRefresh.
+let activePrecision = "all";
+let currentRowsRefresh = () => {};
 
 // Resolve what a Speed cell should show for one row/key ("ttft_2k_ms" | "tps_2k") under the
 // currently active machine. Honest about the three states a machine can be in for a model:
@@ -269,6 +295,26 @@ function renderHardwareSelect() {
   });
   mount.appendChild(el("div", { class: "hwselect" },
     el("label", { for: "hardwareSelect", class: "hwselect-lbl", text: "Speed shown for:" }),
+    select));
+}
+
+// Precision filter, mounted next to the hardware selector. Deliberately defaults to "All": the
+// full-precision tier tops this board, and opening on a filtered view would present that as a
+// finding rather than something the reader chose to look at. The counterexamples (a
+// full-precision model at #11 and #16) only stay visible in the unfiltered default.
+function renderPrecisionSelect() {
+  const mount = document.getElementById("rank-by");
+  if (!mount) return;
+  const select = el("select", { id: "precisionSelect" });
+  [["all", "All"], ["full", "Full precision"], ["quantized", "Quantized"]]
+    .forEach(([v, label]) => select.appendChild(el("option", { value: v }, label)));
+  select.value = activePrecision;
+  select.addEventListener("change", () => {
+    activePrecision = select.value;
+    currentRowsRefresh();
+  });
+  mount.appendChild(el("div", { class: "hwselect" },
+    el("label", { for: "precisionSelect", class: "hwselect-lbl", text: "Precision:" }),
     select));
 }
 
@@ -358,6 +404,15 @@ function renderLeaderboard(models, rankKey = null) {
     }
     if (c.key === "size") return el("td", { class: "dim" }, fmt.size(row));
     if (c.key === "vram") return el("td", { class: "dim" }, vramLabel(row));
+    if (c.key === "precision") {
+      const cls = precisionClass(row);
+      if (cls == null) return el("td", { class: "dim" }, "—");
+      // The dot is decoration for scanning; the word beside it carries the meaning, so the dot
+      // is aria-hidden rather than being the only thing distinguishing the two groups.
+      return el("td", { class: "dim prec prec-" + cls },
+        el("span", { class: "prec-dot", "aria-hidden": "true", text: cls === "full" ? "●" : "○" }),
+        cls === "full" ? "full" : precisionName(row));
+    }
 
     if (c.key === "criterion") {
       const v = rankKey ? (row.criteria ? row.criteria[rankKey] : null) : null;
@@ -441,7 +496,12 @@ function renderLeaderboard(models, rankKey = null) {
 
   let sortKey = rankKey ? "criterion" : "normalized_elo", sortDir = -1;   // default: strongest on top
   function applySort() {
-    const rows = [...models].sort((a, b) => {
+    // Filter BEFORE ranking so the "#" column numbers what is actually on screen; ranking first
+    // and then hiding rows would leave gaps (1, 2, 3, 11, 15) that read as missing data.
+    const visible = activePrecision === "all"
+      ? models
+      : models.filter((m) => precisionClass(m) === activePrecision);
+    const rows = [...visible].sort((a, b) => {
       // Provisional rows always sink, whatever the active sort — they are not participants
       // in the ordering, they are appended context.
       if ((a.ranked === false) !== (b.ranked === false)) return a.ranked === false ? 1 : -1;
@@ -450,6 +510,9 @@ function renderLeaderboard(models, rankKey = null) {
       if (sortKey === "model") { x = a.display_name; y = b.display_name; }
       if (sortKey === "size") { x = a.params_total_b; y = b.params_total_b; }
       if (sortKey === "vram") { x = vramGB(a); y = vramGB(b); }
+      // Sort by real bits-per-weight, not the quant string: alphabetical would scatter
+      // NVFP4/Q4_K_M/Q5_K_M and put "full precision" in the middle of the compressed tier.
+      if (sortKey === "precision") { x = gbPerB(a); y = gbPerB(b); }
       // Speed columns must sort by exactly the numbers the active hardware selection shows —
       // never by the stale dgx-spark headline field once another machine is selected.
       if (sortKey === "ttft_2k_ms" || sortKey === "tps_2k") { x = speedSortValue(a, sortKey); y = speedSortValue(b, sortKey); }
@@ -479,6 +542,7 @@ function renderLeaderboard(models, rankKey = null) {
   });
 
   const table = el("table", { class: "lb" }, thead, tbody);
+  currentRowsRefresh = applySort;      // the precision filter re-runs the whole sort/paint
   applySort();
   return el("div", { class: "table-scroll row-in" }, table);
 }
@@ -727,6 +791,7 @@ async function initLeaderboard() {
     renderTieBanner(data.models);
     renderRankBy(data.models);
     renderHardwareSelect();
+    renderPrecisionSelect();
     mount.replaceChildren(renderLeaderboard(data.models));
   } catch (e) { fail(mount, "Could not load leaderboard.json — " + e.message); }
 }
