@@ -4,14 +4,14 @@
     "pairwise_prompt_hash": "5e4fdc45",
     "rubric_prompt_hash": "d8776a8d"
   },
-  "generated_at": "2026-07-25T16:28:21.072329+00:00",
+  "generated_at": "2026-07-25T16:35:45.266336+00:00",
   "models": [
     {
       "slug": "anubis-mini-8b",
       "display_name": "anubis-mini-8b",
       "params_total_b": 8.0,
       "params_active_b": 8.0,
-      "quant": "unknown",
+      "quant": "BF16",
       "backend": "sglang",
       "architecture": "dense",
       "normalized_elo": 1248.3143251082063,
@@ -74,7 +74,7 @@
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
@@ -87,7 +87,7 @@
       "display_name": "bluestar-27b",
       "params_total_b": 27.0,
       "params_active_b": 27.0,
-      "quant": "unknown",
+      "quant": "BF16",
       "backend": "sglang",
       "architecture": "dense",
       "normalized_elo": 1228.3336060982192,
@@ -144,13 +144,13 @@
           ]
         },
         "rtx-5090": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
@@ -448,7 +448,7 @@
       "display_name": "gemma4-12b-blorbo",
       "params_total_b": 12.0,
       "params_active_b": 12.0,
-      "quant": "unknown",
+      "quant": "BF16",
       "backend": "vllm",
       "architecture": "dense",
       "normalized_elo": 1729.8403741242257,
@@ -511,7 +511,7 @@
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
@@ -524,7 +524,7 @@
       "display_name": "gemma4-26b-a4b-it",
       "params_total_b": 26.0,
       "params_active_b": 4.0,
-      "quant": "unknown",
+      "quant": "BF16",
       "backend": "vllm",
       "architecture": "moe",
       "normalized_elo": 1763.5586344693113,
@@ -581,13 +581,13 @@
           ]
         },
         "rtx-5090": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
@@ -600,7 +600,7 @@
       "display_name": "glistening-gem-31b",
       "params_total_b": 31.0,
       "params_active_b": 31.0,
-      "quant": "unknown",
+      "quant": "BF16",
       "backend": "vllm",
       "architecture": "dense",
       "normalized_elo": 1928.8898608821412,
@@ -657,13 +657,13 @@
           ]
         },
         "rtx-5090": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
@@ -960,10 +960,10 @@
       "slug": "ornith-35b-nvfp4",
       "display_name": "ornith-35b-nvfp4",
       "params_total_b": 35.0,
-      "params_active_b": 35.0,
-      "quant": "unknown",
+      "params_active_b": 3.0,
+      "quant": "NVFP4",
       "backend": "vllm",
-      "architecture": "dense",
+      "architecture": "moe",
       "normalized_elo": 1403.8298002164129,
       "elo_ci_low": 1303.1045115082907,
       "elo_ci_high": 1506.954935831651,
@@ -1024,7 +1024,7 @@
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
@@ -1321,10 +1321,10 @@
       "slug": "qwen36-35b-styletune",
       "display_name": "qwen36-35b-styletune",
       "params_total_b": 35.0,
-      "params_active_b": 35.0,
-      "quant": "unknown",
+      "params_active_b": 3.0,
+      "quant": "BF16",
       "backend": "vllm",
-      "architecture": "dense",
+      "architecture": "moe",
       "normalized_elo": 1723.7509612572283,
       "elo_ci_low": 1629.1566130234992,
       "elo_ci_high": 1774.1256293579884,
@@ -1379,13 +1379,13 @@
           ]
         },
         "rtx-5090": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
@@ -1493,7 +1493,7 @@
       "display_name": "rocinante-xl-16b",
       "params_total_b": 16.0,
       "params_active_b": 16.0,
-      "quant": "unknown",
+      "quant": "BF16",
       "backend": "sglang",
       "architecture": "dense",
       "normalized_elo": 1446.3679481199233,
@@ -1550,13 +1550,13 @@
           ]
         },
         "rtx-5090": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
@@ -1569,7 +1569,7 @@
       "display_name": "skyfall-31b",
       "params_total_b": 31.0,
       "params_active_b": 31.0,
-      "quant": "unknown",
+      "quant": "BF16",
       "backend": "sglang",
       "architecture": "dense",
       "normalized_elo": 1843.7200041503477,
@@ -1626,13 +1626,13 @@
           ]
         },
         "rtx-5090": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []
         },
         "rtx-5080": {
-          "state": "not_measured",
+          "state": "doesnt_fit",
           "ttft_2k_ms": null,
           "tps_2k": null,
           "curve": []

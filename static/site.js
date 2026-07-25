@@ -96,10 +96,16 @@ function vramLabel(row) {
 function cfgLabel(row) {
   const q = (row.quant || "").toString();
   const s = (row.slug || "").toString().toLowerCase();
+  const ql = q.toLowerCase();
   let prec;
-  if (q && q.toLowerCase() !== "unknown") prec = q;                 // GGUF quant code, keep it
-  else if (s.includes("nvfp4") || s.includes("-fp4")) prec = "NVFP4 (4-bit)";
-  else if (s.includes("fp8")) prec = "FP8 (8-bit)";
+  // Reader-facing wording is keyed off the PRECISION, not off where we learned it. Configs now
+  // carry an explicit quant (BF16 / NVFP4) where they used to say "unknown", and without these
+  // two cases that backfill would silently retitle "full precision" -> "BF16" for every
+  // safetensors model and "NVFP4 (4-bit)" -> "NVFP4".
+  if (ql === "bf16" || ql === "f16" || ql === "fp16") prec = "full precision";
+  else if (ql.includes("nvfp4") || s.includes("nvfp4") || s.includes("-fp4")) prec = "NVFP4 (4-bit)";
+  else if (ql.includes("fp8") || s.includes("fp8")) prec = "FP8 (8-bit)";
+  else if (q && ql !== "unknown") prec = q;                         // GGUF quant code, keep it
   else prec = "full precision";
   const engine = { vllm: "vLLM", sglang: "SGLang", "llama.cpp": "llama.cpp" }[row.backend] || row.backend;
   return [prec, engine].filter(Boolean).join(" · ");

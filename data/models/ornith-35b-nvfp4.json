@@ -168,7 +168,7 @@
       "curve": []
     },
     "rtx-5080": {
-      "state": "not_measured",
+      "state": "doesnt_fit",
       "ttft_2k_ms": null,
       "tps_2k": null,
       "curve": []
