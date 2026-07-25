@@ -160,6 +160,31 @@
         }
       ]
     },
+    "rtx-5090": {
+      "state": "measured",
+      "ttft_2k_ms": 112.6506,
+      "tps_2k": 59.6878,
+      "curve": [
+        {
+          "hardware_id": "rtx-5090",
+          "prompt_tokens": 512,
+          "ttft_ms_median": 109.7096,
+          "decode_tps_median": 60.9026
+        },
+        {
+          "hardware_id": "rtx-5090",
+          "prompt_tokens": 2048,
+          "ttft_ms_median": 112.6506,
+          "decode_tps_median": 59.6878
+        },
+        {
+          "hardware_id": "rtx-5090",
+          "prompt_tokens": 8192,
+          "ttft_ms_median": 118.8433,
+          "decode_tps_median": 58.1692
+        }
+      ]
+    },
     "rtx-5080": {
       "state": "doesnt_fit",
       "ttft_2k_ms": null,

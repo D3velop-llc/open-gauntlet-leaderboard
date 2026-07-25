@@ -159,6 +159,12 @@
         }
       ]
     },
+    "rtx-5090": {
+      "state": "not_measured",
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "curve": []
+    },
     "rtx-5080": {
       "state": "measured",
       "ttft_2k_ms": 20.6963,
