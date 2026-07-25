@@ -160,6 +160,31 @@
           "decode_tps_median": 18.5888
         }
       ]
+    },
+    "rtx-5080": {
+      "state": "measured",
+      "ttft_2k_ms": 17.1876,
+      "tps_2k": 83.0222,
+      "curve": [
+        {
+          "hardware_id": "rtx-5080",
+          "prompt_tokens": 512,
+          "ttft_ms_median": 14.59,
+          "decode_tps_median": 88.3173
+        },
+        {
+          "hardware_id": "rtx-5080",
+          "prompt_tokens": 2048,
+          "ttft_ms_median": 17.1876,
+          "decode_tps_median": 83.0222
+        },
+        {
+          "hardware_id": "rtx-5080",
+          "prompt_tokens": 8192,
+          "ttft_ms_median": 27.1519,
+          "decode_tps_median": 74.7597
+        }
+      ]
     }
   },
   "voice": {

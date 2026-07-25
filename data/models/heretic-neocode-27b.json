@@ -160,6 +160,12 @@
           "decode_tps_median": 9.8877
         }
       ]
+    },
+    "rtx-5080": {
+      "state": "doesnt_fit",
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "curve": []
     }
   },
   "voice": {

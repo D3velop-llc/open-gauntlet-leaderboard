@@ -4,7 +4,7 @@
     "pairwise_prompt_hash": "5e4fdc45",
     "rubric_prompt_hash": "d8776a8d"
   },
-  "generated_at": "2026-07-25T14:30:09.967520+00:00",
+  "generated_at": "2026-07-25T15:26:37.196839+00:00",
   "models": [
     {
       "slug": "anubis-mini-8b",
@@ -66,6 +66,12 @@
               "decode_tps_median": 12.6511
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 3.332883
@@ -130,6 +136,12 @@
               "decode_tps_median": 4.0496
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 3.093942
@@ -194,6 +206,12 @@
               "decode_tps_median": 11.0122
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.614818
@@ -258,6 +276,12 @@
               "decode_tps_median": 46.3638
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.732568
@@ -322,6 +346,12 @@
               "decode_tps_median": 10.2884
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 3.042687
@@ -386,6 +416,12 @@
               "decode_tps_median": 7.132
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.625093
@@ -450,6 +486,12 @@
               "decode_tps_median": 21.652
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.768933
@@ -514,6 +556,12 @@
               "decode_tps_median": 3.5496
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.825025
@@ -578,6 +626,12 @@
               "decode_tps_median": 9.8877
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 3.02193
@@ -642,6 +696,12 @@
               "decode_tps_median": 7.2235
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.576017
@@ -706,6 +766,12 @@
               "decode_tps_median": 10.2362
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 3.207448
@@ -770,6 +836,12 @@
               "decode_tps_median": 32.4686
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.757135
@@ -834,6 +906,12 @@
               "decode_tps_median": 40.8689
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.997337
@@ -896,6 +974,31 @@
               "prompt_tokens": 8192,
               "ttft_ms_median": 107.4602,
               "decode_tps_median": 12.247
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "measured",
+          "ttft_2k_ms": 20.6963,
+          "tps_2k": 61.3243,
+          "curve": [
+            {
+              "hardware_id": "rtx-5080",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 18.1829,
+              "decode_tps_median": 62.6349
+            },
+            {
+              "hardware_id": "rtx-5080",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 20.6963,
+              "decode_tps_median": 61.3243
+            },
+            {
+              "hardware_id": "rtx-5080",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 29.3945,
+              "decode_tps_median": 57.4551
             }
           ]
         }
@@ -962,6 +1065,12 @@
               "decode_tps_median": 9.5009
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.694717
@@ -1026,6 +1135,12 @@
               "decode_tps_median": 26.4403
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.763758
@@ -1088,6 +1203,31 @@
               "prompt_tokens": 8192,
               "ttft_ms_median": 87.0893,
               "decode_tps_median": 18.5888
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "measured",
+          "ttft_2k_ms": 17.1876,
+          "tps_2k": 83.0222,
+          "curve": [
+            {
+              "hardware_id": "rtx-5080",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 14.59,
+              "decode_tps_median": 88.3173
+            },
+            {
+              "hardware_id": "rtx-5080",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 17.1876,
+              "decode_tps_median": 83.0222
+            },
+            {
+              "hardware_id": "rtx-5080",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 27.1519,
+              "decode_tps_median": 74.7597
             }
           ]
         }
@@ -1154,6 +1294,12 @@
               "decode_tps_median": 4.6158
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 3.050032
@@ -1218,6 +1364,12 @@
               "decode_tps_median": 2.6851
             }
           ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
         }
       },
       "judging_cost_usd": 2.95376
@@ -1229,6 +1381,12 @@
       "display_name": "DGX Spark",
       "vram_gb": 128.0,
       "notes": "GB10 Grace-Blackwell, 128 GB unified LPDDR5x"
+    },
+    {
+      "hardware_id": "rtx-5080",
+      "display_name": "RTX 5080",
+      "vram_gb": 16.0,
+      "notes": "consumer, 16 GB GDDR7"
     }
   ],
   "judge_calibration_summary": {
