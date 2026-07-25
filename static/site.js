@@ -194,6 +194,78 @@ const GROUP_TITLES = {
   "Speed": "Measured on this machine — no AI judge involved.",
 };
 
+/* ---- multi-hardware speed: leaderboard selector state --------------------
+   The Speed columns headline dgx-spark by default, but a model may have been measured (or
+   found not to fit) on other declared machines too (`row.perf_by_hardware`, keyed by
+   hardware_id — see site_gen.py `_perf_by_hardware`). `activeHardware` is the ONE thing the
+   selector changes: which machine's numbers the Speed columns show. It never touches sort
+   order — `currentSpeedRefresh` (set by whichever leaderboard table is currently mounted)
+   patches just the two speed cells' textContent per row, in place, so the row order on
+   screen can never move because of a hardware switch. */
+let activeHardware = "dgx-spark";
+let currentSpeedRefresh = () => {};
+
+// Resolve what a Speed cell should show for one row/key ("ttft_2k_ms" | "tps_2k") under the
+// currently active machine. Honest about the three states a machine can be in for a model:
+// measured (real number), doesnt_fit (this machine can't hold the weights), not_measured
+// (declared but never benchmarked here). NEVER coerces a missing/unfit number to 0 — that
+// would read as "instant" or "zero throughput" instead of "we don't know" / "can't run it".
+function speedDisplay(row, key) {
+  const pbh = row.perf_by_hardware || {};
+  const entry = pbh[activeHardware];
+  const fmtSpeed = (v) => (v == null ? "—" : (key === "ttft_2k_ms" ? fmt.secs(v) : fmt.wps(v)));
+  if (!entry) {
+    // No hardware-scoped data for this machine at all — either an export that predates
+    // per-hardware perf, or this model was never profiled on a non-default machine. dgx-spark
+    // keeps its historical headline fields so old data keeps rendering; any other machine
+    // is honestly "not measured", not a guess.
+    if (activeHardware === "dgx-spark") return { text: fmtSpeed(row[key]), muted: false };
+    return { text: "—", muted: false };
+  }
+  if (entry.state === "doesnt_fit") return { text: "doesn't fit", muted: true };
+  if (entry.state === "not_measured") return { text: "—", muted: false };
+  return { text: fmtSpeed(entry[key]), muted: false };
+}
+function applySpeedCell(td, row, key) {
+  const { text, muted } = speedDisplay(row, key);
+  td.textContent = text;
+  td.classList.toggle("hw-nofit", muted);
+}
+
+// Resolves the value a Speed column SORTS by for the currently active machine — must mirror
+// speedDisplay()'s honesty rules exactly (same entry lookup, same dgx-spark-only legacy
+// fallback, same "unmeasured/doesn't-fit is not a number") so the column is never ordered by
+// numbers other than the ones it displays. Returns null (not 0) when there is nothing to sort
+// by; the caller's existing numeric-column null-handling sinks those rows the same as any
+// other missing metric.
+function speedSortValue(row, key) {
+  const pbh = row.perf_by_hardware || {};
+  const entry = pbh[activeHardware];
+  if (!entry) return activeHardware === "dgx-spark" ? row[key] : null;
+  if (entry.state !== "measured") return null;
+  return entry[key];
+}
+
+// Populates <select id="hardwareSelect"> from window.OG_HARDWARE (set where each page's data
+// loads — see initLeaderboard/initModel) and wires it to re-source the Speed columns ONLY.
+// Mounted alongside the existing "Rank by" controls; a no-op (nothing appended) if the export
+// carries no hardware list (older DB) or the mount point doesn't exist on this page.
+function renderHardwareSelect() {
+  const mount = document.getElementById("rank-by");
+  const hw = window.OG_HARDWARE || [];
+  if (!mount || !hw.length) return;
+  const select = el("select", { id: "hardwareSelect" });
+  hw.forEach((h) => select.appendChild(el("option", { value: h.hardware_id }, h.display_name || h.hardware_id)));
+  select.value = activeHardware;
+  select.addEventListener("change", () => {
+    activeHardware = select.value;       // display-only — never re-sorts the ladder
+    currentSpeedRefresh();
+  });
+  mount.appendChild(el("div", { class: "hwselect" },
+    el("label", { for: "hardwareSelect", class: "hwselect-lbl", text: "Speed shown for:" }),
+    select));
+}
+
 // Heat ranges are computed from RANKED models only. A provisional model's score comes from a
 // partial, non-random slice of its corpus, so letting it set an endpoint would rescale every
 // other model's cell against a number that doesn't mean the same thing.
@@ -295,11 +367,19 @@ function renderLeaderboard(models, rankKey = null) {
       return td;
     }
 
+    // Speed columns: source from row.perf_by_hardware[activeHardware] (falling back to the
+    // dgx-spark headline fields), never from a fixed dgx-spark-only read — see speedDisplay().
+    // The hardware-select refresh finds these cells again via the captured `speedRefs`/
+    // `currentSpeedRefresh` closure below (paint()), not by DOM query — no data-key needed here.
+    if (c.key === "ttft_2k_ms" || c.key === "tps_2k") {
+      const td = el("td", {});
+      applySpeedCell(td, row, c.key);
+      return td;
+    }
+
     const v = row[c.key];
     let disp;
-    if (c.key === "ttft_2k_ms") disp = fmt.secs(v);
-    else if (c.key === "tps_2k") disp = fmt.wps(v);
-    else if (c.key === "normalized_elo") disp = fmt.eloCI(row);
+    if (c.key === "normalized_elo") disp = fmt.eloCI(row);
     else if (c.key === "win_rate") disp = fmt.pct(v);
     else if (c.key === "eq_score" || c.key === "humanlike_score") disp = fmt.score100(v);
     else if (c.key === "avg_reply_words") disp = fmt.int(v);
@@ -325,10 +405,15 @@ function renderLeaderboard(models, rankKey = null) {
   function paint(rows) {
     tbody.replaceChildren();
     let rank = 0;
+    // Refs to just this paint's speed cells, in ROW order — a hardware switch re-sources these
+    // in place and never rebuilds/reorders the table, so it structurally cannot re-sort.
+    const speedRefs = [];
     rows.forEach((row) => {
       const tr = el("tr", { class: row.ranked === false ? "provisional" : "" });
+      const rowSpeed = {};
       for (const c of cols) {
         const td = cell(c, row);
+        if (c.key === "ttft_2k_ms" || c.key === "tps_2k") rowSpeed[c.key] = td;
         if (c.gstart) td.classList.add("gstart");
         tr.appendChild(td);
       }
@@ -336,7 +421,16 @@ function renderLeaderboard(models, rankKey = null) {
       // their incomplete judging cannot support.
       tr.firstChild.textContent = row.ranked === false ? "—" : String(++rank);
       tbody.appendChild(tr);
+      speedRefs.push({ row, cells: rowSpeed });
     });
+    // Registers this render's refresh as the ACTIVE one — the hardware-select listener always
+    // calls whichever leaderboard table is currently mounted (Overall or a criterion sort).
+    currentSpeedRefresh = () => {
+      for (const { row, cells } of speedRefs) {
+        if (cells.ttft_2k_ms) applySpeedCell(cells.ttft_2k_ms, row, "ttft_2k_ms");
+        if (cells.tps_2k) applySpeedCell(cells.tps_2k, row, "tps_2k");
+      }
+    };
   }
 
   let sortKey = rankKey ? "criterion" : "normalized_elo", sortDir = -1;   // default: strongest on top
@@ -350,6 +444,9 @@ function renderLeaderboard(models, rankKey = null) {
       if (sortKey === "model") { x = a.display_name; y = b.display_name; }
       if (sortKey === "size") { x = a.params_total_b; y = b.params_total_b; }
       if (sortKey === "vram") { x = vramGB(a); y = vramGB(b); }
+      // Speed columns must sort by exactly the numbers the active hardware selection shows —
+      // never by the stale dgx-spark headline field once another machine is selected.
+      if (sortKey === "ttft_2k_ms" || sortKey === "tps_2k") { x = speedSortValue(a, sortKey); y = speedSortValue(b, sortKey); }
       const xn = x == null, yn = y == null;
       if (xn && yn) return 0;
       if (xn) return 1;                    // nulls sink to the bottom
@@ -611,6 +708,9 @@ async function initLeaderboard() {
   const mount = $("#leaderboard");
   try {
     const data = await getJSON("data/leaderboard.json");
+    // Declared machines, ordered by vram desc (Task 5's export order) — shared by the
+    // leaderboard selector AND the model-detail page (which re-fetches this same file for it).
+    window.OG_HARDWARE = data.hardware || [];
     const jg = data.judge_generation || {};
     const gen = document.querySelector("[data-generated-at]");
     if (gen && data.generated_at) gen.textContent = new Date(data.generated_at).toISOString().replace("T", " ").slice(0, 16) + " UTC";
@@ -620,6 +720,7 @@ async function initLeaderboard() {
     renderPickCard(data.models);
     renderTieBanner(data.models);
     renderRankBy(data.models);
+    renderHardwareSelect();
     mount.replaceChildren(renderLeaderboard(data.models));
   } catch (e) { fail(mount, "Could not load leaderboard.json — " + e.message); }
 }
@@ -747,7 +848,16 @@ async function initModel() {
   const slug = new URLSearchParams(location.search).get("slug");
   if (!slug) { fail(mount, "No model selected. Return to the leaderboard and pick a model."); return; }
   try {
-    const d = await getJSON(`data/models/${encodeURIComponent(slug)}.json`);
+    // The model-detail export (data/models/<slug>.json) carries this model's own
+    // perf_by_hardware, but not the ordered/labeled hardware roster — that only lives on
+    // leaderboard.json (see site_gen.py `leaderboard["hardware"]`). Fetch both, same pattern
+    // initCompare already uses (leaderboard.json + a per-model doc in one page load) — not a
+    // new/parallel data path, the same JSON endpoint site.js already fetches elsewhere.
+    const [d, lb] = await Promise.all([
+      getJSON(`data/models/${encodeURIComponent(slug)}.json`),
+      getJSON("data/leaderboard.json").catch(() => null),
+    ]);
+    window.OG_HARDWARE = (lb && lb.hardware) || window.OG_HARDWARE || [];
     $("[data-model-name]").textContent = d.display_name || slug;
     $("[data-model-slug]").textContent = slug;
     document.title = `${d.display_name || slug} — OpenGauntlet`;
@@ -755,6 +865,29 @@ async function initModel() {
 
     const grid = el("div", { class: "grid-2 row-in" }, critCard(d.criteria || []), categoryCard(d.category_breakdown || []));
     mount.appendChild(grid);
+
+    // Three-machine speed table: one row per declared machine, honest about fit. Placed above
+    // the charts (which only ever plot dgx-spark's curve) so "can I actually run this, and how
+    // fast" is answered before the detailed throughput/latency graphs.
+    const pbh = d.perf_by_hardware || {};
+    const hwList = window.OG_HARDWARE || [];
+    const hwNameById = new Map(hwList.map((h) => [h.hardware_id, h.display_name || h.hardware_id]));
+    const hwOrder = hwList.length ? hwList.map((h) => h.hardware_id) : Object.keys(pbh);
+    const perfMachines = el("div", { class: "perf-machines" });
+    hwOrder.forEach((hwId) => {
+      const cell = pbh[hwId];
+      if (!cell) return;
+      const label = { measured: null, doesnt_fit: "doesn't fit", not_measured: "not measured" }[cell.state];
+      const speed = cell.state === "measured" && cell.tps_2k != null
+        ? `${Math.round(cell.tps_2k)} words/sec` : (label || "—");
+      perfMachines.appendChild(el("div", { class: "perf-machine-row" + (cell.state === "doesnt_fit" ? " nofit" : "") },
+        el("span", { class: "hw-name", text: hwNameById.get(hwId) || hwId }),
+        el("span", { class: "hw-speed", text: speed })));
+    });
+    if (perfMachines.children.length) {
+      mount.appendChild(el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }), el("h2", { text: "Speed by machine" })));
+      mount.appendChild(perfMachines);
+    }
 
     // perf charts
     const curve = d.perf_curve || [];

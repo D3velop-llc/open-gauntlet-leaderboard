@@ -118,21 +118,51 @@
   },
   "perf_curve": [
     {
+      "hardware_id": "dgx-spark",
       "prompt_tokens": 512,
       "ttft_ms_median": 178.952,
       "decode_tps_median": 13.2908
     },
     {
+      "hardware_id": "dgx-spark",
       "prompt_tokens": 2048,
       "ttft_ms_median": 149.4783,
       "decode_tps_median": 12.9286
     },
     {
+      "hardware_id": "dgx-spark",
       "prompt_tokens": 8192,
       "ttft_ms_median": 158.835,
       "decode_tps_median": 12.6511
     }
   ],
+  "perf_by_hardware": {
+    "dgx-spark": {
+      "state": "measured",
+      "ttft_2k_ms": 149.4783,
+      "tps_2k": 12.9286,
+      "curve": [
+        {
+          "hardware_id": "dgx-spark",
+          "prompt_tokens": 512,
+          "ttft_ms_median": 178.952,
+          "decode_tps_median": 13.2908
+        },
+        {
+          "hardware_id": "dgx-spark",
+          "prompt_tokens": 2048,
+          "ttft_ms_median": 149.4783,
+          "decode_tps_median": 12.9286
+        },
+        {
+          "hardware_id": "dgx-spark",
+          "prompt_tokens": 8192,
+          "ttft_ms_median": 158.835,
+          "decode_tps_median": 12.6511
+        }
+      ]
+    }
+  },
   "voice": {
     "composite": 52.7807,
     "avg_reply_words": 134,

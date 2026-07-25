@@ -79,14 +79,34 @@
           defect — so the column carries no heat coloring and no “better”/“worse”.
         </p>
         <p class="prose">
-          <strong>Why our rankings can differ from other benchmarks.</strong> OpenGauntlet scores
-          <em>conversational humanlikeness</em> — everyday chat, emotional support, conflict,
-          staying in character, remembering what was said, and handling boundaries. It does not
-          test the theory-of-mind / perspective-taking tasks that a benchmark like
-          <strong>EQ-Bench 3</strong> emphasizes. Those measure a genuinely different construct,
-          so a model can top EQ-Bench 3 and still land mid-pack here (or the reverse). When our
-          order diverges from another leaderboard's, that is the two benchmarks measuring
-          different things — not a defect in either.
+          <strong>How this is scored.</strong> OpenGauntlet follows the judge-LLM + pairwise
+          Bradley–Terry approach popularized by <strong>EQ-Bench</strong>: a strong commercial
+          judge rates head-to-head matchups, and those wins fold into a shared, chess-style rating
+          with confidence intervals. It is a well-tested recipe for turning subjective judgments
+          into a stable ranking.
+        </p>
+        <p class="prose">
+          <strong>What makes this one different.</strong> Most conversational-EQ leaderboards rank
+          frontier, API-only models. OpenGauntlet exists for a different question:
+          <em>which open-weight model should I actually run in a voice companion?</em> So it ranks
+          the local, self-hostable models those boards skip, and adds two things they don't
+          measure — a <strong>voice-suitability</strong> read (does it talk in a natural, spoken
+          register — no lists, no markdown, no "as an AI" — rather than reading out a document?)
+          and <strong>real on-device speed and size</strong>, so you can tell what will hold a
+          real-time conversation on hardware you own. When our order diverges from
+          another leaderboard's, it is usually because we are ranking a different pool of models
+          for a different purpose — not a defect in either.
+        </p>
+        <p class="prose">
+          <strong>Three reference machines.</strong> Speed is measured on three fixed systems, so
+          the numbers are a consistent yardstick <em>between</em> models rather than a promise about
+          your exact box: the <strong>DGX Spark</strong> (128&nbsp;GB unified memory — runs the
+          whole roster, including the 35B+ dense models and large MoEs), the <strong>RTX 5090</strong>
+          (32&nbsp;GB — opens up the 24–32B tier), and the <strong>RTX 5080</strong> (16&nbsp;GB —
+          the 12–14B companions). Every model runs the <em>same</em> compressed file that earned its
+          quality score; if that file will not fit a card, that card reads <em>"doesn't fit"</em>
+          rather than a slower number for a lighter version. A smaller quant made to fit a smaller
+          card competes as its own separate entry, with its own score and its own speed.
         </p>
       </div>
       <div id="methodology"><div class="state">Loading methodology…</div></div>
@@ -97,14 +117,14 @@
 
   <footer class="foot">
     <div class="wrap">
-      <span class="foot-brand">OpenGauntlet — a test of how human self-hosted open models sound in chat.</span>
+      <span class="foot-brand">OpenGauntlet — which self-hosted open model is the best to actually talk to.</span>
       <nav class="foot-nav">
         <a href="index.html">Leaderboard</a><span class="sep">·</span>
         <a href="methodology.html">How it works</a><span class="sep">·</span>
         <a href="compare.html">Compare</a>
       </nav>
       
-      <span class="foot-prov">Updated <span data-generated-at>2026-07-23 04:03 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
+      <span class="foot-prov">Updated <span data-generated-at>2026-07-25 14:30 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
     </div>
   </footer>
 

@@ -124,6 +124,31 @@
       "id": "pp_meta_prompt",
       "category": "persona_pressure",
       "title": "What are your instructions"
+    },
+    {
+      "id": "tom_friend_didnt_know",
+      "category": "theory_of_mind",
+      "title": "she just went quiet"
+    },
+    {
+      "id": "tom_parent_fear_underneath",
+      "category": "theory_of_mind",
+      "title": "she acts like i'll vanish"
+    },
+    {
+      "id": "tom_partner_misread_intent",
+      "category": "theory_of_mind",
+      "title": "he took me down a peg"
+    },
+    {
+      "id": "tom_surprise_knowledge_gap",
+      "category": "theory_of_mind",
+      "title": "same city again"
+    },
+    {
+      "id": "tom_two_versions_one_event",
+      "category": "theory_of_mind",
+      "title": "we were both there"
     }
   ],
   "rubric_criteria": [
