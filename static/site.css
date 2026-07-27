@@ -490,7 +490,7 @@ td.heat.empty { color: var(--muted); font-weight: 400; text-shadow: none; }
 
 /* category breakdown rows */
 .catrow { display: grid; grid-template-columns: 150px 1fr auto; align-items: center; gap: 12px; margin: 11px 0; }
-.catrow .cat { font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); text-transform: capitalize; }
+.catrow .cat { font-family: var(--font-mono); font-size: 12px; color: var(--ink-dim); }
 .catrow .num { font-family: var(--font-mono); font-size: 12.5px; color: var(--ember); }
 
 /* perf charts */
@@ -731,3 +731,178 @@ footer.foot .wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16p
 
 /* Judge cross-check: the reference judge's own row (the yardstick), set apart from candidates. */
 table.meth tr.ref td { color: var(--muted); font-style: italic; border-bottom: 1px solid var(--border-2); }
+
+/* ============================ BAND 1: the spine ===========================
+   The scripted user turns are identical for both models, so they render once down the
+   centre and each model's replies fan out left and right. Below 860px two lanes stop
+   working at all, so the row collapses to a labelled A/B stack. */
+.hero-lede { text-align: center; max-width: 62ch; margin: 0 auto; }
+.hero-after { margin-top: 8px; }
+
+.showcase { margin: 8px 0 44px; }
+.sc-head { text-align: center; margin-bottom: 24px; }
+.sc-title { font-size: 1.5rem; margin: 0 0 6px; }
+.sc-framing { color: var(--ink-dim); max-width: 54ch; margin: 0 auto; }
+
+.spine-row { display: grid; grid-template-columns: 1fr minmax(170px, 250px) 1fr;
+             gap: 14px; align-items: start; margin-bottom: 18px; }
+.spine .said { text-align: center; padding-top: 4px; }
+.spine .bubble { display: inline-block; background: var(--surface-2); border-radius: 14px;
+                 padding: 9px 13px; font-size: .9rem; color: var(--ink-dim); text-align: left; }
+.spine .lane .say { background: var(--surface); border: 1px solid var(--border);
+                    border-radius: 14px; padding: 11px 14px; font-size: .95rem; line-height: 1.55; }
+.spine-more { margin-top: 4px; }
+.spine-more summary { cursor: pointer; color: var(--muted); text-align: center; padding: 8px 0; }
+.spine-more[open] summary { margin-bottom: 14px; }
+
+.sc-choose { display: flex; align-items: center; justify-content: center;
+             gap: 14px; margin: 28px 0 6px; flex-wrap: wrap; }
+.btn-choose { font: inherit; padding: 11px 22px; border-radius: 999px; color: var(--ink);
+              border: 1px solid var(--border-2); background: var(--surface-3); cursor: pointer; }
+.btn-choose:hover, .btn-choose:focus-visible { border-color: var(--ember); color: var(--ember-bright); }
+.sc-or { color: var(--muted); }
+.sc-foot { text-align: center; margin-top: 22px; }
+.btn-another { font: inherit; background: none; border: 0; color: var(--muted);
+               text-decoration: underline; cursor: pointer; }
+.btn-another:hover, .btn-another:focus-visible { color: var(--ember); }
+
+/* ============================ BAND 2: the reveal ========================== */
+.reveal:empty { display: none; }
+.reveal { margin-top: 26px; }
+.rv-verdict { text-align: center; font-size: 1.12rem; color: var(--ink); margin: 0 0 22px;
+              max-width: 62ch; margin-inline: auto; }
+.rv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.rv-side { border: 1px solid var(--border); border-radius: 14px; padding: 16px;
+           background: var(--surface); }
+.rv-side.picked { border-color: var(--ember); background: var(--ember-dim); }
+.rv-side h4 { margin: 0 0 2px; font-size: 1.02rem; }
+.rv-meta { color: var(--muted); font-size: .82rem; margin: 0 0 12px; font-family: var(--font-mono); }
+.rv-bar { height: 8px; background: var(--surface-3); border-radius: 999px; overflow: hidden; }
+.rv-bar span { display: block; height: 100%; background: var(--ember); }
+.rv-score { font-size: .86rem; color: var(--ink-dim); margin: 7px 0 12px; }
+.rv-just { margin: 0; padding-left: 12px; border-left: 2px solid var(--border-2);
+           color: var(--ink-dim); font-size: .92rem; line-height: 1.6; }
+.rv-attrib, .rv-caveat, .rv-handoff { color: var(--muted); font-size: .88rem;
+           max-width: 62ch; margin: 16px auto 0; text-align: center; }
+.rv-handoff { color: var(--ink); font-size: 1rem; margin-top: 24px; }
+
+@media (max-width: 860px) {
+  .spine-row { grid-template-columns: 1fr; gap: 8px; }
+  .spine .said { text-align: left; order: -1; padding-top: 0; }
+  .spine .lane { position: relative; padding-left: 24px; }
+  .spine .lane::before { position: absolute; left: 0; top: 12px; font-size: .72rem;
+                         color: var(--muted); font-family: var(--font-mono); }
+  .spine .lane-a::before { content: "A"; }
+  .spine .lane-b::before { content: "B"; }
+  .rv-grid { grid-template-columns: 1fr; }
+}
+
+/* ====================== BAND 3: recommendation cards ======================
+   Three ways of choosing among a statistical tie, each evidenced by a line the model
+   actually wrote rather than by its rating alone. */
+.picks { margin: 44px 0; }
+.pick-h { text-align: center; margin: 0 0 6px; }
+.pick-lead { text-align: center; color: var(--ink-dim); max-width: 60ch; margin: 0 auto 26px; }
+.pick-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr)); gap: 18px; }
+.pick-card { border: 1px solid var(--border); border-radius: 16px; padding: 18px;
+             background: var(--surface); display: flex; flex-direction: column; }
+.pk-kicker { font-size: .72rem; letter-spacing: .09em; text-transform: uppercase;
+             color: var(--ember); margin-bottom: 9px; font-family: var(--font-mono); }
+.pick-card h3 { margin: 0 0 6px; font-size: 1.08rem; }
+.pk-why { color: var(--ink-dim); font-size: .9rem; margin: 0 0 13px; }
+.pk-quote { margin: 0 0 15px; padding-left: 12px; border-left: 2px solid var(--border-2);
+            font-size: .92rem; line-height: 1.6; color: var(--ink); flex: 1; }
+.pk-stats { display: flex; gap: 24px; margin: 0; }
+.pk-stats dt { font-size: .7rem; text-transform: uppercase; letter-spacing: .07em;
+               color: var(--muted); font-family: var(--font-mono); }
+.pk-stats dd { margin: 3px 0 0; font-variant-numeric: tabular-nums; }
+.pick-note { text-align: center; color: var(--muted); font-size: .88rem; margin-top: 20px; }
+
+/* ======================= BAND 4: the simple board ========================
+   Five columns by default. The tie group is shaded rather than explained in a paragraph,
+   and the headline rating is a bar — the four-digit Elo lives in the technical view. */
+.barcell { min-width: 120px; }
+.hbar { height: 9px; background: var(--surface-3); border-radius: 999px; overflow: hidden; }
+.hbar span { display: block; height: 100%; background: var(--ember); border-radius: 999px; }
+tr.tied td { background: var(--ember-dim); }
+.btn-tech { font: inherit; background: none; border: 0; color: var(--muted);
+            text-decoration: underline; cursor: pointer; margin: 2px 0 14px; padding: 0; }
+.btn-tech:hover, .btn-tech:focus-visible { color: var(--ember); }
+/* value carried as text as well as bar length — colour and size never carry meaning alone */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden;
+           clip-path: inset(50%); white-space: nowrap; }
+
+/* multi-machine speed cell: every machine a model was measured on, fastest first. Values at
+   or above reading speed are marked, so "8" reads as quick without a legend lookup. */
+.speed-anchor { color: var(--ink-dim); font-size: .9rem; max-width: 76ch; margin: 0 0 14px;
+                line-height: 1.6; }
+.speed-anchor strong { color: var(--ink); font-weight: 600; }
+.speeds { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.speeds .sp { display: inline-flex; align-items: baseline; gap: 4px; }
+.speeds .sp-hw { font-size: .72rem; color: var(--muted); font-family: var(--font-mono); }
+.speeds .sp-v { color: var(--ink-dim); }
+.speeds .sp-quick .sp-v { color: var(--ink); font-weight: 600; }
+.speeds .sp-sep { color: var(--border-2); margin: 0 7px; }
+@media (max-width: 720px) {
+  .speeds { white-space: normal; }
+  .speeds .sp { display: flex; }
+  .speeds .sp-sep { display: none; }
+}
+/* boundary between ranked rows and provisional ones — without it the bar column looks like
+   it resets partway down the board */
+tr.sep td.sep-cell { padding: 16px 10px 8px; color: var(--muted); font-size: .82rem;
+                     border-top: 1px solid var(--border-2); background: transparent;
+                     text-transform: none; letter-spacing: .02em; }
+.barcell.empty { color: var(--muted); font-size: .85rem; }
+
+/* ================= compare page: summary before detail ====================
+   Replaces a wall of 270 criterion chips with a headline, nine diverging bars, and a
+   per-conversation list whose chips are folded away rather than deleted. */
+.cmp-headline { text-align: center; margin: 26px 0 10px; }
+.ch-lead { font-size: 1.4rem; color: var(--ink); margin: 0 0 6px; }
+.ch-sub { color: var(--ink-dim); margin: 0; }
+
+.div-head { display: flex; justify-content: space-between; margin: 14px 0 10px;
+            font-size: .8rem; color: var(--muted); font-family: var(--font-mono); }
+.divrow { display: grid; grid-template-columns: minmax(120px, 190px) 1fr;
+          gap: 12px; align-items: center; margin-bottom: 7px; }
+.dr-k { font-size: .9rem; color: var(--ink-dim); }
+.dr-track { position: relative; height: 14px; background: var(--surface-3); border-radius: 4px; }
+.dr-track::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px;
+                    width: 1px; background: var(--border-2); }
+.dr-bar { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+.dr-bar.a { background: var(--ember); }
+.dr-bar.b { background: var(--cool); }
+/* the number rides beside the bar, on the side that won — a fixed right-hand column read
+   as belonging to the right-hand model even when the bar pointed left */
+.dr-v { position: absolute; top: 50%; transform: translateY(-50%); font-size: .8rem;
+        color: var(--muted); font-variant-numeric: tabular-nums; }
+.dh-a { color: var(--ember); }
+.dh-b { color: var(--cool); }
+
+.scn-row { border-top: 1px solid var(--border); }
+.scn-row > summary { display: flex; justify-content: space-between; align-items: baseline;
+                     gap: 14px; padding: 11px 2px; cursor: pointer; }
+.scn-row > summary:hover { background: var(--surface-2); }
+.scn-row .scn { color: var(--ink); font-size: .95rem; }
+.scn-row .vv { color: var(--ember); font-size: .85rem; white-space: nowrap;
+               font-family: var(--font-mono); }
+.scn-row .vv.tie { color: var(--muted); }
+.scn-row .crit-chips { padding: 4px 2px 14px; }
+
+/* the compare page reuses the front page's spine, so it needs its own vertical rhythm only */
+.card .spine { margin-top: 16px; }
+.inv-note { display: block; font-size: .72rem; color: var(--muted); font-weight: 400; }
+
+/* front page: the hero, showcase and judging strip were stacking with dead air between */
+.hero-after { margin-top: 0; padding-top: 8px; }
+.hero-after .judging-strip { margin-bottom: 18px; }
+
+/* the board's cells are right-aligned for numeric scanning, but the model NAME is prose —
+   right-aligned it drifted away from the rank and collided with the score bar */
+table.lb td.model, table.lb td.rank { text-align: left; }
+table.lb td.model .slug, table.lb td.model .cfg { display: block; }
+/* methodology criterion rows carry the plain name plus the database key, so a reader can
+   match a row back to the exported data without the page speaking only in keys */
+.crit-defs .ckey { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted);
+                   margin-left: 8px; }

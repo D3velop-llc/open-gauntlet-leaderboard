@@ -23,6 +23,11 @@ function el(tag, props, ...kids) {
 }
 const $ = (sel, root = document) => root.querySelector(sel);
 
+/* Comfortable adult reading speed, ~240 words/min. The one anchor that makes a words-per-second
+   figure mean anything to a lay reader: at or above this, text arrives faster than you can read
+   it, so more speed buys nothing you'd notice in conversation. */
+const READING_WPS = 4;
+
 /* ---- formatting --------------------------------------------------------- */
 const fmt = {
   n1: (v) => (v == null ? "—" : Number(v).toFixed(1)),
@@ -171,14 +176,49 @@ const CRITERIA = [
   { key: "slop_index",            label: "Fresh writing",      family: "Conversation",     tip: "Avoids clichés and filler" },
 ];
 
+/* ---- one vocabulary for the whole site ---------------------------------
+   CRITERIA above is the single source of plain-language names, but only the leaderboard
+   used it — the model, compare and methodology pages printed raw keys ("assistant smell",
+   "slop index"), so the same measurement had two different names depending on the page.
+   Everything now routes through these. */
+function critLabel(key) {
+  const c = CRITERIA.find((x) => x.key === key);
+  return c ? c.label : String(key || "").replace(/_/g, " ");
+}
+function critTip(key) {
+  const c = CRITERIA.find((x) => x.key === key);
+  return c ? c.tip : "";
+}
+/* Two axes are INVERTED — a high score means "less of the bad thing". Without saying so, a
+   reader sees "Not robotic 14.3/20" and cannot tell which direction is good. */
+const INVERTED_CRITERIA = { assistant_smell: "20 = no corporate-AI tone at all",
+                            slop_index: "20 = freshest writing, no clichés" };
+/* Scenario families, de-underscored. `Boundaries_safety` is a database key, not a heading. */
+function categoryLabel(key) {
+  const map = {
+    emotional_support: "Emotional support", conflict: "Conflict",
+    everyday_banter: "Everyday banter", persona_pressure: "Staying in character",
+    memory_callback: "Remembering", boundaries_safety: "Boundaries & safety",
+    theory_of_mind: "Reading between the lines",
+  };
+  return map[key] || String(key || "").replace(/_/g, " ").replace(/^./, (m) => m.toUpperCase());
+}
+/* Scenario id -> human title ("Just help me this once", not "bs_conceal_harmful").
+   Populated from compare.json / the model detail doc; falls back to the id. */
+let SCENARIO_TITLES = {};
+function scenarioLabel(id) {
+  const m = SCENARIO_TITLES[id];
+  return (m && m.title) || String(id || "");
+}
+
 const COLS = [
-  { key: "rank", label: "#", css: "txt", group: "" },
-  { key: "model", label: "Model", css: "txt", type: "text", group: "" },
+  { key: "rank", label: "#", css: "txt", group: "", simple: true },
+  { key: "model", label: "Model", css: "txt", type: "text", group: "", simple: true },
   { key: "size", label: "Size", type: "text", group: "",
     title: "How big the model is, in billions of parameters. Smaller is easier to run. "
          + "'26B (uses 4B/reply)' means it's a big model that only activates part of itself "
          + "each reply — that makes it faster, but it still needs the full size in memory." },
-  { key: "vram", label: "Runs on", type: "text", group: "",
+  { key: "vram", label: "Runs on", type: "text", group: "", simple: true,
     title: "Rough graphics-card memory (VRAM) needed to run it. Under ~12 GB fits most gaming "
          + "GPUs; 24 GB needs a high-end card; 48 GB+ is server-class. Estimated from the "
          + "model's compression — treat as a ballpark. '—' = couldn't estimate." },
@@ -191,7 +231,7 @@ const COLS = [
          + "model also happens to be a newer architecture served by vLLM/SGLang, and every "
          + "compressed one is a llama.cpp community fine-tune. Those two things move together "
          + "here, so the score gap between the groups can't be pinned on precision alone." },
-  { key: "normalized_elo", label: "Human score", type: "num", heat: true, group: "How it scored",
+  { key: "normalized_elo", label: "Human score", type: "num", heat: true, group: "How it scored", simple: true,
     title: "How human the model sounds, as a chess-style rating — higher is better, no maximum. "
          + "The range in parentheses is our margin of error: if two models' ranges overlap, "
          + "treat them as tied." },
@@ -210,7 +250,7 @@ const COLS = [
   { key: "ttft_2k_ms", label: "Wait for 1st word", type: "num", group: "Speed",
     title: "How long before it starts replying to a long (~2,000-word) prompt. Lower is better. "
          + "'—' = not speed-tested yet." },
-  { key: "tps_2k", label: "Speed", type: "num", group: "Speed",
+  { key: "tps_2k", label: "Speed", type: "num", group: "Speed", simple: true,
     title: "How fast it writes once it starts, in words per second. Higher is faster. "
          + "'—' = not speed-tested yet." },
 ];
@@ -282,6 +322,41 @@ function speedSortValue(row, key) {
 // loads — see initLeaderboard/initModel) and wires it to re-source the Speed columns ONLY.
 // Mounted alongside the existing "Rank by" controls; a no-op (nothing appended) if the export
 // carries no hardware list (older DB) or the mount point doesn't exist on this page.
+/* Short machine label for the simple board — three of these share one cell, so "RTX 5090"
+   and "DGX Spark" get their vendor prefix dropped. */
+function hwShortName(id) {
+  const hw = (window.OG_HARDWARE || []).find((h) => h.hardware_id === id);
+  const name = (hw && hw.display_name) || id;
+  return name.replace(/^(RTX|GTX|DGX|RX)\s+/i, "");
+}
+
+/* Every machine this model was actually MEASURED on, fastest first.
+   Simple view shows them all at once rather than one machine plus a picker: a lone number
+   ("8/s") is uninterpretable without naming the hardware, and the picker lived in chrome the
+   simple view hides. `doesnt_fit` and `not_measured` are omitted entirely — a cell listing
+   what a model can't do is noise here; the technical view still reports both states. */
+function speedAllDisplay(row) {
+  const pbh = row.perf_by_hardware || {};
+  const out = [];
+  for (const [id, entry] of Object.entries(pbh)) {
+    if (entry && entry.state === "measured" && entry.tps_2k != null) {
+      out.push({ id, label: hwShortName(id), tps: entry.tps_2k });
+    }
+  }
+  // Pre-per-hardware exports carry only the dgx-spark headline fields; keep them rendering.
+  if (!out.length && row.tps_2k != null) {
+    out.push({ id: "dgx-spark", label: hwShortName("dgx-spark"), tps: row.tps_2k });
+  }
+  return out.sort((a, b) => b.tps - a.tps);
+}
+
+/* Measured words/sec on one machine, or null when it wasn't measured or doesn't fit. */
+function speedOn(row, hardwareId) {
+  const e = (row.perf_by_hardware || {})[hardwareId];
+  if (e) return e.state === "measured" ? e.tps_2k : null;
+  return hardwareId === "dgx-spark" ? (row.tps_2k ?? null) : null;
+}
+
 function renderHardwareSelect() {
   const mount = document.getElementById("rank-by");
   const hw = window.OG_HARDWARE || [];
@@ -336,17 +411,49 @@ function columnRangeBy(models, get) {
   return { min: Math.min(...vals), max: Math.max(...vals) };
 }
 
-function renderLeaderboard(models, rankKey = null) {
+function renderLeaderboard(models, rankKey = null, simple = false) {
   const crit = rankKey ? CRITERIA.find((c) => c.key === rankKey) : null;
   // In criterion mode: replace the "Human score" (Elo) column with a column showing this
   // criterion's 0-100 score, and drop the head-to-head Win-rate column. Everything else
   // (Size, Runs on, Emotional IQ, Humanlike, speed) stays. `criterion` is a synthetic column.
-  const cols = !crit ? COLS : COLS
+  let cols = !crit ? COLS : COLS
     .filter((c) => c.key !== "win_rate")
     .map((c) => c.key === "normalized_elo"
       ? { key: "criterion", label: crit.label, type: "num", heat: true,
           group: "How it scored", title: crit.tip, gstart: c.gstart }
       : c);
+
+  // Simple view: the five COLS entries flagged `simple`, with the four-digit Elo swapped for
+  // a bar scaled across the board's own range. Same column-substitution mechanism criterion
+  // mode uses above, so COLS stays the single source of truth for the technical view.
+  // Criterion mode is a technical-view feature, so the two never combine.
+  const eloRange = columnRange(models, "normalized_elo");
+  if (simple && !crit) {
+    cols = cols.filter((c) => c.simple).map((c) => {
+      if (c.key === "normalized_elo") return {
+        key: "elo_bar", label: "How human", type: "bar", group: "", simple: true,
+        title: "How human the model sounds, judged across 25 conversations. Bars this close "
+             + "together mean the test can't really separate them.",
+      };
+      // One machine's number can't be read on its own — 8 words/sec sounds slow until you
+      // know it was measured on a DGX Spark and the same model does 47 on an RTX 5090.
+      if (c.key === "tps_2k") return {
+        key: "speed_all", label: "Speed", type: "multi", group: "", simple: true,
+        title: "How fast the model writes, in words per second, on each machine we measured "
+             + "it on. Most people read about 4 words a second, so anything above that "
+             + "arrives faster than you can read it. Machines a model doesn't fit on are "
+             + "left out — switch to the technical view to see those.",
+      };
+      return c;
+    });
+    // Order explicitly rather than inheriting COLS order, which puts "Runs on" ahead of the
+    // rating. The answer belongs next to the name; hardware and speed are the follow-up.
+    const order = ["rank", "model", "elo_bar", "vram", "speed_all"];
+    cols = order.map((k) => cols.find((c) => c.key === k)).filter(Boolean);
+  }
+  // Rows the top-tier confidence intervals cannot separate. In simple view these are shaded
+  // instead of explained in a paragraph — same honesty, no prose.
+  const tied = new Set(simple ? topTier(models).map((m) => m.slug) : []);
 
   const ranges = {};
   for (const c of cols) if (c.heat) {
@@ -357,19 +464,22 @@ function renderLeaderboard(models, rankKey = null) {
 
   const modelPage = (window.OG && window.OG.modelPage) || "model.html";
   const thead = el("thead");
-  // provenance group row: which columns the judge scored vs measured locally
-  const gtr = el("tr", { class: "grp" });
-  for (let i = 0; i < cols.length; ) {
-    let j = i;
-    while (j < cols.length && cols[j].group === cols[i].group) j++;
-    const g = cols[i].group;
-    const th = el("th", { title: GROUP_TITLES[g] || "", class: (i > 0 ? "gstart" : "") + (g === "judge verdicts" ? " judged" : "") },
-      g === "configuration" ? "" : g);
-    th.colSpan = j - i;
-    gtr.appendChild(th);
-    i = j;
+  // provenance group row: which columns the judge scored vs measured locally. Suppressed in
+  // simple view — with five columns the "How it scored"/"Speed" grouping spans nothing useful.
+  if (!simple) {
+    const gtr = el("tr", { class: "grp" });
+    for (let i = 0; i < cols.length; ) {
+      let j = i;
+      while (j < cols.length && cols[j].group === cols[i].group) j++;
+      const g = cols[i].group;
+      const th = el("th", { title: GROUP_TITLES[g] || "", class: (i > 0 ? "gstart" : "") + (g === "judge verdicts" ? " judged" : "") },
+        g === "configuration" ? "" : g);
+      th.colSpan = j - i;
+      gtr.appendChild(th);
+      i = j;
+    }
+    thead.appendChild(gtr);
   }
-  thead.appendChild(gtr);
   const htr = el("tr");
   for (const c of cols) {
     const th = el("th", { class: (c.css === "txt" ? "txt" : "") + (c.gstart ? " gstart" : ""), "data-key": c.key, title: c.title },
@@ -438,6 +548,37 @@ function renderLeaderboard(models, rankKey = null) {
       return td;
     }
 
+    // Every measured machine in one cell, fastest first. Values at or above reading speed
+    // (~4 w/s) are marked so the number reads as "quick enough" without a legend lookup.
+    if (c.key === "speed_all") {
+      const all = speedAllDisplay(row);
+      if (!all.length) return el("td", { class: "speeds" }, "—");
+      const td = el("td", { class: "speeds" });
+      all.forEach((s, i) => {
+        if (i) td.appendChild(el("span", { class: "sp-sep", text: "·" }));
+        td.appendChild(el("span", { class: "sp" + (s.tps >= READING_WPS ? " sp-quick" : "") },
+          el("span", { class: "sp-hw", text: s.label }),
+          el("span", { class: "sp-v", text: Math.round(s.tps) })));
+      });
+      return td;
+    }
+
+    // Simple view's headline: a bar, not a four-digit rating. Length is scaled across the
+    // board's own Elo range; the number rides along as screen-reader text so the value is
+    // never colour/length-only.
+    if (c.key === "elo_bar") {
+      const v = row.normalized_elo;
+      // No bar at all when there is no rating. The minimum-width floor below would otherwise
+      // draw "not measured" as a short bar — i.e. as "measured, worst on the board".
+      if (v == null) return el("td", { class: "barcell empty", text: "not measured" });
+      const pct = eloRange.max === eloRange.min
+        ? 100 : ((v - eloRange.min) / (eloRange.max - eloRange.min)) * 100;
+      return el("td", { class: "barcell" },
+        el("div", { class: "hbar", title: v.toFixed(0) },
+          el("span", { style: `width:${Math.max(3, pct)}%` })),
+        el("span", { class: "sr-only", text: v.toFixed(0) }));
+    }
+
     const v = row[c.key];
     let disp;
     if (c.key === "normalized_elo") disp = fmt.eloCI(row);
@@ -469,8 +610,21 @@ function renderLeaderboard(models, rankKey = null) {
     // Refs to just this paint's speed cells, in ROW order — a hardware switch re-sources these
     // in place and never rebuilds/reorders the table, so it structurally cannot re-sort.
     const speedRefs = [];
+    // Provisional rows always sink, so the bar column runs down and then jumps back up (a
+    // 1665 below a 1190). In the numeric table that read as appended context; as a bar chart
+    // it reads as broken. Label the boundary once, in simple view where the bar is the
+    // headline — the technical view still carries the per-row "provisional" styling.
+    let sepDone = false;
     rows.forEach((row) => {
-      const tr = el("tr", { class: row.ranked === false ? "provisional" : "" });
+      if (simple && !sepDone && row.ranked === false && tbody.children.length) {
+        sepDone = true;
+        const sep = el("td", { class: "sep-cell",
+          text: "Still being judged — scored, but not ranked until every conversation is in" });
+        sep.colSpan = cols.length;
+        tbody.appendChild(el("tr", { class: "sep" }, sep));
+      }
+      const tr = el("tr", { class: (row.ranked === false ? "provisional" : "")
+                                   + (tied.has(row.slug) ? " tied" : "") });
       const rowSpeed = {};
       for (const c of cols) {
         const td = cell(c, row);
@@ -494,7 +648,9 @@ function renderLeaderboard(models, rankKey = null) {
     };
   }
 
-  let sortKey = rankKey ? "criterion" : "normalized_elo", sortDir = -1;   // default: strongest on top
+  // default: strongest on top. In simple view the Elo column is the synthetic `elo_bar`, so
+  // the default key must match its data-key or the sort arrow would render on no column.
+  let sortKey = rankKey ? "criterion" : (simple ? "elo_bar" : "normalized_elo"), sortDir = -1;
   function applySort() {
     // Filter BEFORE ranking so the "#" column numbers what is actually on screen; ranking first
     // and then hiding rows would leave gaps (1, 2, 3, 11, 15) that read as missing data.
@@ -507,6 +663,14 @@ function renderLeaderboard(models, rankKey = null) {
       if ((a.ranked === false) !== (b.ranked === false)) return a.ranked === false ? 1 : -1;
       let x = a[sortKey], y = b[sortKey];
       if (sortKey === "criterion") { x = a.criteria ? a.criteria[rankKey] : null; y = b.criteria ? b.criteria[rankKey] : null; }
+      // `elo_bar` is a presentation-only column — it holds no value of its own, so sort it
+      // by the rating it draws.
+      if (sortKey === "elo_bar") { x = a.normalized_elo; y = b.normalized_elo; }
+      // The cell leads with the fastest machine, so the sort must agree with what's on screen.
+      if (sortKey === "speed_all") {
+        const best = (m) => { const s = speedAllDisplay(m); return s.length ? s[0].tps : null; };
+        x = best(a); y = best(b);
+      }
       if (sortKey === "model") { x = a.display_name; y = b.display_name; }
       if (sortKey === "size") { x = a.params_total_b; y = b.params_total_b; }
       if (sortKey === "vram") { x = vramGB(a); y = vramGB(b); }
@@ -562,6 +726,19 @@ function topTier(models) {
   return ranked.filter((m) => (m.elo_ci_high != null ? m.elo_ci_high : m.normalized_elo) >= floor)
                .sort((a, b) => b.normalized_elo - a.normalized_elo);
 }
+/* Name the machine the speed came from. "writes about 8 words a second" was the DGX Spark
+   figure stated as if it were the model's one true speed — the same model does 47 on a 5090,
+   which is the whole point of the board's per-machine speed column. */
+function fastestWhy(m) {
+  const all = speedAllDisplay(m);
+  if (!all.length) return "Quickest of the top group.";
+  const best = all[0];
+  const rest = all.length > 1 ? `, ${Math.round(all[all.length - 1].tps)} on a ${all[all.length - 1].label}` : "";
+  // "an 5090" / "a RTX" both read wrong; pick the article from the label
+  const art = /^[80aeiou]/i.test(best.label) ? "an" : "a";
+  return `About ${Math.round(best.tps)} words a second on ${art} ${best.label}${rest} — quickest of the top group.`;
+}
+
 function renderPickCard(models) {
   const mount = document.getElementById("pick-card");
   if (!mount) return;
@@ -577,32 +754,54 @@ function renderPickCard(models) {
   const modelPage = (window.OG && window.OG.modelPage) || "model.html";
   const link = (m) => el("a", { href: `${modelPage}?slug=${encodeURIComponent(m.slug)}`, text: m.display_name });
 
-  const kids = [
-    el("h2", { class: "pick-h", text: "Which should I pick?" }),
-    el("p", { class: "pick-lead" },
-      `The top ${tier.length} models all score about the same — the test can't tell them apart, `
-      + `so any of them is a safe pick. Choose by what fits your computer:`),
-  ];
-  const ul = el("ul", { class: "pick-list" });
-  if (lightest) {
-    ul.appendChild(el("li", {},
-      el("strong", { text: "Lightest to run: " }), link(lightest),
-      document.createTextNode(` — needs the least memory (${vramLabel(lightest)}) of the top group.`)));
+  // One card per way of choosing, each evidenced by a line the model actually wrote
+  // (`row.quote`, exported by site_gen._pick_quote) rather than by numbers alone.
+  const card = (kicker, m, why) => {
+    if (!m) return null;
+    return el("div", { class: "pick-card" },
+      el("div", { class: "pk-kicker", text: kicker }),
+      el("h3", {}, link(m)),
+      el("p", { class: "pk-why", text: why }),
+      m.quote ? el("blockquote", { class: "pk-quote", text: m.quote }) : null,
+      el("dl", { class: "pk-stats" },
+        el("div", {}, el("dt", { text: "Runs on" }), el("dd", { text: vramLabel(m) })),
+        el("div", {}, el("dt", { text: "Speed" }),
+          // best measured machine, matching the card's own sentence — reading tps_2k here
+          // showed the Spark figure beside a line that quoted the 5090 one
+          el("dd", { text: (() => {
+            const best = speedAllDisplay(m)[0];
+            return best ? `${Math.round(best.tps)} words/sec on a ${best.label}` : "—";
+          })() }))));
+  };
+
+  // The same model routinely wins several categories (the top model is often also the
+  // lightest AND the fastest of the tie group), which rendered three identical cards and
+  // read as a bug. Collapse those into one card carrying every label it earned.
+  const specs = [
+    ["Best score", tier[0], "Top of the board — but barely ahead, so don't overthink it."],
+    ["Best for a normal gaming PC", lightest,
+     lightest ? `Needs the least memory (${vramLabel(lightest)}) of the top group.` : ""],
+    ["Fastest", fastest, fastest ? fastestWhy(fastest) : ""],
+  ].filter(([, m]) => m);
+  const merged = [];
+  for (const [kicker, m, why] of specs) {
+    const seen = merged.find((x) => x.m.slug === m.slug);
+    if (seen) { seen.kickers.push(kicker); if (why && why.length > seen.why.length) seen.why = why; }
+    else merged.push({ kickers: [kicker], m, why });
   }
-  if (fastest) {
-    ul.appendChild(el("li", {},
-      el("strong", { text: "Fastest: " }), link(fastest),
-      document.createTextNode(` — writes about ${Math.round(fastest.tps_2k)} words/second, quickest of the top group.`)));
-  }
-  ul.appendChild(el("li", {},
-    el("strong", { text: "Want the top score: " }), link(tier[0]),
-    document.createTextNode(" — but it's barely ahead, so don't overthink it.")));
-  ul.appendChild(el("li", { class: "pick-note" },
-    fastest ? "All of these are open-weight and free to run yourself."
-            : "Speed isn't measured for every top model yet — check the “Speed” columns if that "
-              + "matters. All of these are open-weight and free to run yourself."));
-  kids.push(ul);
-  mount.replaceChildren(el("div", { class: "pick" }, ...kids));
+  mount.replaceChildren(el("section", { class: "picks" },
+    el("h2", { class: "pick-h", text: "So which one should I run?" }),
+    el("p", { class: "pick-lead", text: merged.length === 1
+      ? `The top ${tier.length} score close enough that the test can't tell them apart, and one `
+        + `of them happens to be the lightest and the quickest of the group too.`
+      : `The top ${tier.length} score close enough that the test can't tell them apart — any of `
+        + `them is a safe pick. Choose on what fits your computer.` }),
+    el("div", { class: "pick-grid" },
+      ...merged.map((x) => card(x.kickers.join(" · "), x.m, x.why))),
+    el("p", { class: "pick-note", text:
+      fastest ? "All of these are open-weight and free to run yourself."
+              : "Speed isn't measured for every top model yet. All of these are open-weight "
+                + "and free to run yourself." })));
 }
 /* "Rank by" pills: Overall (default) plus each criterion, grouped by family. Clicking a pill
    re-renders the board in that mode and hides the Overall-only chrome (tie banner + pick card),
@@ -661,11 +860,13 @@ function renderTieBanner(models) {
   // Honest wording: state that the top group can't be separated, WITHOUT drawing a hard line
   // that implies the next model down is definitively worse (its range often overlaps too — the
   // whole ladder is a gradient). The CI whiskers on the verdict rail carry the visual nuance.
+  // Kept short: the shaded rows now carry the message visually, so this only has to name
+  // what the shading means. The full "read the board as a gradient" nuance lives in the
+  // CI whiskers on the verdict rail and on the methodology page.
   mount.replaceChildren(el("p", { class: "tie-note" },
-    el("strong", { text: `The top ${tier.length} are a tie, not a ranking. ` }),
-    `Their scores are close enough that we can't say any one is really better — treat #1 through `
-    + `#${tier.length} as equally good and choose on size and speed. Models just below them are `
-    + `often close too, so read the whole board as a gradient, not exact places.`));
+    el("strong", { text: `The shaded rows are a tie, not a ranking. ` }),
+    `The top ${tier.length} are close enough that we can't say any one is really better — pick `
+    + `whichever fits your computer. Models just below them are often close too.`));
 }
 
 /* ---- judging story: a human sentence, not a hash badge ------------------ */
@@ -774,6 +975,128 @@ function renderVerdictStrip(models) {
     el("div", { class: "vs-axis bottom" }, el("span", { text: "less human" }), el("span", { class: "val", text: "≈ " + Math.round(dmin) })));
 }
 
+/* Simple ⇄ technical. The page always opens simple, and the state is deliberately NOT
+   persisted: a shared link must never land a newcomer in the analyst view. The technical
+   view restores today's full table plus its rank-by pills and heat legend — nothing about
+   the board was deleted, only demoted. */
+function renderBoardToggle(models) {
+  const mount = document.getElementById("board-toggle");
+  const lb = document.getElementById("leaderboard");
+  if (!mount || !lb) return;
+  let simple = true;
+  const btn = el("button", { class: "btn-tech", type: "button" });
+  const chrome = () => [document.getElementById("rank-by"), document.querySelector(".legend")];
+  const apply = () => {
+    btn.textContent = simple ? "Show the technical view" : "Back to the simple view";
+    btn.setAttribute("aria-pressed", String(!simple));
+    chrome().forEach((n) => { if (n) n.style.display = simple ? "none" : ""; });
+    lb.replaceChildren(renderLeaderboard(models, null, simple));
+  };
+  btn.addEventListener("click", () => { simple = !simple; apply(); });
+  mount.replaceChildren(btn);
+  apply();
+}
+
+/* ======================= BANDS 1+2: side-by-side + reveal =================
+   One scripted conversation, two models. The scripted user turns are identical across
+   every model (the export REFUSES to emit a fork where they differ), so they render ONCE
+   down a centre spine with each model's replies fanning left and right.
+
+   Two invariants make this an honest test rather than a reveal with extra steps:
+     - the payload carries no winner (see site_gen._showcase), and
+     - the sides are shuffled on every render,
+   so neither the JSON nor the DOM can tell the visitor the answer before they choose. */
+function renderShowcase(showcase) {
+  const mount = document.getElementById("showcase");
+  if (!mount) return;
+  const forks = (showcase && showcase.forks) || [];
+  if (!forks.length) { mount.remove(); return; }      // degrade: the board still renders
+  const judge = (showcase.judge_model || "the judge").replace(/^[a-z0-9_-]+\//i, "");
+  const modelPage = (window.OG && window.OG.modelPage) || "model.html";
+  let idx = 0;
+
+  const draw = () => {
+    const fork = forks[idx];
+    const flip = Math.random() < 0.5;                  // shuffle per render
+    const sides = flip ? [fork.sides[1], fork.sides[0]] : [fork.sides[0], fork.sides[1]];
+    const crit = CRITERIA.find((c) => c.key === fork.criterion);
+    const critLabel = crit ? crit.label : fork.criterion;
+    const shown = Math.max(1, Math.min(fork.show_turns, fork.user_turns.length));
+
+    const row = (i) => el("div", { class: "spine-row" },
+      el("div", { class: "lane lane-a" }, el("div", { class: "say", text: sides[0].replies[i] || "" })),
+      el("div", { class: "said" }, el("div", { class: "bubble", text: fork.user_turns[i] })),
+      el("div", { class: "lane lane-b" }, el("div", { class: "say", text: sides[1].replies[i] || "" })));
+
+    const spine = el("div", { class: "spine" });
+    for (let i = 0; i < shown; i++) spine.appendChild(row(i));
+    if (fork.user_turns.length > shown) {
+      const rest = el("div", { class: "spine" });
+      for (let i = shown; i < fork.user_turns.length; i++) rest.appendChild(row(i));
+      spine.appendChild(el("details", { class: "spine-more" },
+        el("summary", { text: "read the rest of the conversation" }), rest));
+    }
+
+    const reveal = el("div", { class: "reveal", "aria-live": "polite" });
+    const choose = (picked) => {
+      const strong = sides[0].score_0_20 >= sides[1].score_0_20 ? 0 : 1;
+      const card = (s, i) => el("div", { class: "rv-side" + (i === picked ? " picked" : "") },
+        el("h4", {}, el("a", { href: `${modelPage}?slug=${encodeURIComponent(s.slug)}`, text: s.display_name })),
+        // Several display names already carry the quant in parentheses — don't say it twice.
+        el("p", { class: "rv-meta", text: [
+          s.params_total_b ? `${s.params_total_b}B` : null,
+          (s.quant && !(s.display_name || "").includes(s.quant)) ? s.quant : null,
+        ].filter(Boolean).join(" · ") || " " }),
+        el("div", { class: "rv-bar" }, el("span", { style: `width:${(s.score_0_20 / 20) * 100}%` })),
+        el("p", { class: "rv-score", text: `${Number(s.score_0_20).toFixed(0)} out of 20 for ${critLabel.toLowerCase()}` }),
+        el("blockquote", { class: "rv-just", text: s.justification }));
+
+      // The tie fork's headline is about the FULL board, not these two replies: the scores
+      // shown belong to the single displayed conversation, and claiming they tied would
+      // overstate what's on screen.
+      const verdict = fork.note === "tie"
+        ? `Close one. Across all 25 conversations these two are a statistical tie — and one of them is a fraction of the size of the other.`
+        : picked === strong
+          ? `That's the one ${judge} scored higher too.`
+          : `${judge} scored the other one higher. Here's what it saw — read them again and judge for yourself.`;
+
+      const kids = [
+        el("p", { class: "rv-verdict", text: verdict }),
+        el("div", { class: "rv-grid" }, card(sides[0], 0), card(sides[1], 1)),
+        el("p", { class: "rv-attrib", text: `Both scores and both comments above are ${judge}'s, on “${critLabel}”.` }),
+      ];
+      if (fork.note === "wide") {
+        kids.push(el("p", { class: "rv-caveat", text:
+          "This is one of the widest gaps we measured. Most models are far closer than "
+          + "this — which is why the ranking below rests on hundreds of comparisons, not one." }));
+      }
+      kids.push(el("p", { class: "rv-handoff", text:
+        "We put 24 free models through 25 conversations like this one." }));
+      reveal.replaceChildren(...kids);
+      buttons.remove();
+    };
+
+    const buttons = el("div", { class: "sc-choose" },
+      el("button", { class: "btn-choose", type: "button", onclick: () => choose(0) }, "the left one"),
+      el("span", { class: "sc-or", text: "or" }),
+      el("button", { class: "btn-choose", type: "button", onclick: () => choose(1) }, "the right one"));
+
+    mount.replaceChildren(el("section", { class: "showcase" },
+      el("div", { class: "sc-head" },
+        el("h2", { class: "sc-title", text: fork.title }),
+        el("p", { class: "sc-framing", text: fork.framing })),
+      spine, buttons, reveal,
+      forks.length > 1
+        ? el("div", { class: "sc-foot" }, el("button", {
+            class: "btn-another", type: "button",
+            onclick: () => { idx = (idx + 1) % forks.length; draw(); },
+          }, "try another conversation"))
+        : null));
+  };
+
+  draw();
+}
+
 async function initLeaderboard() {
   const mount = $("#leaderboard");
   try {
@@ -785,6 +1108,10 @@ async function initLeaderboard() {
     const gen = document.querySelector("[data-generated-at]");
     if (gen && data.generated_at) gen.textContent = new Date(data.generated_at).toISOString().replace("T", " ").slice(0, 16) + " UTC";
     renderJudgingStrip(jg.model, data.judge_calibration_summary);
+    // Caught independently of the board's own try: a missing or malformed showcase must
+    // degrade to a board-only page, never take the leaderboard down with it.
+    const showcase = await getJSON("data/showcase.json").catch(() => null);
+    renderShowcase(showcase);
     if (!data.models || !data.models.length) { renderVerdictStrip([]); fail(mount, "No models have completed a run yet."); return; }
     renderVerdictStrip(data.models);
     renderPickCard(data.models);
@@ -792,21 +1119,24 @@ async function initLeaderboard() {
     renderRankBy(data.models);
     renderHardwareSelect();
     renderPrecisionSelect();
-    mount.replaceChildren(renderLeaderboard(data.models));
+    renderBoardToggle(data.models);
   } catch (e) { fail(mount, "Could not load leaderboard.json — " + e.message); }
 }
 
 /* ============================ MODEL DETAIL =============================== */
 function critCard(criteria) {
-  const card = el("div", { class: "card" }, el("h3", { text: "Rubric criteria" }),
-    el("p", { class: "sub", text: "Mean score per criterion (0–20). The whisker spans ±1 std of iteration-to-iteration noise, averaged over scenarios (it excludes scenario-to-scenario spread)." }));
+  const card = el("div", { class: "card" }, el("h3", { text: "How it scored on each quality" }),
+    el("p", { class: "sub", text: "Judge's mean score out of 20, over 25 conversations. Higher is better on all nine. The whisker shows how much the score moved between repeat runs of the same conversation." }));
   for (const c of criteria) {
     const mean = c.mean, std = Math.sqrt(Math.max(0, c.variance || 0));
     const pct = (v) => Math.max(0, Math.min(100, (v / 20) * 100));
     const lo = pct(mean - std), hi = pct(mean + std);
-    card.appendChild(el("div", { class: "crit" },
+    // Two axes are inverted; without saying so, "Not robotic 14.3/20" is unreadable.
+    const inv = INVERTED_CRITERIA[c.criterion];
+    card.appendChild(el("div", { class: "crit", title: critTip(c.criterion) },
       el("div", { class: "cl" },
-        el("span", { class: "name", text: c.criterion.replace(/_/g, " ") }),
+        el("span", { class: "name" }, critLabel(c.criterion),
+          inv ? el("span", { class: "inv-note", text: inv }) : null),
         el("span", { class: "val", text: fmt.n1(mean) + " / 20" })),
       el("div", { class: "bar" },
         el("div", { class: "fill", style: `width:${pct(mean)}%` }),
@@ -816,13 +1146,13 @@ function critCard(criteria) {
 }
 
 function categoryCard(cats) {
-  const card = el("div", { class: "card" }, el("h3", { text: "By scenario category" }),
-    el("p", { class: "sub", text: "Mean rubric score (0–20) grouped by scenario family." }));
+  const card = el("div", { class: "card" }, el("h3", { text: "How it scored by situation" }),
+    el("p", { class: "sub", text: "The same score out of 20, grouped by the kind of conversation it was handling." }));
   if (!cats || !cats.length) { card.appendChild(el("p", { class: "note", text: "No category data." })); return card; }
   const max = 20;
   for (const c of cats) {
     card.appendChild(el("div", { class: "catrow" },
-      el("span", { class: "cat", text: c.category }),
+      el("span", { class: "cat", text: categoryLabel(c.category) }),
       el("div", { class: "bar" }, el("div", { class: "fill", style: `width:${(c.mean_score_0_20 / max) * 100}%` })),
       el("span", { class: "num", text: fmt.n1(c.mean_score_0_20) })));
   }
@@ -866,14 +1196,16 @@ function transcriptFold(t, i) {
     for (const s of scores) {
       jn.appendChild(el("div", { class: "jn" },
         el("div", { class: "head" },
-          el("span", { class: "c", text: s.criterion.replace(/_/g, " ") }),
+          el("span", { class: "c", text: critLabel(s.criterion) }),
           el("span", { class: "s", text: (s.score_0_20 != null ? s.score_0_20 : "—") + " / 20" })),
         s.justification ? el("div", { class: "just", text: s.justification }) : null));
     }
     wrap.appendChild(jn);
   }
   return el("details", { class: "fold" },
-    el("summary", {}, el("span", { class: "caret", text: "▸" }), `Transcript — ${t.scenario_id} · iter ${t.iteration}`,
+    el("summary", {}, el("span", { class: "caret", text: "▸" }),
+      t.title ? `“${t.title}”` : t.scenario_id,
+      t.category ? el("span", { class: "tag", text: categoryLabel(t.category) }) : null,
       el("span", { class: "tag", text: `${(t.turns || []).length} turns` })),
     wrap);
 }
@@ -902,11 +1234,11 @@ function perfChart(canvas, curve, field, color, unit) {
         tooltip: {
           backgroundColor: "#171C28", borderColor: "rgba(255,255,255,0.13)", borderWidth: 1,
           titleColor: "#E8EAF0", bodyColor: "#AEB6C6", padding: 10,
-          callbacks: { title: (it) => `${it[0].label} prompt tokens`, label: (it) => ` ${Number(it.raw).toFixed(1)} ${unit}` },
+          callbacks: { title: (it) => `${it[0].label} words of conversation so far`, label: (it) => ` ${Number(it.raw).toFixed(1)} ${unit}` },
         },
       },
       scales: {
-        x: { title: { display: true, text: "prompt tokens", color: muted, font: { size: 10 } },
+        x: { title: { display: true, text: "words of conversation so far", color: muted, font: { size: 10 } },
              grid: { color: grid }, ticks: { color: muted, font: { family: "monospace", size: 11 } } },
         y: { grid: { color: grid }, ticks: { color: muted, font: { family: "monospace", size: 11 } }, beginAtZero: true },
       },
@@ -965,11 +1297,11 @@ async function initModel() {
     const cTtft = el("canvas");
     const cTps = el("canvas");
     const perf = el("div", {},
-      el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }), el("h2", { text: "Throughput & latency" })),
+      el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }), el("h2", { text: "Speed in detail" })),
       el("div", { class: "charts" },
-        el("div", { class: "chart-card" }, el("h3", { text: "Time to first token" }), el("p", { class: "sub", text: "TTFT median (ms) vs prompt size" }),
+        el("div", { class: "chart-card" }, el("h3", { text: "Wait before the first word" }), el("p", { class: "sub", text: "How long it thinks before replying, as the conversation gets longer" }),
           el("div", { class: "chart-scroll" }, el("div", { class: "chart-box" }, cTtft))),
-        el("div", { class: "chart-card" }, el("h3", { text: "Decode speed" }), el("p", { class: "sub", text: "words/sec median vs prompt size" }),
+        el("div", { class: "chart-card" }, el("h3", { text: "Writing speed" }), el("p", { class: "sub", text: "Words per second once it starts, as the conversation gets longer" }),
           el("div", { class: "chart-scroll" }, el("div", { class: "chart-box" }, cTps)))));
     mount.appendChild(perf);
     perfChart(cTtft, curve, "ttft_ms_median", "#4AA8D8", "ms");
@@ -1038,7 +1370,10 @@ async function initMethodology() {
     const critList = el("ul", { class: "crit-defs" });
     for (const c of (m.rubric_criteria || []))
       critList.appendChild(el("li", { class: weighted.has(c) ? "weighted" : "" },
-        el("span", { class: "cname", text: c.replace(/_/g, " ") }),
+        // the plain name the rest of the site uses, with the database key kept alongside so
+        // this page still lets you match a row back to the data
+        el("span", { class: "cname", text: critLabel(c) }),
+        el("span", { class: "ckey", text: c }),
         el("span", { class: "cdesc", text: descs[c] || "" })));
 
     const bm = m.bias_mitigations || {};
@@ -1133,7 +1468,7 @@ function cmpEloRow(ra, rb) {
     if (!overlap) { aWin = av > bv; bWin = !aWin; }
   }
   return el("div", { class: "cmp-metric" },
-    el("span", { class: "k", text: "Normalized Elo (95% CI)" }),
+    el("span", { class: "k", text: "How human it sounds (with margin of error)" }),
     el("span", { class: "v" + (aWin ? " win" : ""), text: fmt.eloCI(ra) }),
     el("span", { class: "v" + (bWin ? " win" : ""), text: fmt.eloCI(rb) }));
 }
@@ -1152,7 +1487,6 @@ function pairwiseVerdictCard(pairEntry, ra, rb, bySlug) {
     return card;
   }
   const name = (slug) => (bySlug[slug] && bySlug[slug].display_name) || slug;
-  // record credit is keyed by lo/hi; map to the selected left (ra) / right (rb) models
   const rec = pairEntry.record || { lo: pairEntry.lo, lo_credit: 0, hi_credit: 0 };
   const aCredit = rec.lo === ra.slug ? rec.lo_credit : rec.hi_credit;
   const bCredit = rec.lo === rb.slug ? rec.lo_credit : rec.hi_credit;
@@ -1161,20 +1495,103 @@ function pairwiseVerdictCard(pairEntry, ra, rb, bySlug) {
     el("span", { class: "dash", text: "–" }),
     el("span", { class: "rec" + (bCredit > aCredit ? " win" : ""), text: `${bCredit} ${name(rb.slug)}` })));
   card.appendChild(el("p", { class: "note", text: "Margin-weighted judge-preference games (a decisive win counts more than a narrow one). This is the direct head-to-head — the Elo ladder ranks across every opponent and can order two models differently." }));
-  for (const v of pairEntry.scenarios) {
+  return card;
+}
+
+/* ---------------- compare page: summary before detail ---------------------
+   The old page printed one row per scenario, each carrying nine criterion chips: 30 rows ×
+   9 = 270 chips, every one repeating a full model name. Nothing was wrong in it and nothing
+   could be found in it. These three build the same data as headline → summary → detail, with
+   the chips folded away rather than deleted. */
+
+/* Who won, in a sentence a person can repeat. */
+function cmpHeadline(pairEntry, ra, rb, bySlug) {
+  const scns = (pairEntry && pairEntry.scenarios) || [];
+  if (!scns.length) return null;
+  const name = (s) => (bySlug[s] && bySlug[s].display_name) || s;
+  let aw = 0, bw = 0, ties = 0;
+  for (const v of scns) {
     const w = v.overall.winner;
-    const isTie = w == null;
-    const verdict = isTie ? "tie" : `${name(w)} +${Number(v.overall.margin).toFixed(1)}`;
+    if (w == null) ties++; else if (w === ra.slug) aw++; else bw++;
+  }
+  const lead = aw === bw
+    ? `Dead even: ${aw} conversations each.`
+    : `${name(aw > bw ? ra.slug : rb.slug)} won more of them.`;
+  const parts = [`${aw} to ${name(ra.slug)}`, `${bw} to ${name(rb.slug)}`];
+  if (ties) parts.push(`${ties} tied`);
+  return el("div", { class: "cmp-headline" },
+    el("p", { class: "ch-lead", text: lead }),
+    el("p", { class: "ch-sub", text: `Across ${scns.length} conversations: ${parts.join(", ")}.` }));
+}
+
+/* Nine criteria, one diverging bar each: which model the judge preferred on that quality and
+   by how much, summed over every conversation. This is what the 270 chips were trying to say. */
+function cmpCriterionSummary(pairEntry, ra, rb) {
+  const scns = (pairEntry && pairEntry.scenarios) || [];
+  if (!scns.length) return null;
+  const net = {};                       // criterion -> signed margin, positive favours ra
+  for (const v of scns) {
+    for (const c of (v.per_criterion || [])) {
+      if (c.winner == null) { net[c.criterion] = net[c.criterion] || 0; continue; }
+      const sign = c.winner === ra.slug ? 1 : -1;
+      net[c.criterion] = (net[c.criterion] || 0) + sign * Number(c.margin || 0);
+    }
+  }
+  const rows = CRITERIA.filter((c) => c.key in net);
+  if (!rows.length) return null;
+  const max = Math.max(1, ...rows.map((c) => Math.abs(net[c.key])));
+
+  const card = el("div", { class: "card row-in", style: "margin-top:22px" },
+    el("h3", { text: "Where each one is stronger" }),
+    el("p", { class: "sub", text:
+      "Every conversation added up, one quality at a time. Each bar points toward the model "
+      + "the judge preferred on that quality, and its length is how strong the preference was." }),
+    el("div", { class: "div-head" },
+      el("span", { class: "dh-a", text: "◀ " + ra.display_name }),
+      el("span", { class: "dh-b", text: rb.display_name + " ▶" })));
+  for (const c of rows) {
+    const v = net[c.key];
+    const pct = (Math.abs(v) / max) * 50;                     // half-width each side
+    // The value sits on the SAME side as the bar. Parked in a fixed right-hand column it
+    // read as belonging to the right-hand model even when the bar favoured the left one.
+    const val = el("span", {
+      class: "dr-v",
+      // park it just past the bar's outer end, on the winning side
+      style: v === 0 ? "left:calc(50% + 8px)"
+           : (v > 0 ? `right:calc(50% + ${pct}% + 8px)` : `left:calc(50% + ${pct}% + 8px)`),
+      text: v === 0 ? "tie" : Math.abs(v).toFixed(1),
+    });
+    card.appendChild(el("div", { class: "divrow", title: c.tip },
+      el("span", { class: "dr-k", text: c.label }),
+      el("span", { class: "dr-track" },
+        el("span", { class: "dr-bar" + (v > 0 ? " a" : " b"),
+          style: v === 0 ? "width:0" : (v > 0 ? `right:50%;width:${pct}%` : `left:50%;width:${pct}%`) }),
+        val)));
+  }
+  return card;
+}
+
+/* One row per conversation, named in words. The nine chips live behind each row's expander —
+   available, not shouted. */
+function cmpScenarioList(pairEntry, ra, rb, bySlug) {
+  const scns = (pairEntry && pairEntry.scenarios) || [];
+  if (!scns.length) return null;
+  const name = (s) => (bySlug[s] && bySlug[s].display_name) || s;
+  const card = el("div", { class: "card row-in", style: "margin-top:22px" },
+    el("h3", { text: "Conversation by conversation" }),
+    el("p", { class: "sub", text: "Each of the scripted conversations, and who the judge preferred. Open one to see how it broke down by quality." }));
+  for (const v of scns) {
+    const w = v.overall.winner, isTie = w == null;
     const chips = el("div", { class: "crit-chips" });
     for (const c of (v.per_criterion || [])) {
-      const cw = c.winner;
-      chips.appendChild(el("span", { class: "chip" + (cw == null ? " tie" : ""),
-        text: `${c.criterion.replace(/_/g, " ")}: ${cw == null ? "tie" : name(cw) + " +" + Number(c.margin).toFixed(1)}` }));
+      chips.appendChild(el("span", { class: "chip" + (c.winner == null ? " tie" : ""),
+        text: `${critLabel(c.criterion)}: ${c.winner == null ? "tie" : name(c.winner) + " +" + Number(c.margin).toFixed(1)}` }));
     }
-    card.appendChild(el("div", { class: "verdict-row" },
-      el("span", { class: "scn", text: v.scenario_id }),
-      el("span", { class: "vv" + (isTie ? " tie" : ""), text: verdict }),
-      chips));
+    const summary = el("summary", {},
+      el("span", { class: "scn", text: scenarioLabel(v.scenario_id) }),
+      el("span", { class: "vv" + (isTie ? " tie" : ""),
+        text: isTie ? "too close to call" : `${name(w)} +${Number(v.overall.margin).toFixed(1)}` }));
+    card.appendChild(el("details", { class: "scn-row" }, summary, chips));
   }
   return card;
 }
@@ -1191,15 +1608,33 @@ async function initCompare() {
   const compare = await getJSON("data/compare.json").catch(() => ({ pairwise: {} }));
   const pairwise = (compare && compare.pairwise) || {};
 
+  SCENARIO_TITLES = (compare && compare.scenarios) || {};
+
   const mkSelect = (def) => {
     const s = el("select", { class: "pick" });
-    models.forEach((m, i) => s.appendChild(el("option", { value: m.slug, selected: (m.slug === def) ? "selected" : null }, `${m.display_name} · ${m.slug}`)));
+    // display_name only: it already carries the quant, so appending the slug printed
+    // "glistening-gem-31b (Q4_K_M) · glistening-gem-31b-q4" — the same thing twice.
+    models.forEach((m) => s.appendChild(el("option", { value: m.slug, selected: (m.slug === def) ? "selected" : null }, m.display_name)));
     return s;
   };
-  // default to the two strongest ranked models — the most informative first view
+  // Default to the strongest model against the strongest opponent it was ACTUALLY judged
+  // against, from a different family. Two constraints, both learned the hard way:
+  //   - `pairwise_opponents` caps who faces whom, so most pairs have no head-to-head data
+  //     at all; defaulting to one opens the page with its two best sections missing.
+  //   - #1 vs #2 is often two builds of the same model — near-identical columns and a
+  //     board of ties, i.e. the page at its least informative.
   const ranked = [...models].sort((a, b) => (b.normalized_elo ?? -Infinity) - (a.normalized_elo ?? -Infinity));
-  const selA = mkSelect(ranked[0].slug);
-  const selB = mkSelect((ranked[1] || ranked[0]).slug);
+  const stem = (m) => (m.slug || "").split("-")[0];
+  const judged = (x, y) => {
+    const e = pairwise[[x, y].sort().join("|")];
+    return e && (e.scenarios || []).length;
+  };
+  const top = ranked.find((m) => ranked.some((o) => judged(m.slug, o.slug))) || ranked[0];
+  const other = ranked.find((m) => m.slug !== top.slug && stem(m) !== stem(top) && judged(top.slug, m.slug))
+             || ranked.find((m) => m.slug !== top.slug && judged(top.slug, m.slug))
+             || ranked[1] || ranked[0];
+  const selA = mkSelect(top.slug);
+  const selB = mkSelect(other.slug);
   const pickers = el("div", { class: "pickers" }, selA, el("span", { class: "vs", text: "VS" }), selB);
   const out = el("div", { id: "cmp-out" });
   mount.replaceChildren(pickers, out);
@@ -1213,50 +1648,84 @@ async function initCompare() {
     out.replaceChildren(el("div", { class: "state", text: "loading…" }));
     const [da, db] = await Promise.all([detail(sa), detail(sb)]);
 
-    const headline = el("div", { class: "card row-in" }, el("h3", { text: "Headline metrics" }),
-      el("p", { class: "sub" }, el("b", { text: ra.display_name }), " (left) vs ", el("b", { text: rb.display_name }), " (right) — ember marks the stronger value (Elo shows no ember when the two 95% intervals overlap)."));
-    headline.appendChild(cmpEloRow(ra, rb));
-    headline.appendChild(cmpMetricRow("EQ composite", ra.eq_score, rb.eq_score, fmt.n1, true));
-    headline.appendChild(cmpMetricRow("Humanlike", ra.humanlike_score, rb.humanlike_score, fmt.n1, true));
-    headline.appendChild(cmpMetricRow("Reply length", ra.avg_reply_words, rb.avg_reply_words, fmt.int, false, true));
-    headline.appendChild(cmpMetricRow("TTFT 2k (ms, lower better)", ra.ttft_2k_ms, rb.ttft_2k_ms, fmt.n1, false));
-    headline.appendChild(cmpMetricRow("words/s 2k", ra.tps_2k, rb.tps_2k, fmt.n1, true));
-
     // key must match Python's f"{lo}|{hi}" from sorted((a,b)); JS default string sort and
     // Python's codepoint sort agree for the project's ASCII slug convention.
     const pairKey = [sa, sb].sort().join("|");
-    const nodes = [headline, pairwiseVerdictCard(pairwise[pairKey], ra, rb, bySlug)];
+    const pe = pairwise[pairKey];
 
-    // per-criterion side by side
+    // Answer first, then the summary that supports it, then the per-conversation detail.
+    const nodes = [
+      cmpHeadline(pe, ra, rb, bySlug),
+      cmpCriterionSummary(pe, ra, rb),
+    ].filter(Boolean);
+
+    // Read them yourself — the same spine the front page uses. This is the most convincing
+    // thing on the site, so it sits above the numbers rather than under them.
     if (da && db) {
-      const mapB = Object.fromEntries((db.criteria || []).map((c) => [c.criterion, c.mean]));
-      const critCmp = el("div", { class: "card", style: "margin-top:22px" }, el("h3", { text: "Rubric criteria" }),
-        el("p", { class: "sub", text: "Mean 0–20 per criterion, side by side." }));
-      for (const c of (da.criteria || [])) {
-        critCmp.appendChild(cmpMetricRow(c.criterion.replace(/_/g, " "), c.mean, mapB[c.criterion], fmt.n1, true));
-      }
-      nodes.push(critCmp);
-
-      // shared-scenario transcript pair
       const aByScn = Object.fromEntries((da.sample_transcripts || []).map((t) => [t.scenario_id, t]));
       const shared = (db.sample_transcripts || []).map((t) => t.scenario_id).find((id) => aByScn[id]);
       if (shared) {
         const ta = aByScn[shared], tb = (db.sample_transcripts || []).find((t) => t.scenario_id === shared);
-        const side = (t) => {
-          const turns = el("div", { class: "sc-turns" });
-          for (const turn of (t.turns || []))
-            turns.appendChild(el("div", { class: "turn " + (turn.role === "assistant" ? "assistant" : "user") },
-              el("span", { class: "who", text: turn.role || "?" }), el("div", { class: "say", text: turn.content || "" })));
-          return turns;
-        };
-        nodes.push(el("div", { class: "section-head", style: "margin-top:32px" }, el("span", { class: "idx", text: "//" }),
-          el("h2", { text: "Same scenario, side by side" }), el("span", { class: "note", text: shared })));
-        nodes.push(el("div", { class: "cmp-grid scenario-cmp" },
-          el("div", { class: "card" }, el("h3", { text: ra.display_name }), side(ta)),
-          el("div", { class: "card" }, el("h3", { text: rb.display_name }), side(tb))));
+        const users = (ta.turns || []).filter((x) => x.role === "user").map((x) => x.content);
+        const repA = (ta.turns || []).filter((x) => x.role === "assistant").map((x) => x.content);
+        const repB = (tb.turns || []).filter((x) => x.role === "assistant").map((x) => x.content);
+        const row = (i) => el("div", { class: "spine-row" },
+          el("div", { class: "lane lane-a" }, el("div", { class: "say", text: repA[i] || "" })),
+          el("div", { class: "said" }, el("div", { class: "bubble", text: users[i] })),
+          el("div", { class: "lane lane-b" }, el("div", { class: "say", text: repB[i] || "" })));
+        // Replies here run much longer than the front page's, and a model that writes three
+        // times as much stretches every row. Show the opening exchanges, fold the rest.
+        const SHOW = 3;
+        const spine = el("div", { class: "spine" });
+        for (let i = 0; i < Math.min(SHOW, users.length); i++) spine.appendChild(row(i));
+        if (users.length > SHOW) {
+          const rest = el("div", { class: "spine" });
+          for (let i = SHOW; i < users.length; i++) rest.appendChild(row(i));
+          spine.appendChild(el("details", { class: "spine-more" },
+            el("summary", { text: "read the rest of the conversation" }), rest));
+        }
+        nodes.push(el("div", { class: "card row-in", style: "margin-top:22px" },
+          el("h3", { text: "Read them side by side" }),
+          el("p", { class: "sub", text:
+            `The same person, saying the same things to both — “${ta.title || shared}”. `
+            + `${ra.display_name} on the left, ${rb.display_name} on the right.` }),
+          spine));
       }
     }
-    out.replaceChildren(...nodes);
+
+    nodes.push(cmpScenarioList(pe, ra, rb, bySlug));
+
+    // The numbers, in plain language, last — for anyone who wants them.
+    const headline = el("div", { class: "card row-in", style: "margin-top:22px" },
+      el("h3", { text: "The numbers" }),
+      el("p", { class: "sub" }, el("b", { text: ra.display_name }), " on the left, ",
+        el("b", { text: rb.display_name }), " on the right. Ember marks the stronger value; "
+        + "the human score shows none when the two ranges overlap, because then it's a tie."));
+    headline.appendChild(cmpEloRow(ra, rb));
+    headline.appendChild(cmpMetricRow("Emotional IQ (out of 100)", ra.eq_score, rb.eq_score, fmt.n1, true));
+    headline.appendChild(cmpMetricRow("Sounds human (out of 100)", ra.humanlike_score, rb.humanlike_score, fmt.n1, true));
+    headline.appendChild(cmpMetricRow("Reply length (words — style, not quality)", ra.avg_reply_words, rb.avg_reply_words, fmt.int, false, true));
+    for (const hw of (window.OG_HARDWARE || [])) {
+      const va = speedOn(ra, hw.hardware_id), vb = speedOn(rb, hw.hardware_id);
+      if (va == null && vb == null) continue;
+      headline.appendChild(cmpMetricRow(`Speed on ${hw.display_name} (words/sec)`, va, vb,
+        (v) => (v == null ? "doesn't fit / not measured" : Math.round(v)), true));
+    }
+    nodes.push(headline);
+
+    // Per-criterion averages, using the same names as everywhere else on the site.
+    if (da && db) {
+      const mapB = Object.fromEntries((db.criteria || []).map((c) => [c.criterion, c.mean]));
+      const critCmp = el("div", { class: "card", style: "margin-top:22px" },
+        el("h3", { text: "Average score on each quality" }),
+        el("p", { class: "sub", text: "Judge's mean score out of 20, over every conversation. Higher is better on all nine — the two inverted ones are worded so that more is better." }));
+      for (const c of (da.criteria || [])) {
+        critCmp.appendChild(cmpMetricRow(critLabel(c.criterion), c.mean, mapB[c.criterion], fmt.n1, true));
+      }
+      nodes.push(critCmp);
+    }
+
+    out.replaceChildren(...nodes.filter(Boolean));
   }
   selA.addEventListener("change", render);
   selB.addEventListener("change", render);

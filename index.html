@@ -26,25 +26,30 @@
   </header>
 
   
+  
   <div class="wrap">
-    <section class="hero hero-split">
-      <div class="hero-left">
-        <div class="eyebrow"><span class="tick">//</span> free, open models you run yourself</div>
-        <h1>Which local model is the best to actually <span class="warm">talk to</span>?</h1>
-        <p class="lede">
-          These are open models you can run on your own computer — for free — ranked on how
-          human they sound <em>and</em> whether they're quick enough to hold a real, back-and-forth
-          conversation. Each one goes through the same 25 emotional conversations, and a top
-          commercial AI grades how human every reply sounds; we clock speed and size too, so you
-          can gauge what your own machine could handle.
-        </p>
-        <p class="judging-strip" data-judging-strip>
-          Graded by <span data-judge-model>gpt-5.4</span>, using the same instructions for every model.
-        </p>
-      </div>
-      <div class="hero-right">
-        <div id="verdict-strip" class="verdict-strip"><div class="state">Loading…</div></div>
-      </div>
+    <section class="hero hero-lede">
+      <div class="eyebrow"><span class="tick">//</span> free, open models you run yourself</div>
+      <h1>Which one of these would you rather <span class="warm">talk to</span>?</h1>
+      <p class="lede">
+        Two AI models you can run on your own computer, for free. Same person, saying the
+        same things to both. Read the two answers and pick whichever sounds more like a
+        friend — then we'll tell you what you picked.
+      </p>
+    </section>
+  </div>
+
+  
+  <div class="wrap wrap-wide">
+    <div id="showcase"></div>
+  </div>
+
+  <div class="wrap">
+    <section class="hero hero-after">
+      <p class="judging-strip" data-judging-strip>
+        Graded by <span data-judge-model>gpt-5.4</span>, using the same instructions for every model.
+      </p>
+      <div id="verdict-strip" class="verdict-strip"><div class="state">Loading…</div></div>
     </section>
   </div>
 
@@ -54,8 +59,17 @@
       <div class="section-head">
         <span class="idx">//</span>
         <h2>The leaderboard</h2>
-        <span class="note">Every model, sortable — click any column heading to sort by it.</span>
+        <span class="note">Every model we tested. Click a heading to sort.</span>
       </div>
+      
+      <p class="speed-anchor">
+        Speed is in words per second, listed for every machine we measured a model on —
+        a <strong>DGX Spark</strong>, an <strong>RTX 5090</strong> and an <strong>RTX 5080</strong>.
+        Most people read about <strong>4 words a second</strong>, so anything above that is
+        already arriving faster than you can read it. Machines a model is too big to fit on
+        are left out.
+      </p>
+      <div id="board-toggle"></div>
       <div id="rank-by"></div>
       <div id="tie-banner"></div>
       <details class="disclose">
@@ -82,7 +96,7 @@
         <a href="compare.html">Compare</a>
       </nav>
       
-      <span class="foot-prov">Updated <span data-generated-at>2026-07-27 02:27 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
+      <span class="foot-prov">Updated <span data-generated-at>2026-07-27 04:45 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
     </div>
   </footer>
 
