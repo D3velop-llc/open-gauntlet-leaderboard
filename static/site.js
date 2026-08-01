@@ -1843,32 +1843,32 @@ function ttsRunsOn(row, tier) {
    `cell` overrides which field is DISPLAYED when the sort key is a numeric twin
    (price_sort sorts, price_note reads). */
 const TTS_COLS = [
-  { key: "name",           label: "System",          txt: true, def: true, fixed: true },
-  { key: "standout",       label: "What's different", txt: true, def: true, wide: true },
-  { key: "category",       label: "Kind",            txt: true, def: true },
-  { key: "licence",        label: "Licence",         txt: true, def: true },
-  { key: "rating",         label: "Rating",                     def: true },
-  { key: "price_sort",     label: "Cost",            txt: true, def: true, cell: "price_note" },
-  { key: "cloning",        label: "Cloning",         txt: true, def: true, wide: true },
-  { key: "hardware",       label: "Needs",                      def: true },
-  { key: "runs_on",        label: "Runs on",         txt: true, wide: true },
-  { key: "emotion",        label: "Emotion control", txt: true, wide: true },
-  { key: "languages_sort", label: "Langs",                      cell: "languages_note" },
-  { key: "params",         label: "Params",          txt: true },
-  { key: "architecture",   label: "Architecture",    txt: true, wide: true },
-  { key: "codec",          label: "Codec",           txt: true, wide: true },
-  { key: "vram",           label: "VRAM",            txt: true },
-  { key: "streaming",      label: "Streaming",       txt: true },
-  { key: "max_generation", label: "Max length",      txt: true, wide: true },
-  { key: "quantisation",   label: "Quantisation",    txt: true, wide: true },
-  { key: "fine_tuning",    label: "Fine-tuning",     txt: true, wide: true },
-  { key: "watermark",      label: "Watermark",       txt: true, wide: true },
-  { key: "multi_speaker",  label: "Multi-speaker",   txt: true, wide: true },
-  { key: "timestamps",     label: "Timestamps",      txt: true, wide: true },
-  { key: "latency_note",   label: "Latency",         txt: true, wide: true },
-  { key: "status",         label: "Status",          txt: true },
-  { key: "verification",   label: "Evidence",        txt: true },
-  { key: "watch",          label: "The catch",       txt: true, wide: true },
+  { key: "name",           label: "System",          txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",       label: "What's different", txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",       label: "Kind",            txt: true, def: true, group: "Core" },
+  { key: "licence",        label: "Licence",         txt: true, def: true, group: "Core" },
+  { key: "rating",         label: "Rating",                     group: "Evidence" },
+  { key: "price_sort",     label: "Cost",            txt: true, cell: "price_note", group: "Commercial" },
+  { key: "cloning",        label: "Cloning",         txt: true, def: true, wide: true, group: "Core" },
+  { key: "hardware",       label: "Needs",                      def: true, group: "Core" },
+  { key: "runs_on",        label: "Runs on",         txt: true, wide: true, group: "Technical" },
+  { key: "emotion",        label: "Emotion control", txt: true, wide: true, group: "Capability" },
+  { key: "languages_sort", label: "Langs",                      cell: "languages_note", group: "Capability" },
+  { key: "params",         label: "Params",          txt: true, group: "Technical" },
+  { key: "architecture",   label: "Architecture",    txt: true, wide: true, group: "Technical" },
+  { key: "codec",          label: "Codec",           txt: true, wide: true, group: "Technical" },
+  { key: "vram",           label: "VRAM",            txt: true, group: "Technical" },
+  { key: "streaming",      label: "Streaming",       txt: true, group: "Capability" },
+  { key: "max_generation", label: "Max length",      txt: true, wide: true, group: "Capability" },
+  { key: "quantisation",   label: "Quantisation",    txt: true, wide: true, group: "Technical" },
+  { key: "fine_tuning",    label: "Fine-tuning",     txt: true, wide: true, group: "Technical" },
+  { key: "watermark",      label: "Watermark",       txt: true, wide: true, group: "Capability" },
+  { key: "multi_speaker",  label: "Multi-speaker",   txt: true, wide: true, group: "Capability" },
+  { key: "timestamps",     label: "Timestamps",      txt: true, wide: true, group: "Capability" },
+  { key: "latency_note",   label: "Latency",         txt: true, wide: true, group: "Evidence" },
+  { key: "status",         label: "Status",          txt: true, group: "Evidence" },
+  { key: "verification",   label: "Evidence",        txt: true, group: "Evidence" },
+  { key: "watch",          label: "The catch",       txt: true, wide: true, group: "Evidence" },
 ];
 const TTS_COL_DEFAULT = TTS_COLS.filter((c) => c.def).map((c) => c.key);
 
@@ -1993,34 +1993,34 @@ const ASR_FACET_GROUPS = [
 const ASR_FACET_LABEL = Object.fromEntries(ASR_FACET_GROUPS.flatMap((g) => g.facets));
 
 const ASR_COLS = [
-  { key: "name",           label: "System",           txt: true, def: true, fixed: true },
-  { key: "standout",       label: "What's different", txt: true, def: true, wide: true },
-  { key: "category",       label: "Kind",             txt: true, def: true },
-  { key: "licence",        label: "Licence",          txt: true, def: true },
+  { key: "name",           label: "System",           txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",       label: "What's different", txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",       label: "Kind",             txt: true, def: true, group: "Core" },
+  { key: "licence",        label: "Licence",          txt: true, def: true, group: "Core" },
   // Accuracy leads with the sortable figure and reads as the prose that states
   // its conditions — the same numeric-twin split price and languages use.
-  { key: "wer_sort",       label: "WER",              txt: true, def: true, cell: "accuracy_note", wide: true },
-  { key: "diarization",    label: "Speakers",         txt: true, def: true, wide: true },
-  { key: "price_sort",     label: "Cost / audio hr",  txt: true, def: true, cell: "price_note" },
-  { key: "hardware",       label: "Needs",                       def: true },
-  { key: "languages_sort", label: "Langs",                       cell: "languages_note" },
-  { key: "streaming",      label: "Streaming",        txt: true, wide: true },
-  { key: "latency_note",   label: "Latency",          txt: true, wide: true },
-  { key: "timestamps",     label: "Timestamps",       txt: true, wide: true },
-  { key: "punctuation",    label: "Punctuation",      txt: true, wide: true },
-  { key: "custom_vocab",   label: "Custom vocab",     txt: true, wide: true },
-  { key: "translation",    label: "Translation",      txt: true, wide: true },
-  { key: "audio_limits",   label: "Audio limits",     txt: true, wide: true },
-  { key: "params",         label: "Params",           txt: true },
-  { key: "architecture",   label: "Architecture",     txt: true, wide: true },
-  { key: "vram",           label: "VRAM",             txt: true },
-  { key: "quantisation",   label: "Quantisation",     txt: true, wide: true },
-  { key: "fine_tuning",    label: "Fine-tuning",      txt: true, wide: true },
-  { key: "runs_on",        label: "Runs on",          txt: true, wide: true },
-  { key: "self_host",      label: "Self-host",        txt: true, wide: true },
-  { key: "status",         label: "Status",           txt: true },
-  { key: "verification",   label: "Evidence",         txt: true },
-  { key: "watch",          label: "The catch",        txt: true, wide: true },
+  { key: "wer_sort",       label: "Accuracy",         txt: true, def: true, cell: "accuracy_note", wide: true, group: "Core" },
+  { key: "diarization",    label: "Speakers",         txt: true, def: true, wide: true, group: "Core" },
+  { key: "price_sort",     label: "Cost / audio hr",  txt: true, cell: "price_note", group: "Commercial" },
+  { key: "hardware",       label: "Needs",                       def: true, group: "Core" },
+  { key: "languages_sort", label: "Langs",                       cell: "languages_note", group: "Capability" },
+  { key: "streaming",      label: "Streaming",        txt: true, wide: true, group: "Capability" },
+  { key: "latency_note",   label: "Latency",          txt: true, wide: true, group: "Evidence" },
+  { key: "timestamps",     label: "Timestamps",       txt: true, wide: true, group: "Capability" },
+  { key: "punctuation",    label: "Punctuation",      txt: true, wide: true, group: "Capability" },
+  { key: "custom_vocab",   label: "Custom vocab",     txt: true, wide: true, group: "Capability" },
+  { key: "translation",    label: "Translation",      txt: true, wide: true, group: "Capability" },
+  { key: "audio_limits",   label: "Audio limits",     txt: true, wide: true, group: "Capability" },
+  { key: "params",         label: "Params",           txt: true, group: "Technical" },
+  { key: "architecture",   label: "Architecture",     txt: true, wide: true, group: "Technical" },
+  { key: "vram",           label: "VRAM",             txt: true, group: "Technical" },
+  { key: "quantisation",   label: "Quantisation",     txt: true, wide: true, group: "Technical" },
+  { key: "fine_tuning",    label: "Fine-tuning",      txt: true, wide: true, group: "Technical" },
+  { key: "runs_on",        label: "Runs on",          txt: true, wide: true, group: "Technical" },
+  { key: "self_host",      label: "Self-host",        txt: true, wide: true, group: "Technical" },
+  { key: "status",         label: "Status",           txt: true, group: "Evidence" },
+  { key: "verification",   label: "Evidence",         txt: true, group: "Evidence" },
+  { key: "watch",          label: "The catch",        txt: true, wide: true, group: "Evidence" },
 ];
 const ASR_COL_DEFAULT = ASR_COLS.filter((c) => c.def).map((c) => c.key);
 const ASR_COL_PRESETS = [
@@ -2443,7 +2443,7 @@ function renderTtsControls(mount, rows, state, onChange) {
       ttsKindPicker(rows, state, onChange),
       ttsFacetPicker(rows, state, onChange),
       ttsHardwarePicker(rows, state, onChange),
-      ttsColumnPicker(state, onChange)),
+      ttsColumnPicker(rows, state, onChange)),
     ttsActiveFilters(rows, state, onChange),
   );
 }
@@ -2572,23 +2572,63 @@ function ttsActiveFilters(rows, state, onChange) {
   }
   return wrap;
 }
-function ttsColumnPicker(state, onChange) {
-  const box = el("div", { class: "tts-colgrid" });
+/* What it is, then what it does, then how it is built, then what it costs,
+   then how much to trust it. */
+const TTS_COL_GROUP_ORDER = ["Core", "Capability", "Technical", "Commercial", "Evidence"];
 
-  SPEC.cols.forEach((c) => {
-    if (c.fixed) return;
-    const id = "ttscol-" + c.key;
-    const cb = el("input", { type: "checkbox", id });
-    cb.checked = state.cols.has(c.key);
-    cb.addEventListener("change", () => {
-      if (cb.checked) state.cols.add(c.key); else state.cols.delete(c.key);
-      // Sorting by a column you just hid leaves the table in an order with no
-      // visible cause. Fall back to the one column that is always present.
-      if (!cb.checked && state.sort === c.key) { state.sort = "name"; state.desc = false; }
-      ttsSavePrefs(state);
-      onChange();
+/* Column picker.
+
+   The default view is deliberately narrow — six or seven columns, the ones
+   nearly every row can actually fill. Everything else is one click away, and
+   the picker's job is to make that click INFORMED rather than a gamble.
+
+   So each option carries how many rows it would fill. "Watermark 45/168" tells
+   you before you turn it on that three quarters of the table will read "not
+   published", which is a fact about the vendors rather than a fault of the
+   page — but it is not what you want occupying a column while you are choosing
+   between three products. */
+function ttsColumnPicker(rows, state, onChange) {
+  const total = rows.length;
+  const fill = (c) => rows.filter((r) => {
+    const v = r[c.cell || c.key];
+    return v !== undefined && v !== null && v !== "";
+  }).length;
+
+  const box = el("div", { class: "tts-colgroups" });
+  // Grouped, because twenty-five checkboxes in one flat list is the same
+  // problem the popovers were introduced to solve, one level down.
+  // Declared order, not discovery order. Grouping by first appearance in the
+  // column list put Evidence second, which is not how anyone reads a spec
+  // sheet — what it is, then what it does, then how it is built, then what it
+  // costs, then how much to trust it.
+  const groups = TTS_COL_GROUP_ORDER
+    .map((name) => ({ name, cols: SPEC.cols.filter((c) => !c.fixed && c.group === name) }))
+    .filter((g) => g.cols.length);
+  const ungrouped = SPEC.cols.filter((c) => !c.fixed && !TTS_COL_GROUP_ORDER.includes(c.group));
+  if (ungrouped.length) groups.push({ name: "Other", cols: ungrouped });
+
+  groups.forEach((g) => {
+    const grid = el("div", { class: "tts-colgrid" });
+    g.cols.forEach((c) => {
+      const n = fill(c);
+      const cb = el("input", { type: "checkbox", id: `col-${SPEC.key}-${c.key}` });
+      cb.checked = state.cols.has(c.key);
+      cb.addEventListener("change", () => {
+        if (cb.checked) state.cols.add(c.key); else state.cols.delete(c.key);
+        // Sorting by a column you just hid leaves the table in an order with no
+        // visible cause. Fall back to the one column that is always present.
+        if (!cb.checked && state.sort === c.key) { state.sort = "name"; state.desc = false; }
+        ttsSavePrefs(state);
+        onChange();
+      });
+      grid.appendChild(el("label", {
+        class: "tts-colopt" + (n / total < 0.4 ? " thin" : ""),
+        title: `${n} of ${total} rows have a value for this`,
+      }, cb, el("span", { class: "lbl", text: c.label }),
+         el("span", { class: "pill-n", text: `${n}` })));
     });
-    box.appendChild(el("label", { class: "tts-colopt" }, cb, el("span", { text: c.label })));
+    box.appendChild(el("div", { class: "tts-colgroup" },
+      el("h4", { text: g.name }), grid));
   });
 
   const presets = el("div", { class: "tts-presets" });
@@ -2607,10 +2647,13 @@ function ttsColumnPicker(state, onChange) {
   return el("details", { class: "tts-colpick" },
     el("summary", { class: "pill" }, "Columns", el("span", { class: "pill-n", text: String(n) })),
     el("div", { class: "tts-colpanel" },
-      el("p", { class: "tts-colhint", text: "Show only what you are deciding on." }),
+      el("p", { class: "tts-colhint" },
+        "Show only what you are deciding on. The number beside each is how many of the ",
+        el("strong", { text: String(total) }), " rows have a value for it — a column most "
+        + "systems never publish is a fact about the vendors, but it is not worth a column "
+        + "while you are choosing."),
       presets, box));
 }
-
 
 function ttsCompareValue(row, key) {
   if (key === "hardware") {
@@ -2760,10 +2803,15 @@ function renderTtsRatingCoverage(mount, rows) {
     el("p", { class: "tts-rating-cov" },
       el("strong", { text: `${rated.length} of ${rows.length} systems carry an external rating.` }),
       " Ratings come from ", sources.join(" and "), when,
-      ". Nothing on this page is measured by OpenGauntlet. An unrated row is one "
-      + "no public arena has run — not a low-scoring one, and the two must not be "
-      + "read the same way. Arena standings also move in weeks, and the boards "
-      + "disagree with each other — see the corrections below.",
+      ". Nothing on this page is measured by OpenGauntlet. A blank is a system that "
+      + "source has not measured — not a low-scoring one, and the two must not be read "
+      + "the same way. "
+      + (SPEC.key === "tts"
+        ? "Arena standings move in weeks, and the boards disagree with each other — see the corrections below."
+        : "Only figures from this one board appear here. Every other number — vendor "
+          + "self-reports, Artificial Analysis, academic studies — stays in the accuracy "
+          + "column with the conditions that produced it, because averaging across "
+          + "indices ranks by which board measured a system rather than by accuracy."),
     ),
     SPEC.key !== "tts" ? null : el("p", { class: "tts-rating-cov note" },
       "These are human-preference scores. Word error rate is deliberately excluded: "
