@@ -2516,7 +2516,7 @@
         "licence-catch",
         "actively-maintained"
       ],
-      "hardware": "gpu-16",
+      "hardware": "gpu-12",
       "params": "~4.6 B total (safetensors 4,561,852,416) — 4 B 'Slow AR' + 400 M 'Fast AR'",
       "architecture": "Dual-autoregressive decoder-only transformer over an RVQ neural codec, RL-aligned via GRPO. Native multi-speaker / multi-turn generation.",
       "codec": "RVQ (Fish) — 10 codebooks at ~21 Hz frame rate; the dual-AR head handles the depth axis",
@@ -2690,7 +2690,7 @@
         "licence-catch",
         "actively-maintained"
       ],
-      "hardware": "gpu-16",
+      "hardware": "gpu-12",
       "params": null,
       "architecture": "IndexTTS 2: autoregressive with decoupled emotion and speaker-identity features, GPT latent representations, three-stage training, BigVGAN2 decoder, built on the XTTS/Tortoise lineage with a conformer speech-conditioning encoder. IndexTTS 2.5: semantic codec compressed from 50 Hz to 25 Hz, U-DiT replaced by a Zipformer-based semantic-to-mel module, plus RL optimisation.",
       "codec": "Semantic codec at 50 Hz in IndexTTS 2, compressed to 25 Hz in 2.5; BigVGAN2 decoder",
@@ -3328,7 +3328,7 @@
         "licence-catch",
         "no-watermark"
       ],
-      "hardware": "gpu-16",
+      "hardware": "gpu-12",
       "params": "0.45 B TTS Diffusion Transformer backbone, plus a Qwen2.5-0.5B grapheme-to-phoneme model and a speech-text aligner; the total system size is not stated",
       "architecture": "Modular: G2P (Qwen2.5-0.5B) → aligner → 0.45 B DiT → WaveVAE decoder",
       "codec": "WaveVAE — the DECODER is published but ByteDance withholds the ENCODER weights 'for security issues', so inference only runs from latents ByteDance provides",
@@ -7807,7 +7807,7 @@
         "commercially-safe",
         "frozen"
       ],
-      "hardware": "gpu-16",
+      "hardware": "gpu-12",
       "params": null,
       "architecture": "Dual transformer over a text-speech interleaved sequence, targeted at long conversational speech",
       "codec": "Streaming speech tokenizer at 12.5 Hz",
@@ -7918,7 +7918,7 @@
         "licence-catch",
         "frozen"
       ],
-      "hardware": "gpu-16",
+      "hardware": "gpu-12",
       "params": "~1 B+ across all components; the T2S model file alone is 2.99 GB",
       "architecture": "Two-stage fully non-autoregressive masked generative codec transformer — text to semantic tokens by masked prediction, then semantic to acoustic. Requires no explicit text-speech alignment and no phone-level duration prediction, which is genuinely different from every AR model in this segment.",
       "codec": null,
@@ -7974,7 +7974,7 @@
         "licence-catch",
         "english-only"
       ],
-      "hardware": "gpu-16",
+      "hardware": "gpu-12",
       "params": "2.4 B DiT",
       "architecture": "Diffusion transformer generating Fish Speech S1-DAC latents, producing 44.1 kHz audio",
       "codec": null,
@@ -8028,7 +8028,7 @@
         "zero-shot-cloning",
         "licence-catch"
       ],
-      "hardware": "gpu-16",
+      "hardware": "gpu-12",
       "params": "1.5 B",
       "architecture": "Two-stage hybrid — a text-to-token autoregressive model followed by a token-to-waveform diffusion model. One corpus table instead describes it as LLM plus flow matching with GRPO RL; the two descriptions do not agree.",
       "codec": null,
@@ -8592,7 +8592,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
-      "hardware": "gpu-48",
+      "hardware": "gpu-80",
       "params": "35 B total, MoE with ~3 B active (A3B)",
       "architecture": "Natively end-to-end omni-modal — text, audio, image and video in, text and speech out — via an MoE Thinker–Talker design with AuT pretraining and a multi-codebook decoder",
       "codec": null,
@@ -9374,7 +9374,7 @@
         "licence-catch",
         "actively-maintained"
       ],
-      "hardware": "gpu-16",
+      "hardware": "gpu-12",
       "params": null,
       "architecture": "Controllable voice imitation with independently controllable timbre and style",
       "codec": null,

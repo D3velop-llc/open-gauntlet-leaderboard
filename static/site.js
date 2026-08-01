@@ -1806,13 +1806,17 @@ const TTS_FACET_LABEL = Object.fromEntries(
    `hosted` sits outside the ladder — an API needs no hardware, so it survives
    every hardware filter rather than being ranked against local models. */
 const TTS_HARDWARE = [
-  { key: "browser", label: "A browser tab", note: "WASM / WebGPU" },
+  { key: "browser", label: "A browser tab",     note: "WASM / WebGPU" },
   { key: "phone",   label: "Phone, Pi or NPU" },
   { key: "cpu",     label: "Laptop CPU, no GPU" },
-  { key: "gpu-8",   label: "GPU up to 8 GB" },
-  { key: "gpu-16",  label: "GPU up to 16 GB", note: "incl. 16 GB Macs" },
-  { key: "gpu-24",  label: "GPU up to 24 GB", note: "3090 / 4090" },
-  { key: "gpu-48",  label: "Workstation / datacentre" },
+  { key: "gpu-8",   label: "8 GB GPU",   note: "RTX 4060, 3060 Ti" },
+  { key: "gpu-12",  label: "12 GB GPU",  note: "RTX 4070, 3060 12 GB" },
+  { key: "gpu-16",  label: "16 GB",      note: "RTX 5060 Ti, 16 GB Mac" },
+  { key: "gpu-24",  label: "24 GB GPU",  note: "RTX 3090 / 4090" },
+  { key: "gpu-32",  label: "32 GB GPU",  note: "RTX 5090" },
+  { key: "gpu-48",  label: "48 GB GPU",  note: "RTX 6000 Ada, A6000" },
+  { key: "gpu-80",  label: "80–96 GB",   note: "A100, H100, RTX PRO 6000" },
+  { key: "gpu-128", label: "128 GB+ unified", note: "DGX Spark, M-series Ultra" },
 ];
 const TTS_HW_LADDER = Object.fromEntries(TTS_HARDWARE.map((h, i) => [h.key, i]));
 const TTS_HW_LABEL = Object.fromEntries(TTS_HARDWARE.map((h) => [h.key, h.label]));
@@ -2229,23 +2233,17 @@ function renderTtsMatrix(mount, rows, state) {
   mount.replaceChildren(count, wrapEl);
 }
 
-function renderTtsControls(mount, rows, state, onChange) {
-  const pills = el("div", { class: "pill-row" });
-  const all = el("button", { class: "pill" + (state.cats.size ? "" : " on"), text: "All" });
-  all.addEventListener("click", () => { state.cats.clear(); onChange(); });
-  pills.appendChild(all);
-  TTS_CATS.forEach((c) => {
-    const n = rows.filter((r) => r.category === c.key).length;
-    if (!n) return;
-    const p = el("button", { class: "pill" + (state.cats.has(c.key) ? " on" : "") },
-      c.label, el("span", { class: "pill-n", text: String(n) }));
-    p.addEventListener("click", () => {
-      if (state.cats.has(c.key)) state.cats.delete(c.key); else state.cats.add(c.key);
-      onChange();
-    });
-    pills.appendChild(p);
-  });
+/* Controls.
 
+   The filters earned their keep — "no GPU + clones + commercially safe" going
+   from 168 rows to 7 is the whole reason this page beats a spreadsheet. But
+   showing all of them at once put roughly 46 chips between the reader and the
+   first row of data, which is its own kind of unusable.
+
+   So: everything stays, nothing is on screen until asked for. Four controls and
+   a search box; whatever you have actually picked appears underneath as
+   removable chips. You see your filter, not the filter vocabulary. */
+function renderTtsControls(mount, rows, state, onChange) {
   const search = el("input", {
     class: "tts-search", type: "search", "aria-label": "Search every field",
     placeholder: "Search licence, language, hardware, caveat…",
@@ -2254,76 +2252,140 @@ function renderTtsControls(mount, rows, state, onChange) {
   search.addEventListener("input", () => { state.q = search.value.trim().toLowerCase(); onChange(); });
 
   mount.replaceChildren(
-    el("div", { class: "tts-controls" }, pills, search, ttsColumnPicker(state, onChange)),
-    ttsHardwareBar(rows, state, onChange),
-    ttsFacetBar(rows, state, onChange),
+    el("div", { class: "tts-controls" },
+      search,
+      ttsKindPicker(rows, state, onChange),
+      ttsFacetPicker(rows, state, onChange),
+      ttsHardwarePicker(rows, state, onChange),
+      ttsColumnPicker(state, onChange)),
+    ttsActiveFilters(rows, state, onChange),
   );
 }
 
-/* "What can I run on the machine I own" — the question every reader arrives
-   with, and the one a 40-column matrix of prose could not answer. */
-function ttsHardwareBar(rows, state, onChange) {
-  const wrap = el("div", { class: "tts-hw" });
-  if (!rows.some((r) => r.hardware)) return wrap;
+/* A <details> popover. No focus trap to get wrong, closes on Escape for free,
+   and degrades to an open list if the toggle ever fails. */
+function ttsPopover(label, badge, cls, ...body) {
+  const summary = el("summary", { class: "pill" }, label);
+  if (badge) summary.appendChild(el("span", { class: "pill-n", text: String(badge) }));
+  return el("details", { class: "tts-pop " + cls }, summary,
+    el("div", { class: "tts-pop-panel" }, ...body));
+}
 
-  const head = el("div", { class: "tts-hw-head" },
-    el("span", { class: "tts-facet-title", text: "What I can run it on" }));
-  wrap.appendChild(head);
-
-  const row = el("div", { class: "tts-hw-row" });
-  const any = el("button", { class: "pill" + (state.hw ? "" : " on"), text: "Anything" });
-  any.addEventListener("click", () => { state.hw = null; ttsSavePrefs(state); onChange(); });
-  row.appendChild(any);
-
-  TTS_HARDWARE.forEach((h) => {
-    // Count what PICKING this would leave, so the number is a promise the other
-    // active filters can keep.
-    const n = ttsVisible(rows, { ...state, hw: h.key }).length;
-    const b = el("button", { class: "pill hw" + (state.hw === h.key ? " on" : "") },
-      h.label,
-      h.note ? el("span", { class: "hw-note", text: h.note }) : "",
-      el("span", { class: "pill-n", text: String(n) }));
-    b.addEventListener("click", () => {
-      state.hw = state.hw === h.key ? null : h.key;
-      ttsSavePrefs(state);
+function ttsKindPicker(rows, state, onChange) {
+  const box = el("div", { class: "tts-optgrid" });
+  TTS_CATS.forEach((c) => {
+    const n = rows.filter((r) => r.category === c.key).length;
+    if (!n) return;
+    const cb = el("input", { type: "checkbox", id: "ttscat-" + c.key });
+    cb.checked = state.cats.has(c.key);
+    cb.addEventListener("change", () => {
+      if (cb.checked) state.cats.add(c.key); else state.cats.delete(c.key);
       onChange();
     });
-    row.appendChild(b);
+    box.appendChild(el("label", { class: "tts-opt" }, cb,
+      el("span", { text: c.label }), el("span", { class: "pill-n", text: String(n) })));
   });
-  wrap.appendChild(row);
+  return ttsPopover("Kind", state.cats.size || "", "tts-pop-kind",
+    el("p", { class: "tts-pop-hint", text: "Nine kinds of speech product. Leave all off for everything." }),
+    box);
+}
 
-  if (state.hw) {
-    const passing = ttsVisible(rows, state);
-    const hosted = passing.filter((r) => r.hardware === "hosted").length;
-    const unknown = passing.filter((r) => r.hardware == null).length;
-    const note = el("p", { class: "tts-hw-note note" },
-      `Showing everything that runs on “${TTS_HW_LABEL[state.hw]}” or less. `,
-      `That includes ${hosted} hosted services, which need no hardware at all, and `,
-      `${unknown} rows whose vendor publishes no hardware requirement — `,
-      el("em", { text: "never stated" }), " is not the same as ",
-      el("em", { text: "will not run" }), ". ");
-    // Point at the fix rather than only naming the problem: the reader who
-    // wants "things I can actually run locally" has to exclude both groups, and
-    // the facet that does it is three inches away but not obviously connected.
-    if (hosted + unknown) {
-      const add = el("button", { class: "pill sm",
-        text: state.facets.has("self-hostable") ? "Self-hostable ✓" : "Add: self-hostable" });
-      add.addEventListener("click", () => {
-        if (state.facets.has("self-hostable")) state.facets.delete("self-hostable");
-        else state.facets.add("self-hostable");
+function ttsFacetPicker(rows, state, onChange) {
+  const wrap = el("div", { class: "tts-facets" });
+  TTS_FACET_GROUPS.forEach((group) => {
+    const row = el("div", { class: "tts-facet-group" },
+      el("span", { class: "tts-facet-gl", text: group.title }));
+    let shown = 0;
+    group.facets.forEach(([key, label]) => {
+      const on = state.facets.has(key);
+      // The count is what SELECTING this would leave, not its global total —
+      // otherwise every number is a promise the other active filters break.
+      const n = on ? ttsVisible(rows, state).length : ttsVisible(rows, state, key).length;
+      if (!on && !n && !rows.some((r) => (r.facets || []).includes(key))) return;
+      shown++;
+      const b = el("button", { class: "pill fct" + (on ? " on" : "") + (!on && !n ? " none" : "") },
+        label, el("span", { class: "pill-n", text: String(n) }));
+      if (!on && !n) b.setAttribute("disabled", "disabled");
+      b.addEventListener("click", () => {
+        if (state.facets.has(key)) state.facets.delete(key); else state.facets.add(key);
         ttsSavePrefs(state);
         onChange();
       });
-      note.appendChild(add);
+      row.appendChild(b);
+    });
+    if (shown) wrap.appendChild(row);
+  });
+  return ttsPopover("Can do", state.facets.size || "", "tts-pop-facets",
+    el("p", { class: "tts-pop-hint", text:
+      "Combined with AND — the OR of three capabilities is most of the table and answers nothing." }),
+    wrap);
+}
+
+/* One <select>, not twelve chips. The ladder needs real rungs (a 5090 is 32 GB,
+   DGX Spark is 128) and twelve chips is exactly the clutter this pass exists to
+   remove — a single control both names your hardware and shows the choice. */
+function ttsHardwarePicker(rows, state, onChange) {
+  const sel = el("select", { class: "tts-hwsel", "aria-label": "Hardware you have" });
+  sel.appendChild(el("option", { value: "", text: "Runs on: anything" }));
+  TTS_HARDWARE.forEach((h) => {
+    const n = ttsVisible(rows, { ...state, hw: h.key }).length;
+    sel.appendChild(el("option", { value: h.key },
+      `${h.label}${h.note ? " · " + h.note : ""}  (${n})`));
+  });
+  sel.value = state.hw || "";
+  sel.addEventListener("change", () => {
+    state.hw = sel.value || null;
+    ttsSavePrefs(state);
+    onChange();
+  });
+  return sel;
+}
+
+/* What you have actually picked, as removable chips. This is the half that makes
+   hiding the rest safe: a filter you cannot see is a filter you forget you set,
+   and then the table looks broken. */
+function ttsActiveFilters(rows, state, onChange) {
+  const wrap = el("div", { class: "tts-active" });
+  const chip = (label, drop) => {
+    const b = el("button", { class: "pill act" }, label, el("span", { class: "x", text: "×" }));
+    b.addEventListener("click", () => { drop(); ttsSavePrefs(state); onChange(); });
+    return b;
+  };
+
+  state.cats.forEach((k) =>
+    wrap.appendChild(chip(TTS_CAT_LABEL[k] || k, () => state.cats.delete(k))));
+  if (state.hw) {
+    wrap.appendChild(chip("Runs on " + TTS_HW_LABEL[state.hw], () => { state.hw = null; }));
+  }
+  // Ordered by the group list, not click order, so the chip row does not
+  // reshuffle under the cursor as you add filters.
+  TTS_FACET_GROUPS.flatMap((g) => g.facets).forEach(([key, label]) => {
+    if (state.facets.has(key)) {
+      wrap.appendChild(chip(label, () => state.facets.delete(key)));
     }
-    wrap.appendChild(note);
+  });
+
+  if (!wrap.childNodes.length) return wrap;
+  const all = el("button", { class: "pill sm", text: "Clear all" });
+  all.addEventListener("click", () => {
+    state.cats.clear(); state.facets.clear(); state.hw = null;
+    ttsSavePrefs(state); onChange();
+  });
+  wrap.insertBefore(el("span", { class: "tts-active-lbl", text: "Filtering by" }), wrap.firstChild);
+  wrap.appendChild(all);
+
+  // The hardware filter passes hosted and unpublished-requirement rows through
+  // on purpose. Said once, here, rather than as a standing paragraph.
+  if (state.hw) {
+    const through = ttsVisible(rows, state)
+      .filter((r) => r.hardware === "hosted" || r.hardware == null).length;
+    if (through) {
+      wrap.appendChild(el("span", { class: "tts-active-note", text:
+        `includes ${through} that need no hardware or never published a requirement` }));
+    }
   }
   return wrap;
 }
-
-/* Column picker. A <details> popover rather than a modal: it needs no focus
-   trap, closes on Escape for free, and degrades to an open list if JS for the
-   toggle ever fails. */
 function ttsColumnPicker(state, onChange) {
   const box = el("div", { class: "tts-colgrid" });
 
@@ -2361,54 +2423,6 @@ function ttsColumnPicker(state, onChange) {
     el("div", { class: "tts-colpanel" },
       el("p", { class: "tts-colhint", text: "Show only what you are deciding on." }),
       presets, box));
-}
-
-/* Facet bar — the answer to "what can this actually DO", which 30 columns of
-   prose could not give at a glance.
-
-   Each chip carries the count you would get by ADDING it to the current
-   selection, and a chip that would empty the table is disabled rather than
-   hidden: seeing "No GPU needed 0" next to an active cloning filter is itself
-   the answer, where a vanished chip just looks like a missing feature. */
-function ttsFacetBar(rows, state, onChange) {
-  const wrap = el("div", { class: "tts-facets" });
-  const anyFaceted = rows.some((r) => r.facets && r.facets.length);
-  if (!anyFaceted) return wrap;
-
-  const head = el("div", { class: "tts-facet-head" },
-    el("span", { class: "tts-facet-title", text: "Filter by what it can do" }));
-  if (state.facets.size) {
-    const clear = el("button", { class: "pill sm", text: `Clear ${state.facets.size}` });
-    clear.addEventListener("click", () => { state.facets.clear(); ttsSavePrefs(state); onChange(); });
-    head.appendChild(clear);
-  }
-  wrap.appendChild(head);
-
-  TTS_FACET_GROUPS.forEach((group) => {
-    const row = el("div", { class: "tts-facet-group" },
-      el("span", { class: "tts-facet-gl", text: group.title }));
-    let shown = 0;
-    group.facets.forEach(([key, label]) => {
-      const on = state.facets.has(key);
-      // Count what SELECTING this would leave, not what it matches globally —
-      // otherwise every count is a promise the current filter cannot keep.
-      const n = on ? ttsVisible(rows, state).length : ttsVisible(rows, state, key).length;
-      if (!on && !n && !rows.some((r) => (r.facets || []).includes(key))) return;
-      shown++;
-      const b = el("button", {
-        class: "pill fct" + (on ? " on" : "") + (!on && !n ? " none" : ""),
-      }, label, el("span", { class: "pill-n", text: String(n) }));
-      if (!on && !n) b.setAttribute("disabled", "disabled");
-      b.addEventListener("click", () => {
-        if (state.facets.has(key)) state.facets.delete(key); else state.facets.add(key);
-        ttsSavePrefs(state);
-        onChange();
-      });
-      row.appendChild(b);
-    });
-    if (shown) wrap.appendChild(row);
-  });
-  return wrap;
 }
 
 /* Every field worth putting side by side, in the order a decision gets made:
@@ -2454,9 +2468,19 @@ function ttsComparePanel(mount, rows, state, onChange) {
   const picked = rows.filter((r) => state.picked.has(r.name));
   if (picked.length < 2) { mount.replaceChildren(); return; }
 
+  // No sentinel string: an earlier version mapped absent values to a
+  // placeholder and a stray NUL byte ended up in the file, which JS happily
+  // parsed and every grep thereafter treated as binary. Count distinct present
+  // values, plus one if anything is absent — "neither publishes it" is
+  // agreement, not a difference.
   const differs = ([key]) => {
-    const vals = picked.map((r) => ttsCompareValue(r, key));
-    return new Set(vals.map((v) => (v == null ? " " : v))).size > 1;
+    const seen = new Set();
+    let anyAbsent = false;
+    for (const r of picked) {
+      const v = ttsCompareValue(r, key);
+      if (v == null) anyAbsent = true; else seen.add(v);
+    }
+    return seen.size + (anyAbsent ? 1 : 0) > 1;
   };
   // In differences mode, drop fields nobody publishes AND fields everyone
   // agrees on. In every-field mode show the lot, INCLUDING the all-blank rows —

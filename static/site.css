@@ -1017,65 +1017,92 @@ table.lb.tts.tts-cmp tbody td { min-width: 12rem; font-size: 12.5px; line-height
 .tts-pick.on { background: var(--cool); border-color: var(--cool); color: #08131a; }
 .tts-pick:focus-visible { outline: 2px solid var(--cool); outline-offset: 1px; }
 
-/* ---- hardware ladder ----------------------------------------------------- */
-/* Given its own band above the facets, because "what runs on my machine" is the
-   question people arrive with — it frames everything below it rather than
-   sitting as one filter among twenty-seven. */
-.tts-hw {
-  margin: 0 0 14px; padding: 11px 13px;
-  background: rgba(74, 168, 216, 0.045);
-  border: 1px solid rgba(74, 168, 216, 0.18); border-radius: var(--radius);
+/* ---- filter popovers ----------------------------------------------------- */
+/* Four controls instead of forty-six chips. Everything the page could filter by
+   still exists; none of it is on screen until asked for. */
+.tts-pop { position: relative; flex: 0 0 auto; }
+.tts-pop > summary { list-style: none; cursor: pointer; white-space: nowrap; }
+.tts-pop > summary::-webkit-details-marker { display: none; }
+.tts-pop > summary::after { content: " BE"; opacity: .5; margin-left: 5px; }
+.tts-pop[open] > summary { background: var(--cool); color: #08131a; border-color: var(--cool); }
+.tts-pop-panel {
+  position: absolute; left: 0; top: calc(100% + 6px); z-index: 40;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px 14px 14px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .42);
 }
-.tts-hw-head { margin-bottom: 8px; }
-.tts-hw-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.pill.hw { display: inline-flex; align-items: baseline; gap: 6px; }
-.pill.hw.on { background: var(--cool); color: #08131a; border-color: var(--cool); }
-.hw-note { font-size: 10px; opacity: 0.62; }
-.tts-hw-note { margin: 9px 0 0; max-width: 74ch; line-height: 1.55; }
+.tts-pop-kind .tts-pop-panel   { width: min(23rem, calc(100vw - 2rem)); }
+.tts-pop-facets .tts-pop-panel { width: min(46rem, calc(100vw - 2rem)); }
+/* the rightmost popovers open leftward so they never run off the viewport */
+.tts-pop-facets .tts-pop-panel, .tts-colpick .tts-colpanel { left: auto; right: 0; }
+.tts-pop-hint { margin: 0 0 10px; color: var(--muted); font-size: 12px; max-width: 52ch; }
+.tts-optgrid { display: grid; grid-template-columns: 1fr; gap: 1px; }
+.tts-opt {
+  display: flex; align-items: center; gap: 8px; cursor: pointer;
+  font-size: 12.5px; color: var(--ink-dim); padding: 4px 3px; border-radius: 4px;
+}
+.tts-opt:hover { color: var(--ink); background: rgba(74, 168, 216, .07); }
+.tts-opt input { accent-color: var(--cool); flex: 0 0 auto; }
+.tts-opt > span:first-of-type { flex: 1 1 auto; }
 
-/* the per-row chip */
-.chip.hw {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.02em;
-  border: 1px solid rgba(74, 168, 216, 0.34); background: rgba(74, 168, 216, 0.08);
+/* hardware select — one control, real card names */
+.tts-hwsel {
+  flex: 0 0 auto; max-width: 17rem;
+  background: var(--surface); color: var(--ink-dim);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 6px 9px; font-family: var(--font-sans); font-size: 12.5px; cursor: pointer;
 }
-.chip.hw-hosted { border-color: var(--border); background: transparent; color: var(--muted); }
-.chip.hw-browser, .chip.hw-phone, .chip.hw-cpu { border-color: rgba(122, 192, 137, 0.45); }
-.chip.hw-gpu-24, .chip.hw-gpu-48 { border-color: rgba(245, 163, 75, 0.45); }
-table.lb.tts td .chip.hw { white-space: nowrap; }
+.tts-hwsel:hover { color: var(--ink); border-color: var(--cool); }
+.tts-hwsel:focus { outline: 2px solid var(--cool); outline-offset: 1px; }
 
-/* ---- facet filters ------------------------------------------------------- */
-/* Two filter axes share this bar, so they must not look alike: category pills
-   fill solid when active, facet pills tint and outline. Same hue, different
-   weight — a third accent would fight the section colour for no gain. */
-.tts-facets { margin: 0 0 16px; }
-.tts-facet-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 7px; }
-.tts-facet-title {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.09em;
-  text-transform: uppercase; color: var(--muted);
+/* ---- active filters ------------------------------------------------------ */
+/* The half that makes hiding the rest safe: a filter you cannot see is one you
+   forget you set, and then the table just looks broken. */
+.tts-active { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 14px; }
+.tts-active:empty { margin: 0; }
+.tts-active-lbl {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted); margin-right: 2px;
 }
-.tts-facet-group {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
-  padding: 3px 0;
+.pill.act {
+  background: rgba(74, 168, 216, .16); border-color: var(--cool); color: var(--ink);
+  font-size: 11.5px; padding: 3px 8px;
 }
+.pill.act .x { margin-left: 6px; opacity: .6; }
+.pill.act:hover .x { opacity: 1; }
+.tts-active-note { font-size: 11.5px; color: var(--muted); margin-left: 4px; }
+
+/* facet chips inside the popover */
+.tts-facets { display: flex; flex-direction: column; gap: 3px; }
+.tts-facet-group { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; padding: 2px 0; }
 .tts-facet-gl {
-  flex: 0 0 6.6rem; font-size: 11px; color: var(--muted);
-  font-family: var(--font-mono); letter-spacing: 0.02em;
+  flex: 0 0 6.4rem; font-size: 11px; color: var(--muted);
+  font-family: var(--font-mono); letter-spacing: .02em;
 }
 .pill.fct { font-size: 11.5px; padding: 3px 9px; }
 .pill.fct.on {
-  background: rgba(74, 168, 216, 0.16); border-color: var(--cool); color: var(--ink);
+  background: rgba(74, 168, 216, .16); border-color: var(--cool); color: var(--ink);
   box-shadow: inset 2px 0 0 var(--cool);
 }
-/* Kept visible, not hidden: "0" next to an active filter is the answer. */
-.pill.fct.none { opacity: 0.34; cursor: not-allowed; }
+.pill.fct.none { opacity: .34; cursor: not-allowed; }
 
 /* facet chips inside an expanded row */
 .tts-facet-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 11px; }
 .chip.fct {
-  font-size: 10.5px; letter-spacing: 0.02em;
-  background: rgba(74, 168, 216, 0.1); border: 1px solid rgba(74, 168, 216, 0.3);
+  font-size: 10.5px; letter-spacing: .02em;
+  background: rgba(74, 168, 216, .1); border: 1px solid rgba(74, 168, 216, .3);
   color: var(--ink-dim);
 }
+
+/* the per-row hardware chip */
+.chip.hw {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .02em;
+  border: 1px solid rgba(74, 168, 216, .34); background: rgba(74, 168, 216, .08);
+}
+.chip.hw-hosted { border-color: var(--border); background: transparent; color: var(--muted); }
+.chip.hw-browser, .chip.hw-phone, .chip.hw-cpu { border-color: rgba(122, 192, 137, .45); }
+.chip.hw-gpu-48, .chip.hw-gpu-80, .chip.hw-gpu-128 { border-color: rgba(245, 163, 75, .45); }
+table.lb.tts td .chip.hw { white-space: nowrap; }
 
 /* ---- external rating ----------------------------------------------------- */
 table.lb.tts td.tts-rating { min-width: 6.4rem; }
