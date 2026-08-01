@@ -1742,13 +1742,17 @@ async function initCompare() {
    ========================================================================== */
 
 const TTS_CATS = [
-  { key: "cloud",  label: "Cloud API" },
-  { key: "hyper",  label: "Hyperscaler" },
-  { key: "open",   label: "Open weights" },
-  { key: "device", label: "On-device" },
-  { key: "rt",     label: "Realtime S2S" },
-  { key: "vc",     label: "Voice conversion" },
-  { key: "legacy", label: "Classical" },
+  { key: "cloud",   label: "Cloud API" },
+  { key: "hyper",   label: "Hyperscaler" },
+  { key: "open",    label: "Open weights" },
+  { key: "device",  label: "On-device" },
+  { key: "rt",      label: "Realtime S2S" },
+  // Neither of these synthesises speech. An agent platform inherits whatever voice
+  // you point it at; a runtime is how a model reaches a phone, a browser or an NPU.
+  { key: "agent",   label: "Voice-agent platform" },
+  { key: "runtime", label: "Runtime" },
+  { key: "vc",      label: "Voice conversion" },
+  { key: "legacy",  label: "Classical" },
 ];
 const TTS_CAT_LABEL = Object.fromEntries(TTS_CATS.map((c) => [c.key, c.label]));
 
@@ -2073,6 +2077,42 @@ function renderTtsGaps(mount, gaps) {
   mount.replaceChildren(el("div", { class: "card explainer" }, ul));
 }
 
+/* How stale is this? Rendered from the data rather than hardcoded, so it can never
+   drift from the payload it describes — and the age is COMPUTED, because "compiled
+   31 July 2026" means nothing to a reader who does not know today's date. */
+function renderTtsDateline(mount, doc) {
+  if (!mount || !doc.compiled) return;
+  const compiled = new Date(doc.compiled + "T00:00:00Z");
+  const days = Math.max(0, Math.floor((Date.now() - compiled.getTime()) / 86400000));
+  const pretty = compiled.toLocaleDateString(undefined,
+    { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
+  const age = days === 0 ? "compiled today"
+    : days === 1 ? "1 day ago"
+    : days < 60 ? `${days} days ago`
+    : `${Math.round(days / 30.44)} months ago`;
+
+  // Past a quarter the prices are the problem, not the models — say so rather than
+  // letting a reader quote a year-old rate at a vendor.
+  const stale = days > 90;
+
+  mount.replaceChildren(
+    el("div", { class: "tts-dateline-row" },
+      el("span", { class: "tts-dl-k", text: "Last updated" }),
+      el("span", { class: "tts-dl-v mono", text: pretty }),
+      el("span", { class: "tts-dl-age" + (stale ? " stale" : ""), text: age }),
+      el("span", { class: "sep", text: "·" }),
+      el("span", { class: "tts-dl-v mono", text: `edition ${doc.edition}` }),
+      el("span", { class: "sep", text: "·" }),
+      el("span", { class: "tts-dl-v mono", text: `${doc.counts ? doc.counts.total : doc.systems.length} systems` }),
+    ),
+    el("p", { class: "tts-dateline-note", text: stale
+      ? "Prices and model versions in this field move monthly and leaderboard standings move in weeks. "
+        + "This snapshot is old enough that pricing should be re-checked against the vendor before you rely on it."
+      : "Prices and model versions in this field move monthly. Every figure is true as of the date above — "
+        + "re-check the vendor's own page before committing budget." }),
+  );
+}
+
 async function initTts() {
   const matrix = $("#tts-matrix");
   const controls = $("#tts-controls");
@@ -2090,6 +2130,7 @@ async function initTts() {
     renderTtsMatrix(matrix, rows, state);
   };
   rerender();
+  renderTtsDateline($("#tts-dateline"), doc);
   renderTtsCorrections($("#tts-corrections"), doc.corrections);
   renderTtsGaps($("#tts-gaps"), doc.gaps);
 
