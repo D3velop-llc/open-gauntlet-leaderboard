@@ -1036,3 +1036,44 @@ ol.numlist li::marker { color: var(--cool); font-family: var(--font-mono); font-
   .tts-controls { gap: 8px; }
   .tts-search { flex-basis: 100%; }
 }
+
+/* ---- Voices: technical view + grouped detail panels ---------------------- */
+.tts-view { margin-left: auto; flex: 0 0 auto; white-space: nowrap; }
+.tts-view.on { background: var(--cool); color: #08131a; border-color: var(--cool); }
+
+/* An optional field the sources never stated. Legible but visibly not a value,
+   so an empty cell can never be misread as "none" or "zero". */
+table.lb.tts td.tts-na { color: var(--muted); font-style: italic; opacity: 0.6; }
+
+/* lifecycle + evidence chips: quiet, and semantically separate from licence */
+.chip.st { font-family: var(--font-mono); font-size: 10px; text-transform: lowercase;
+           letter-spacing: .02em; border: 1px solid currentColor; background: transparent; }
+.st-active      { color: var(--good); }
+.st-dormant     { color: var(--ember); }
+.st-dead        { color: #F2777A; }
+.st-unknown     { color: var(--muted); }
+.st-verified    { color: var(--good); }
+.st-vendor-claim{ color: var(--ember); }
+.st-unverified  { color: var(--muted); }
+.st-mixed       { color: var(--cool); }
+
+.tts-panels {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px 26px; margin: 12px 0 0;
+}
+.tts-panel h4 {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--cool); margin: 0 0 6px;
+}
+dl.tts-spec { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 3px 10px; }
+dl.tts-spec dt {
+  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  white-space: nowrap; align-self: start;
+}
+dl.tts-spec dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-dim); }
+.tts-nodata { margin-top: 10px !important; color: var(--muted); font-size: 12px; font-style: italic; }
+
+@media (max-width: 720px) {
+  .tts-view { margin-left: 0; }
+  .tts-panels { grid-template-columns: 1fr; }
+}

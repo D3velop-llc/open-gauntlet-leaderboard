@@ -1763,22 +1763,92 @@ const TTS_LIC = {
   dead:   { label: "discontinued",    cls: "lic-dead" },
 };
 
+/* Columns. `simple: true` survives into the default view; everything else appears
+   only in the technical view — the same COLS[].simple contract the leaderboard
+   uses, so the two tables behave identically for a reader who has met one of them.
+   `cell` overrides which field is DISPLAYED when the sort key is a numeric twin
+   (price_sort sorts, price_note reads). */
 const TTS_COLS = [
-  { key: "name",       label: "System",   txt: true },
-  { key: "category",   label: "Kind",     txt: true },
-  { key: "licence",    label: "Licence",  txt: true },
-  { key: "price_sort", label: "Cost",     txt: true },
-  { key: "cloning",    label: "Cloning",  txt: true, wide: true },
-  { key: "emotion",    label: "Emotion control", txt: true, wide: true },
-  { key: "languages_sort", label: "Langs" },
-  { key: "runs_on",    label: "Runs on",  txt: true, wide: true },
+  { key: "name",           label: "System",          txt: true, simple: true },
+  { key: "category",       label: "Kind",            txt: true, simple: true },
+  { key: "licence",        label: "Licence",         txt: true, simple: true },
+  { key: "price_sort",     label: "Cost",            txt: true, simple: true, cell: "price_note" },
+  { key: "cloning",        label: "Cloning",         txt: true, simple: true, wide: true },
+  { key: "emotion",        label: "Emotion control", txt: true, simple: true, wide: true },
+  { key: "languages_sort", label: "Langs",                      simple: true, cell: "languages_note" },
+  { key: "runs_on",        label: "Runs on",         txt: true, simple: true, wide: true },
+  // technical view only
+  { key: "params",         label: "Params",          txt: true },
+  { key: "architecture",   label: "Architecture",    txt: true, wide: true },
+  { key: "codec",          label: "Codec",           txt: true, wide: true },
+  { key: "vram",           label: "VRAM",            txt: true },
+  { key: "streaming",      label: "Streaming",       txt: true },
+  { key: "max_generation", label: "Max length",      txt: true, wide: true },
+  { key: "watermark",      label: "Watermark",       txt: true, wide: true },
+  { key: "status",         label: "Status",          txt: true },
+  { key: "verification",   label: "Evidence",        txt: true },
 ];
 
+/* The expanded row, grouped. Flat key/value dumps of 23 fields are unreadable;
+   these are the questions a reader actually arrives with, in order. */
+const TTS_PANELS = [
+  { title: "Technical", fields: [
+    ["params", "Parameters"], ["architecture", "Architecture"], ["codec", "Codec"],
+    ["vram", "VRAM"], ["streaming", "Streaming"], ["max_generation", "Max generation"],
+    ["quantisation", "Quantisation"], ["fine_tuning", "Fine-tuning"], ["watermark", "Watermark"],
+  ] },
+  { title: "Commercial", fields: [
+    ["billing_unit", "Billing unit"], ["free_tier", "Free tier"], ["concurrency", "Concurrency"],
+    ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ] },
+  { title: "Control surface", fields: [
+    ["ssml", "SSML"], ["lexicon", "Pronunciation control"],
+    ["multi_speaker", "Multi-speaker"], ["timestamps", "Timestamps"],
+  ] },
+  { title: "Evidence", fields: [
+    ["benchmarks", "Benchmarks"], ["adoption", "Adoption"], ["released", "Released"],
+    ["latency_note", "Latency"],
+  ] },
+];
+
+/* Columns whose text leads with a magnitude-suffixed number. Sorting these as
+   strings ranks "82 M" above "5 B", because it compares "8" against "5" and never
+   reaches the unit. */
+const TTS_MAGNITUDE_COLS = new Set(["params", "vram"]);
+const TTS_SCALE = { k: 1e-3, m: 1, b: 1e3, t: 1e6 };
+
+/* How far into a value a magnitude may appear and still be THIS system's size.
+   Beyond this the number belongs to prose — a backbone, a comparison, a codec —
+   not to the field. "Backbone-dependent — v0.7 uses GLM 4.6, …, 70 B" must sink
+   as unquantified rather than sort as the largest model on the page. */
+const TTS_MAGNITUDE_LEAD = 24;
+
+/* Leading number in a string, scaled by its magnitude suffix. NaN when the value
+   does not lead with a quantity ("CPU only", "N/A (closed)", "Backbone-dependent"),
+   which the comparator sinks in both directions.
+
+   Two details are load-bearing, both found by sorting real data:
+     - the leading \b stops "SeamlessM4T" matching "4T" as four trillion;
+     - there is deliberately NO leading -?, because sizes are never negative and a
+       hyphen here is part of a model name — "VibeVoice-TTS-1.5B" parsed as −1500. */
+function ttsMagnitude(str) {
+  const s = String(str == null ? "" : str);
+  const m = s.match(/\b([\d,]*\.?\d+)\s*([kMBT])\b/);
+  if (!m || m.index > TTS_MAGNITUDE_LEAD) return NaN;
+  const n = parseFloat(m[1].replace(/,/g, ""));
+  return isNaN(n) ? NaN : n * TTS_SCALE[m[2].toLowerCase()];
+}
+
 /* Sort value for a column. Numeric columns read their dedicated *_sort field so
-   the order matches the label; everything else compares as lowercased text. */
+   the order matches the label; magnitude columns parse their unit; everything
+   else compares as lowercased text. */
 function ttsSortVal(row, key) {
   if (key === "price_sort" || key === "languages_sort") return row[key];
   if (key === "category") return TTS_CAT_LABEL[row.category] || row.category;
+  if (TTS_MAGNITUDE_COLS.has(key)) {
+    const v = ttsMagnitude(row[key]);
+    return isNaN(v) ? null : v;   // null sinks in both directions
+  }
   return String(row[key] == null ? "" : row[key]).toLowerCase();
 }
 
@@ -1794,17 +1864,39 @@ function ttsMatches(row, q) {
 
 function ttsDetailRow(row, colCount) {
   const body = el("div", { class: "tts-detail-body" });
+
   body.appendChild(el("p", { class: "tts-best" },
     el("span", { class: "tts-dt", text: "Best for" }), " ", row.best_for));
-  if (row.latency_note) {
-    body.appendChild(el("p", { class: "tts-lat" },
-      el("span", { class: "tts-dt", text: "Latency" }), " ", row.latency_note));
-  }
   if (row.watch) {
     // The caveat is the reason this page exists; give it its own visual weight.
     body.appendChild(el("p", { class: "tts-watch" },
       el("span", { class: "tts-dt warn", text: "Watch out" }), " ", row.watch));
   }
+
+  const grid = el("div", { class: "tts-panels" });
+  TTS_PANELS.forEach((panel) => {
+    // A panel whose every field is absent is omitted entirely rather than
+    // rendered as a heading over four dashes.
+    const present = panel.fields.filter(([k]) => row[k]);
+    if (!present.length) return;
+    const dl = el("dl", { class: "tts-spec" });
+    present.forEach(([k, label]) => {
+      dl.appendChild(el("dt", { text: label }));
+      dl.appendChild(el("dd", { text: row[k] }));
+    });
+    grid.appendChild(el("div", { class: "tts-panel" },
+      el("h4", { text: panel.title }), dl));
+  });
+  if (grid.childNodes.length) body.appendChild(grid);
+
+  // Absence is a finding, not a gap in the page. Say which fields the sources
+  // did not state, rather than letting the reader assume we simply omitted them.
+  const missing = TTS_PANELS.flatMap((p) => p.fields).filter(([k]) => !row[k]).length;
+  if (missing) {
+    body.appendChild(el("p", { class: "tts-nodata" },
+      `${missing} further ${missing === 1 ? "field is" : "fields are"} not published for this system.`));
+  }
+
   const td = el("td", { class: "tts-detail-cell", colspan: String(colCount) }, body);
   return el("tr", { class: "tts-detail", hidden: "hidden" }, td);
 }
@@ -1832,9 +1924,11 @@ function renderTtsMatrix(mount, rows, state) {
     return;
   }
 
+  const cols = TTS_COLS.filter((c) => (state.simple ? c.simple : true));
+
   const thead = el("thead");
   const htr = el("tr");
-  TTS_COLS.forEach((c) => {
+  cols.forEach((c) => {
     const th = el("th", {
       class: c.txt ? "txt" : "",
       tabindex: "0",
@@ -1856,7 +1950,7 @@ function renderTtsMatrix(mount, rows, state) {
   const tbody = el("tbody");
   shown.forEach((row) => {
     const lic = TTS_LIC[row.licence_class] || TTS_LIC.closed;
-    const detail = ttsDetailRow(row, TTS_COLS.length);
+    const detail = ttsDetailRow(row, cols.length);
 
     const nameCell = el("td", { class: "tts-name txt" },
       el("span", { class: "nm", text: row.name }));
@@ -1876,17 +1970,41 @@ function renderTtsMatrix(mount, rows, state) {
       onkeydown: (e) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.target.click(); }
       },
-    },
-      nameCell,
-      el("td", { class: "txt" }, el("span", { class: "chip", text: TTS_CAT_LABEL[row.category] || row.category })),
-      el("td", { class: "txt tts-lic" },
-        el("span", { class: "chip lic " + lic.cls, title: row.licence, text: lic.label })),
-      el("td", { class: "txt tts-price", text: row.price_note }),
-      el("td", { class: "txt tts-prose", text: row.cloning }),
-      el("td", { class: "txt tts-prose", text: row.emotion }),
-      el("td", { text: row.languages_note }),
-      el("td", { class: "txt tts-prose", text: row.runs_on }),
-    );
+    });
+
+    // Cells are built FROM the column list, so adding a column to TTS_COLS is the
+    // only edit needed to surface a new field — the previous hand-written cell
+    // list silently ignored anything added to the header.
+    cols.forEach((c) => {
+      if (c.key === "name") { tr.appendChild(nameCell); return; }
+      if (c.key === "category") {
+        tr.appendChild(el("td", { class: "txt" },
+          el("span", { class: "chip", text: TTS_CAT_LABEL[row.category] || row.category })));
+        return;
+      }
+      if (c.key === "licence") {
+        tr.appendChild(el("td", { class: "txt tts-lic" },
+          el("span", { class: "chip lic " + lic.cls, title: row.licence, text: lic.label })));
+        return;
+      }
+      if (c.key === "status" || c.key === "verification") {
+        const v = row[c.key] || "unknown";
+        tr.appendChild(el("td", { class: "txt" },
+          el("span", { class: "chip st st-" + v, text: v })));
+        return;
+      }
+      // `cell` names the readable twin of a numeric sort key (price_sort → price_note).
+      const value = row[c.cell || c.key];
+      const cls = c.key === "price_sort" ? "txt tts-price"
+        : c.wide ? "txt tts-prose"
+        : c.txt ? "txt" : "";
+      // An absent optional field says so, rather than rendering as an empty cell
+      // that reads as "none" — the not-measured / measured-as-zero distinction
+      // this project holds everywhere else.
+      tr.appendChild(value
+        ? el("td", { class: cls, text: value })
+        : el("td", { class: (cls + " tts-na").trim(), text: "not published" }));
+    });
 
     tbody.appendChild(tr);
     tbody.appendChild(detail);
@@ -1923,7 +2041,16 @@ function renderTtsControls(mount, rows, state, onChange) {
   search.value = state.q;
   search.addEventListener("input", () => { state.q = search.value.trim().toLowerCase(); onChange(); });
 
-  mount.replaceChildren(el("div", { class: "tts-controls" }, pills, search));
+  // Simple by default: a shared link must never land a newcomer in a 17-column
+  // table. Same contract as the leaderboard's board toggle.
+  const toggle = el("button", {
+    class: "pill tts-view" + (state.simple ? "" : " on"),
+    "aria-pressed": state.simple ? "false" : "true",
+    text: state.simple ? "Technical view" : "Simple view",
+  });
+  toggle.addEventListener("click", () => { state.simple = !state.simple; onChange(); });
+
+  mount.replaceChildren(el("div", { class: "tts-controls" }, pills, search, toggle));
 }
 
 function renderTtsCorrections(mount, items) {
@@ -1957,7 +2084,7 @@ async function initTts() {
     return;
   }
   const rows = doc.systems || [];
-  const state = { cats: new Set(), q: "", sort: "name", desc: false };
+  const state = { cats: new Set(), q: "", sort: "name", desc: false, simple: true };
   const rerender = () => {
     renderTtsControls(controls, rows, state, rerender);
     renderTtsMatrix(matrix, rows, state);
