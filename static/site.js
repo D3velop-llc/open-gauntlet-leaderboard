@@ -1732,6 +1732,246 @@ async function initCompare() {
   render();
 }
 
+/* ============================== VOICES (TTS) ===============================
+   A sourced survey of the speech-synthesis market, NOT a gauntlet result. The
+   payload comes straight from configs/tts.yaml with no DB path, and nothing here
+   may present itself as benchmarked — the leaderboard scores text, this scores
+   nothing. Sorting is client-side over the numeric *_sort fields rather than the
+   display strings, because "$50–100 / 1M chars" and "70+ (v3) · 32 (Flash)" do
+   not compare as numbers.
+   ========================================================================== */
+
+const TTS_CATS = [
+  { key: "cloud",  label: "Cloud API" },
+  { key: "hyper",  label: "Hyperscaler" },
+  { key: "open",   label: "Open weights" },
+  { key: "device", label: "On-device" },
+  { key: "rt",     label: "Realtime S2S" },
+  { key: "vc",     label: "Voice conversion" },
+  { key: "legacy", label: "Classical" },
+];
+const TTS_CAT_LABEL = Object.fromEntries(TTS_CATS.map((c) => [c.key, c.label]));
+
+/* Licence class → what a buyer needs to know in one word. `bad` is the important
+   one: open weights you may NOT use commercially, which is the trap this page
+   exists to flag. */
+const TTS_LIC = {
+  open:   { label: "commercial-safe", cls: "lic-open" },
+  warn:   { label: "has a catch",     cls: "lic-warn" },
+  bad:    { label: "non-commercial",  cls: "lic-bad" },
+  closed: { label: "proprietary",     cls: "lic-closed" },
+  dead:   { label: "discontinued",    cls: "lic-dead" },
+};
+
+const TTS_COLS = [
+  { key: "name",       label: "System",   txt: true },
+  { key: "category",   label: "Kind",     txt: true },
+  { key: "licence",    label: "Licence",  txt: true },
+  { key: "price_sort", label: "Cost",     txt: true },
+  { key: "cloning",    label: "Cloning",  txt: true, wide: true },
+  { key: "emotion",    label: "Emotion control", txt: true, wide: true },
+  { key: "languages_sort", label: "Langs" },
+  { key: "runs_on",    label: "Runs on",  txt: true, wide: true },
+];
+
+/* Sort value for a column. Numeric columns read their dedicated *_sort field so
+   the order matches the label; everything else compares as lowercased text. */
+function ttsSortVal(row, key) {
+  if (key === "price_sort" || key === "languages_sort") return row[key];
+  if (key === "category") return TTS_CAT_LABEL[row.category] || row.category;
+  return String(row[key] == null ? "" : row[key]).toLowerCase();
+}
+
+function ttsMatches(row, q) {
+  if (!q) return true;
+  const hay = [
+    row.name, row.variants, TTS_CAT_LABEL[row.category], row.licence, row.price_note,
+    row.cloning, row.emotion, row.languages_note, row.runs_on, row.latency_note,
+    row.best_for, row.watch,
+  ].filter(Boolean).join(" ").toLowerCase();
+  return hay.includes(q);
+}
+
+function ttsDetailRow(row, colCount) {
+  const body = el("div", { class: "tts-detail-body" });
+  body.appendChild(el("p", { class: "tts-best" },
+    el("span", { class: "tts-dt", text: "Best for" }), " ", row.best_for));
+  if (row.latency_note) {
+    body.appendChild(el("p", { class: "tts-lat" },
+      el("span", { class: "tts-dt", text: "Latency" }), " ", row.latency_note));
+  }
+  if (row.watch) {
+    // The caveat is the reason this page exists; give it its own visual weight.
+    body.appendChild(el("p", { class: "tts-watch" },
+      el("span", { class: "tts-dt warn", text: "Watch out" }), " ", row.watch));
+  }
+  const td = el("td", { class: "tts-detail-cell", colspan: String(colCount) }, body);
+  return el("tr", { class: "tts-detail", hidden: "hidden" }, td);
+}
+
+function renderTtsMatrix(mount, rows, state) {
+  const shown = rows
+    .filter((r) => !state.cats.size || state.cats.has(r.category))
+    .filter((r) => ttsMatches(r, state.q));
+
+  const dir = state.desc ? -1 : 1;
+  shown.sort((a, b) => {
+    const x = ttsSortVal(a, state.sort), y = ttsSortVal(b, state.sort);
+    // Rows with no number sink to the bottom in BOTH directions — reversing the
+    // sort must never float "not published" to the top.
+    if (x == null && y == null) return a.name.localeCompare(b.name);
+    if (x == null) return 1;
+    if (y == null) return -1;
+    if (x < y) return -1 * dir;
+    if (x > y) return 1 * dir;
+    return a.name.localeCompare(b.name);
+  });
+
+  if (!shown.length) {
+    mount.replaceChildren(el("div", { class: "state" }, "No system matches that filter."));
+    return;
+  }
+
+  const thead = el("thead");
+  const htr = el("tr");
+  TTS_COLS.forEach((c) => {
+    const th = el("th", {
+      class: c.txt ? "txt" : "",
+      tabindex: "0",
+      role: "button",
+      onclick: () => {
+        if (state.sort === c.key) state.desc = !state.desc;
+        else { state.sort = c.key; state.desc = false; }
+        renderTtsMatrix(mount, rows, state);
+      },
+      onkeydown: (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.target.click(); }
+      },
+    }, c.label, el("span", { class: "arrow", text: state.desc ? " ▼" : " ▲" }));
+    if (state.sort === c.key) th.setAttribute("aria-sort", state.desc ? "descending" : "ascending");
+    htr.appendChild(th);
+  });
+  thead.appendChild(htr);
+
+  const tbody = el("tbody");
+  shown.forEach((row) => {
+    const lic = TTS_LIC[row.licence_class] || TTS_LIC.closed;
+    const detail = ttsDetailRow(row, TTS_COLS.length);
+
+    const nameCell = el("td", { class: "tts-name txt" },
+      el("span", { class: "nm", text: row.name }));
+    if (row.variants) nameCell.appendChild(el("span", { class: "slug", text: row.variants }));
+
+    const tr = el("tr", {
+      class: "tts-row" + (row.licence_class === "dead" ? " is-dead" : ""),
+      tabindex: "0",
+      role: "button",
+      "aria-expanded": "false",
+      onclick: () => {
+        const open = detail.hasAttribute("hidden");
+        if (open) detail.removeAttribute("hidden"); else detail.setAttribute("hidden", "hidden");
+        tr.setAttribute("aria-expanded", open ? "true" : "false");
+        tr.classList.toggle("open", open);
+      },
+      onkeydown: (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.target.click(); }
+      },
+    },
+      nameCell,
+      el("td", { class: "txt" }, el("span", { class: "chip", text: TTS_CAT_LABEL[row.category] || row.category })),
+      el("td", { class: "txt tts-lic" },
+        el("span", { class: "chip lic " + lic.cls, title: row.licence, text: lic.label })),
+      el("td", { class: "txt tts-price", text: row.price_note }),
+      el("td", { class: "txt tts-prose", text: row.cloning }),
+      el("td", { class: "txt tts-prose", text: row.emotion }),
+      el("td", { text: row.languages_note }),
+      el("td", { class: "txt tts-prose", text: row.runs_on }),
+    );
+
+    tbody.appendChild(tr);
+    tbody.appendChild(detail);
+  });
+
+  const table = el("table", { class: "lb tts" }, thead, tbody);
+  const wrapEl = el("div", { class: "table-scroll" }, table);
+  const count = el("p", { class: "note tts-count" },
+    `${shown.length} of ${rows.length} systems shown. Click any row for what it is best at — and the catch.`);
+  mount.replaceChildren(count, wrapEl);
+}
+
+function renderTtsControls(mount, rows, state, onChange) {
+  const pills = el("div", { class: "pill-row" });
+  const all = el("button", { class: "pill" + (state.cats.size ? "" : " on"), text: "All" });
+  all.addEventListener("click", () => { state.cats.clear(); onChange(); });
+  pills.appendChild(all);
+  TTS_CATS.forEach((c) => {
+    const n = rows.filter((r) => r.category === c.key).length;
+    if (!n) return;
+    const p = el("button", { class: "pill" + (state.cats.has(c.key) ? " on" : "") },
+      c.label, el("span", { class: "pill-n", text: String(n) }));
+    p.addEventListener("click", () => {
+      if (state.cats.has(c.key)) state.cats.delete(c.key); else state.cats.add(c.key);
+      onChange();
+    });
+    pills.appendChild(p);
+  });
+
+  const search = el("input", {
+    class: "tts-search", type: "search", "aria-label": "Search every field",
+    placeholder: "Search licence, language, hardware, caveat…",
+  });
+  search.value = state.q;
+  search.addEventListener("input", () => { state.q = search.value.trim().toLowerCase(); onChange(); });
+
+  mount.replaceChildren(el("div", { class: "tts-controls" }, pills, search));
+}
+
+function renderTtsCorrections(mount, items) {
+  if (!items || !items.length) { mount.replaceChildren(); return; }
+  const list = el("div", { class: "tts-corrections" });
+  items.forEach((c) => {
+    list.appendChild(el("div", { class: "tts-corr" },
+      el("p", { class: "tts-claim" },
+        el("span", { class: "tts-dt bad", text: "Commonly stated" }), " ", c.claim),
+      el("p", { class: "tts-real" },
+        el("span", { class: "tts-dt", text: "Actually" }), " ", c.reality)));
+  });
+  mount.replaceChildren(list);
+}
+
+function renderTtsGaps(mount, gaps) {
+  if (!gaps || !gaps.length) { mount.replaceChildren(); return; }
+  const ul = el("ul", { class: "deflist tts-gaps" });
+  gaps.forEach((g) => ul.appendChild(el("li", { text: g })));
+  mount.replaceChildren(el("div", { class: "card explainer" }, ul));
+}
+
+async function initTts() {
+  const matrix = $("#tts-matrix");
+  const controls = $("#tts-controls");
+  let doc;
+  try {
+    doc = await getJSON("data/tts.json");
+  } catch (e) {
+    fail(matrix, "The voices matrix could not be loaded.");
+    return;
+  }
+  const rows = doc.systems || [];
+  const state = { cats: new Set(), q: "", sort: "name", desc: false };
+  const rerender = () => {
+    renderTtsControls(controls, rows, state, rerender);
+    renderTtsMatrix(matrix, rows, state);
+  };
+  rerender();
+  renderTtsCorrections($("#tts-corrections"), doc.corrections);
+  renderTtsGaps($("#tts-gaps"), doc.gaps);
+
+  // Provenance: the edition and compile date belong on the page, because every
+  // figure in the table is only true as of that date.
+  const foot = $("[data-generated-at]");
+  if (foot && doc.compiled) foot.textContent = `${doc.compiled} · voices edition ${doc.edition}`;
+}
+
 /* ------------------------------ router ---------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const page = document.body.getAttribute("data-page");
@@ -1739,4 +1979,5 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
+  else if (page === "tts") initTts();
 });

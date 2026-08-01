@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>TTS licensing, consent &amp; law — OpenGauntlet</title>
+  
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/site.css">
+  
+</head>
+<body data-page="tts-legal">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav">
+        <a href="index.html">Leaderboard</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="compare.html">Compare</a>
+        
+        <a href="tts.html" class="active">Voices</a>
+      </nav>
+    </div>
+  </header>
+
+  
+  <div class="wrap">
+   <div class="meth-flow">
+    <section class="hero">
+      <div class="eyebrow"><span class="tick">//</span> voices · what you're allowed to do</div>
+      <h1>The licence traps, and the <span class="warm">law that just landed</span></h1>
+      <p class="lede prose">
+        Open-weights speech models are unusually treacherous to license, four incompatible
+        labelling regimes are now in force worldwide, and the market ships almost none of what
+        they require. <strong>Informational only — this is not legal advice.</strong> Verify
+        against primary sources and qualified counsel before relying on any of it.
+      </p>
+    </section>
+
+    <section class="block">
+      <div class="card explainer row-in">
+        <h3>The single most common mistake in open TTS</h3>
+        <p class="prose">
+          A speech project licenses its <strong>code</strong> and its <strong>model weights</strong>
+          separately. MIT or Apache-2.0 code paired with non-commercial weights is extremely
+          common, because the weights inherit restrictions from whatever the model was trained on.
+        </p>
+        <p class="prose">
+          The GitHub badge tells you about the code. <strong>Check the model card, and check it
+          for the specific checkpoint you intend to ship</strong> — sibling models in one
+          repository sometimes carry different licences. Three claims you will see everywhere and
+          that are all wrong: Fish Audio S2 Pro is not MIT, IndexTTS 2 is not Apache-2.0, and
+          F5-TTS's released checkpoints are not MIT.
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>Split licences, and other traps</h3>
+        <ul class="deflist">
+          <li>
+            <strong>Permissive code, restricted weights.</strong> The endemic pattern. Reading only
+            the repository LICENSE file gives you the wrong answer for F5-TTS, OmniVoice,
+            Echo-TTS, Supertonic and the Coqui/XTTS lineage.
+          </li>
+          <li>
+            <strong>Licences that cover the OUTPUT.</strong> A handful — the Coqui Public Model
+            Licence most notably — restrict not just the model but the audio it generates. That is
+            what makes XTTS-v2 unusable in a commercial product despite its popularity.
+          </li>
+          <li>
+            <strong>Open in name only.</strong> MegaTTS 3 is nominally Apache-2.0, but its
+            publisher withholds the encoder weights, so you can only run inference from latents
+            they provide. Voice cloning with your own audio is impossible.
+          </li>
+          <li>
+            <strong>Stacked licences.</strong> Some models inherit three at once — a project
+            licence, a backbone-model licence, and a separate licence on the audio codec. All
+            three have to clear.
+          </li>
+          <li>
+            <strong>Relicensing.</strong> Piper moved from MIT to GPL-3.0 and archived the old
+            repository. Anyone who embedded the MIT-era build in a proprietary product cannot
+            simply upgrade.
+          </li>
+          <li>
+            <strong>Transitive copyleft.</strong> eSpeak NG is GPL-3.0 and is the pronunciation
+            front end embedded inside Piper, Kokoro, StyleTTS 2 and many others. Products shipping
+            those models should check whether they are linking GPL code.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>Four questions before you ship</h3>
+        <ol class="numlist">
+          <li>What licence is on the <em>specific checkpoint file</em> you will load — not the repository, the file?</li>
+          <li>Does the licence say anything about the <em>generated audio</em>, as distinct from the model?</li>
+          <li>What was it trained on, and does that corpus impose downstream terms?</li>
+          <li>If it is a hosted API: who owns the output, is your audio used for training by default, how long is it retained, and what happens to a cloned voice if you stop paying?</li>
+        </ol>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>Synthetic-audio labelling is now law in four places, and they disagree</h3>
+        <p class="prose">
+          <strong>European Union.</strong> AI Act Article 50 has applied since 2 August 2026.
+          Providers of systems generating synthetic audio must mark outputs in a machine-readable
+          format detectable as artificially generated; deployers publishing a deepfake must
+          disclose it perceivably. A cloned voice that plausibly appears authentic counts, and the
+          duty applies <em>even without intent to deceive</em>. Penalties reach €15 million or 3%
+          of worldwide annual turnover. The regulation names no technical standard, so vendors are
+          guessing between provenance metadata and watermarking.
+        </p>
+        <p class="prose">
+          <strong>China</strong> has the strictest and most technically prescriptive regime: a
+          human-perceptible label <em>and</em> machine-readable metadata to a named national
+          standard, in force since September 2025. <strong>India</strong> requires audio
+          disclosures plus permanent provenance metadata, with takedown clocks measured in hours.
+          <strong>South Korea</strong> requires visible or machine-readable labels for synthetic
+          sounds. The <strong>UK, US federal law and Japan</strong> have no synthetic-audio
+          labelling mandate at all.
+        </p>
+        <p class="prose">
+          The practical consequence: <strong>a single global product cannot satisfy all four
+          in-force regimes with one implementation.</strong>
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>Almost nothing on the market is watermarked</h3>
+        <p class="prose">
+          Against those requirements, the market's actual behaviour is stark. Most major
+          commercial vendors disclose no audio watermark. One leading vendor's own detection
+          classifier explicitly does not reliably identify audio from its own flagship model, and
+          analyses only the first minute of a clip.
+        </p>
+        <p class="prose">
+          <strong>The most reliably watermarked synthetic speech available right now comes from an
+          MIT-licensed open model.</strong> Chatterbox embeds a watermark in every generation and
+          ships the extraction code so anyone can verify it. For everything else, the practical
+          retrofit is an open watermarking library with permissive weights, applied as a
+          post-generation pipeline step.
+        </p>
+        <p class="prose">
+          Two caveats that apply to every scheme. All of them are <em>proactive</em> — they mark
+          at generation time, so <strong>the absence of a watermark proves nothing</strong>. And
+          published robustness figures are measured against benign edits like compression and
+          re-encoding, not against a motivated adversary.
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>What it takes to clone a voice, by vendor</h3>
+        <p class="prose">
+          This varies enormously, and it is a procurement question rather than a feature. At the
+          strict end, one hyperscaler requires a recorded verbal consent statement in a fixed
+          script <em>plus a biometric match</em> between that statement and the training audio,
+          and gates the whole capability behind account-team approval. In the middle, vendors
+          require the speaker to read a consent statement with no verification that it is the same
+          person. At the loose end sit vendors that accept a checkbox — and open-weights models,
+          which have <strong>no gate whatsoever</strong>.
+        </p>
+        <p class="prose">
+          If deepfake liability matters to you, this dimension should outrank price. And note that
+          self-hosting exempts you from nothing: if you place a self-hosted system on the EU
+          market, <strong>you</strong> are the provider under Article 50.
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>Does your vendor train on your audio?</h3>
+        <p class="prose">
+          Several major TTS vendors <strong>train on customer content by default</strong>, with an
+          opt-out buried in account settings that is not retroactive. At least two take a
+          perpetual, irrevocable, sublicensable licence over your input with no opt-out identified
+          at all — difficult to reconcile with data-subject rights under GDPR.
+        </p>
+        <p class="prose">
+          Others do not train by default and say so plainly; one exposes a per-request parameter
+          to disable it, which is the most auditable control found anywhere in the segment.
+          <strong>Retention and training policy could not be verified from primary sources for
+          most vendors.</strong> Speech inputs routinely contain personal data — get these terms
+          contractually rather than assuming.
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>US voice rights, briefly</h3>
+        <p class="prose">
+          <strong>Copyright does not protect a voice.</strong> The leading 2025 case held that
+          copyright covers the fixed sound recording, not the abstract qualities of a voice nor a
+          new recording that imitates one. Trademark generally fails too. What survives is state
+          right-of-publicity law, state consumer-protection law, and breach of contract — and the
+          question of whether training on scraped recordings infringes was left open rather than
+          decided.
+        </p>
+        <p class="prose">
+          The fastest-moving US exposure is not publicity but <strong>biometric privacy</strong>.
+          Illinois's statute enumerates voiceprints and carries a private right of action; a wave
+          of class actions filed in May 2026 named nine major technology companies over voiceprints
+          allegedly extracted from public recordings to train commercial voice models. The
+          unresolved doctrinal question — whether a generative voice model is a "voiceprint" —
+          will determine exposure for the entire industry.
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>Cloning the voices of the dead</h3>
+        <p class="prose">
+          There is no binding law anywhere governing memorial voices or digital-afterlife
+          services. The only articulated guidance is academic: consent from the person before
+          death, consent from heirs <em>and</em> from the mourners who will interact, adult users
+          only, easy opt-out, and defined retirement protocols for a dignified shutdown.
+        </p>
+        <p class="prose">
+          The nearest binding constraints are indirect — post-mortem publicity rights, and estate
+          consent under performers'-union agreements. In most of Europe, data-protection law does
+          not apply to the deceased at all. The result is an inversion worth stating plainly:
+          <strong>the law protects the commercial value of a dead celebrity's voice far better
+          than it protects an ordinary family from an unwanted synthetic parent.</strong>
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>A checklist</h3>
+        <ol class="numlist">
+          <li>If you touch the EU, implement machine-readable marking on output. An MIT-licensed watermarking library with open weights is the free path.</li>
+          <li>Give whoever deploys your system a perceivable disclosure mechanism — that duty is theirs, but they need a hook from you.</li>
+          <li>If you clone voices, copy the strictest vendor pattern: fixed-script recorded consent plus a biometric match against the training audio, retained as evidence.</li>
+          <li>Never rely on "the user ticked a box" as consent evidence in a biometric-privacy jurisdiction.</li>
+          <li>Document your training-data provenance now — that is exactly what the 2026 litigation wave targets.</li>
+          <li>Check whether your vendor trains on your audio by default, and turn it off in writing.</li>
+          <li>For deceased voices, obtain estate consent and treat the academic guidance as the floor.</li>
+          <li>Do not assume any vendor watermarks unless its documentation says so. Most do not.</li>
+        </ol>
+      </div>
+    </section>
+   </div>
+  </div>
+
+
+  <footer class="foot">
+    <div class="wrap">
+      <span class="foot-brand">OpenGauntlet — which self-hosted open model is the best to actually talk to.</span>
+      <nav class="foot-nav">
+        <a href="index.html">Leaderboard</a><span class="sep">·</span>
+        <a href="methodology.html">How it works</a><span class="sep">·</span>
+        <a href="compare.html">Compare</a><span class="sep">·</span>
+        <a href="tts.html">Voices</a>
+      </nav>
+      
+      <span class="foot-prov">Updated <span data-generated-at>2026-07-31 07:56 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
+    </div>
+  </footer>
+
+  
+  <script src="static/site.js" defer></script>
+</body>
+</html>

@@ -906,3 +906,133 @@ table.lb td.model .slug, table.lb td.model .cfg { display: block; }
    match a row back to the exported data without the page speaking only in keys */
 .crit-defs .ckey { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted);
                    margin-left: 8px; }
+
+/* ============================== VOICES (TTS) ================================
+   The spoken-voice section. It inherits the whole system — surfaces, hairlines,
+   the three type voices, table.lb — and changes exactly one thing: the signal
+   colour. Ember stays the BRAND (it is the measured quantity on the leaderboard:
+   warmth). Voices signals in --cool, which the perf charts already use for
+   latency, and latency is the dominant axis over here.
+
+   Licence colour is SEMANTIC, not decorative, and deliberately separate from
+   both: red does not mean "bad model", it means "you may not ship this".
+   ========================================================================== */
+body[data-page^="tts"] .section-head .idx,
+body[data-page^="tts"] .eyebrow .tick { color: var(--cool); }
+body[data-page^="tts"] .hero h1 .warm {
+  background: linear-gradient(96deg, #8ecdf0, var(--cool) 58%, #2f7fa8);
+  -webkit-background-clip: text; background-clip: text;
+}
+body[data-page^="tts"] a { color: var(--cool); }
+body[data-page^="tts"] a:hover { color: #8ecdf0; }
+/* the top nav is brand chrome and must NOT recolour with the section */
+body[data-page^="tts"] .topbar a { color: var(--ink-dim); }
+body[data-page^="tts"] .topbar a:hover { color: var(--ink); }
+body[data-page^="tts"] .topbar a.active { color: var(--ember); background: var(--ember-dim); }
+body[data-page^="tts"] .brand { color: var(--ink); }
+body[data-page^="tts"] .brand .slash, body[data-page^="tts"] .brand em { color: var(--ember); }
+
+/* the scope card states what this section is NOT before showing any data */
+.tts-scope { border-left: 2px solid var(--cool); }
+.tts-scope .sep { color: var(--muted); margin: 0 8px; }
+
+/* ---- controls ----------------------------------------------------------- */
+.tts-controls {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin: 0 0 14px;
+}
+.pill-row { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.pill-row .pill.on { background: var(--cool); color: #08131a; border-color: var(--cool); }
+.pill-n {
+  margin-left: 7px; font-size: 10.5px; opacity: 0.65;
+  font-variant-numeric: tabular-nums;
+}
+.tts-search {
+  flex: 1 1 260px; min-width: 200px;
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 7px 11px; font-family: var(--font-sans); font-size: 13px;
+}
+.tts-search::placeholder { color: var(--muted); }
+.tts-search:focus { outline: 2px solid var(--cool); outline-offset: 1px; border-color: transparent; }
+.tts-count { margin: 0 0 10px; }
+
+/* ---- the matrix --------------------------------------------------------- */
+/* table.lb is built for numeric scanning: nowrap, right-aligned. Half these
+   columns are prose, so they wrap and align left, and the table gets a wider
+   floor so the prose columns do not concertina. */
+table.lb.tts { min-width: 1180px; }
+table.lb.tts thead th { text-align: left; }
+table.lb.tts tbody td {
+  text-align: left; white-space: normal; vertical-align: top;
+  font-family: var(--font-sans);
+}
+table.lb.tts td.tts-prose { color: var(--ink-dim); min-width: 13rem; line-height: 1.5; }
+table.lb.tts td.tts-price { font-family: var(--font-mono); font-size: 12px; min-width: 9rem; }
+table.lb.tts td.tts-name { min-width: 11rem; }
+table.lb.tts td.tts-name .nm { font-weight: 600; color: var(--ink); }
+table.lb.tts td.tts-name .slug { display: block; color: var(--muted); font-size: 11px; margin-top: 1px; }
+table.lb.tts tbody tr.tts-row { cursor: pointer; }
+table.lb.tts tbody tr.tts-row:hover td { background: rgba(74, 168, 216, 0.055); }
+table.lb.tts tbody tr.tts-row:focus-visible { outline: 2px solid var(--cool); outline-offset: -2px; }
+table.lb.tts tbody tr.tts-row.open td { background: rgba(74, 168, 216, 0.075); border-bottom-color: transparent; }
+/* a discontinued vendor must not read as a live option */
+table.lb.tts tbody tr.is-dead td { opacity: 0.55; }
+table.lb.tts tbody tr.is-dead .nm { text-decoration: line-through; }
+
+/* ---- licence chips: semantic, and separate from the section accent ------- */
+.chip.lic { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.03em;
+            border: 1px solid currentColor; background: transparent; }
+.lic-open   { color: var(--good); }
+.lic-warn   { color: var(--ember); }
+.lic-bad    { color: #F2777A; }
+.lic-closed { color: var(--muted); }
+.lic-dead   { color: #F2777A; opacity: 0.75; }
+/* legend swatches reuse the same colours so the key is not a second vocabulary */
+.tts-legend { flex-wrap: wrap; gap: 8px 18px; }
+.lic-key { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
+           border: 1px solid currentColor; margin-right: 5px; vertical-align: baseline; }
+.tts-legend .lic-open { color: var(--good); }
+.tts-legend .lic-warn { color: var(--ember); }
+.tts-legend .lic-bad { color: #F2777A; }
+.tts-legend .lic-closed { color: var(--muted); }
+.tts-legend .lic-dead { color: #F2777A; opacity: 0.75; }
+
+/* ---- expanded row ------------------------------------------------------- */
+tr.tts-detail > td.tts-detail-cell {
+  padding: 0 13px 14px; background: rgba(74, 168, 216, 0.075);
+  border-bottom: 1px solid var(--border);
+}
+.tts-detail-body { max-width: 92ch; }
+.tts-detail-body p { margin: 0 0 7px; font-size: 13px; line-height: 1.6; color: var(--ink-dim); }
+.tts-detail-body p:last-child { margin-bottom: 0; }
+.tts-dt {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--cool); margin-right: 4px;
+}
+.tts-dt.warn { color: var(--ember); }
+.tts-dt.bad { color: #F2777A; }
+.tts-watch { color: var(--ink); }
+
+/* ---- corrections -------------------------------------------------------- */
+.tts-corrections { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 1px;
+                   background: var(--border); border: 1px solid var(--border); border-radius: var(--radius);
+                   overflow: hidden; }
+.tts-corr { background: var(--surface); padding: 14px 16px; }
+.tts-corr p { margin: 0 0 8px; font-size: 13px; line-height: 1.6; }
+.tts-corr p:last-child { margin-bottom: 0; }
+.tts-corr .tts-claim { color: var(--muted); }
+.tts-corr .tts-real { color: var(--ink-dim); }
+
+/* ---- prose lists shared by the two explainer pages ---------------------- */
+ul.deflist, ol.numlist { margin: 4px 0 0; padding-left: 1.15rem; max-width: none; }
+ul.deflist li, ol.numlist li { margin-bottom: 10px; font-size: 14px; line-height: 1.65; color: var(--ink-dim); }
+ul.deflist li:last-child, ol.numlist li:last-child { margin-bottom: 0; }
+ul.deflist strong, ol.numlist strong { color: var(--ink); font-weight: 600; }
+ol.numlist li::marker { color: var(--cool); font-family: var(--font-mono); font-size: 12px; }
+.tts-gaps li { color: var(--ink-dim); }
+
+@media (max-width: 720px) {
+  .tts-controls { gap: 8px; }
+  .tts-search { flex-basis: 100%; }
+}

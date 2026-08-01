@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>How to read TTS numbers — OpenGauntlet</title>
+  
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/site.css">
+  
+</head>
+<body data-page="tts-guide">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav">
+        <a href="index.html">Leaderboard</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="compare.html">Compare</a>
+        
+        <a href="tts.html" class="active">Voices</a>
+      </nav>
+    </div>
+  </header>
+
+  
+  <div class="wrap">
+   <div class="meth-flow">
+    <section class="hero">
+      <div class="eyebrow"><span class="tick">//</span> voices · reading the numbers</div>
+      <h1>Why most TTS comparisons are <span class="warm">measuring the wrong thing</span></h1>
+      <p class="lede prose">
+        Every table in the <a href="tts.html">voices matrix</a> carries numbers. Almost none of
+        them are comparable across sources, and the single most-quoted metric in the field turns
+        out to point the wrong way. Here is what each one means and how it gets gamed.
+      </p>
+    </section>
+
+    <section class="block">
+      <div class="card explainer row-in">
+        <h3>The finding that breaks the usual ranking</h3>
+        <p class="prose">
+          The standard way to score a speech model is <strong>word error rate</strong>: synthesise
+          a script, feed the audio back through a speech recogniser, and count the mistakes. Lower
+          is better — or so every leaderboard assumes.
+        </p>
+        <p class="prose">
+          In 2026 a validation study ran sixteen objective metrics against roughly
+          <strong>11,800 human ratings</strong> across four speech domains. Word error rate came
+          out <strong>negatively correlated</strong> with what listeners actually preferred
+          (Spearman ρ ≈ −0.11 to −0.45). Lower error tracked <em>worse</em> perceived quality.
+        </p>
+        <p class="prose">
+          The mechanism is obvious in hindsight. Over-articulated, prosodically flat,
+          recogniser-friendly speech scores beautifully on WER and sounds like a train
+          announcement. The qualities that make a voice sound human — elision, uneven stress,
+          breath, the slight slurring of unstressed syllables — are exactly the qualities that
+          make a recogniser work harder.
+        </p>
+        <p class="prose">
+          A second result from the same study is worth stating plainly:
+          <strong>generic speaker-verification embeddings outperformed every purpose-built
+          quality predictor.</strong> The models built to predict human opinion did worse than
+          models built to answer a different question entirely.
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>The six metrics you will meet</h3>
+        <ul class="deflist">
+          <li>
+            <strong>RTF — real-time factor.</strong> Generation time divided by the length of
+            audio produced. RTF 0.5 means ten seconds of speech took five seconds to make. Below
+            1.0 is faster than real time; for live conversation you want under about 0.3 so there
+            is headroom for everything else. <em>Always ask which hardware</em> — an RTF without a
+            named GPU is not a number.
+          </li>
+          <li>
+            <strong>Time to first audio.</strong> How long between sending text and having
+            something playable. For conversation this matters <em>more</em> than RTF: a system at
+            RTF 0.8 with 90 ms to first audio feels instant, while RTF 0.2 with a two-second wait
+            feels broken. Vendor figures almost always exclude network, queueing and TLS — expect
+            40–150 ms on top for a real client.
+          </li>
+          <li>
+            <strong>Word error rate.</strong> Intelligibility and faithfulness to the script, not
+            beauty — and see above. It also depends entirely on which recogniser was used; two
+            common choices disagree by more than the gap between the systems being compared.
+          </li>
+          <li>
+            <strong>Speaker similarity.</strong> How close a cloned voice is to the original.
+            Above 0.90 is excellent, below 0.70 is a different person. Two traps: similarity
+            measured against a codec-reconstructed reference flatters the model, and the
+            embedding model used changes both the scale <em>and</em> the rank order.
+          </li>
+          <li>
+            <strong>Mean opinion score.</strong> Human raters scoring 1–5. The gold standard and
+            the most expensive — and <strong>not an absolute scale</strong>. It depends on the
+            rater pool, the listening conditions, the sentences chosen and which competitors were
+            in the same batch. A 4.2 in one paper and a 4.1 in another tell you nothing.
+          </li>
+          <li>
+            <strong>Predicted MOS.</strong> Neural networks trained to guess human ratings.
+            Cheap, reproducible, and easily fooled — they reward clean, smooth, slightly
+            over-processed audio and penalise the rasp and breathiness that make a voice sound
+            alive. Treat a high score as evidence that artefacts are absent, not that quality is
+            present.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>Seven ways these numbers mislead</h3>
+        <ol class="numlist">
+          <li>
+            <strong>Cross-paper comparison is invalid by default.</strong> Different test sets,
+            reference lengths, recognisers and embedding extractors. Only trust numbers produced
+            by one evaluator running every system through the same harness.
+          </li>
+          <li>
+            <strong>Home-field test sets.</strong> A model evaluated on the test split of its own
+            training corpus looks better than it is. Shared benchmarks are shared for a reason; a
+            benchmark you have never heard of is usually the authors' own — and the useful
+            question is whether <em>competitors</em> adopted it.
+          </li>
+          <li>
+            <strong>Zero-shot scores understate fine-tuned reality.</strong> Published cloning
+            figures use deliberately hostile conditions — short, noisy clips from unseen speakers.
+            With clean studio audio and a fine-tune, expect roughly 0.10–0.15 higher.
+          </li>
+          <li>
+            <strong>Datacentre latency is not your latency.</strong> Autoregressive decode is
+            bound by memory bandwidth, not compute, so halve or third a datacentre figure for
+            consumer hardware.
+          </li>
+          <li>
+            <strong>Partial-pipeline throughput.</strong> Some benchmarks time the language model
+            and quietly omit the audio decoder. End-to-end is always worse.
+          </li>
+          <li>
+            <strong>Cherry-picked demos.</strong> Demo audio is chosen. The honest test is your
+            own text — especially numbers, acronyms, proper nouns, addresses, and anything longer
+            than thirty seconds.
+          </li>
+          <li>
+            <strong>Arena ratings conflate preference with fitness.</strong> Blind A/B arenas
+            reward whatever sounds impressive in an eight-second clip. They do not measure
+            consistency across a two-hour audiobook, pronunciation control, or whether the model
+            will read a phone number correctly.
+          </li>
+        </ol>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>The measurement that matters most, and that nobody publishes</h3>
+        <p class="prose">
+          Benchmarks in this field use short utterances. Real work is long. One vendor's own
+          technical report shows speaker similarity <strong>collapsing from roughly 0.80 to
+          0.52</strong> over minutes of continuous generation, with error rates rising fourfold.
+        </p>
+        <p class="prose">
+          Identity drift over long output is a real, measured failure mode that short-utterance
+          benchmarks hide completely — and it is far more decision-relevant than any half-point
+          difference on a clean test set. <strong>If you are producing anything longer than a
+          sentence, this is the thing to test yourself.</strong>
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>Three results that say there is no single score</h3>
+        <p class="prose">
+          Independently, in the same year, three groups reached the same conclusion from
+          different directions. Objective intelligibility anti-correlates with perceived quality.
+          Control over non-verbal sounds "often decouples from overall speech quality" — a model
+          can top a naturalness arena and be bad at the laughter tag its own demo showcases. And
+          naturalness, expressiveness, identity stability and reliability behave as
+          <strong>largely independent axes</strong>, concluding that voice systems
+          "should be evaluated as a profile rather than by a single aggregate score."
+        </p>
+        <p class="prose">
+          All three contradict the format of a single ranked list of best models — including, to
+          be explicit, <a href="tts.html">the matrix on this site</a>. That is why it sorts on
+          many columns and ranks on none of them by default.
+        </p>
+      </div>
+
+      <div class="card explainer row-in">
+        <h3>The test that actually predicts production quality</h3>
+        <p class="prose">
+          Synthesise the same 300-word script through every candidate, using your real content
+          including the awkward parts. Listen once at normal speed for naturalness, once at 1.5×
+          for artefacts, and run the output through a recogniser to catch dropped words you will
+          not consciously hear.
+        </p>
+        <p class="prose">
+          Then <strong>repeat it a week later</strong>. Several systems are non-deterministic, and
+          the variance between runs is often larger than the gap between vendors.
+        </p>
+      </div>
+    </section>
+   </div>
+  </div>
+
+
+  <footer class="foot">
+    <div class="wrap">
+      <span class="foot-brand">OpenGauntlet — which self-hosted open model is the best to actually talk to.</span>
+      <nav class="foot-nav">
+        <a href="index.html">Leaderboard</a><span class="sep">·</span>
+        <a href="methodology.html">How it works</a><span class="sep">·</span>
+        <a href="compare.html">Compare</a><span class="sep">·</span>
+        <a href="tts.html">Voices</a>
+      </nav>
+      
+      <span class="foot-prov">Updated <span data-generated-at>2026-07-31 07:56 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
+    </div>
+  </footer>
+
+  
+  <script src="static/site.js" defer></script>
+</body>
+</html>

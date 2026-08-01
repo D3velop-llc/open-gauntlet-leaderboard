@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>Voices — text-to-speech compared · OpenGauntlet</title>
+  
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="static/site.css">
+  
+</head>
+<body data-page="tts">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav">
+        <a href="index.html">Leaderboard</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="compare.html">Compare</a>
+        
+        <a href="tts.html" class="active">Voices</a>
+      </nav>
+    </div>
+  </header>
+
+  
+  <div class="wrap">
+    <section class="hero hero-lede">
+      <div class="eyebrow"><span class="tick">//</span> the half the leaderboard doesn't measure</div>
+      <h1>Now make it <span class="warm">speak</span></h1>
+      <p class="lede">
+        The leaderboard scores how human a model reads. It says nothing about how a model
+        <em>sounds</em> — that is a different piece of software entirely, and choosing it badly
+        is where most voice projects go wrong. Here is every text-to-speech system that matters,
+        on the axes that actually decide a project.
+      </p>
+    </section>
+  </div>
+
+  <div class="wrap wrap-wide">
+    <section class="block">
+      
+      <div class="card explainer tts-scope">
+        <h3>Read this before the table</h3>
+        <p class="prose">
+          <strong>None of this is benchmarked here.</strong> OpenGauntlet measures
+          <em>Conversational Language Humanlikeness</em> — transcript-level qualities like word
+          choice, warmth and emotional reasoning. It deliberately does not score prosody,
+          intonation or timing. This section is a <strong>sourced survey</strong> of the speech
+          market, not a trial. Where a claim could not be verified against a primary source, it
+          says so rather than smoothing it over.
+        </p>
+        <p class="prose">
+          <a href="tts-guide.html">How to read these numbers →</a>
+          <span class="sep">·</span>
+          <a href="tts-legal.html">What you're allowed to do with them →</a>
+        </p>
+      </div>
+
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>Every system, compared</h2>
+        <span class="note">
+          Filter by kind, search any field, click a heading to sort. Every row carries the one
+          thing a buyer would otherwise find out too late.
+        </span>
+      </div>
+
+      <div id="tts-controls"></div>
+      <div id="tts-matrix"><div class="state">Loading…</div></div>
+
+      <div class="legend tts-legend">
+        <span><span class="lic-key lic-open" aria-hidden="true"></span> commercial-safe weights</span>
+        <span><span class="lic-key lic-warn" aria-hidden="true"></span> permissive, with a catch</span>
+        <span><span class="lic-key lic-bad" aria-hidden="true"></span> <strong>not</strong> usable commercially</span>
+        <span><span class="lic-key lic-closed" aria-hidden="true"></span> proprietary service</span>
+        <span><span class="lic-key lic-dead" aria-hidden="true"></span> discontinued</span>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>Claims this corrects</h2>
+        <span class="note">Each of these is repeated widely, and each is wrong.</span>
+      </div>
+      <div id="tts-corrections"></div>
+    </section>
+
+    <section class="block">
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>What we couldn't establish</h2>
+        <span class="note">A comparison that hides its gaps is less useful than one that names them.</span>
+      </div>
+      <div id="tts-gaps"></div>
+    </section>
+  </div>
+
+
+  <footer class="foot">
+    <div class="wrap">
+      <span class="foot-brand">OpenGauntlet — which self-hosted open model is the best to actually talk to.</span>
+      <nav class="foot-nav">
+        <a href="index.html">Leaderboard</a><span class="sep">·</span>
+        <a href="methodology.html">How it works</a><span class="sep">·</span>
+        <a href="compare.html">Compare</a><span class="sep">·</span>
+        <a href="tts.html">Voices</a>
+      </nav>
+      
+      <span class="foot-prov">Updated <span data-generated-at>2026-07-31 07:56 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
+    </div>
+  </footer>
+
+  
+  <script src="static/site.js" defer></script>
+</body>
+</html>
