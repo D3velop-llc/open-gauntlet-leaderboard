@@ -1767,31 +1767,107 @@ const TTS_LIC = {
   dead:   { label: "discontinued",    cls: "lic-dead" },
 };
 
-/* Columns. `simple: true` survives into the default view; everything else appears
-   only in the technical view — the same COLS[].simple contract the leaderboard
-   uses, so the two tables behave identically for a reader who has met one of them.
+/* Capability facets — MUST mirror TTS_FACETS in config.py, which validates every
+   row against it. A key here that is missing there is a chip matching nothing; a
+   key there and missing here renders a row that no filter can reach. The same
+   two-sided contract TTS_CATS has with TTS_CATEGORIES, and a test asserts both. */
+const TTS_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Phone / edge"],
+    ["browser", "In-browser"], ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+  ] },
+  { title: "Can do", facets: [
+    ["zero-shot-cloning", "Clones from a clip"], ["fine-tune-cloning", "Clones via training"],
+    ["no-cloning", "Fixed voices only"], ["voice-design", "Voice from a description"],
+    ["emotion-control", "Emotion control"], ["streaming", "Streaming"],
+    ["multi-speaker", "Multi-speaker"], ["word-timestamps", "Word timestamps"],
+    ["ssml", "SSML"], ["phoneme-control", "Pronunciation control"], ["long-form", "Long-form"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"], ["no-watermark", "No watermark"],
+    ["watermarked", "Watermarked"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+  { title: "Languages", facets: [["multilingual", "10+ languages"], ["english-only", "English only"]] },
+];
+const TTS_FACET_LABEL = Object.fromEntries(
+  TTS_FACET_GROUPS.flatMap((g) => g.facets));
+
+/* Columns. `def: true` is the out-of-the-box view; every other column is one
+   click away in the picker rather than gated behind a coarse simple/technical
+   binary, because which columns matter is a property of the READER — price and
+   language count are decisive for one person and noise to the next.
    `cell` overrides which field is DISPLAYED when the sort key is a numeric twin
    (price_sort sorts, price_note reads). */
 const TTS_COLS = [
-  { key: "name",           label: "System",          txt: true, simple: true },
-  { key: "category",       label: "Kind",            txt: true, simple: true },
-  { key: "licence",        label: "Licence",         txt: true, simple: true },
-  { key: "price_sort",     label: "Cost",            txt: true, simple: true, cell: "price_note" },
-  { key: "cloning",        label: "Cloning",         txt: true, simple: true, wide: true },
-  { key: "emotion",        label: "Emotion control", txt: true, simple: true, wide: true },
-  { key: "languages_sort", label: "Langs",                      simple: true, cell: "languages_note" },
-  { key: "runs_on",        label: "Runs on",         txt: true, simple: true, wide: true },
-  // technical view only
+  { key: "name",           label: "System",          txt: true, def: true, fixed: true },
+  { key: "standout",       label: "What's different", txt: true, def: true, wide: true },
+  { key: "category",       label: "Kind",            txt: true, def: true },
+  { key: "licence",        label: "Licence",         txt: true, def: true },
+  { key: "rating",         label: "Rating",                     def: true },
+  { key: "price_sort",     label: "Cost",            txt: true, def: true, cell: "price_note" },
+  { key: "cloning",        label: "Cloning",         txt: true, def: true, wide: true },
+  { key: "runs_on",        label: "Runs on",         txt: true, def: true, wide: true },
+  { key: "emotion",        label: "Emotion control", txt: true, wide: true },
+  { key: "languages_sort", label: "Langs",                      cell: "languages_note" },
   { key: "params",         label: "Params",          txt: true },
   { key: "architecture",   label: "Architecture",    txt: true, wide: true },
   { key: "codec",          label: "Codec",           txt: true, wide: true },
   { key: "vram",           label: "VRAM",            txt: true },
   { key: "streaming",      label: "Streaming",       txt: true },
   { key: "max_generation", label: "Max length",      txt: true, wide: true },
+  { key: "quantisation",   label: "Quantisation",    txt: true, wide: true },
+  { key: "fine_tuning",    label: "Fine-tuning",     txt: true, wide: true },
   { key: "watermark",      label: "Watermark",       txt: true, wide: true },
+  { key: "multi_speaker",  label: "Multi-speaker",   txt: true, wide: true },
+  { key: "timestamps",     label: "Timestamps",      txt: true, wide: true },
+  { key: "latency_note",   label: "Latency",         txt: true, wide: true },
   { key: "status",         label: "Status",          txt: true },
   { key: "verification",   label: "Evidence",        txt: true },
+  { key: "watch",          label: "The catch",       txt: true, wide: true },
 ];
+const TTS_COL_DEFAULT = TTS_COLS.filter((c) => c.def).map((c) => c.key);
+
+/* Named starting points, so the picker is not 25 checkboxes and no opinion. */
+const TTS_COL_PRESETS = [
+  { key: "default", label: "Default", cols: TTS_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "rating", "runs_on", "cloning", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "params", "architecture", "codec", "vram", "streaming", "max_generation",
+           "quantisation", "fine_tuning"] },
+  { key: "all",     label: "Everything", cols: TTS_COLS.map((c) => c.key) },
+];
+
+/* Column choice and facet filters survive a reload — this table is something a
+   reader configures once and returns to, and re-picking eight checkboxes every
+   visit is the kind of friction that makes them stop returning. Storage is
+   wrapped because it throws outright in some private-browsing modes. */
+const TTS_PREFS_KEY = "og.tts.prefs.v1";
+function ttsLoadPrefs() {
+  try {
+    const raw = localStorage.getItem(TTS_PREFS_KEY);
+    if (!raw) return null;
+    const p = JSON.parse(raw);
+    // Drop anything unrecognised rather than trusting stored keys: a column
+    // renamed since the visit would otherwise render a blank column forever.
+    const known = new Set(TTS_COLS.map((c) => c.key));
+    const cols = Array.isArray(p.cols) ? p.cols.filter((k) => known.has(k)) : [];
+    const facets = Array.isArray(p.facets) ? p.facets.filter((f) => f in TTS_FACET_LABEL) : [];
+    return { cols: cols.length ? cols : null, facets };
+  } catch (e) { return null; }
+}
+function ttsSavePrefs(state) {
+  try {
+    localStorage.setItem(TTS_PREFS_KEY, JSON.stringify({
+      cols: [...state.cols], facets: [...state.facets],
+    }));
+  } catch (e) { /* storage disabled or full — the page still works, unremembered */ }
+}
 
 /* The expanded row, grouped. Flat key/value dumps of 23 fields are unreadable;
    these are the questions a reader actually arrives with, in order. */
@@ -1847,7 +1923,11 @@ function ttsMagnitude(str) {
    the order matches the label; magnitude columns parse their unit; everything
    else compares as lowercased text. */
 function ttsSortVal(row, key) {
-  if (key === "price_sort" || key === "languages_sort") return row[key];
+  // `rating` joins the numeric keys: as a string it would sort "1310" below
+  // "980", and it is the one column where a reader will trust the order blindly.
+  if (key === "price_sort" || key === "languages_sort" || key === "rating") {
+    return row[key] == null ? null : row[key];
+  }
   if (key === "category") return TTS_CAT_LABEL[row.category] || row.category;
   if (TTS_MAGNITUDE_COLS.has(key)) {
     const v = ttsMagnitude(row[key]);
@@ -1861,13 +1941,45 @@ function ttsMatches(row, q) {
   const hay = [
     row.name, row.variants, TTS_CAT_LABEL[row.category], row.licence, row.price_note,
     row.cloning, row.emotion, row.languages_note, row.runs_on, row.latency_note,
-    row.best_for, row.watch,
+    row.best_for, row.watch, row.standout,
+    // Facets are searchable by their READABLE label, so typing "no gpu" finds
+    // what the chip labelled "No GPU needed" would have selected.
+    ...(row.facets || []).map((f) => `${f} ${TTS_FACET_LABEL[f] || ""}`),
   ].filter(Boolean).join(" ").toLowerCase();
   return hay.includes(q);
 }
 
+/* AND, not OR. "CPU-capable and clones voices and is commercially safe" is a
+   real buying question with a short answer; the OR of those three is most of the
+   table and answers nothing. */
+function ttsHasFacets(row, want) {
+  if (!want.size) return true;
+  const have = new Set(row.facets || []);
+  for (const f of want) if (!have.has(f)) return false;
+  return true;
+}
+
+function ttsVisible(rows, state, extraFacet) {
+  const want = extraFacet ? new Set([...state.facets, extraFacet]) : state.facets;
+  return rows
+    .filter((r) => !state.cats.size || state.cats.has(r.category))
+    .filter((r) => ttsHasFacets(r, want))
+    .filter((r) => ttsMatches(r, state.q));
+}
+
 function ttsDetailRow(row, colCount) {
   const body = el("div", { class: "tts-detail-body" });
+
+  if (row.facets && row.facets.length) {
+    const chips = el("div", { class: "tts-facet-chips" });
+    // Ordered by the group list, not by however the yaml happened to list them,
+    // so "runs on" always reads before "can I ship it" across every row.
+    TTS_FACET_GROUPS.flatMap((g) => g.facets).forEach(([key, label]) => {
+      if (!row.facets.includes(key)) return;
+      chips.appendChild(el("span", { class: "chip fct fct-" + key, text: label }));
+    });
+    body.appendChild(chips);
+  }
 
   body.appendChild(el("p", { class: "tts-best" },
     el("span", { class: "tts-dt", text: "Best for" }), " ", row.best_for));
@@ -1906,9 +2018,7 @@ function ttsDetailRow(row, colCount) {
 }
 
 function renderTtsMatrix(mount, rows, state) {
-  const shown = rows
-    .filter((r) => !state.cats.size || state.cats.has(r.category))
-    .filter((r) => ttsMatches(r, state.q));
+  const shown = ttsVisible(rows, state);
 
   const dir = state.desc ? -1 : 1;
   shown.sort((a, b) => {
@@ -1928,7 +2038,10 @@ function renderTtsMatrix(mount, rows, state) {
     return;
   }
 
-  const cols = TTS_COLS.filter((c) => (state.simple ? c.simple : true));
+  // Order follows TTS_COLS, not click order, so the table does not reshuffle as
+  // the reader toggles. `fixed` columns cannot be hidden — a row with no name is
+  // not a row.
+  const cols = TTS_COLS.filter((c) => c.fixed || state.cols.has(c.key));
 
   const thead = el("thead");
   const htr = el("tr");
@@ -1997,6 +2110,25 @@ function renderTtsMatrix(mount, rows, state) {
           el("span", { class: "chip st st-" + v, text: v })));
         return;
       }
+      if (c.key === "rating") {
+        // A rating is the field most likely to be mistaken for something WE
+        // measured, so the source travels with the number in the cell itself —
+        // not in a footnote the sorting reader never reaches.
+        if (row.rating == null) {
+          tr.appendChild(el("td", { class: "tts-rating tts-na", text: "not rated" }));
+          return;
+        }
+        const cell = el("td", { class: "tts-rating" },
+          el("span", { class: "tts-elo mono", text: String(row.rating) }));
+        cell.appendChild(el("span", {
+          class: "tts-elo-src",
+          title: [row.rating_metric, row.rating_source, row.rating_as_of && `read ${row.rating_as_of}`,
+            row.rating_votes && `${row.rating_votes} votes`].filter(Boolean).join(" · "),
+          text: row.rating_source || "",
+        }));
+        tr.appendChild(cell);
+        return;
+      }
       // `cell` names the readable twin of a numeric sort key (price_sort → price_note).
       const value = row[c.cell || c.key];
       const cls = c.key === "price_sort" ? "txt tts-price"
@@ -2045,16 +2177,100 @@ function renderTtsControls(mount, rows, state, onChange) {
   search.value = state.q;
   search.addEventListener("input", () => { state.q = search.value.trim().toLowerCase(); onChange(); });
 
-  // Simple by default: a shared link must never land a newcomer in a 17-column
-  // table. Same contract as the leaderboard's board toggle.
-  const toggle = el("button", {
-    class: "pill tts-view" + (state.simple ? "" : " on"),
-    "aria-pressed": state.simple ? "false" : "true",
-    text: state.simple ? "Technical view" : "Simple view",
-  });
-  toggle.addEventListener("click", () => { state.simple = !state.simple; onChange(); });
+  mount.replaceChildren(
+    el("div", { class: "tts-controls" }, pills, search, ttsColumnPicker(state, onChange)),
+    ttsFacetBar(rows, state, onChange),
+  );
+}
 
-  mount.replaceChildren(el("div", { class: "tts-controls" }, pills, search, toggle));
+/* Column picker. A <details> popover rather than a modal: it needs no focus
+   trap, closes on Escape for free, and degrades to an open list if JS for the
+   toggle ever fails. */
+function ttsColumnPicker(state, onChange) {
+  const box = el("div", { class: "tts-colgrid" });
+
+  TTS_COLS.forEach((c) => {
+    if (c.fixed) return;
+    const id = "ttscol-" + c.key;
+    const cb = el("input", { type: "checkbox", id });
+    cb.checked = state.cols.has(c.key);
+    cb.addEventListener("change", () => {
+      if (cb.checked) state.cols.add(c.key); else state.cols.delete(c.key);
+      // Sorting by a column you just hid leaves the table in an order with no
+      // visible cause. Fall back to the one column that is always present.
+      if (!cb.checked && state.sort === c.key) { state.sort = "name"; state.desc = false; }
+      ttsSavePrefs(state);
+      onChange();
+    });
+    box.appendChild(el("label", { class: "tts-colopt" }, cb, el("span", { text: c.label })));
+  });
+
+  const presets = el("div", { class: "tts-presets" });
+  TTS_COL_PRESETS.forEach((p) => {
+    const b = el("button", { class: "pill sm", text: p.label });
+    b.addEventListener("click", () => {
+      state.cols = new Set(p.cols);
+      if (!state.cols.has(state.sort)) { state.sort = "name"; state.desc = false; }
+      ttsSavePrefs(state);
+      onChange();
+    });
+    presets.appendChild(b);
+  });
+
+  const n = TTS_COLS.filter((c) => c.fixed || state.cols.has(c.key)).length;
+  return el("details", { class: "tts-colpick" },
+    el("summary", { class: "pill" }, "Columns", el("span", { class: "pill-n", text: String(n) })),
+    el("div", { class: "tts-colpanel" },
+      el("p", { class: "tts-colhint", text: "Show only what you are deciding on." }),
+      presets, box));
+}
+
+/* Facet bar — the answer to "what can this actually DO", which 30 columns of
+   prose could not give at a glance.
+
+   Each chip carries the count you would get by ADDING it to the current
+   selection, and a chip that would empty the table is disabled rather than
+   hidden: seeing "No GPU needed 0" next to an active cloning filter is itself
+   the answer, where a vanished chip just looks like a missing feature. */
+function ttsFacetBar(rows, state, onChange) {
+  const wrap = el("div", { class: "tts-facets" });
+  const anyFaceted = rows.some((r) => r.facets && r.facets.length);
+  if (!anyFaceted) return wrap;
+
+  const head = el("div", { class: "tts-facet-head" },
+    el("span", { class: "tts-facet-title", text: "Filter by what it can do" }));
+  if (state.facets.size) {
+    const clear = el("button", { class: "pill sm", text: `Clear ${state.facets.size}` });
+    clear.addEventListener("click", () => { state.facets.clear(); ttsSavePrefs(state); onChange(); });
+    head.appendChild(clear);
+  }
+  wrap.appendChild(head);
+
+  TTS_FACET_GROUPS.forEach((group) => {
+    const row = el("div", { class: "tts-facet-group" },
+      el("span", { class: "tts-facet-gl", text: group.title }));
+    let shown = 0;
+    group.facets.forEach(([key, label]) => {
+      const on = state.facets.has(key);
+      // Count what SELECTING this would leave, not what it matches globally —
+      // otherwise every count is a promise the current filter cannot keep.
+      const n = on ? ttsVisible(rows, state).length : ttsVisible(rows, state, key).length;
+      if (!on && !n && !rows.some((r) => (r.facets || []).includes(key))) return;
+      shown++;
+      const b = el("button", {
+        class: "pill fct" + (on ? " on" : "") + (!on && !n ? " none" : ""),
+      }, label, el("span", { class: "pill-n", text: String(n) }));
+      if (!on && !n) b.setAttribute("disabled", "disabled");
+      b.addEventListener("click", () => {
+        if (state.facets.has(key)) state.facets.delete(key); else state.facets.add(key);
+        ttsSavePrefs(state);
+        onChange();
+      });
+      row.appendChild(b);
+    });
+    if (shown) wrap.appendChild(row);
+  });
+  return wrap;
 }
 
 function renderTtsCorrections(mount, items) {
@@ -2080,6 +2296,39 @@ function renderTtsGaps(mount, gaps) {
 /* How stale is this? Rendered from the data rather than hardcoded, so it can never
    drift from the payload it describes — and the age is COMPUTED, because "compiled
    31 July 2026" means nothing to a reader who does not know today's date. */
+/* The rating column is sparse and always will be — the arenas cover a few dozen
+   systems out of 160-odd. Sorted by rating, an unrated row sinks, and a reader
+   who does not know why will read the bottom of that column as "these are the
+   bad ones" instead of "nobody ran an arena on these".
+   Saying the coverage out loud is what makes the column safe to publish. */
+function renderTtsRatingCoverage(mount, rows) {
+  if (!mount) return;
+  const rated = rows.filter((r) => r.rating != null);
+  if (!rated.length) { mount.replaceChildren(); return; }
+
+  const sources = [...new Set(rated.map((r) => r.rating_source).filter(Boolean))].sort();
+  const dates = [...new Set(rated.map((r) => r.rating_as_of).filter(Boolean))].sort();
+  const when = !dates.length ? ""
+    : dates.length === 1 ? `, read ${dates[0]}`
+    : `, read between ${dates[0]} and ${dates[dates.length - 1]}`;
+
+  mount.replaceChildren(
+    el("p", { class: "tts-rating-cov" },
+      el("strong", { text: `${rated.length} of ${rows.length} systems carry an external rating.` }),
+      " Ratings come from ", sources.join(" and "), when,
+      ". Nothing on this page is measured by OpenGauntlet. An unrated row is one "
+      + "no public arena has run — not a low-scoring one, and the two must not be "
+      + "read the same way. Arena standings also move in weeks, and the boards "
+      + "disagree with each other — see the corrections below.",
+    ),
+    el("p", { class: "tts-rating-cov note" },
+      "These are human-preference scores. Word error rate is deliberately excluded: "
+      + "it correlates negatively with perceived quality (ρ ≈ −0.11 to −0.45 across "
+      + "~11,800 ratings), because over-articulated, recogniser-friendly speech scores "
+      + "well and sounds bad. WER appears under Benchmarks, labelled as what it is."),
+  );
+}
+
 function renderTtsDateline(mount, doc) {
   if (!mount || !doc.compiled) return;
   const compiled = new Date(doc.compiled + "T00:00:00Z");
@@ -2124,12 +2373,18 @@ async function initTts() {
     return;
   }
   const rows = doc.systems || [];
-  const state = { cats: new Set(), q: "", sort: "name", desc: false, simple: true };
+  const prefs = ttsLoadPrefs();
+  const state = {
+    cats: new Set(), q: "", sort: "name", desc: false,
+    cols: new Set(prefs && prefs.cols ? prefs.cols : TTS_COL_DEFAULT),
+    facets: new Set(prefs ? prefs.facets : []),
+  };
   const rerender = () => {
     renderTtsControls(controls, rows, state, rerender);
     renderTtsMatrix(matrix, rows, state);
   };
   rerender();
+  renderTtsRatingCoverage($("#tts-rating-coverage"), rows);
   renderTtsDateline($("#tts-dateline"), doc);
   renderTtsCorrections($("#tts-corrections"), doc.corrections);
   renderTtsGaps($("#tts-gaps"), doc.gaps);

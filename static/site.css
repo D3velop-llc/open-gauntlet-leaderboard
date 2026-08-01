@@ -957,6 +957,76 @@ body[data-page^="tts"] .brand .slash, body[data-page^="tts"] .brand em { color: 
 .tts-search:focus { outline: 2px solid var(--cool); outline-offset: 1px; border-color: transparent; }
 .tts-count { margin: 0 0 10px; }
 
+/* ---- column picker ------------------------------------------------------ */
+.tts-colpick { margin-left: auto; flex: 0 0 auto; position: relative; }
+.tts-colpick > summary { list-style: none; cursor: pointer; white-space: nowrap; }
+.tts-colpick > summary::-webkit-details-marker { display: none; }
+.tts-colpick[open] > summary { background: var(--cool); color: #08131a; border-color: var(--cool); }
+.tts-colpanel {
+  position: absolute; right: 0; top: calc(100% + 6px); z-index: 40;
+  width: min(30rem, calc(100vw - 2rem));
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px 14px 14px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
+}
+.tts-colhint { margin: 0 0 9px; color: var(--muted); font-size: 12px; }
+.tts-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 11px;
+               padding-bottom: 11px; border-bottom: 1px solid var(--border); }
+.pill.sm { font-size: 11px; padding: 3px 9px; }
+.tts-colgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); gap: 2px 12px; }
+.tts-colopt {
+  display: flex; align-items: center; gap: 7px; cursor: pointer;
+  font-size: 12.5px; color: var(--ink-dim); padding: 3px 2px; border-radius: 4px;
+}
+.tts-colopt:hover { color: var(--ink); background: rgba(74, 168, 216, 0.07); }
+.tts-colopt input { accent-color: var(--cool); flex: 0 0 auto; }
+
+/* ---- facet filters ------------------------------------------------------- */
+/* Two filter axes share this bar, so they must not look alike: category pills
+   fill solid when active, facet pills tint and outline. Same hue, different
+   weight — a third accent would fight the section colour for no gain. */
+.tts-facets { margin: 0 0 16px; }
+.tts-facet-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 7px; }
+.tts-facet-title {
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--muted);
+}
+.tts-facet-group {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 5px;
+  padding: 3px 0;
+}
+.tts-facet-gl {
+  flex: 0 0 6.6rem; font-size: 11px; color: var(--muted);
+  font-family: var(--font-mono); letter-spacing: 0.02em;
+}
+.pill.fct { font-size: 11.5px; padding: 3px 9px; }
+.pill.fct.on {
+  background: rgba(74, 168, 216, 0.16); border-color: var(--cool); color: var(--ink);
+  box-shadow: inset 2px 0 0 var(--cool);
+}
+/* Kept visible, not hidden: "0" next to an active filter is the answer. */
+.pill.fct.none { opacity: 0.34; cursor: not-allowed; }
+
+/* facet chips inside an expanded row */
+.tts-facet-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 11px; }
+.chip.fct {
+  font-size: 10.5px; letter-spacing: 0.02em;
+  background: rgba(74, 168, 216, 0.1); border: 1px solid rgba(74, 168, 216, 0.3);
+  color: var(--ink-dim);
+}
+
+/* ---- external rating ----------------------------------------------------- */
+table.lb.tts td.tts-rating { min-width: 6.4rem; }
+.tts-elo { display: block; font-size: 14px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.tts-elo-src { display: block; font-size: 10px; color: var(--muted); margin-top: 1px; cursor: help; }
+.tts-rating-coverage { margin: 14px 0 0; }
+.tts-rating-cov {
+  margin: 0 0 7px; max-width: 68ch; font-size: 13px; line-height: 1.6; color: var(--ink-dim);
+  border-left: 2px solid var(--cool); padding-left: 12px;
+}
+.tts-rating-cov strong { color: var(--ink); }
+.tts-rating-cov.note { border-left-color: var(--border); color: var(--muted); font-size: 12px; }
+
 /* ---- the matrix --------------------------------------------------------- */
 /* table.lb is built for numeric scanning: nowrap, right-aligned. Half these
    columns are prose, so they wrap and align left, and the table gets a wider
@@ -1038,8 +1108,7 @@ ol.numlist li::marker { color: var(--cool); font-family: var(--font-mono); font-
 }
 
 /* ---- Voices: technical view + grouped detail panels ---------------------- */
-.tts-view { margin-left: auto; flex: 0 0 auto; white-space: nowrap; }
-.tts-view.on { background: var(--cool); color: #08131a; border-color: var(--cool); }
+/* .tts-view retired — the simple/technical binary became the column picker. */
 
 /* An optional field the sources never stated. Legible but visibly not a value,
    so an empty cell can never be misread as "none" or "zero". */
@@ -1074,7 +1143,9 @@ dl.tts-spec dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--in
 .tts-nodata { margin-top: 10px !important; color: var(--muted); font-size: 12px; font-style: italic; }
 
 @media (max-width: 720px) {
-  .tts-view { margin-left: 0; }
+  .tts-colpick { margin-left: 0; }
+  .tts-colpanel { right: auto; left: 0; }
+  .tts-facet-gl { flex-basis: 100%; }
   .tts-panels { grid-template-columns: 1fr; }
 }
 
