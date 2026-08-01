@@ -8,6 +8,8 @@
    ========================================================================== */
 
 :root {
+  --fp-name: 320px;   /* forest-plot name gutter */
+  --fp-num: 132px;
   /* ---- palette (formalized identity) ------------------------------------ */
   --bg:           #0B0E14;   /* near-black night — the page plane */
   --surface:      #11151F;   /* panels / cards / table body */
@@ -247,65 +249,108 @@ td.hw-nofit { color: var(--muted); font-style: italic; }
 .tie-note strong { color: var(--ember-bright); }
 
 /* ====================== WARMTH VERDICT STRIP ============================= */
-/* The signature element: a vertical thermal rail plotting each model on the
-   normalized-Elo axis. Built entirely from leaderboard.json in site.js. */
-.verdict-strip {
-  /* de-carded: the rail floats on the night background, glow bleeding into the dark */
-  border: none;
-  background: transparent;
-  padding: 6px 4px 0;
-  /* Was 440px with a 420px plot — 32 models at roughly 13px each, which made the
-     site's headline artefact the smallest thing on its own page. */
-  width: 100%; max-width: 820px; margin-inline: auto;
+/* ---- the ranking, as a forest plot --------------------------------------
+   The interval is the loud object and the point estimate is subordinate. That
+   inversion is the whole design: a bold dot with a thin whisker beside it reads
+   as "the number is real, give or take", which is the opposite of what 29
+   overlapping pairs out of 30 actually say. */
+.verdict-strip { border: none; background: transparent; padding: 0; width: 100%; }
+
+.fp-axis-row {
+  display: grid; grid-template-columns: var(--fp-name) 1fr var(--fp-num);
+  column-gap: 16px; align-items: end;
+  position: sticky; top: 0; z-index: 3;
+  padding: 6px 0 7px; margin-bottom: 2px;
+  background: linear-gradient(to bottom, var(--bg) 74%, rgba(11, 14, 20, 0));
 }
-.vs-title {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--muted); margin: 0 0 4px;
+.fp-axis-k { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.fp-axis { position: relative; height: 14px; }
+.fp-gl-lab {
+  position: absolute; bottom: 0; transform: translateX(-50%);
+  font-size: 10px; color: var(--muted);
 }
-.vs-title .tick { color: var(--ember); }
-.vs-axis {
-  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.06em;
-  color: var(--muted); display: flex; gap: 8px; align-items: baseline;
+
+.fp-body { position: relative; }
+/* the ruler runs through every row, which is what turns "which is best" into
+   "by how much" */
+.fp-grid { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.fp-gl {
+  position: absolute; top: 0; bottom: 0; width: 1px;
+  background: rgba(118, 126, 142, .07);
 }
-.vs-axis .val { color: var(--ink-dim); }
-.vs-axis.top { margin-bottom: 6px; }
-.vs-axis.bottom { margin-top: 6px; }
-/* Height scales with the roster: --vs-rows is set from the model count at
-   render time, so enrolling models spreads the ladder instead of crushing it. */
-.vs-plot { position: relative; height: clamp(420px, calc(var(--vs-rows, 24) * 25px), 900px); }
-.vs-rail {
-  position: absolute; left: 20px; top: 0; bottom: 0; width: 8px; border-radius: 4px;
-  background: linear-gradient(to top, var(--cold) 0%, #6b533f 46%, var(--ember) 78%, var(--ember-bright) 100%);
-  box-shadow: 0 0 34px rgba(245, 163, 75, 0.16), 0 0 90px rgba(245, 163, 75, 0.07);
+.fp-gl.major { background: rgba(118, 126, 142, .13); }
+
+.fp-row {
+  display: grid; grid-template-columns: var(--fp-name) 1fr var(--fp-num);
+  column-gap: 16px; align-items: center;
+  min-height: 34px; padding: 3px 0; position: relative; z-index: 1;
+  border-radius: 6px;
 }
-.vs-whisker {                       /* CI extent as a bright core on the rail */
-  position: absolute; left: 24px; width: 2.5px; transform: translateX(-50%);
-  background: rgba(255, 201, 126, 0.55); border-radius: 2px;
+.fp-row:hover { background: rgba(255, 255, 255, .028); }
+.fp-row.is-contender { min-height: 40px; }
+
+.fp-name {
+  min-width: 0; font-family: var(--font-mono); line-height: 1.18;
+  overflow-wrap: anywhere;                 /* wrap, never truncate */
 }
-/* no end caps and no separate position tick — the dot and the bright whisker
-   core carry the meaning; extra marks read as stray dashes at a glance */
-.vs-htick { display: none; }
-.vs-leader {                        /* connects a nudged label back to its dot */
-  position: absolute; left: 42px; width: 1.5px; transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.16); border-radius: 1px;
+.fp-nm { font-size: 11.5px; color: var(--ink); }
+.fp-tl { font-size: 10.5px; color: var(--muted); }
+.fp-row:hover .fp-nm { color: var(--ember); }
+.fp-row.is-contender .fp-nm { font-size: 12.5px; }
+
+.fp-plot { position: relative; height: 18px; min-width: 0; }
+.fp-ci {
+  position: absolute; top: 50%; height: 9px; transform: translateY(-50%);
+  border-radius: 4.5px;
+  background: rgba(245, 163, 75, .22);
+  /* 1px inset border rather than a fill alone: composited on #0B0E14 the fill
+     alone lands near 1.2:1, which fails WCAG 1.4.11 for a non-text element
+     carrying the entire meaning of the chart. */
+  box-shadow: inset 0 0 0 1px rgba(245, 163, 75, .62);
 }
-.vs-dot {
-  position: absolute; left: 24px; width: 13px; height: 13px; border-radius: 50%;
-  transform: translate(-50%, 50%);
-  background: var(--ember); border: 1px solid rgba(11, 14, 20, 0.7);
+.fp-row.is-contender .fp-ci { background: rgba(245, 163, 75, .3); }
+.fp-tick {
+  position: absolute; top: 50%; width: 2px; height: 11px;
+  transform: translate(-50%, -50%);
+  background: #C6CDD9; border-radius: 1px;
 }
-.vs-dot.cold { background: var(--muted); }
-.vs-label {
-  position: absolute; left: 48px; transform: translateY(50%);
-  display: flex; flex-direction: row; align-items: baseline; gap: 7px;
-  max-width: calc(100% - 48px); white-space: nowrap;
+
+.fp-nums {
+  display: grid; grid-template-columns: 1fr auto auto; column-gap: 9px;
+  align-items: baseline; font-size: 11px; text-align: right;
 }
-.vs-label .nm {
-  font-family: var(--font-mono); font-size: 13.5px; color: var(--ink);
-  min-width: 0; flex: 0 1 auto; overflow: hidden; text-overflow: ellipsis;
+.fp-elo { color: var(--ink); font-size: 12px; }
+.fp-ci-n, .fp-rank { color: var(--muted); font-size: 10.5px; }
+
+.fp-sep {
+  display: grid; grid-template-columns: var(--fp-name) 1fr;
+  column-gap: 16px; margin: 6px 0 10px; position: relative; z-index: 1;
 }
-a.vs-label:hover .nm { color: var(--ember); }
-.vs-label .el { font-family: var(--font-mono); font-size: 13px; color: var(--ember); font-weight: 600; flex: 0 0 auto; }
+.fp-sep-l {
+  grid-column: 2; font-size: 10px; letter-spacing: .04em; color: var(--muted);
+  border-top: 1px solid rgba(245, 163, 75, .2); padding-top: 7px;
+}
+.fp-foot { margin: 18px 0 0; max-width: 78ch; }
+.fp-foot strong { color: var(--ink-dim); }
+
+/* Ignition: each interval grows outward from its point estimate. Ordered by
+   UPPER BOUND, so the contenders arrive together — staggering by rank would
+   reinforce the ladder reading the chart exists to break. */
+/* FAIL-SAFE: the bar's resting style is the FINISHED state, and the animation is
+   opted into by a class JS adds inside a rAF. `animation-fill-mode: both` with a
+   delay holds the FROM state, so a context where animations never run — a
+   background tab, a non-compositing embed — would have held every bar at
+   scaleX(.02) forever. The chart would have been invisible and the CSS would
+   have looked correct. Default to the end state; animate only when something
+   has proven it can. */
+@media (prefers-reduced-motion: no-preference) {
+  .fp-body.ignite .fp-ci {
+    animation: fp-ignite .38s cubic-bezier(.2, .7, .2, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+  @keyframes fp-ignite { from { transform: translateY(-50%) scaleX(.02); opacity: 0; }
+                         to   { transform: translateY(-50%) scaleX(1); opacity: 1; } }
+}
 
 /* ============================ SECTIONS =================================== */
 section.block { padding: 8px 0 72px; }
@@ -1453,8 +1498,40 @@ a.pipe-step:hover .pipe-name { color: var(--ink); }
    rather than one of several stacked blocks. */
 .section-head--centre {
   flex-direction: column; align-items: center; text-align: center; gap: 6px;
-  margin-bottom: 22px;
+  margin-bottom: 26px;
 }
 .section-head--centre .note { max-width: 56ch; }
-.block-rail { padding-top: 4px; }
+
+/* The ranking needs air above it. Sitting 4px under the pipeline strip, its
+   heading read as a caption for the strip rather than the title of the section
+   below — two unrelated things touching look like one thing. */
+.block-rail { padding-top: 56px; margin-top: 12px; position: relative; }
+.block-rail::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 64px; height: 1px; background: var(--border-2);
+}
 .block-rail .judging-strip { text-align: center; margin: 18px auto 0; max-width: 62ch; }
+
+
+/* ---- forest plot, responsive ---------------------------------------------
+   Wider screens buy measurement resolution, never a second panel: the whole
+   argument is that there is ONE ruler and everything sits on it. */
+@media (min-width: 1500px) {
+  .block-rail .wrap, .block-rail { --fp-name: 344px; --fp-num: 168px; }
+}
+@media (max-width: 1099px) {
+  :root { --fp-name: 240px; --fp-num: 96px; }
+  .fp-rank { display: none; }
+}
+/* Below 700px the row restacks: name and score on one line, a full-bleed plot
+   under it. Two columns of 240px and a plot cannot both survive here, and a
+   squeezed ruler would break the comparison the chart is for. */
+@media (max-width: 700px) {
+  .fp-row, .fp-axis-row, .fp-sep { grid-template-columns: 1fr; row-gap: 4px; }
+  .fp-axis-row { grid-template-columns: 1fr; }
+  .fp-axis-k { display: none; }
+  .fp-row { padding: 9px 0; }
+  .fp-nums { grid-template-columns: auto auto auto; justify-content: start; text-align: left; }
+  .fp-sep-l { grid-column: 1; }
+  .fp-plot { height: 16px; }
+}

@@ -892,103 +892,183 @@ function renderJudgingStrip(judgeModel, summary) {
 }
 
 /* ---- Warmth Verdict Strip: the signature element ------------------------ */
-/* A vertical thermal rail plotting each model on the normalized-Elo axis. Each model gets a
-   horizontal tick + glowing dot at its Elo, a CI whisker spanning ci_low..ci_high along the
-   rail, and a label linking to its page. Glow intensity scales with win_rate. Pure DOM+CSS. */
+/* The ranking, as a forest plot.
+
+   It was a vertical thermal rail: a dot per model down a gradient line, name to
+   the right. That shape was designed for eight models and broke at thirty-one —
+   a tall thin line down a wide page, rows 23px apart, and a strict top-to-bottom
+   order that the data does not support.
+
+   It does not support it because 29 of the 30 adjacent pairs have OVERLAPPING
+   95% intervals, with a median interval width of 137 Elo against a 1104-point
+   range. #1 at 1876 [1800-1902] and #2 at 1839 [1741-1885] are not
+   distinguishable. Any chart that draws those as an ordered ladder of points is
+   asserting a precision the measurement does not have.
+
+   So: a forest plot, which is the form meta-analysis invented for exactly this
+   problem. One shared horizontal ruler, one row per model, and THE INTERVAL IS
+   THE LOUD OBJECT — a 9px capsule with the point estimate as a subordinate 2px
+   hairline inside it. Adjacent rows on a shared axis make overlap unmissable
+   with no legend and no interaction. Vertical position carries no claim at all;
+   it is pure enumeration, which is also what keeps the layout O(n) instead of a
+   label-packing problem.
+
+   No bare rank integers. Each row shows the range of ranks its interval is
+   consistent with. */
+
+const VS_PAD = 20;                       /* Elo padding either side of the domain */
+
+/* The ranks a model's interval is actually consistent with. It can only be 1st
+   if every other interval lies entirely below its own. */
+function vsRankRange(m, all) {
+  let best = 1, worst = all.length;
+  for (const o of all) {
+    if (o === m) continue;
+    if (o.lo > m.hi) best++;             // strictly better than m
+    if (o.hi < m.lo) worst--;            // strictly worse than m
+  }
+  return [best, worst];
+}
+
+/* Long technical names carry their meaning in the tail — "(Q4_K_M)", "Huihui QAT
+   Abliterated MTP NVFP4" is the whole reason the row is separate from its
+   sibling. Split after the first size token so the identity leads and the
+   distinguishing part follows, and never truncate: a name that ends in "..." has
+   thrown away the thing the row exists to say. */
+function vsSplitName(name) {
+  const m = /^(.*?\d+\s*[Bb](?:-\w+)?)\b\s*(.*)$/.exec(name);
+  return m && m[2] ? [m[1], m[2]] : [name, ""];
+}
+
 function renderVerdictStrip(models) {
   const mount = document.getElementById("verdict-strip");
   if (!mount) return;
   const modelPage = (window.OG && window.OG.modelPage) || "model.html";
-  // The ladder plots the ranking. A provisional model has no standing in it — including it
-  // would draw an incomplete measurement as a peer of the fully-judged ones.
-  const pts = (models || []).filter((m) => m.normalized_elo != null && m.ranked !== false);
-  if (!pts.length) {
+  // A provisional model has no standing in a ranking. Drawn faintly it would
+  // still read as a rank, so it is not drawn at all.
+  const raw = (models || []).filter((m) => m.normalized_elo != null && m.ranked !== false);
+  if (!raw.length) {
     mount.replaceChildren(el("div", { class: "state state-empty" },
       el("img", { src: "static/img/pose-a3.webp", alt: "", width: "120", height: "72",
                   class: "state-bot", loading: "lazy" }),
       el("p", { text: "No ranked models yet." })));
     return;
   }
-  // The plot height scales with the roster rather than being a fixed 420px: at
-  // 32 models that was ~13px a row, which crushed the labels into each other.
-  // Enrolling models should spread the ladder, not compress it.
-  mount.style.setProperty("--vs-rows", String(pts.length));
 
-  const clamp01 = (x) => Math.max(0, Math.min(1, x));
-  const nz = (v, f) => (v != null ? Number(v) : Number(f));
+  const pts = raw.map((m) => {
+    const e = Number(m.normalized_elo);
+    return {
+      m,
+      elo: e,
+      lo: m.elo_ci_low != null ? Number(m.elo_ci_low) : e,
+      hi: m.elo_ci_high != null ? Number(m.elo_ci_high) : e,
+    };
+  }).sort((a, b) => b.elo - a.elo);
 
-  // axis domain: min(ci_low) − 40 … max(ci_high) + 40, falling back to the point Elo w/o a CI
-  let dmin = Infinity, dmax = -Infinity;
-  for (const m of pts) {
-    dmin = Math.min(dmin, nz(m.elo_ci_low, m.normalized_elo));
-    dmax = Math.max(dmax, nz(m.elo_ci_high, m.normalized_elo));
-  }
-  dmin -= 40; dmax += 40;
-  const span = dmax - dmin || 1;
-  const pos = (v) => clamp01((Number(v) - dmin) / span) * 100;
+  const dmin = Math.min(...pts.map((p) => p.lo)) - VS_PAD;
+  const dmax = Math.max(...pts.map((p) => p.hi)) + VS_PAD;
+  const span = Math.max(1, dmax - dmin);
+  const pc = (v) => ((v - dmin) / span) * 100;
 
-  const items = pts.map((m) => ({
-    m,
-    yElo: pos(m.normalized_elo),
-    yLo: pos(nz(m.elo_ci_low, m.normalized_elo)),
-    yHi: pos(nz(m.elo_ci_high, m.normalized_elo)),
-  }));
+  // Who could still be first: anyone whose interval reaches the highest lower
+  // bound on the board. This is the honest headline — "six are tied at the top"
+  // is defensible where "1st place" is not.
+  const topLo = Math.max(...pts.map((p) => p.lo));
+  const contenders = pts.filter((p) => p.hi >= topLo);
+  const maxHi = Math.max(...pts.map((p) => p.hi));
+  const minHi = Math.min(...pts.map((p) => p.hi));
 
-  // declutter single-line labels in %-space: nudge apart to a minimum gap, then shift down if
-  // they overflow. A leader line ties each nudged label back to its exact-position dot.
-  // The gap is ADAPTIVE: with many models a fixed 6.5% needs more than the rail has, so the
-  // overflow shift used to push the bottom labels into the axis caption (they collided and
-  // garbled — "pantheon" over "designant"). Sizing the gap to fit all n labels in the usable
-  // band [BOT, TOP] guarantees no overflow, so nothing gets shoved off either end.
-  const TOP = 94, BOT = 4;                       // leave room for the axis captions above/below
-  const MIN_GAP = 6.5;
-  const sorted = [...items].sort((a, b) => a.yElo - b.yElo);
-  let last = -Infinity;
-  for (const it of sorted) { it.yLabel = Math.max(it.yElo, last + MIN_GAP); last = it.yLabel; }
-  // If the labels can't all sit near their dots without overflowing the rail — which happens
-  // when a tight cluster (e.g. 6 models within a few Elo) needs more vertical room than exists,
-  // or simply with many models — a shift-and-clamp used to stack the bottom labels on top of
-  // each other (they garbled). Fall back to spreading ALL labels EVENLY; the leader line still
-  // ties each to its true position. This is collision-free for any number of models.
-  if (last > TOP) {
-    const gap = (TOP - BOT) / Math.max(1, sorted.length - 1);
-    sorted.forEach((it, i) => { it.yLabel = BOT + i * gap; });
-  }
+  const frag = document.createDocumentFragment();
 
-  const plot = el("div", { class: "vs-plot" }, el("div", { class: "vs-rail" }));
-  let ai = 0;                       // stagger index for the one orchestrated load moment
-  const anim = (node) => { node.classList.add("vs-in"); node.style.setProperty("--i", String(ai)); return node; };
-  for (const it of items) {
-    ai++;
-    const m = it.m, wr = m.win_rate;
-    plot.appendChild(anim(el("div", { class: "vs-whisker", style: `bottom:${it.yLo}%;height:${Math.max(0, it.yHi - it.yLo)}%` })));
-    // leader line bridging the dot's true position to the nudged label
-    const loY = Math.min(it.yElo, it.yLabel), gap = Math.abs(it.yLabel - it.yElo);
-    if (gap > 0.4) plot.appendChild(anim(el("div", { class: "vs-leader", style: `bottom:${loY}%;height:${gap}%` })));
-    const dot = el("div", { class: "vs-dot" + (wr == null ? " cold" : ""), style: `bottom:${it.yElo}%` });
-    if (wr != null) {
-      const blur = 6 + Number(wr) * 20, alpha = 0.35 + Number(wr) * 0.5;
-      dot.style.boxShadow = `0 0 ${blur.toFixed(1)}px rgba(245,163,75,${alpha.toFixed(2)})`;
+  // ---- axis: gridlines every 100, labelled every 200 ----------------------
+  const axis = el("div", { class: "fp-axis" });
+  const grid = el("div", { class: "fp-grid", "aria-hidden": "true" });
+  const first = Math.ceil(dmin / 100) * 100;
+  for (let v = first; v <= dmax; v += 100) {
+    const line = el("span", { class: "fp-gl" + (v % 200 === 0 ? " major" : "") });
+    line.style.left = pc(v) + "%";
+    grid.appendChild(line);
+    if (v % 200 === 0) {
+      const lab = el("span", { class: "fp-gl-lab mono", text: String(v) });
+      lab.style.left = pc(v) + "%";
+      axis.appendChild(lab);
     }
-    plot.appendChild(anim(dot));
-    plot.appendChild(anim(el("a", {
-      class: "vs-label", href: `${modelPage}?slug=${encodeURIComponent(m.slug)}`, style: `bottom:${it.yLabel}%`,
-    },
-      el("span", { class: "nm", text: m.display_name }),
-      el("span", { class: "el", text: String(Math.round(Number(m.normalized_elo))) }))));
   }
+  frag.appendChild(el("div", { class: "fp-axis-row" },
+    el("span", { class: "fp-axis-k mono", text: "more human →" }), axis));
 
-  mount.replaceChildren(
-    el("div", { class: "vs-title" }, el("span", { class: "tick", text: "// " }), "How human each model sounds"),
-    el("div", { class: "vs-axis top" }, el("span", { text: "more human" }), el("span", { class: "val", text: "≈ " + Math.round(dmax) })),
-    plot,
-    el("div", { class: "vs-axis bottom" }, el("span", { text: "less human" }), el("span", { class: "val", text: "≈ " + Math.round(dmin) })));
+  // ---- rows ---------------------------------------------------------------
+  const body = el("div", { class: "fp-body" }, grid);
+  pts.forEach((p, i) => {
+    const [head, tail] = vsSplitName(p.m.display_name || p.m.slug || "—");
+    const [rb, rw] = vsRankRange(p, pts);
+    const isContender = p.hi >= topLo;
+
+    const cap = el("span", { class: "fp-ci", "aria-hidden": "true" });
+    cap.style.left = pc(p.lo) + "%";
+    cap.style.right = (100 - pc(p.hi)) + "%";
+    // Ignition order is by UPPER BOUND, not by rank: models light in order of
+    // "could this still be the best", so the contenders arrive together and the
+    // field follows. Staggering by rank would reinforce the ladder reading this
+    // chart exists to break.
+    cap.style.setProperty("--d", Math.round(900 * (maxHi - p.hi) / Math.max(1, maxHi - minHi)) + "ms");
+
+    const tick = el("span", { class: "fp-tick", "aria-hidden": "true" });
+    tick.style.left = pc(p.elo) + "%";
+
+    const plot = el("div", { class: "fp-plot" }, cap, tick);
+
+    const name = el("a", { class: "fp-name", href: `${modelPage}?slug=${encodeURIComponent(p.m.slug)}` },
+      el("span", { class: "fp-nm", text: head }));
+    if (tail) name.appendChild(el("span", { class: "fp-tl", text: " " + tail }));
+
+    const nums = el("div", { class: "fp-nums mono" },
+      el("span", { class: "fp-elo", text: String(Math.round(p.elo)) }),
+      el("span", { class: "fp-ci-n", text: `±${Math.round((p.hi - p.lo) / 2)}` }),
+      el("span", { class: "fp-rank", text: rb === rw ? `#${rb}` : `#${rb}–${rw}` }));
+
+    const row = el("div", {
+      class: "fp-row" + (isContender ? " is-contender" : ""),
+      title: `${p.m.display_name}: ${Math.round(p.elo)} Elo, 95% interval `
+        + `${Math.round(p.lo)}–${Math.round(p.hi)}. Consistent with ranks ${rb}–${rw} of ${pts.length}.`,
+    }, name, plot, nums);
+    body.appendChild(row);
+
+    if (i === contenders.length - 1 && contenders.length < pts.length) {
+      body.appendChild(el("div", { class: "fp-sep" },
+        el("span", { class: "fp-sep-l mono", text:
+          `↑ ${contenders.length} models whose interval still reaches first place — not separable at 95%` })));
+    }
+  });
+  frag.appendChild(body);
+
+  frag.appendChild(el("p", { class: "fp-foot note" },
+    "Bars are 95% bootstrap intervals, not error bars on a known truth. ",
+    el("strong", { text: "Overlapping bars are not distinguishable" }),
+    " — of the 30 adjacent pairs here, "
+    + String(pts.slice(1).filter((p, i) => p.hi >= pts[i].lo).length)
+    + " overlap. Non-overlap implies a real difference; overlap does not prove there is none."));
+
+  mount.replaceChildren(frag);
+
+  // Opt into the entrance only once a frame has actually run. If rAF never
+  // fires the class is never added and the bars stay at their resting style,
+  // which is the finished state — the chart degrades to a still forest plot
+  // rather than to nothing.
+  requestAnimationFrame(() => {
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((es) => {
+        if (!es[0].isIntersecting) return;
+        body.classList.add("ignite");
+        io.disconnect();
+      }, { threshold: 0.05 });
+      io.observe(body);
+    } else {
+      body.classList.add("ignite");
+    }
+  });
 }
 
-/* Simple ⇄ technical. The page always opens simple, and the state is deliberately NOT
-   persisted: a shared link must never land a newcomer in the analyst view. The technical
-   view restores today's full table plus its rank-by pills and heat legend — nothing about
-   the board was deleted, only demoted. */
 function renderBoardToggle(models) {
   const mount = document.getElementById("board-toggle");
   const lb = document.getElementById("leaderboard");
