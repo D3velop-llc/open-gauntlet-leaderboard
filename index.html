@@ -8,7 +8,7 @@
   
   <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
   <link rel="apple-touch-icon" href="static/img/bot-head.png">
-  <link rel="stylesheet" href="static/site.css?v=85421154ba">
+  <link rel="stylesheet" href="static/site.css?v=7e56e9abe5">
   
   
   <script>window.OG = { modelPage: "model.html" };</script>
@@ -39,9 +39,9 @@
       
       <h1>Then, which one would you rather <span class="warm">talk to</span>?</h1>
       <p class="lede">
-        Two AI models you can run on your own computer, for free. Same person, saying the
-        same things to both. Read the two answers and pick whichever sounds more like a
-        friend — then we'll tell you what you picked.
+        Free models you can run on your own computer, ranked on one question: which of them
+        is worth talking to? Same scenarios, same judge, same instructions for every model —
+        and the whole ladder is below, most human at the top.
       </p>
   <div class="hero-signal hero-signal--words">
     <img class="hero-bot" src="static/img/pose-a5.webp" alt=""
@@ -77,26 +77,28 @@
   </div>
 
   
-  <div class="wrap wrap-wide">
-    <div id="showcase"></div>
-  </div>
-
   <div class="wrap">
-    <section class="hero hero-after">
+    <section class="block block-rail">
+      <div class="section-head section-head--centre">
+        <h2>How human each one sounds</h2>
+        <span class="note">
+          Every model we have run, on one scale. Higher is more human — the number is a
+          normalised Elo from head-to-head judging, not a percentage.
+        </span>
+      </div>
+      <div id="verdict-strip" class="verdict-strip"><div class="state">Loading…</div></div>
       <p class="judging-strip" data-judging-strip>
         Graded by <span data-judge-model>gpt-5.4</span>, using the same instructions for every model.
       </p>
-      <div id="verdict-strip" class="verdict-strip"><div class="state">Loading…</div></div>
     </section>
   </div>
 
   <div class="wrap wrap-wide">
-    <div id="pick-card"></div>
     <section class="block">
       <div class="section-head">
         <span class="idx">//</span>
-        <h2>The leaderboard</h2>
-        <span class="note">Every model we tested. Click a heading to sort.</span>
+        <h2>The full table</h2>
+        <span class="note">Every column we record, for every model. Click a heading to sort.</span>
       </div>
       
       <p class="speed-anchor">
@@ -140,6 +142,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=d0cb875044" defer></script>
+  <script src="static/site.js?v=25d472b372" defer></script>
 </body>
 </html>

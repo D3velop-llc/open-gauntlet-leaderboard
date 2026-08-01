@@ -902,7 +902,17 @@ function renderVerdictStrip(models) {
   // The ladder plots the ranking. A provisional model has no standing in it — including it
   // would draw an incomplete measurement as a peer of the fully-judged ones.
   const pts = (models || []).filter((m) => m.normalized_elo != null && m.ranked !== false);
-  if (!pts.length) { mount.replaceChildren(el("div", { class: "state", text: "No ranked models yet." })); return; }
+  if (!pts.length) {
+    mount.replaceChildren(el("div", { class: "state state-empty" },
+      el("img", { src: "static/img/pose-a3.webp", alt: "", width: "120", height: "72",
+                  class: "state-bot", loading: "lazy" }),
+      el("p", { text: "No ranked models yet." })));
+    return;
+  }
+  // The plot height scales with the roster rather than being a fixed 420px: at
+  // 32 models that was ~13px a row, which crushed the labels into each other.
+  // Enrolling models should spread the ladder, not compress it.
+  mount.style.setProperty("--vs-rows", String(pts.length));
 
   const clamp01 = (x) => Math.max(0, Math.min(1, x));
   const nz = (v, f) => (v != null ? Number(v) : Number(f));
