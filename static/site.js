@@ -930,6 +930,42 @@ function vsRankRange(m, all) {
   return [best, worst];
 }
 
+/* The rank distribution, when the solver has produced one.
+
+   `vsRankRange` above answers "which ranks is this interval consistent with",
+   which is a CONSERVATIVE test: it compares two marginal intervals and so
+   under-claims separation, because the uncertainty on the DIFFERENCE between
+   two models is tighter than the two intervals suggest — the more they were
+   judged against each other, the more their errors move together.
+
+   The bootstrap already knows the answer. Each of its replicates is a whole
+   alternate tournament, so within one replicate every model's Elo came from the
+   same resampled games; ranking inside each replicate and tallying gives
+   "was first in 34% of them" where overlap could only offer "somewhere in 1-5".
+
+   The field is NULL on any rating solved before this shipped, so every reader
+   falls back to the interval-based envelope rather than showing nothing. */
+function vsRankDist(m, fieldSize) {
+  const d = m && m.rank_dist;
+  if (!d || typeof d !== "object") return null;
+  const p = Number(d.p_best), med = Number(d.median_rank), n = Number(d.n_replicates);
+  if (!isFinite(p) || !isFinite(med) || !(n > 0)) return null;
+  // A rank is only meaningful against the field it was computed over. site_gen
+  // already refuses to publish a distribution whose field differs from the one
+  // it draws, so this is the second lock: new markup against a cached older
+  // leaderboard.json is exactly the mismatch the asset hashing exists to stop,
+  // and a "#7" on a six-row chart is the shape that bug would take here.
+  if (fieldSize != null && Array.isArray(d.field) && d.field.length !== fieldSize) return null;
+  return { p, med, n };
+}
+
+/* 0.4% must not print as "0%" beside a visible bar. */
+function vsPct(p) {
+  if (p >= 0.995) return "100%";
+  if (p > 0 && p < 0.005) return "<1%";
+  return Math.round(p * 100) + "%";
+}
+
 /* Long technical names carry their meaning in the tail — "(Q4_K_M)", "Huihui QAT
    Abliterated MTP NVFP4" is the whole reason the row is separate from its
    sibling. Split after the first size token so the identity leads and the
@@ -980,6 +1016,63 @@ function renderVerdictStrip(models) {
 
   const frag = document.createDocumentFragment();
 
+  // ---- who is actually first ----------------------------------------------
+  // The forest plot answers "by how much". This answers "who won", which is the
+  // question people came with — and it is the only place on the site that can
+  // answer it with a number instead of a hedge. Rendered only when the solver
+  // has produced distributions; before that the plot alone is the whole story.
+  const crown = pts
+    .map((q) => ({ q, rd: vsRankDist(q.m, pts.length) }))
+    .filter((x) => x.rd && x.rd.p > 0)
+    .sort((a, b) => b.rd.p - a.rd.p);
+  if (crown.length) {
+    const reps = crown[0].rd.n;
+    const shown = crown.slice(0, 8);
+    const rest = crown.slice(8);
+    const box = el("div", { class: "fp-crown" },
+      el("h3", { class: "fp-crown-h", text: "Who is actually first?" }),
+      el("p", { class: "fp-crown-s note" },
+        `We re-ran the whole tournament ${reps} times on resampled judgements. `
+        + "This is how often each model came out on top."));
+
+    const bars = el("div", { class: "fp-crown-bars" });
+    // Bars are scaled to the leader, not to 100%: at a 34% ceiling a
+    // full-width axis would render every contender as a stub and hide the
+    // spacing between them, which is the thing worth seeing.
+    const top = shown[0].rd.p;
+    shown.forEach((x) => {
+      // Head AND tail. Sibling variants share a head — "glistening-gem-31b" is both
+      // the base model and its q4 — so a head-only label renders two different bars
+      // with the same name pointing at different models, which is worse than a long
+      // label: it looks like a duplicate rather than a distinction.
+      const [head, tail] = vsSplitName(x.q.m.display_name || x.q.m.slug || "—");
+      const fill = el("span", { class: "fp-cb-fill" });
+      fill.style.width = (100 * x.rd.p / top) + "%";
+      const nm = el("a", { class: "fp-cb-n mono",
+                           href: `${modelPage}?slug=${encodeURIComponent(x.q.m.slug)}` },
+        el("span", { text: head }));
+      if (tail) nm.appendChild(el("span", { class: "fp-tl", text: " " + tail }));
+      bars.append(nm, el("span", { class: "fp-cb-t" }, fill),
+        el("span", { class: "fp-cb-p mono", text: vsPct(x.rd.p) }));
+    });
+    box.appendChild(bars);
+
+    // Never let a cap read as "that was everyone".
+    if (rest.length) {
+      const tail = rest.reduce((s, x) => s + x.rd.p, 0);
+      box.appendChild(el("p", { class: "fp-crown-f note", text:
+        `${rest.length} more model${rest.length > 1 ? "s" : ""} finished first at least once, `
+        + `sharing the remaining ${vsPct(tail)}.` }));
+    }
+    // The number is conditional on the instrument, and saying so is not a
+    // disclaimer — a probability without its conditioning is just a bigger claim.
+    box.appendChild(el("p", { class: "fp-crown-f note" },
+      "This is uncertainty from ", el("strong", { text: "how many judgements we have" }),
+      ", not from whether this judge and these scenarios are the right test. "
+      + "That part is not in the number."));
+    frag.appendChild(box);
+  }
+
   // ---- axis: gridlines every 100, labelled every 200 ----------------------
   const axis = el("div", { class: "fp-axis" });
   const grid = el("div", { class: "fp-grid", "aria-hidden": "true" });
@@ -1022,15 +1115,21 @@ function renderVerdictStrip(models) {
       el("span", { class: "fp-nm", text: head }));
     if (tail) name.appendChild(el("span", { class: "fp-tl", text: " " + tail }));
 
+    // Median rank where it is measured, the interval envelope where it is not.
+    const rd = vsRankDist(p.m, pts.length);
     const nums = el("div", { class: "fp-nums mono" },
       el("span", { class: "fp-elo", text: String(Math.round(p.elo)) }),
       el("span", { class: "fp-ci-n", text: `±${Math.round((p.hi - p.lo) / 2)}` }),
-      el("span", { class: "fp-rank", text: rb === rw ? `#${rb}` : `#${rb}–${rw}` }));
+      el("span", { class: "fp-rank", text: rd ? `#${rd.med}` : (rb === rw ? `#${rb}` : `#${rb}–${rw}`) }));
 
     const row = el("div", {
       class: "fp-row" + (isContender ? " is-contender" : ""),
       title: `${p.m.display_name}: ${Math.round(p.elo)} Elo, 95% interval `
-        + `${Math.round(p.lo)}–${Math.round(p.hi)}. Consistent with ranks ${rb}–${rw} of ${pts.length}.`,
+        + `${Math.round(p.lo)}–${Math.round(p.hi)}. `
+        + (rd
+            ? `Finished #${rd.med} in the median of ${rd.n} bootstrap replicates, `
+              + `and first in ${vsPct(rd.p)} of them.`
+            : `Consistent with ranks ${rb}–${rw} of ${pts.length}.`),
     }, name, plot, nums);
     body.appendChild(row);
 
@@ -1042,12 +1141,22 @@ function renderVerdictStrip(models) {
   });
   frag.appendChild(body);
 
-  frag.appendChild(el("p", { class: "fp-foot note" },
+  const nOverlap = pts.slice(1).filter((q, i) => q.hi >= pts[i].lo).length;
+  const foot = el("p", { class: "fp-foot note" },
     "Bars are 95% bootstrap intervals, not error bars on a known truth. ",
     el("strong", { text: "Overlapping bars are not distinguishable" }),
-    " — of the 30 adjacent pairs here, "
-    + String(pts.slice(1).filter((p, i) => p.hi >= pts[i].lo).length)
-    + " overlap. Non-overlap implies a real difference; overlap does not prove there is none."));
+    ` — of the ${pts.length - 1} adjacent pairs here, ${nOverlap} overlap. `
+    + "Non-overlap implies a real difference; overlap does not prove there is none.");
+  // Overlap is a weaker test than the replicates it was standing in for, and
+  // once we have the replicates we should say so rather than let a reader
+  // conclude the top of the board is a coin toss.
+  if (crown.length) {
+    foot.append(" Overlap is the conservative reading: it compares two intervals "
+      + "separately, while the panel above compares the models inside the same "
+      + "replicate, where their errors move together. Trust the percentages over "
+      + "the overlaps.");
+  }
+  frag.appendChild(foot);
 
   mount.replaceChildren(frag);
 
