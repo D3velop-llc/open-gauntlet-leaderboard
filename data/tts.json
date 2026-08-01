@@ -36,6 +36,7 @@
         "actively-maintained",
         "multilingual"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -94,6 +95,7 @@
         "actively-maintained",
         "multilingual"
       ],
+      "hardware": null,
       "params": "N/A (closed)",
       "architecture": "State-space model (SSM) rather than a transformer — the stated basis of the latency claim",
       "codec": null,
@@ -149,6 +151,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -205,6 +208,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -263,6 +267,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": "LLM-based TTS — Octave reads surrounding context to decide delivery",
       "codec": null,
@@ -320,6 +325,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -380,6 +386,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -433,6 +440,7 @@
         "streaming",
         "long-form"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -490,6 +498,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A for the hosted s2.x models",
       "architecture": null,
       "codec": null,
@@ -544,6 +553,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "N/A (closed). MARS-Nano is explicitly an on-device variant.",
       "architecture": null,
       "codec": null,
@@ -601,6 +611,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -655,6 +666,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed) for Bulbul TTS. Sarvam has separately open-sourced some Indic LLMs, but Bulbul weights are not open.",
       "architecture": null,
       "codec": null,
@@ -714,6 +726,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "Hosted model sizes not published.",
       "architecture": null,
       "codec": null,
@@ -769,6 +782,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -824,6 +838,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -878,6 +893,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": null,
       "codec": null,
@@ -933,6 +949,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "Not published by Unreal Speech. The vendor states the service is \"Powered by Kokoro TTS\" and links hexgrad/Kokoro-82M, whose model card gives 82 M parameters — but that is the open checkpoint's figure, not a published property of the hosted service, which may serve a modified, quantised or fine-tuned build.",
       "architecture": null,
       "codec": null,
@@ -985,6 +1002,7 @@
         "api-only",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A",
       "architecture": null,
       "codec": null,
@@ -1041,6 +1059,7 @@
         "watermarked",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": null,
       "architecture": null,
       "codec": null,
@@ -1093,6 +1112,7 @@
         "api-only",
         "discontinued"
       ],
+      "hardware": "hosted",
       "params": "N/A",
       "architecture": null,
       "codec": null,
@@ -1155,6 +1175,7 @@
         "actively-maintained",
         "multilingual"
       ],
+      "hardware": "phone",
       "params": "N/A (closed API)",
       "architecture": null,
       "codec": null,
@@ -1215,6 +1236,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed API)",
       "architecture": "LLM-style generative HD TTS in three families — DragonHD (30+ fine-tuned personas), DragonHDOmni (700+ voices, unified prebuilt + AI-generated), DragonHDFlash (low-latency, zh-CN/en-US only). Sampling exposed via temperature (0.3–1.0, default 0.7 Omni / 1.0 DragonHD), top_p 0.7, top_k 22, cfg_scale 1.4 (cfg_scale controls both speech speed and contextual relevance).",
       "codec": null,
@@ -1272,6 +1294,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed API)",
       "architecture": "Zero-shot TTS — a short audio prompt plus a recorded verbal consent statement produces a speakerProfileId; voice characteristics are encoded into an embedding referenced via SSML <mstts:ttsembedding>",
       "codec": null,
@@ -1328,6 +1351,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed API)",
       "architecture": "Google's latest-generation generative TTS models (no further architectural detail published)",
       "codec": null,
@@ -1383,6 +1407,7 @@
         "phoneme-control",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed API)",
       "architecture": "Zero-shot cloning producing a client-side \"voice cloning key\" — a text-string representation of the voice passed per request rather than stored server-side, so the same key can be used concurrently by multiple clients/devices",
       "codec": null,
@@ -1441,6 +1466,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "Not disclosed",
       "architecture": "LLM-native text-to-audio, controllable via natural-language style prompts rather than SSML. Single-speaker and multi-speaker (up to 2 speakers) modes.",
       "codec": null,
@@ -1502,6 +1528,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed API); not disclosed for the Generative engine",
       "architecture": "Four distinct engines — Standard: concatenative/parametric legacy. Neural: neural TTS. Long-Form: tuned for extended narration with consistent paragraph-level prosody. Generative: large transformer-based, uniquely supporting StartSpeechSynthesisStream (text streams in while audio streams out).",
       "codec": null,
@@ -1558,6 +1585,7 @@
         "no-watermark",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "Not disclosed",
       "architecture": "GPT-4o-mini-derived TTS accepting a free-text `instructions` field alongside the input text, served on /v1/audio/speech",
       "codec": null,
@@ -1617,6 +1645,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "Not disclosed",
       "architecture": "Three neural voice tiers — Natural (newest, best naturalness/expressiveness), Expressive (context-derived sentiment, extra speaking styles, interjection emphasis) and Enhanced neural (V3Voice, broadest feature support). All voices now use neural technology; the legacy concatenative voices are gone.",
       "codec": null,
@@ -1674,6 +1703,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "Not disclosed for the hosted models",
       "architecture": "Qwen3 TTS family. HTTP models (no -realtime suffix) return a 24-hour audio URL or chunked PCM; -realtime models use WebSocket bidirectional streaming.",
       "codec": null,
@@ -1725,6 +1755,7 @@
       "facets": [
         "discontinued"
       ],
+      "hardware": null,
       "params": "N/A — no TTS product",
       "architecture": "N/A — no TTS product. Verified 2026-07-31: neither docs.anthropic.com/en/docs/about-claude/models/overview nor docs.claude.com/en/api/overview contains any occurrence of \"tts\", \"text-to-speech\", \"audio\", \"speech\" or \"voice\" as a product capability. No audio output modality, no speech-to-speech model, no voice API.",
       "codec": null,
@@ -1780,6 +1811,7 @@
         "multilingual",
         "frozen"
       ],
+      "hardware": null,
       "params": "SeamlessM4T v2 Large: 2.3 B (Meta's model card)",
       "architecture": "SeamlessM4T v2 uses a non-autoregressive text-to-unit decoder for improved text/speech consistency, and is the foundation for SeamlessExpressive (preserves pauses, speech rate, vocal style and emotional tone across translation) and SeamlessStreaming (simultaneous translation)",
       "codec": null,
@@ -1836,6 +1868,7 @@
         "multilingual",
         "frozen"
       ],
+      "hardware": "cpu",
       "params": "36,284,592 (facebook/mms-tts-eng); 36,282,096 (facebook/mms-tts-kor). One separate checkpoint per language, not a single multilingual model — a 1,107-language deployment means 1,107 checkpoints.",
       "architecture": "VITS — end-to-end variational inference with adversarial learning and normalizing flows, hidden_size 192, HiFi-GAN decoder, stochastic duration prediction. Trained per language.",
       "codec": null,
@@ -1894,6 +1927,7 @@
         "actively-maintained",
         "multilingual"
       ],
+      "hardware": "gpu-8",
       "params": "2 B (MiniCPM-4 backbone)",
       "architecture": "Tokenizer-free diffusion-autoregressive — LocEnc → TSLM → RALM → LocDiT, with AudioVAE V2 and built-in super-resolution; native 48 kHz with no external upsampler",
       "codec": "None — tokenizer-free/codec-free; generates continuous speech representations via AudioVAE V2",
@@ -1950,6 +1984,7 @@
         "commercially-safe",
         "superseded"
       ],
+      "hardware": "cpu",
       "params": "0.5 B backbone (MiniCPM4-0.5B) — that is the vendor's \"Backbone Parameters\" column, not the whole system, which is ~0.8 B once the 1.30 GB checkpoint and 301 MB AudioVAE are counted",
       "architecture": "Tokenizer-free diffusion-autoregressive on a MiniCPM-4 0.5B backbone — LocEnc → TSLM → RALM → LocDiT, trained end-to-end under one diffusion objective with gradients passed through an FSQ bottleneck by straight-through estimation. No external speech tokenizer.",
       "codec": "None — tokenizer-free; 16 kHz output via AudioVAE",
@@ -2011,6 +2046,7 @@
         "actively-maintained",
         "multilingual"
       ],
+      "hardware": "phone",
       "params": "1.7 B and 0.6 B variants (HF lists the 1.7 B repo at ~2 B tensor size); the tokenizer repo is ~300 M",
       "architecture": "Discrete multi-codebook LM, lightweight non-DiT, dual-track hybrid streaming generation — Talker (28 layers, first codebook token from text) + Code Predictor (5 layers, 15 further codebook tokens). Post-training DPO → GSPO. Trained on 5M+ hours.",
       "codec": "Qwen3-TTS-Tokenizer-12Hz — 12.5 Hz multi-codebook, jointly optimised semantic + acoustic streams, GAN framework with a WavLM teacher, causal chunked decode, 24 kHz output",
@@ -2071,6 +2107,7 @@
         "actively-maintained",
         "multilingual"
       ],
+      "hardware": "cpu",
       "params": "8 B (MossTTSDelay), 4 B and 1.7 B (MossTTSLocal), 1.7 B (MossTTSRealtime), 0.1 B (MOSS-TTS-Nano). v1.5 exists for only two of these — MOSS-TTS-v1.5 (8 B Delay) and MOSS-TTS-Local-Transformer-v1.5; Realtime and Nano-100M remain at v1.0.",
       "architecture": "Three complementary designs — MossTTSDelay (multi-head parallel RVQ prediction with delay-pattern scheduling, for stability/speed), MossTTSLocal (time-synchronous RVQ blocks with a depth transformer, for streaming flexibility), MossTTSRealtime (hierarchical text-audio inputs for low-latency agents)",
       "codec": "MOSS-Audio-Tokenizer-v2, native 48 kHz stereo (which v1.5 checkpoints output 48 kHz stereo vs 24 kHz mono is flagged as unresolved in the corpus)",
@@ -2128,6 +2165,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "1.7 B backbone + 200 M local \"Depth\" Transformer (4 blocks). Checkpoint is 4.66 GB bf16. No combined total is published.",
       "architecture": "MossTTSRealtime — a Qwen3-1.7B-initialised backbone (28 layers, hidden 2048) exposes hidden states to a 4-layer 200 M local Transformer that autoregressively emits RVQ audio tokens. Hierarchical input, text and speech tokens at different levels. Purely autoregressive, no diffusion.",
       "codec": "MOSS-Audio-Tokenizer (Causal Audio Tokenizer) — 12.5 Hz frame rate, 16 RVQ codebooks, 24 kHz out",
@@ -2184,6 +2222,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "2 B (Qwen2.5-1.5B AR backbone + AR flow-matching acoustic head)",
       "architecture": "Fully continuous end-to-end AR — semantic encoder → LLM → autoregressive flow-matching acoustic head over a 48 kHz AudioVAE. Processes BPE text directly with no phonemization. Three 2 B variants: -base (pretrained), -soar (self-corrective-aligned, default), -mf (MeanFlow-distilled for 2-4 step low latency).",
       "codec": "None — no discrete codec tokens anywhere; 48 kHz AudioVAE, mono output",
@@ -2239,6 +2278,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "1 B and 3.5 B (HF tensor listing for the 3.5 B shows ~4 B)",
       "architecture": "Diffusion TTS operating directly in the WAVEFORM latent space — no mel-spectrogram intermediate. Requires only a waveform VAE (Wav-VAE) plus a diffusion backbone, with Adaptive Projection Guidance.",
       "codec": "None — waveform VAE (Wav-VAE), no mel intermediate and no discrete codec; 24 kHz output",
@@ -2297,6 +2337,7 @@
         "watermarked",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "0.5 B (Multilingual V3, and the original English model). Turbo (350 M) and Nano (110 M) have their own rows. The Single Language Pack is six dedicated 500 M finetunes — zh-cmn, es-mx-latam, pt-br, es-es, pt-pt, hi.",
       "architecture": "AR LM on a Llama 3 backbone predicting speech tokens + S3Gen/flow decoder to mel, 10 diffusion steps; trained on ~0.5 M hours of cleaned data. The single-step distilled decoder is the Turbo and Nano rows, not this one.",
       "codec": "Not named in the corpus — speech tokens decoded by an S3Gen/flow decoder to mel; 24 kHz output",
@@ -2356,6 +2397,7 @@
         "watermarked",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "110 M as published by Resemble (GitHub README, HF card and product page) — a backbone-only figure. Measured from the shipped safetensors header, t3_nano_v1.safetensors carries 217.5 M F32 parameters: 85.0 M in 12 transformer blocks at 768 hidden, the balance in embedding/output tables including three 50,276 x 768 matrices. With the decoder and voice encoder loaded the pipeline is ~483 M.",
       "architecture": "Turbo's architecture in a smaller package: autoregressive speech-token LM over a 12-layer, 768-hidden decoder with learned positional embeddings (8,196 positions) and a 6,563-token speech vocabulary, feeding a distilled S3Gen/flow decoder that produces mel in one step instead of the 10 diffusion steps of the 0.5 B models. Trained on the same dataset as Chatterbox Turbo.",
       "codec": null,
@@ -2412,6 +2454,7 @@
         "english-only",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "350 M",
       "architecture": "AR LM on a Llama backbone predicting speech tokens, then a distilled S3Gen/flow decoder to mel — one step, down from the 10 diffusion steps of the multilingual model",
       "codec": null,
@@ -2473,6 +2516,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "gpu-16",
       "params": "~4.6 B total (safetensors 4,561,852,416) — 4 B 'Slow AR' + 400 M 'Fast AR'",
       "architecture": "Dual-autoregressive decoder-only transformer over an RVQ neural codec, RL-aligned via GRPO. Native multi-speaker / multi-turn generation.",
       "codec": "RVQ (Fish) — 10 codebooks at ~21 Hz frame rate; the dual-AR head handles the depth axis",
@@ -2532,6 +2576,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "~4 B (36-layer AR decoder, hidden dim 2560, GQA 32/8); HF lists the repo at ~5 B tensor size",
       "architecture": "Autoregressive decoder over 8 codebooks x 1026 vocab with delay-pattern staggering; 24 kHz output",
       "codec": "Multi-codebook — 8 codebooks of 1026 vocab with delay-pattern staggering; the codec is not separately named",
@@ -2587,6 +2632,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "gpu-24",
       "params": "9.77 B (9,766,336,640 safetensors total, identical for base and Instruct; HF rounds to 10B). LLM core initialised from Qwen2.5-7B.",
       "architecture": "Audio foundation model — hybrid audio input (continuous Whisper-encoder features plus discrete semantic tokens) into a Qwen2.5-7B-initialised transformer with shared multimodal layers and PARALLEL heads emitting text and audio tokens, then a flow-matching detokenizer and BigVGAN vocoder. Pre-trained on 13M+ hours of speech, music and sound.",
       "codec": "12.5 Hz single-codebook VQ on a Whisper-encoder backbone; continuous acoustic features downsampled 50 Hz to 12.5 Hz by an adaptor. Detokenizer is flow matching to mel, then BigVGAN, 24 kHz.",
@@ -2644,6 +2690,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "gpu-16",
       "params": null,
       "architecture": "IndexTTS 2: autoregressive with decoupled emotion and speaker-identity features, GPT latent representations, three-stage training, BigVGAN2 decoder, built on the XTTS/Tortoise lineage with a conformer speech-conditioning encoder. IndexTTS 2.5: semantic codec compressed from 50 Hz to 25 Hz, U-DiT replaced by a Zipformer-based semantic-to-mel module, plus RL optimisation.",
       "codec": "Semantic codec at 50 Hz in IndexTTS 2, compressed to 25 Hz in 2.5; BigVGAN2 decoder",
@@ -2701,6 +2748,7 @@
         "no-watermark",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "3 B",
       "architecture": "Three components — a dual-codebook audio tokenizer, a 3 B audio LLM initialised from a text LLM and RL-trained with GRPO, and a flow-matching audio decoder",
       "codec": "Dual-codebook — linguistic stream at 16.7 Hz / 1024 codebook and semantic stream at 25 Hz / 4096 codebook, interleaved 2:3",
@@ -2758,6 +2806,7 @@
         "watermarked",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "VibeVoice-TTS-1.5B: Qwen2.5-1.5B LLM + ~340 M acoustic encoder + ~340 M decoder + ~123 M diffusion head (HF ships 5.41 GB across three bf16 shards, ~2.7 B total tensors) — comparison tables citing both '1.5B' and '3B' are defensible.",
       "architecture": "Next-token diffusion over continuous speech tokenizers at a 7.5 Hz frame rate (3,200x downsampling from 24 kHz), with LLM context understanding and CFG at inference",
       "codec": "σ-VAE at 7.5 Hz (Microsoft) — continuous rather than discrete tokens, ~3,200x downsampling; this is what enables 90-minute generations",
@@ -2815,6 +2864,7 @@
         "watermarked",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "0.5B headline. Qwen2.5-0.5B decoder (hidden 896, 24 layers, 8192 max positions) plus an acoustic tokenizer and a 4-layer diffusion head; the bf16 checkpoint is 2.04 GB, so ~1.0 B total tensors. Same headline-vs-total gap the 1.5B row notes.",
       "architecture": "Interleaved, windowed streaming design — incrementally encodes arriving text chunks while continuing diffusion-based acoustic latent generation from prior context. Removes the semantic tokenizer used by the long-form multi-speaker variants and relies solely on the acoustic tokenizer.",
       "codec": "Acoustic tokenizer only, 7.5 Hz, 3,200x downsampling from 24 kHz. The semantic tokenizer present in the 1.5B is dropped.",
@@ -2873,6 +2923,7 @@
         "actively-maintained",
         "multilingual"
       ],
+      "hardware": null,
       "params": "900 M active / 8 B total (sparse Mixture-of-Experts, MoE++ architecture from Zyphra's ZAYA LLMs)",
       "architecture": "MoE transformer generating DAC codec tokens from NeMo-normalised raw UTF-8 BYTES (no phonemizer), conditioned on an ECAPA-TDNN speaker embedding. Novel MLP router and delay-pattern architecture for parallel token generation. Classifier-free guidance removed. Trained on 6M+ hours.",
       "codec": "DAC (Descript), ~86 Hz — excellent fidelity at an expensive token budget",
@@ -2931,6 +2982,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "0.5 B",
       "architecture": "LLM-based TTS with flow matching and bi-streaming (text-in and audio-out streaming); an RL-optimised (DiffRO-EMO) variant is available",
       "codec": "FSQ / S3 tokens at 25 Hz (Alibaba) — finite scalar quantisation, single codebook, no codebook collapse; ~100% codebook utilisation versus VQ's ~23%",
@@ -2986,6 +3038,7 @@
         "no-watermark",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "4 B total — 3.4 B transformer decoder backbone (built on Ministral 3B) + 390 M flow-matching acoustic transformer + 300 M neural audio codec",
       "architecture": "Autoregressive backbone feeding a flow-matching acoustic transformer over a neural codec",
       "codec": "300 M neural audio codec bundled in the model; not separately named and no frame rate published",
@@ -3045,6 +3098,7 @@
         "actively-maintained",
         "multilingual"
       ],
+      "hardware": null,
       "params": "0.6 B (built on Qwen/Qwen3-0.6B — that is what the card's base_model frontmatter declares; Qwen3-0.6B-Base is a different repo). The figure is the LM only and excludes the separately shipped audio tokenizer.",
       "architecture": "Diffusion language model-style architecture — a notable departure from AR-LM+codec",
       "codec": null,
@@ -3102,6 +3156,7 @@
         "commercially-safe",
         "frozen"
       ],
+      "hardware": "cpu",
       "params": "Not published by the project; the corpus deployment matrix lists ~407 M for v4",
       "architecture": "GPT (autoregressive semantic token prediction) + SoVITS (VITS-based synthesis), with per-version vocoder changes; v4 outputs native 48 kHz and fixes v3's metallic upsampling artifacts",
       "codec": null,
@@ -3158,6 +3213,7 @@
         "no-watermark",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "~336 M for the standard F5-TTS Base checkpoint — widely reported but not restated on current primary pages, treat as approximate. An 'F5TTS v1 Small' variant was added in v1.1.20.",
       "architecture": "Non-autoregressive flow matching with a Diffusion Transformer (DiT); ConvNeXt text refinement; Sway Sampling at inference. E2-TTS is the simpler flat-UNet-Transformer baseline reimplemented in the same repo.",
       "codec": null,
@@ -3217,6 +3273,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": null,
       "architecture": "GPT-2-style autoregressive conditioning + VQ-VAE codes + HiFi-GAN decoder, 24 kHz output",
       "codec": "VQ-VAE speech codes decoded by HiFi-GAN",
@@ -3271,6 +3328,7 @@
         "licence-catch",
         "no-watermark"
       ],
+      "hardware": "gpu-16",
       "params": "0.45 B TTS Diffusion Transformer backbone, plus a Qwen2.5-0.5B grapheme-to-phoneme model and a speech-text aligner; the total system size is not stated",
       "architecture": "Modular: G2P (Qwen2.5-0.5B) → aligner → 0.45 B DiT → WaveVAE decoder",
       "codec": "WaveVAE — the DECODER is published but ByteDance withholds the ENCODER weights 'for security issues', so inference only runs from latents ByteDance provides",
@@ -3328,6 +3386,7 @@
         "no-watermark",
         "frozen"
       ],
+      "hardware": "gpu-8",
       "params": "3.78 B released (safetensors 3,782,986,752 — a Llama-3.2-3B base plus an expanded audio-token vocabulary, so the \"3b\" in the repo name understates it). The 1 B / 400 M / 150 M variants remain on the development checklist and have NOT shipped, despite appearing in many comparison tables.",
       "architecture": "Llama-3B (Llama 3.2 architecture) backbone predicting SNAC codec tokens, with a CNN-based streaming detokenizer converting SNAC to waveform. Trained on 100k+ hours of English speech.",
       "codec": "SNAC — hierarchical multi-scale at 12/24/48 Hz, 7 tokens per frame, 24 kHz output",
@@ -3387,6 +3446,7 @@
         "commercially-safe",
         "frozen"
       ],
+      "hardware": "gpu-8",
       "params": "Dia 1.6 B; Dia2 in 1 B and 2 B variants",
       "architecture": "Dialogue-specialised autoregressive model generating dialogue directly from a transcript with [S1]/[S2] speaker tags; Dia2 adds streaming",
       "codec": "Dia 2 uses Kyutai's Mimi at 12.5 Hz — split semantic + acoustic streams designed for full-duplex dialogue",
@@ -3444,6 +3504,7 @@
         "no-watermark",
         "frozen"
       ],
+      "hardware": "cpu",
       "params": "123 M",
       "architecture": "Flow matching over a Zipformer backbone. Four variants: ZipVoice (single-speaker zero-shot), ZipVoice-Distill (speed-optimised), ZipVoice-Dialog (mono two-party dialogue), ZipVoice-Dialog-Stereo (separate channel per speaker).",
       "codec": null,
@@ -3499,6 +3560,7 @@
         "frozen",
         "english-only"
       ],
+      "hardware": "gpu-8",
       "params": "1.55 B (safetensors 1,552,791,552). The \"1B\" in the name is the Llama backbone alone; a smaller Mimi-code audio decoder loads alongside it.",
       "architecture": "Multimodal transformer generating RVQ audio codes from text AND audio inputs, so it is conditioned on conversational context; dual-AR with a Llama backbone plus a decoder",
       "codec": "Mimi at 12.5 Hz (Kyutai) — split semantic + acoustic streams, designed for full-duplex dialogue",
@@ -3557,6 +3619,7 @@
         "frozen",
         "multilingual"
       ],
+      "hardware": "cpu",
       "params": "1 B (Llama-OuteTTS-1.0-1B, Llama 3.2 backbone) and 0.6 B (OuteTTS-1.0-0.6B, Qwen3 backbone); v0.2 available via external libraries",
       "architecture": "Pure language modelling — speech generated directly from interleaved text and audio tokens with no external adapters, encoders or diffusion steps",
       "codec": "DAC (Descript), ~86 Hz — excellent fidelity at an expensive token budget",
@@ -3615,6 +3678,7 @@
         "frozen",
         "english-only"
       ],
+      "hardware": "cpu",
       "params": "Mini v1: 880 M. Large v1: 2.3 B.",
       "architecture": "Description-conditioned autoregressive generation — speech steered by a free-text description of the desired speaker characteristics; 34 named speakers plus acoustic descriptors",
       "codec": "DAC (Descript), ~86 Hz",
@@ -3672,6 +3736,7 @@
         "superseded",
         "multilingual"
       ],
+      "hardware": "cpu",
       "params": null,
       "architecture": "Style diffusion with adversarial training using large speech language models (WavLM discriminators); text aligner, pitch extractor and PL-BERT phonetic representations. Style vectors are sampled via diffusion.",
       "codec": null,
@@ -3731,6 +3796,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "Roughly 15–20 M (medium) and 28–32 M (high) per community docs — not stated in the official repo. Verified file sizes: en_US-lessac-medium.onnx 63.2 MB, en_GB-alan-low.onnx 63.1 MB, de_DE-thorsten-high.onnx 114 MB",
       "architecture": "VITS end-to-end (conditional VAE + adversarial training) exported to ONNX; espeak-ng embedded purely as the grapheme-to-phoneme front end. Two files per voice (.onnx + .onnx.json)",
       "codec": "None — end-to-end VITS, single feed-forward pass text → waveform",
@@ -3790,6 +3856,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "browser",
       "params": "99 M (Supertonic 3); 66 M for the Supertonic 1/2 line as documented on Hugging Face",
       "architecture": "ONNX Runtime pipeline (models processed through OnnxSlim); 44.1 kHz 16-bit WAV output in Supertonic 3",
       "codec": null,
@@ -3846,6 +3913,7 @@
         "streaming",
         "long-form"
       ],
+      "hardware": "cpu",
       "params": "100 M per the Kyutai repo; ~155 M per FluidInference's description of the autoregressive backend — the two sources disagree",
       "architecture": "Flow-matching language model generating 80 ms audio frames (1,920 samples at 24 kHz). Core ML packaging is four models for synthesis plus an optional fifth (Mimi encoder, 40 MB, language-agnostic) for cloning",
       "codec": "Mimi codec for audio tokens",
@@ -3905,6 +3973,7 @@
         "long-form",
         "frozen"
       ],
+      "hardware": "browser",
       "params": "82 M",
       "architecture": "StyleTTS 2 with an ISTFTNet decoder — no diffusion, no encoder released. Text-in/audio-out with a per-voice style vector shipped as a separate voices .bin/.npz pack. IPA phoneme input",
       "codec": "None — ISTFTNet decoder produces waveform directly; single feed-forward pass, no neural codec tokens",
@@ -3962,6 +4031,7 @@
         "streaming",
         "watermarked"
       ],
+      "hardware": "phone",
       "params": "747,930,496 total BF16 per the checkpoint's safetensors metadata (~748 M, matching the card's '0.7B params'); the vendor's own table quotes ~360 M active and ~552 M active-plus-embeddings for Air",
       "architecture": "0.5 B-class Qwen2 LLM backbone predicting NeuCodec tokens; takes phonemes as input",
       "codec": "NeuCodec — single-codebook neural audio codec at 50 Hz, 0.8 kbps",
@@ -4019,6 +4089,7 @@
         "streaming",
         "watermarked"
       ],
+      "hardware": "phone",
       "params": "~116.8 M active (backbone only) / ~228.7 M total with tied embeddings and head, per the model card. Size a device budget from the larger figure. Vendor GitHub table rounds these to ~120 m and ~229 m.",
       "architecture": "Compact LM backbone tuned for TTS token generation predicting NeuCodec tokens. Takes phonemes as input, per the vendor's Input Format row — not raw text.",
       "codec": "NeuCodec — Neuphonic's open-source neural audio codec (itself Apache-2.0, unlike the Nano backbone)",
@@ -4077,6 +4148,7 @@
         "licence-catch",
         "english-only"
       ],
+      "hardware": "phone",
       "params": "~125 M active / ~236 M total with tied embeddings — the 472 MB checkpoint reflects the larger figure, so size a device budget from 236 M",
       "architecture": "Qwen2-class LLM backbone predicting NeuCodec tokens; takes raw text, not phonemes",
       "codec": null,
@@ -4133,6 +4205,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "0.1 B (100 M)",
       "architecture": null,
       "codec": null,
@@ -4191,6 +4264,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "15 M (nano) / 40 M (micro) / 80 M (mini)",
       "architecture": "Not formally documented on the model card; ONNX text-to-waveform, 24 kHz output",
       "codec": null,
@@ -4247,6 +4321,7 @@
         "streaming",
         "long-form"
       ],
+      "hardware": "phone",
       "params": "250 M backbone + 60 M decoder ≈ 310 M total (the safetensors repo reports 0.6 B including tied/embedding weights); a 100 M variant is also published",
       "architecture": "Sesame CSM-1B-derived dual-transformer — a 250 M multimodal backbone over interleaved text+audio RVQ tokens plus a 60 M audio decoder",
       "codec": "Kyutai Mimi",
@@ -4304,6 +4379,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "browser",
       "params": "N/A (closed) — not disclosed; 7 MB model file",
       "architecture": "Proprietary deep-learning streaming TTS designed to consume LLM token streams",
       "codec": null,
@@ -4359,6 +4435,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "N/A (closed) — not disclosed",
       "architecture": "System TTS engine with quality tiers exposed via AVSpeechSynthesisVoiceQuality (default / enhanced / premium); Personal Voice is trained on-device from recorded prompts, Apple-Intelligence-backed in iOS 26",
       "codec": null,
@@ -4414,6 +4491,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "N/A (closed) — not disclosed for the Google Speech Services engine",
       "architecture": "Engine-agnostic system service; the app calls speak() or synthesizeToFile() against whichever TTS engine is selected in system settings. AOSP API is Apache-2.0, the Google engine is proprietary and Google-Play-Services-gated",
       "codec": null,
@@ -4467,6 +4545,7 @@
         "browser",
         "actively-maintained"
       ],
+      "hardware": "browser",
       "params": "N/A — no model of its own",
       "architecture": "Bridge to the host OS speech engine (SAPI 5 / OneCore on Windows, AVSpeechSynthesis on macOS/iOS, Android TTS on Android, speech-dispatcher on Linux), plus browser-supplied cloud voices in some cases",
       "codec": null,
@@ -4522,6 +4601,7 @@
         "no-watermark",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": "Native speech-to-speech — audio tokens in, audio tokens out, single model, not cascaded. Sibling models split the stack: gpt-realtime-translate (live speech translation), gpt-live-transcribe (streaming transcription).",
       "codec": null,
@@ -4578,6 +4658,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": "Native audio — single model, audio in to audio out. Google historically also shipped a 'half-cascade' Live variant; both currently documented models are native-audio.",
       "codec": null,
@@ -4632,6 +4713,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": "Native unified speech-to-speech — ASR, understanding, generation and synthesis in one model",
       "codec": null,
@@ -4688,6 +4770,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "gpu-16",
       "params": "7 B Temporal Transformer plus a compact Depth Transformer for intra-frame codebook dependencies; the Mimi codec is a separate model",
       "architecture": "Native full-duplex S2S. Models two audio streams simultaneously (system speech + user speech) plus a text 'inner monologue' stream that carries the model's own words; 17 parallel token streams at 12.5 Hz, one text token predicted first at each 80 ms step as a semantic anchor.",
       "codec": "Mimi — 24 kHz audio to a 12.5 Hz token rate at 1.1 kbps, fully streaming with 80 ms frames, split semantic/acoustic streams with WavLM semantic distillation",
@@ -4744,6 +4827,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "7 B — Moshi-architecture temporal transformer plus depth transformer over Mimi codes at 12.5 fps",
       "architecture": null,
       "codec": "Mimi, 12.5 Hz — inherited from the Moshi architecture",
@@ -4800,6 +4884,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "9 B total — SigLip2 vision encoder + Whisper-medium audio encoder + CosyVoice2 speech decoder + Qwen3-8B LLM",
       "architecture": "Native full-duplex omni-modal. The key technique is 'Omni-Flow' — a unified streaming framework aligning omni-modal inputs and outputs on a SHARED TEMPORAL AXIS, converting turn-based interaction into a full-duplex time-aligned process.",
       "codec": null,
@@ -4855,6 +4940,7 @@
         "commercially-safe",
         "frozen"
       ],
+      "hardware": null,
       "params": "8 B (Step-Audio 2 mini); exact parameter counts are not stated in the repo README",
       "architecture": "End-to-end multimodal LLM with unified text-audio tokenization; multimodal RAG plus tool calling built in. Barge-in rather than genuine full-duplex.",
       "codec": null,
@@ -4908,6 +4994,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "Backbone-dependent — v0.7 uses GLM 4.6, v0.6 used Llama 3.3 70B, ultravox-v0.6-gemma3-27b uses Gemma 3 27B, an 8 B variant exists. Ultravox itself is an audio encoder plus a trainable adapter/projector on a frozen LLM.",
       "architecture": "HALF-CASCADE / speech-input-native: audio encoder → adapter → frozen LLM, emitting STREAMING TEXT, not audio. It replaces STT+LLM, not the whole pipeline — a separate TTS stage is still required. Fixie's stated roadmap is streaming speech tokens decoded by a unit vocoder, which would make it true S2S; not shipped as of this research.",
       "codec": null,
@@ -4962,6 +5049,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "Not published as a figure — the corpus records params only as \"Variable\"",
       "architecture": "VITS + HuBERT + retrieval (Applio is an enhanced RVC wrapper)",
       "codec": null,
@@ -5016,6 +5104,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "gpu-8",
       "params": null,
       "architecture": "Diffusion Transformer (DiT) with UViT backbone + Whisper content encoder + BigVGAN vocoder",
       "codec": null,
@@ -5069,6 +5158,7 @@
         "fine-tune-cloning",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": null,
       "codec": null,
@@ -5122,6 +5212,7 @@
         "zero-shot-cloning",
         "commercially-safe"
       ],
+      "hardware": "gpu-8",
       "params": "Not published as a figure — the corpus records params only as \"Small\"",
       "architecture": "Reference encoder + tone converter",
       "codec": null,
@@ -5177,6 +5268,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "14 M",
       "architecture": "DiT + mean flows, single-step (no iterative denoising); built on components from F5-TTS and Vocos. From Northwestern Polytechnical University",
       "codec": null,
@@ -5240,6 +5332,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "browser",
       "params": "N/A — no neural model. Per-language voice/rule data files are typically tens to hundreds of KB.",
       "architecture": "Formant synthesis plus rule-based letter-to-sound; optional Klatt and speechPlayer backends (speechPlayer added in 1.51). C99 codebase with no ML runtime.",
       "codec": "None — formant synthesis, no neural codec and no ML runtime.",
@@ -5298,6 +5391,7 @@
         "commercially-safe",
         "frozen"
       ],
+      "hardware": "phone",
       "params": "N/A — non-neural.",
       "architecture": "Diphone concatenation (8 kHz cmu_us_kal by default) plus CLUSTERGEN statistical parametric voices; C implementation. An alternative run-time engine for voices developed in the FestVox framework - explicitly not a replacement for Festival, which remains a separate, far larger system.",
       "codec": "None — non-neural diphone concatenation.",
@@ -5356,6 +5450,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "cpu",
       "params": "N/A - non-neural.",
       "architecture": "C++ system built on the Edinburgh Speech Tools, driven by a Scheme (SIOD) command interpreter. APIs at shell level, through the Scheme interpreter, as a C++ library, and via an Emacs interface. Back ends include diphone concatenation, unit selection (clunits), Clustergen and hts_engine.",
       "codec": "None - non-neural concatenative and statistical parametric synthesis.",
@@ -5412,6 +5507,7 @@
         "long-form",
         "frozen"
       ],
+      "hardware": "phone",
       "params": "N/A — formant synthesiser, no neural model.",
       "architecture": "Formant synthesis (ETI-Eloquence engine) wrapped as a SAPI 5 TTS engine.",
       "codec": "None — formant synthesis.",
@@ -5472,6 +5568,7 @@
         "commercially-safe",
         "frozen"
       ],
+      "hardware": "browser",
       "params": "18–90 M per voice (compiled reference figure for the VITS / Matcha / Glow / FastSpeech2 family). Matcha-TTS is separately reported at ~10–40 M elsewhere in the corpus.",
       "architecture": "Generation-2: neural acoustic model plus a separate vocoder. VITS specifically is end-to-end — a conditional VAE with adversarial training, a single feed-forward pass from text to waveform. Matcha-TTS decodes with an ODE solver in 2–5 steps. Glow-TTS internals are not stated in the corpus.",
       "codec": "None — no neural audio codec. Mel spectrogram plus vocoder, and VITS goes end-to-end text to waveform.",
@@ -5526,6 +5623,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": null,
       "architecture": "Provider-agnostic orchestration supporting both cascaded STT→LLM→TTS and native realtime models in one framework. Five turn-detection strategies: the turn-detector model (default, audio plus semantic on top of VAD), VAD-only for minimum latency, STT endpointing, realtime-LLM server-side detection, and manual push-to-talk over RPC. The v1 audio detector encodes user audio directly rather than depending on transcripts; the older text-based detector is deprecated.",
       "codec": null,
@@ -5581,6 +5679,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "N/A for the framework; the bundled Smart Turn v3 turn-detection model is 8 M parameters, 8 MB int8 ONNX",
       "architecture": "Pipeline/frame-based orchestration over cascaded or native-realtime models, with 25+ STT providers, 30+ LLMs and 25+ TTS providers, plus Pipecat Flows for structured stateful dialog. Ships Smart Turn v3, an 8M-parameter Whisper-Tiny encoder with a shallow linear classifier that reads the raw waveform rather than the transcript, so endpointing never waits for STT.",
       "codec": null,
@@ -5634,6 +5733,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Cascaded orchestration by default — you pick STT, LLM and TTS — with support for native realtime models, and a large third-party integration surface across telephony, AI providers and business tools",
       "codec": null,
@@ -5687,6 +5787,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Cascaded orchestration with per-component vendor selection",
       "codec": null,
@@ -5740,6 +5841,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Vertically integrated — Bland runs its own models end to end rather than orchestrating third parties, the opposite strategy to Vapi, Retell and LiveKit",
       "codec": null,
@@ -5793,6 +5895,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Native end-to-end speech-to-speech. Phonic trains its own speech foundation models rather than layering an agent on third-party TTS, and explicitly positions against 'TTS with an agent layer on top' — one of very few startups shipping proprietary native S2S as a product. Model sizes undisclosed.",
       "codec": null,
@@ -5846,6 +5949,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Twilio owns both speech hops: it orchestrates STT and TTS and hands you text over a WebSocket, and you bring the LLM. Twilio describes it as a native integration rather than a chained cascade, but functionally you are in a cascaded architecture with Twilio holding the speech legs.",
       "codec": null,
@@ -5899,6 +6003,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Cascaded orchestration on top of Agora RTC. Bundled providers per the docs: ARES and Deepgram models for ASR, OpenAI GPT-4o-mini and newer for LLM, MiniMax and OpenAI TTS-1 for TTS.",
       "codec": null,
@@ -5953,6 +6058,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": null,
       "architecture": "Cascaded but vertically owned — Deepgram supplies the STT (Flux/Nova-3), the orchestration and the TTS (Aura) as one stack, which is what lets it co-optimise turn-taking. Flux moves end-of-turn detection inside the ASR model rather than bolting on a VAD plus silence timer. BYO LLM and BYO TTS are supported while keeping Deepgram orchestration.",
       "codec": null,
@@ -6006,6 +6112,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": null,
       "architecture": "Cascaded agent platform layered on Cartesia's own Sonic TTS and Ink STT — a component vendor selling the whole loop. Not native speech-to-speech.",
       "codec": null,
@@ -6061,6 +6168,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Cascaded orchestration with first-party TTS as the differentiator",
       "codec": null,
@@ -6115,6 +6223,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": null,
       "architecture": "Extensible plugin/extension architecture: TEN Framework core, TEN VAD, TEN Turn Detection, agent examples and a documentation portal. Full-duplex dialogue is achieved through the turn-detection model rather than a duplex speech model.",
       "codec": null,
@@ -6169,6 +6278,7 @@
         "commercially-safe",
         "frozen"
       ],
+      "hardware": null,
       "params": null,
       "architecture": "Modular cascaded orchestration (STT→LLM→TTS) with telephony and meeting transports, across vocode-core, vocode-api for Node and Python, and a React SDK",
       "codec": null,
@@ -6226,6 +6336,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "N/A (closed) — not disclosed",
       "architecture": "Three overlapping stacks: SAPI 5 (COM, legacy), Windows.Media.SpeechSynthesis ('OneCore'), and Narrator natural voices (on-device neural, Azure-lineage models packaged as MSIX)",
       "codec": null,
@@ -6281,6 +6392,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "N/A (closed) — not disclosed",
       "architecture": "The same AVSpeechSynthesis engine as iOS, with `say` as a CLI front end",
       "codec": null,
@@ -6336,6 +6448,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "N/A — no model of its own",
       "architecture": "Server daemon multiplexing client requests by priority across pluggable output modules",
       "codec": null,
@@ -6395,6 +6508,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "Not published",
       "architecture": "Not publicly detailed; distributed as torch.hub / JIT packages. Output sample rates 8, 24 and 48 kHz.",
       "codec": null,
@@ -6455,6 +6569,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "N/A — non-neural",
       "architecture": "Unit-selection / statistical hybrid, not a modern neural model",
       "codec": null,
@@ -6513,6 +6628,7 @@
         "long-form",
         "discontinued"
       ],
+      "hardware": "phone",
       "params": "Not published",
       "architecture": "VITS-family neural TTS with a separate mimic3-voices repository",
       "codec": null,
@@ -6565,6 +6681,7 @@
         "commercially-safe",
         "self-hostable"
       ],
+      "hardware": null,
       "params": "Not verified",
       "architecture": "Not verified",
       "codec": null,
@@ -6618,6 +6735,7 @@
         "edge-capable",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "N/A (closed) — not disclosed",
       "architecture": "Modular embedded plus cloud neural TTS, with quality tiers including an 'Intermediate' automotive-standard variant balancing quality against memory footprint",
       "codec": null,
@@ -6672,6 +6790,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "N/A (closed) — not disclosed",
       "architecture": "Tiered embedded voice packs: Low Footprint and High Quality Medium",
       "codec": null,
@@ -6725,6 +6844,7 @@
         "streaming",
         "superseded"
       ],
+      "hardware": null,
       "params": "N/A (closed) — not disclosed",
       "architecture": "Nuance/Cerence unit-selection plus neural embedded synthesis",
       "codec": null,
@@ -6783,6 +6903,7 @@
         "long-form",
         "frozen"
       ],
+      "hardware": "browser",
       "params": "Not published",
       "architecture": "VITS-derived multilingual TTS",
       "codec": null,
@@ -6840,6 +6961,7 @@
         "english-only",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "N/A — no neural model",
       "architecture": "Linear Predictive Coding decoded to the ESP32 DAC from a pre-encoded word and allophone bank. Frame rate not published.",
       "codec": null,
@@ -6893,6 +7015,7 @@
         "ssml",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Not documented on the international product page beyond \"real-time and non-real-time synthesis\"",
       "codec": null,
@@ -6950,6 +7073,7 @@
         "long-form",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "LLM-upgraded TTS that predicts emotional tone from context, with parameter-controlled emotion synthesis",
       "codec": null,
@@ -7002,6 +7126,7 @@
         "api-only",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": null,
       "codec": null,
@@ -7057,6 +7182,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": null,
       "codec": null,
@@ -7113,6 +7239,7 @@
         "multilingual",
         "superseded"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": "Five distinct engines — parametric Standard, WaveNet vocoder, Neural2, Studio for long-form narration, and Polyglot for one speaker across multiple languages (still Preview)",
       "codec": null,
@@ -7170,6 +7297,7 @@
         "phoneme-control",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": "Fine-tuned neural voice model trained on customer-recorded voice-talent data and deployed to a dedicated endpoint",
       "codec": null,
@@ -7225,6 +7353,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": "A fully managed pipeline — Azure STT, a choice of LLM (GPT-Realtime, GPT-4o and 4.1, GPT-5.x and Phi families), Azure TTS including custom voice, plus an optional avatar — exposed over a single WebSocket compatible with the Azure OpenAI Realtime API event schema",
       "codec": null,
@@ -7279,6 +7408,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "N/A (closed)",
       "architecture": "TTS-driven photorealistic video avatar, with real-time and batch paths",
       "codec": null,
@@ -7333,6 +7463,7 @@
         "streaming",
         "superseded"
       ],
+      "hardware": "hosted",
       "params": "Not disclosed",
       "architecture": "Dedicated TTS models served on /v1/audio/speech, distinct from both the instructable gpt-4o-mini-tts and the Realtime API",
       "codec": null,
@@ -7387,6 +7518,7 @@
         "streaming",
         "superseded"
       ],
+      "hardware": "hosted",
       "params": "Not disclosed",
       "architecture": "Unified speech understanding and generation in a single model, over an event-driven bidirectional stream on a persistent connection — ASR, dialogue and synthesis together, with RAG grounding and tool calling",
       "codec": null,
@@ -7445,6 +7577,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "Not disclosed for the hosted versions",
       "architecture": "CosyVoice series over WebSocket. Some versions support SSML markup and LaTeX formula reading, which no Qwen3-TTS model advertises.",
       "codec": null,
@@ -7502,6 +7635,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": "Not disclosed",
       "architecture": "Dedicated cloning (VC) and text-description voice design (VD) endpoints in the Qwen3-TTS family, in both HTTP and WebSocket-realtime forms",
       "codec": null,
@@ -7560,6 +7694,7 @@
         "streaming",
         "voice-design"
       ],
+      "hardware": "gpu-16",
       "params": "3 B",
       "architecture": "Llama-style decoder-only transformer predicting SNAC neural codec tokens rather than raw waveforms",
       "codec": "SNAC at ~0.98 kbps, 24 kHz output; SNAC is hierarchical multi-scale at 12 / 24 / 48 Hz",
@@ -7615,6 +7750,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "gpu-8",
       "params": "0.5 B (AR model initialised from Qwen2.5-0.5B-Instruct)",
       "architecture": "Single-stream decoupled BiCodec — the LLM predicts speech codes directly and audio is reconstructed from them with no separate acoustic model",
       "codec": "BiCodec at 50 Hz (HKUST / SparkAudio) — explicitly decouples speaker identity from linguistic content",
@@ -7671,6 +7807,7 @@
         "commercially-safe",
         "frozen"
       ],
+      "hardware": "gpu-16",
       "params": null,
       "architecture": "Dual transformer over a text-speech interleaved sequence, targeted at long conversational speech",
       "codec": "Streaming speech tokenizer at 12.5 Hz",
@@ -7726,6 +7863,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "gpu-16",
       "params": "1 B, 3 B and 8 B; Llasa-3B is 4 B in BF16 tensors, built on Llama-3.2-3B-Instruct",
       "architecture": "Llama LLM extended with a 65,536-entry XCodec2 speech codebook — a pure LM-scaling approach to TTS. Uniquely supports inference-time compute scaling, using a speech-understanding model as a verifier to resample low-similarity generations.",
       "codec": "XCodec2 at 50 Hz (HKUST) — single-codebook semantic and acoustic unification, 65,536 entries, 50 tokens per second",
@@ -7780,6 +7918,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "gpu-16",
       "params": "~1 B+ across all components; the T2S model file alone is 2.99 GB",
       "architecture": "Two-stage fully non-autoregressive masked generative codec transformer — text to semantic tokens by masked prediction, then semantic to acoustic. Requires no explicit text-speech alignment and no phone-level duration prediction, which is genuinely different from every AR model in this segment.",
       "codec": null,
@@ -7835,6 +7974,7 @@
         "licence-catch",
         "english-only"
       ],
+      "hardware": "gpu-16",
       "params": "2.4 B DiT",
       "architecture": "Diffusion transformer generating Fish Speech S1-DAC latents, producing 44.1 kHz audio",
       "codec": null,
@@ -7888,6 +8028,7 @@
         "zero-shot-cloning",
         "licence-catch"
       ],
+      "hardware": "gpu-16",
       "params": "1.5 B",
       "architecture": "Two-stage hybrid — a text-to-token autoregressive model followed by a token-to-waveform diffusion model. One corpus table instead describes it as LLM plus flow matching with GRPO RL; the two descriptions do not agree.",
       "codec": null,
@@ -7945,6 +8086,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "601.2 M (601,159,424), excluding the codec",
       "architecture": "DualAR, explicitly inspired by Fish Audio S2 Pro — a Slow AR transformer (24 layers, width 896, 14 heads, 2 KV heads) predicts one semantic token per audio frame; a Fast AR transformer (4 layers, same width) predicts that frame's codec codebooks. All values read from config.json.",
       "codec": "Bundled 44.1 kHz neural codec — 10 codebooks × 4,096 entries, 2,048 samples per frame (~21.5 Hz). Handles both reference encoding and waveform decoding, so no separate codec checkpoint is needed.",
@@ -8000,6 +8142,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "400 M (LiquidAI LFM2-350M plus ~50 M NanoCodec); 370 M for the Japanese and MLX multilingual variants; the original KaniTTS was 370 M",
       "architecture": "LiquidAI LFM2-350M backbone — 10 double-gated short-range convolution blocks plus 6 grouped-query-attention blocks, a hybrid rather than a standard transformer, claimed 2× faster CPU decode than Qwen3 — feeding NVIDIA NeMo NanoCodec",
       "codec": "NVIDIA NanoCodec, 0.6 kbps FSQ at 22.05 kHz. Frame rate is reported inconsistently in the corpus: 21.5 Hz in the codec table, 12.5 fps in the validation notes.",
@@ -8056,6 +8199,7 @@
         "commercially-safe",
         "frozen"
       ],
+      "hardware": null,
       "params": null,
       "architecture": "GPT-style transformer inspired by AudioLM and VALL-E, generating quantised EnCodec audio tokens directly from text with no phoneme intermediate",
       "codec": "EnCodec (Meta) at 24 / 48 Hz — the original widely-used neural codec, now largely superseded",
@@ -8111,6 +8255,7 @@
         "frozen",
         "english-only"
       ],
+      "hardware": "gpu-8",
       "params": null,
       "architecture": "Autoregressive decoder feeding a diffusion decoder, with a CLVP re-ranker — the direct ancestor of IndexTTS and the XTTS lineage",
       "codec": null,
@@ -8165,6 +8310,7 @@
         "edge-capable",
         "streaming"
       ],
+      "hardware": "phone",
       "params": null,
       "architecture": null,
       "codec": null,
@@ -8221,6 +8367,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "Inflect-Micro-v2: 9,356,513 deployable parameters (37.53 MB FP32). Inflect-Nano-v2: 3.97 M.",
       "architecture": "VITS-family end-to-end text-to-waveform — English phoneme frontend, monotonic alignment, stochastic latent synthesis, residual coupling flow and an integrated alias-reduced neural waveform decoder. 24 kHz mono.",
       "codec": null,
@@ -8276,6 +8423,7 @@
         "commercially-safe",
         "superseded"
       ],
+      "hardware": "gpu-8",
       "params": "1.6 B, in two variants — a pure transformer and a transformer + Mamba2 SSM hybrid, the first open-source SSM hybrid audio model",
       "architecture": "Transformer, and a transformer + Mamba2 SSM hybrid, generating DAC codec tokens; trained on 200 k+ hours",
       "codec": "DAC (Descript) at ~86 Hz — excellent fidelity at an expensive token budget",
@@ -8330,6 +8478,7 @@
         "licence-catch",
         "superseded"
       ],
+      "hardware": "gpu-24",
       "params": "5.8 B total — a 3.6 B Llama-3.2-3B LLM plus a 2.2 B DualFFN. Commonly cited as '3 B' after the backbone alone.",
       "architecture": "LLM (Llama-3.2-3B) with a DualFFN head over a multi-codebook codec, trained on 10 M+ hours. A V2.5 variant condenses to 1 B via GRPO alignment and adds streaming.",
       "codec": null,
@@ -8386,6 +8535,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "gpu-24",
       "params": "8.5 B transformer, trained on 20 million unique hours of audio — the largest speech corpus named in this segment",
       "architecture": "Native full-duplex speech-to-speech. A two-channel model processes user and bot audio simultaneously; raw audio in, raw audio out, with no text involvement anywhere in the model.",
       "codec": "8 Hz latent at 1 kbps — mono 16 kHz speech encoded to an 8 Hz representation, a lower frame rate than Moshi's 12.5 Hz and the source of the 80 ms floor",
@@ -8442,6 +8592,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": "gpu-48",
       "params": "35 B total, MoE with ~3 B active (A3B)",
       "architecture": "Natively end-to-end omni-modal — text, audio, image and video in, text and speech out — via an MoE Thinker–Talker design with AuT pretraining and a multi-codebook decoder",
       "codec": null,
@@ -8496,6 +8647,7 @@
         "licence-catch",
         "frozen"
       ],
+      "hardware": "gpu-24",
       "params": "GLM-4-Voice-9B chat model, plus GLM-4-Voice-Tokenizer and GLM-4-Voice-Decoder",
       "architecture": null,
       "codec": "GLM-4-Voice-Tokenizer — Whisper encoder plus vector quantisation at 12.5 tokens per second; a flow-matching decoder on the output side",
@@ -8550,6 +8702,7 @@
         "streaming",
         "frozen"
       ],
+      "hardware": "gpu-24",
       "params": "7 B — Qwen2-7B-Instruct as a frozen LLM backbone plus a streaming speech encoder and an autoregressive speech decoder; a corpus table gives ~8 B",
       "architecture": "Speech-text multimodal with a FROZEN LLM — speech input and output modalities attach to a text LLM whose parameters never change during training, so no catastrophic forgetting from speech training. Duplex via chunk-level state prediction that decides whether the user is interrupting.",
       "codec": null,
@@ -8605,6 +8758,7 @@
         "streaming",
         "frozen"
       ],
+      "hardware": "gpu-16",
       "params": "7 B",
       "architecture": "Multiple Cross-modal Token Prefill (MCTP) modules enable fast interleaved cross-modal token generation — several audio tokens per LLM forward pass instead of one. Partial duplex only.",
       "codec": null,
@@ -8660,6 +8814,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "gpu-8",
       "params": "Kyutai TTS 1.6 B server model; STT stt-1b-en_fr (~1 B) and stt-2.6b-en (~2.6 B); Unmute's default in-stack LLM is Gemma 3 1B",
       "architecture": "Cascaded by design — Kyutai STT → any text LLM → Kyutai TTS, glued by a WebSocket backend, with the pitch 'make any text LLM listen and speak'. Delayed Streams Modeling formalises streaming X→Y tasks with learned time-delays between streams, so synthesis can start before the full text exists and consume an LLM token stream directly.",
       "codec": "Mimi, 12.5 Hz — split semantic and acoustic streams, the same codec that underpins Moshi",
@@ -8719,6 +8874,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "364M (3.64 x 10^8), a transformer encoder-decoder with a 6-layer causal encoder, 12-layer causal decoder and a local transformer for multi-codebook refinement. The Hugging Face repo is named magpie_tts_multilingual_357m but the card states 364M for that same checkpoint — one model, not two. Nemotron Speech ASR is a NeMo checkpoint whose size was not captured.",
       "architecture": "Cascaded components — Nemotron Speech ASR → your LLM → Magpie TTS. MagpieTTS generates tokens then decodes through an audio codec model, unlike FastPitch and RadTTS++ which produce mel-spectrograms for a HiFi-GAN vocoder.",
       "codec": "NanoCodec, 21.5 Hz — very low bitrate (0.6 kbps) at 22 kHz output",
@@ -8776,6 +8932,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": null,
       "architecture": "T5-TTS encoder-decoder transformer plus a neural audio codec, per the build.nvidia.com model card — it takes text tokens and reference audio codes as input and autoregressively predicts acoustic tokens of the target speech. Named differently from the flagship MagpieTTS architecture, though the card documents v1 and may lag container 1.2.0.",
       "codec": "Low Frame Rate Speech Codec, 21 Hz, per the build.nvidia.com model card — distinct from the NanoCodec 21.5 Hz used by Magpie Multilingual. Output is mono PCM 16-bit at 22.05 kHz, 20 second maximum length.",
@@ -8832,6 +8989,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "browser",
       "params": "N/A — a runtime, not a model",
       "architecture": "ONNX Runtime-based C++ core with thin bindings for C++, C, Python, JavaScript, Java, C#, Kotlin, Swift, Go, Dart, Rust and Pascal",
       "codec": null,
@@ -8885,6 +9043,7 @@
         "self-hostable",
         "actively-maintained"
       ],
+      "hardware": "cpu",
       "params": "N/A — a quantisation stack and model collection, not a model",
       "architecture": "A llama.cpp analogue for audio models, with native GGUF conversions",
       "codec": null,
@@ -8939,6 +9098,7 @@
         "streaming",
         "actively-maintained"
       ],
+      "hardware": "phone",
       "params": "N/A — a runtime, not a model",
       "architecture": "Ahead-of-time export to .pte plus a small C++ runtime with delegated backends",
       "codec": null,
@@ -8995,6 +9155,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "browser",
       "params": "N/A — a runtime, not a model",
       "architecture": "ONNX models executed by onnxruntime-web over WASM SIMD with threads, or via WebGPU/WebNN",
       "codec": null,
@@ -9049,6 +9210,7 @@
         "commercially-safe",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "N/A — a runtime, not a model",
       "architecture": "MLX-native inference layer plus per-model implementations; mlx-community hosts the pre-converted weights",
       "codec": null,
@@ -9102,6 +9264,7 @@
         "zero-shot-cloning",
         "non-commercial"
       ],
+      "hardware": "gpu-8",
       "params": "Not published as a figure — the corpus records params only as \"Small\"",
       "architecture": "WavLM features + k-nearest-neighbour matching + HiFi-GAN vocoder",
       "codec": null,
@@ -9155,6 +9318,7 @@
         "zero-shot-cloning",
         "non-commercial"
       ],
+      "hardware": "gpu-8",
       "params": "Not published as a figure — the corpus records params only as \"Small\"",
       "architecture": "VITS with a WavLM information bottleneck",
       "codec": null,
@@ -9210,6 +9374,7 @@
         "licence-catch",
         "actively-maintained"
       ],
+      "hardware": "gpu-16",
       "params": null,
       "architecture": "Controllable voice imitation with independently controllable timbre and style",
       "codec": null,
@@ -9266,6 +9431,7 @@
         "multilingual",
         "actively-maintained"
       ],
+      "hardware": null,
       "params": "509 M AR (Qwen2.5-0.5B init) + 363 M flow-matching transformer + 255 M Vocos-based vocoder",
       "architecture": "Two stages: autoregressive content-style modelling for text/prosody/style control, then flow-matching acoustic modelling for timbre control",
       "codec": "Two VQ-VAE tokenizers — prosody, 512-entry codebook at 6.25 Hz (56.25 bps); content-style, 16,384-entry codebook at 12.5 Hz (175 bps)",
@@ -9318,6 +9484,7 @@
         "api-only",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": null,
       "codec": null,
@@ -9371,6 +9538,7 @@
         "no-watermark",
         "actively-maintained"
       ],
+      "hardware": "hosted",
       "params": null,
       "architecture": null,
       "codec": null,

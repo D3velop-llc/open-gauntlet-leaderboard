@@ -981,6 +981,68 @@ body[data-page^="tts"] .brand .slash, body[data-page^="tts"] .brand em { color: 
 .tts-colopt:hover { color: var(--ink); background: rgba(74, 168, 216, 0.07); }
 .tts-colopt input { accent-color: var(--cool); flex: 0 0 auto; }
 
+/* ---- compare ------------------------------------------------------------- */
+.tts-compare {
+  margin: 0 0 18px; padding: 13px 15px 15px;
+  background: var(--surface); border: 1px solid var(--cool); border-radius: var(--radius);
+}
+.tts-cmp-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 11px; flex-wrap: wrap; }
+.tts-cmp-head h3 { margin: 0; font-size: 15px; }
+.tts-cmp-head .pill.on { background: var(--cool); color: #08131a; border-color: var(--cool); }
+table.lb.tts.tts-cmp { min-width: 0; width: 100%; }
+table.lb.tts.tts-cmp thead th { vertical-align: bottom; }
+table.lb.tts.tts-cmp thead th .nm { font-weight: 600; color: var(--ink); }
+table.lb.tts.tts-cmp tbody td { min-width: 12rem; font-size: 12.5px; line-height: 1.5; }
+/* The row-label column is the spine of the table — pin it so a wide comparison
+   stays readable while it scrolls sideways. */
+.tts-cmp-k {
+  position: sticky; left: 0; z-index: 2; background: var(--surface);
+  white-space: nowrap; color: var(--muted); font-weight: 500; font-size: 12px;
+}
+.tts-cmp-drop {
+  margin-left: 7px; background: none; border: 0; cursor: pointer;
+  color: var(--muted); font-size: 15px; line-height: 1; padding: 0 2px;
+}
+.tts-cmp-drop:hover { color: var(--ink); }
+.tts-cmp-foot { margin: 10px 0 0; max-width: 74ch; }
+
+/* pick control */
+.tts-pick {
+  float: left; margin: 1px 8px 0 0; width: 20px; height: 20px; flex: 0 0 auto;
+  border: 1px solid var(--border); border-radius: 5px; background: transparent;
+  color: var(--muted); font-size: 12px; line-height: 1; cursor: pointer;
+  font-family: var(--font-mono);
+}
+.tts-pick:hover { border-color: var(--cool); color: var(--ink); }
+.tts-pick.on { background: var(--cool); border-color: var(--cool); color: #08131a; }
+.tts-pick:focus-visible { outline: 2px solid var(--cool); outline-offset: 1px; }
+
+/* ---- hardware ladder ----------------------------------------------------- */
+/* Given its own band above the facets, because "what runs on my machine" is the
+   question people arrive with — it frames everything below it rather than
+   sitting as one filter among twenty-seven. */
+.tts-hw {
+  margin: 0 0 14px; padding: 11px 13px;
+  background: rgba(74, 168, 216, 0.045);
+  border: 1px solid rgba(74, 168, 216, 0.18); border-radius: var(--radius);
+}
+.tts-hw-head { margin-bottom: 8px; }
+.tts-hw-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.pill.hw { display: inline-flex; align-items: baseline; gap: 6px; }
+.pill.hw.on { background: var(--cool); color: #08131a; border-color: var(--cool); }
+.hw-note { font-size: 10px; opacity: 0.62; }
+.tts-hw-note { margin: 9px 0 0; max-width: 74ch; line-height: 1.55; }
+
+/* the per-row chip */
+.chip.hw {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.02em;
+  border: 1px solid rgba(74, 168, 216, 0.34); background: rgba(74, 168, 216, 0.08);
+}
+.chip.hw-hosted { border-color: var(--border); background: transparent; color: var(--muted); }
+.chip.hw-browser, .chip.hw-phone, .chip.hw-cpu { border-color: rgba(122, 192, 137, 0.45); }
+.chip.hw-gpu-24, .chip.hw-gpu-48 { border-color: rgba(245, 163, 75, 0.45); }
+table.lb.tts td .chip.hw { white-space: nowrap; }
+
 /* ---- facet filters ------------------------------------------------------- */
 /* Two filter axes share this bar, so they must not look alike: category pills
    fill solid when active, facet pills tint and outline. Same hue, different

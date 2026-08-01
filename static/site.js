@@ -1797,6 +1797,41 @@ const TTS_FACET_GROUPS = [
 const TTS_FACET_LABEL = Object.fromEntries(
   TTS_FACET_GROUPS.flatMap((g) => g.facets));
 
+/* Hardware floors, ordered smallest first — MUST mirror HARDWARE_TIERS in
+   config.py. The filter is CUMULATIVE, not exact-match: pick a 24 GB card and
+   you see everything that runs on 24 GB and everything below it, because that
+   is what owning a 24 GB card actually means. Exact-match would hide the very
+   models most likely to be the right answer.
+
+   `hosted` sits outside the ladder — an API needs no hardware, so it survives
+   every hardware filter rather than being ranked against local models. */
+const TTS_HARDWARE = [
+  { key: "browser", label: "A browser tab", note: "WASM / WebGPU" },
+  { key: "phone",   label: "Phone, Pi or NPU" },
+  { key: "cpu",     label: "Laptop CPU, no GPU" },
+  { key: "gpu-8",   label: "GPU up to 8 GB" },
+  { key: "gpu-16",  label: "GPU up to 16 GB", note: "incl. 16 GB Macs" },
+  { key: "gpu-24",  label: "GPU up to 24 GB", note: "3090 / 4090" },
+  { key: "gpu-48",  label: "Workstation / datacentre" },
+];
+const TTS_HW_LADDER = Object.fromEntries(TTS_HARDWARE.map((h, i) => [h.key, i]));
+const TTS_HW_LABEL = Object.fromEntries(TTS_HARDWARE.map((h) => [h.key, h.label]));
+
+/* A row runs on your machine if its floor is at or below the tier you picked.
+   Two deliberate passes:
+     - `hosted` always survives: it needs no hardware at all, and hiding an API
+       from someone on a Pi would be answering a question they did not ask.
+     - an ABSENT floor also survives, flagged rather than filtered. 31 rows have
+       no published hardware requirement, and silently dropping them would turn
+       "the vendor never said" into "it does not run", which is a different and
+       false claim. */
+function ttsRunsOn(row, tier) {
+  if (!tier) return true;
+  if (row.hardware === "hosted" || row.hardware == null) return true;
+  const floor = TTS_HW_LADDER[row.hardware];
+  return floor === undefined || floor <= TTS_HW_LADDER[tier];
+}
+
 /* Columns. `def: true` is the out-of-the-box view; every other column is one
    click away in the picker rather than gated behind a coarse simple/technical
    binary, because which columns matter is a property of the READER — price and
@@ -1811,7 +1846,8 @@ const TTS_COLS = [
   { key: "rating",         label: "Rating",                     def: true },
   { key: "price_sort",     label: "Cost",            txt: true, def: true, cell: "price_note" },
   { key: "cloning",        label: "Cloning",         txt: true, def: true, wide: true },
-  { key: "runs_on",        label: "Runs on",         txt: true, def: true, wide: true },
+  { key: "hardware",       label: "Needs",                      def: true },
+  { key: "runs_on",        label: "Runs on",         txt: true, wide: true },
   { key: "emotion",        label: "Emotion control", txt: true, wide: true },
   { key: "languages_sort", label: "Langs",                      cell: "languages_note" },
   { key: "params",         label: "Params",          txt: true },
@@ -1858,13 +1894,14 @@ function ttsLoadPrefs() {
     const known = new Set(TTS_COLS.map((c) => c.key));
     const cols = Array.isArray(p.cols) ? p.cols.filter((k) => known.has(k)) : [];
     const facets = Array.isArray(p.facets) ? p.facets.filter((f) => f in TTS_FACET_LABEL) : [];
-    return { cols: cols.length ? cols : null, facets };
+    const hw = p.hw && p.hw in TTS_HW_LADDER ? p.hw : null;
+    return { cols: cols.length ? cols : null, facets, hw };
   } catch (e) { return null; }
 }
 function ttsSavePrefs(state) {
   try {
     localStorage.setItem(TTS_PREFS_KEY, JSON.stringify({
-      cols: [...state.cols], facets: [...state.facets],
+      cols: [...state.cols], facets: [...state.facets], hw: state.hw,
     }));
   } catch (e) { /* storage disabled or full — the page still works, unremembered */ }
 }
@@ -1929,6 +1966,15 @@ function ttsSortVal(row, key) {
     return row[key] == null ? null : row[key];
   }
   if (key === "category") return TTS_CAT_LABEL[row.category] || row.category;
+  // Sort by position on the hardware ladder, not alphabetically: "browser"
+  // before "cpu" before "gpu-8" is the useful order, and the alphabet gives
+  // browser, cpu, gpu-16, gpu-24, gpu-48, gpu-8 — with 8 GB last.
+  if (key === "hardware") {
+    if (row.hardware == null) return null;                 // sinks both ways
+    if (row.hardware === "hosted") return -1;              // needs nothing
+    const i = TTS_HW_LADDER[row.hardware];
+    return i === undefined ? null : i;
+  }
   if (TTS_MAGNITUDE_COLS.has(key)) {
     const v = ttsMagnitude(row[key]);
     return isNaN(v) ? null : v;   // null sinks in both directions
@@ -1964,6 +2010,7 @@ function ttsVisible(rows, state, extraFacet) {
   return rows
     .filter((r) => !state.cats.size || state.cats.has(r.category))
     .filter((r) => ttsHasFacets(r, want))
+    .filter((r) => ttsRunsOn(r, state.hw))
     .filter((r) => ttsMatches(r, state.q));
 }
 
@@ -2069,8 +2116,24 @@ function renderTtsMatrix(mount, rows, state) {
     const lic = TTS_LIC[row.licence_class] || TTS_LIC.closed;
     const detail = ttsDetailRow(row, cols.length);
 
-    const nameCell = el("td", { class: "tts-name txt" },
-      el("span", { class: "nm", text: row.name }));
+    const nameCell = el("td", { class: "tts-name txt" });
+    // Pick control lives in the row but must not open it: the row-level click
+    // toggles the detail panel, so this stops propagation or every compare
+    // click also expands something.
+    const pick = el("button", {
+      class: "tts-pick" + (state.picked.has(row.name) ? " on" : ""),
+      "aria-pressed": state.picked.has(row.name) ? "true" : "false",
+      "aria-label": (state.picked.has(row.name) ? "Remove from" : "Add to") + " comparison: " + row.name,
+      title: "Compare",
+      text: state.picked.has(row.name) ? "✓" : "+",
+    });
+    pick.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (state.picked.has(row.name)) state.picked.delete(row.name); else state.picked.add(row.name);
+      state.onPick();
+    });
+    nameCell.appendChild(pick);
+    nameCell.appendChild(el("span", { class: "nm", text: row.name }));
     if (row.variants) nameCell.appendChild(el("span", { class: "slug", text: row.variants }));
 
     const tr = el("tr", {
@@ -2108,6 +2171,16 @@ function renderTtsMatrix(mount, rows, state) {
         const v = row[c.key] || "unknown";
         tr.appendChild(el("td", { class: "txt" },
           el("span", { class: "chip st st-" + v, text: v })));
+        return;
+      }
+      if (c.key === "hardware") {
+        if (!row.hardware) {
+          tr.appendChild(el("td", { class: "txt tts-na", text: "not published" }));
+          return;
+        }
+        const lab = row.hardware === "hosted" ? "hosted" : TTS_HW_LABEL[row.hardware];
+        tr.appendChild(el("td", { class: "txt" },
+          el("span", { class: "chip hw hw-" + row.hardware, text: lab })));
         return;
       }
       if (c.key === "rating") {
@@ -2148,8 +2221,11 @@ function renderTtsMatrix(mount, rows, state) {
 
   const table = el("table", { class: "lb tts" }, thead, tbody);
   const wrapEl = el("div", { class: "table-scroll" }, table);
+  const picked = state.picked.size;
   const count = el("p", { class: "note tts-count" },
-    `${shown.length} of ${rows.length} systems shown. Click any row for what it is best at — and the catch.`);
+    `${shown.length} of ${rows.length} systems shown. Click any row for what it is best at — and the catch.`
+    + (picked === 1 ? "  Pick one more to compare."
+      : picked > 1 ? `  Comparing ${picked}.` : "  Use + to compare."));
   mount.replaceChildren(count, wrapEl);
 }
 
@@ -2179,8 +2255,70 @@ function renderTtsControls(mount, rows, state, onChange) {
 
   mount.replaceChildren(
     el("div", { class: "tts-controls" }, pills, search, ttsColumnPicker(state, onChange)),
+    ttsHardwareBar(rows, state, onChange),
     ttsFacetBar(rows, state, onChange),
   );
+}
+
+/* "What can I run on the machine I own" — the question every reader arrives
+   with, and the one a 40-column matrix of prose could not answer. */
+function ttsHardwareBar(rows, state, onChange) {
+  const wrap = el("div", { class: "tts-hw" });
+  if (!rows.some((r) => r.hardware)) return wrap;
+
+  const head = el("div", { class: "tts-hw-head" },
+    el("span", { class: "tts-facet-title", text: "What I can run it on" }));
+  wrap.appendChild(head);
+
+  const row = el("div", { class: "tts-hw-row" });
+  const any = el("button", { class: "pill" + (state.hw ? "" : " on"), text: "Anything" });
+  any.addEventListener("click", () => { state.hw = null; ttsSavePrefs(state); onChange(); });
+  row.appendChild(any);
+
+  TTS_HARDWARE.forEach((h) => {
+    // Count what PICKING this would leave, so the number is a promise the other
+    // active filters can keep.
+    const n = ttsVisible(rows, { ...state, hw: h.key }).length;
+    const b = el("button", { class: "pill hw" + (state.hw === h.key ? " on" : "") },
+      h.label,
+      h.note ? el("span", { class: "hw-note", text: h.note }) : "",
+      el("span", { class: "pill-n", text: String(n) }));
+    b.addEventListener("click", () => {
+      state.hw = state.hw === h.key ? null : h.key;
+      ttsSavePrefs(state);
+      onChange();
+    });
+    row.appendChild(b);
+  });
+  wrap.appendChild(row);
+
+  if (state.hw) {
+    const passing = ttsVisible(rows, state);
+    const hosted = passing.filter((r) => r.hardware === "hosted").length;
+    const unknown = passing.filter((r) => r.hardware == null).length;
+    const note = el("p", { class: "tts-hw-note note" },
+      `Showing everything that runs on “${TTS_HW_LABEL[state.hw]}” or less. `,
+      `That includes ${hosted} hosted services, which need no hardware at all, and `,
+      `${unknown} rows whose vendor publishes no hardware requirement — `,
+      el("em", { text: "never stated" }), " is not the same as ",
+      el("em", { text: "will not run" }), ". ");
+    // Point at the fix rather than only naming the problem: the reader who
+    // wants "things I can actually run locally" has to exclude both groups, and
+    // the facet that does it is three inches away but not obviously connected.
+    if (hosted + unknown) {
+      const add = el("button", { class: "pill sm",
+        text: state.facets.has("self-hostable") ? "Self-hostable ✓" : "Add: self-hostable" });
+      add.addEventListener("click", () => {
+        if (state.facets.has("self-hostable")) state.facets.delete("self-hostable");
+        else state.facets.add("self-hostable");
+        ttsSavePrefs(state);
+        onChange();
+      });
+      note.appendChild(add);
+    }
+    wrap.appendChild(note);
+  }
+  return wrap;
 }
 
 /* Column picker. A <details> popover rather than a modal: it needs no focus
@@ -2271,6 +2409,121 @@ function ttsFacetBar(rows, state, onChange) {
     if (shown) wrap.appendChild(row);
   });
   return wrap;
+}
+
+/* Every field worth putting side by side, in the order a decision gets made:
+   can I use it, will it run, what does it do, what does it cost, is it alive. */
+const TTS_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["hardware", "Needs"], ["runs_on", "Runs on"], ["vram", "VRAM"],
+  ["params", "Parameters"], ["architecture", "Architecture"], ["codec", "Codec"],
+  ["cloning", "Cloning"], ["emotion", "Emotion control"],
+  ["languages_note", "Languages"], ["streaming", "Streaming"],
+  ["max_generation", "Max generation"], ["latency_note", "Latency"],
+  ["multi_speaker", "Multi-speaker"], ["timestamps", "Timestamps"],
+  ["ssml", "SSML"], ["lexicon", "Pronunciation control"],
+  ["quantisation", "Quantisation"], ["fine_tuning", "Fine-tuning"], ["watermark", "Watermark"],
+  ["price_note", "Cost"], ["billing_unit", "Billed by"], ["free_tier", "Free tier"],
+  ["concurrency", "Concurrency"], ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ["rating", "External rating"], ["benchmarks", "Benchmarks"], ["adoption", "Adoption"],
+  ["released", "Released"], ["status", "Status"], ["verification", "Evidence"],
+  ["best_for", "Best for"],
+];
+
+function ttsCompareValue(row, key) {
+  if (key === "hardware") {
+    return row.hardware ? (row.hardware === "hosted" ? "hosted" : TTS_HW_LABEL[row.hardware]) : null;
+  }
+  if (key === "rating") {
+    return row.rating == null ? null : `${row.rating} · ${row.rating_source || ""}`.trim();
+  }
+  if (key === "category") return TTS_CAT_LABEL[row.category] || row.category;
+  return row[key] == null || row[key] === "" ? null : String(row[key]);
+}
+
+/* Side-by-side for the finalists.
+
+   DIFFERENCES ONLY, ON BY DEFAULT. That is the whole feature. Thirty-seven
+   fields across three systems is 111 cells, most of them agreeing, and a reader
+   who has already filtered down to three candidates is asking exactly one
+   question: what separates these? Showing every field answers it by making them
+   find it. */
+function ttsComparePanel(mount, rows, state, onChange) {
+  if (!mount) return;
+  const picked = rows.filter((r) => state.picked.has(r.name));
+  if (picked.length < 2) { mount.replaceChildren(); return; }
+
+  const differs = ([key]) => {
+    const vals = picked.map((r) => ttsCompareValue(r, key));
+    return new Set(vals.map((v) => (v == null ? " " : v))).size > 1;
+  };
+  // In differences mode, drop fields nobody publishes AND fields everyone
+  // agrees on. In every-field mode show the lot, INCLUDING the all-blank rows —
+  // "not one of these three publishes a codec" is a finding about the field, and
+  // suppressing it made the toggle look broken because both modes rendered the
+  // same 28 rows.
+  const anyValue = (f) => picked.some((r) => ttsCompareValue(r, f[0]) != null);
+  const fields = state.diffOnly
+    ? TTS_COMPARE_FIELDS.filter((f) => anyValue(f) && differs(f))
+    : TTS_COMPARE_FIELDS.slice();
+  const same = TTS_COMPARE_FIELDS.filter((f) => anyValue(f) && !differs(f)).length;
+  const blank = TTS_COMPARE_FIELDS.filter((f) => !anyValue(f)).length;
+
+  const head = el("div", { class: "tts-cmp-head" },
+    el("h3", { text: `Comparing ${picked.length}` }));
+
+  const toggle = el("button", {
+    class: "pill sm" + (state.diffOnly ? " on" : ""),
+    "aria-pressed": state.diffOnly ? "true" : "false",
+    text: state.diffOnly ? "Differences only" : "Every field",
+  });
+  toggle.addEventListener("click", () => { state.diffOnly = !state.diffOnly; onChange(); });
+  head.appendChild(toggle);
+
+  const clear = el("button", { class: "pill sm", text: "Clear" });
+  clear.addEventListener("click", () => { state.picked.clear(); onChange(); });
+  head.appendChild(clear);
+
+  const thead = el("thead");
+  const htr = el("tr", {}, el("th", { class: "txt", text: "" }));
+  picked.forEach((r) => {
+    const th = el("th", { class: "txt" }, el("span", { class: "nm", text: r.name }));
+    const drop = el("button", { class: "tts-cmp-drop", "aria-label": `Remove ${r.name}`, text: "×" });
+    drop.addEventListener("click", () => { state.picked.delete(r.name); onChange(); });
+    th.appendChild(drop);
+    htr.appendChild(th);
+  });
+  thead.appendChild(htr);
+
+  const tbody = el("tbody");
+  fields.forEach(([key, label]) => {
+    const tr = el("tr", {}, el("th", { class: "txt tts-cmp-k", scope: "row", text: label }));
+    picked.forEach((r) => {
+      const v = ttsCompareValue(r, key);
+      tr.appendChild(v
+        ? el("td", { class: "txt", text: v })
+        : el("td", { class: "txt tts-na", text: "not published" }));
+    });
+    tbody.appendChild(tr);
+  });
+
+  // Count the two kinds of hidden row separately: "they agree" and "nobody
+  // published it" are different facts, and merging them hides the second.
+  const parts = [];
+  if (same) parts.push(`${same} identical`);
+  if (blank) parts.push(`${blank} unpublished by all ${picked.length}`);
+  const foot = el("p", { class: "note tts-cmp-foot", text: state.diffOnly
+    ? `${fields.length} of ${TTS_COMPARE_FIELDS.length} fields differ`
+      + (parts.length ? ` — ${parts.join(", ")} hidden. ` : ". ")
+      + "The reason to compare is to find what separates them."
+    : `All ${fields.length} fields, including ${blank} that none of these `
+      + `${picked.length} publish — which is itself a fact about the field.` });
+
+  mount.replaceChildren(
+    el("div", { class: "tts-compare" }, head,
+      el("div", { class: "table-scroll" }, el("table", { class: "lb tts tts-cmp" }, thead, tbody)),
+      foot));
 }
 
 function renderTtsCorrections(mount, items) {
@@ -2378,11 +2631,18 @@ async function initTts() {
     cats: new Set(), q: "", sort: "name", desc: false,
     cols: new Set(prefs && prefs.cols ? prefs.cols : TTS_COL_DEFAULT),
     facets: new Set(prefs ? prefs.facets : []),
+    hw: prefs ? prefs.hw : null,
+    // Comparison is transient by design — it is a question you are asking right
+    // now, not a preference. Deliberately not persisted.
+    picked: new Set(),
+    diffOnly: true,
   };
   const rerender = () => {
     renderTtsControls(controls, rows, state, rerender);
     renderTtsMatrix(matrix, rows, state);
+    ttsComparePanel($("#tts-compare"), rows, state, rerender);
   };
+  state.onPick = rerender;
   rerender();
   renderTtsRatingCoverage($("#tts-rating-coverage"), rows);
   renderTtsDateline($("#tts-dateline"), doc);
