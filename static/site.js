@@ -2839,37 +2839,34 @@ function renderTtsDateline(mount, doc) {
   const compiled = new Date(doc.compiled + "T00:00:00Z");
   const days = Math.max(0, Math.floor((Date.now() - compiled.getTime()) / 86400000));
   const pretty = compiled.toLocaleDateString(undefined,
-    { year: "numeric", month: "long", day: "numeric", timeZone: "UTC" });
-  const age = days === 0 ? "compiled today"
-    : days === 1 ? "1 day ago"
+    { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
+  const age = days === 0 ? "today"
+    : days === 1 ? "yesterday"
     : days < 60 ? `${days} days ago`
     : `${Math.round(days / 30.44)} months ago`;
 
-  // Past a quarter the prices are the problem, not the models — say so rather than
-  // letting a reader quote a year-old rate at a vendor.
+  // Past a quarter the prices are the problem, not the models. The line stays
+  // quiet until then, and only raises its voice when it has something to say —
+  // a permanent warning is one nobody reads.
   const stale = days > 90;
 
-  mount.replaceChildren(
-    el("div", { class: "tts-dateline-row" },
-      el("span", { class: "tts-dl-k", text: "Last updated" }),
-      el("span", { class: "tts-dl-v mono", text: pretty }),
-      el("span", { class: "tts-dl-age" + (stale ? " stale" : ""), text: age }),
-      el("span", { class: "sep", text: "·" }),
-      el("span", { class: "tts-dl-v mono", text: `edition ${doc.edition}` }),
-      el("span", { class: "sep", text: "·" }),
-      el("span", { class: "tts-dl-v mono", text: `${doc.counts ? doc.counts.total : doc.systems.length} systems` }),
-    ),
-    el("p", { class: "tts-dateline-note", text: stale
-      ? "Prices and model versions in this field move monthly and leaderboard standings move in weeks. "
-        + "This snapshot is old enough that pricing should be re-checked against the vendor before you rely on it."
-      : "Prices and model versions in this field move monthly. Every figure is true as of the date above — "
-        + "re-check the vendor's own page before committing budget." }),
-  );
+  const line = el("p", { class: "tts-dateline-line" + (stale ? " stale" : "") },
+    el("span", { class: "mono", text: `${doc.counts ? doc.counts.total : doc.systems.length} systems` }),
+    el("span", { class: "sep", text: "·" }),
+    el("span", { class: "mono", text: `edition ${doc.edition}` }),
+    el("span", { class: "sep", text: "·" }),
+    el("span", { text: `compiled ${pretty}` }),
+    " ",
+    el("span", { class: "tts-dl-age", text: age }));
+  mount.replaceChildren(line);
+
+  if (stale) {
+    mount.appendChild(el("p", { class: "tts-dateline-note note", text:
+      "Prices and model versions in this field move monthly. This snapshot is old "
+      + "enough that pricing should be re-checked against the vendor before you rely on it." }));
+  }
 }
 
-/* One init for both matrices. `key` selects the spec and every mount id is
-   derived from it, so adding a third section is a spec plus a template — not
-   another copy of this function. */
 async function initMatrix(key) {
   SPEC = MATRIX_SPECS[key];
   const matrix = $(`#${key}-matrix`);

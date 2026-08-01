@@ -1268,29 +1268,26 @@ dl.tts-spec dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--in
 /* ---- Voices: currency dateline ------------------------------------------ */
 /* Sits directly under the lede. Currency is a precondition for trusting any
    number on this page, so it reads before the data rather than after it. */
-.tts-dateline { margin: 18px 0 0; }
-.tts-dateline-row {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px;
-  padding: 9px 13px; border: 1px solid var(--border); border-radius: var(--radius);
-  background: var(--surface); width: fit-content; max-width: 100%;
+/* ---- currency line -------------------------------------------------------
+   Was a bordered panel in the hero, and off-centre with it: `width: fit-content`
+   on a flex block does not centre inside a text-align:centre parent. It is now
+   one quiet mono line directly above the table — "how old is this?" is a
+   question the reader has just before trusting a number, not on arrival. */
+.tts-dateline { margin: 10px 0 0; }
+.tts-dateline-line {
+  margin: 0; font-family: var(--font-mono); font-size: 11px;
+  color: var(--muted); letter-spacing: .02em;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 7px;
 }
-.tts-dl-k {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--muted);
+.tts-dateline-line .sep { opacity: .5; }
+.tts-dl-age { color: var(--ink-dim); }
+/* Only raises its voice when it has something to say. A permanent warning is
+   one nobody reads. */
+.tts-dateline-line.stale .tts-dl-age {
+  color: var(--ember); border: 1px solid currentColor; border-radius: 4px; padding: 0 5px;
 }
-.tts-dl-v { font-size: 12.5px; color: var(--ink); }
-.tts-dl-age {
-  font-family: var(--font-mono); font-size: 11px; color: var(--cool);
-  border: 1px solid currentColor; border-radius: 4px; padding: 0 6px;
-}
-/* Past a quarter the pricing is the risk, not the roster — the badge changes
-   colour so a stale snapshot cannot be mistaken for a fresh one at a glance. */
-.tts-dl-age.stale { color: var(--ember); }
-.tts-dateline .sep { color: var(--border-2); }
-.tts-dateline-note {
-  margin: 8px 0 0; max-width: 74ch;
-  font-size: 12.5px; line-height: 1.6; color: var(--muted);
-}
+.tts-dateline-note { margin: 6px 0 0; max-width: 74ch; }
+
 
 
 /* ---- empty state --------------------------------------------------------- */
@@ -1318,38 +1315,57 @@ dl.tts-spec dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--in
 .ev.hollow { background: transparent; border: 1px solid var(--cool); }
 .nav a { display: inline-flex; align-items: center; }
 
-/* ---- pipeline strip ------------------------------------------------------ */
-/* Three adjacent nav links are not a walk. This names the stage you are on, the
-   job each one does, and restates the evidence status at every step — so the
-   boundary is never more than one glance away, rather than living once in a
-   card the reader may have scrolled past. */
+/* ---- pipeline strip ------------------------------------------------------
+   Three text blocks with arrow glyphs between them read as three things that
+   happen to be adjacent. A rail with nodes on it reads as one thing with three
+   stops — the eye follows the line instead of parsing each cell. */
 .pipeline {
-  display: flex; align-items: stretch; justify-content: center;
-  flex-wrap: wrap; gap: 4px; margin: 22px auto 0; max-width: 62rem;
+  display: flex; align-items: flex-start; justify-content: center;
+  gap: 0; margin: 26px auto 0; max-width: 46rem; position: relative;
 }
 .pipe-step {
-  display: flex; flex-direction: column; gap: 2px;
-  padding: 9px 15px; border-radius: var(--radius);
-  border: 1px solid transparent; min-width: 8.5rem;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 0 14px 0; flex: 1 1 0; min-width: 0; text-align: center;
+  position: relative; padding-top: 26px;
 }
-a.pipe-step:hover { background: var(--surface); border-color: var(--border); }
-.pipe-step.is-here { background: var(--surface); border-color: var(--border); }
+/* the node, sitting ON the rail */
+.pipe-step::before {
+  content: ""; position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--border-2);
+  z-index: 2; transition: border-color .15s, background .15s;
+}
+/* the rail itself: half-segments either side of each node, so the ends of the
+   strip stop cleanly instead of trailing into nothing */
+.pipe-step::after {
+  content: ""; position: absolute; top: 10px; height: 1px;
+  background: var(--border); z-index: 1;
+  left: 0; right: 0;
+}
+.pipe-step:first-child::after { left: 50%; }
+.pipe-step:last-child::after  { right: 50%; }
+a.pipe-step:hover::before { border-color: var(--cool); }
+.pipe-step.is-here::before { border-color: var(--ember); background: var(--ember); }
+
 .pipe-job {
-  font-family: var(--font-mono); font-size: 10px; letter-spacing: .07em;
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em;
   text-transform: uppercase; color: var(--muted);
 }
-.pipe-name { font-size: 14px; font-weight: 600; color: var(--ink-dim); }
+.pipe-name { font-size: 15px; font-weight: 600; color: var(--ink-dim); line-height: 1.2; }
 a.pipe-step:hover .pipe-name { color: var(--ink); }
 .pipe-step.is-here .pipe-name { color: var(--ink); }
 .pipe-ev {
-  display: flex; align-items: center;
+  display: inline-flex; align-items: center;
   font-family: var(--font-mono); font-size: 10px; color: var(--muted);
 }
-.pipe-arrow { align-self: center; color: var(--muted); opacity: .5; }
-@media (max-width: 700px) {
-  .pipeline { gap: 2px; }
-  .pipe-arrow { display: none; }
-  .pipe-step { min-width: 0; flex: 1 1 8rem; padding: 8px 10px; }
+/* the glyph arrows are gone — the rail carries the direction now */
+.pipe-arrow { display: none; }
+
+@media (max-width: 640px) {
+  .pipeline { max-width: none; }
+  .pipe-step { padding-left: 4px; padding-right: 4px; }
+  .pipe-name { font-size: 13px; }
+  .pipe-job { font-size: 9px; letter-spacing: .06em; }
 }
 
 /* ---- section sub-row ----------------------------------------------------- */
@@ -1360,3 +1376,16 @@ a.pipe-step:hover .pipe-name { color: var(--ink); }
   color: var(--muted);
 }
 .subnav .sep { margin: 0 8px; opacity: .55; }
+
+
+/* ---- the mark ------------------------------------------------------------
+   Small enough to read as a logo rather than a cartoon, and dimmed a touch so
+   it sits behind the wordmark rather than competing with it. */
+.brand { gap: 7px; }
+.brand-bot {
+  width: 26px; height: 26px; flex: 0 0 auto;
+  opacity: .92; align-self: center;
+  transition: opacity .15s, transform .15s;
+}
+.brand:hover .brand-bot { opacity: 1; transform: translateY(-1px); }
+@media (max-width: 620px) { .brand-bot { width: 22px; height: 22px; } }
