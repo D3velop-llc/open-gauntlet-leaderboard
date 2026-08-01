@@ -130,7 +130,8 @@ a:hover { color: var(--ember-bright); }
   line-height: 1.08;
   letter-spacing: -0.015em;
   margin: 16px 0 0;
-  max-width: 17ch;
+  max-width: 17ch;            /* two-column hero only; .hero-lede clears it */
+  text-wrap: balance;
 }
 .hero h1 .warm {
   font-style: italic;
@@ -736,7 +737,23 @@ table.meth tr.ref td { color: var(--muted); font-style: italic; border-bottom: 1
    The scripted user turns are identical for both models, so they render once down the
    centre and each model's replies fan out left and right. Below 860px two lanes stop
    working at all, so the row collapses to a labelled A/B stack. */
-.hero-lede { text-align: center; max-width: 62ch; margin: 0 auto; }
+/* Centred hero.
+
+   `max-width: 62ch` here was measured against the SECTION's inherited 14.5px
+   font rather than the lede's 16px, which collapsed the whole block to 485px
+   inside a 1240px page — a third of the width — and forced the h1 into three
+   lines and the lede into four. `ch` on a container is a trap: it resolves
+   against whatever font that container inherits, not the text you meant.
+   The container is sized in rem; only the prose keeps a ch measure, on the
+   element whose font it is actually describing. */
+.hero-lede { text-align: center; max-width: 50rem; margin: 0 auto; }
+.hero-lede h1 {
+  max-width: none;            /* the 17ch cap is for the two-column hero */
+  margin-inline: auto;
+  text-wrap: balance;         /* break where the phrase does, not at a column */
+  font-size: clamp(34px, 4.6vw, 52px);
+}
+.hero-lede .lede { max-width: 64ch; margin-inline: auto; }
 .hero-after { margin-top: 8px; }
 
 .showcase { margin: 8px 0 44px; }
@@ -917,20 +934,20 @@ table.lb td.model .slug, table.lb td.model .cfg { display: block; }
    Licence colour is SEMANTIC, not decorative, and deliberately separate from
    both: red does not mean "bad model", it means "you may not ship this".
    ========================================================================== */
-body[data-page^="tts"] .section-head .idx,
-body[data-page^="tts"] .eyebrow .tick { color: var(--cool); }
-body[data-page^="tts"] .hero h1 .warm {
+body[data-kind="surveyed"] .section-head .idx,
+body[data-kind="surveyed"] .eyebrow .tick { color: var(--cool); }
+body[data-kind="surveyed"] .hero h1 .warm {
   background: linear-gradient(96deg, #8ecdf0, var(--cool) 58%, #2f7fa8);
   -webkit-background-clip: text; background-clip: text;
 }
-body[data-page^="tts"] a { color: var(--cool); }
-body[data-page^="tts"] a:hover { color: #8ecdf0; }
+body[data-kind="surveyed"] a { color: var(--cool); }
+body[data-kind="surveyed"] a:hover { color: #8ecdf0; }
 /* the top nav is brand chrome and must NOT recolour with the section */
-body[data-page^="tts"] .topbar a { color: var(--ink-dim); }
-body[data-page^="tts"] .topbar a:hover { color: var(--ink); }
-body[data-page^="tts"] .topbar a.active { color: var(--ember); background: var(--ember-dim); }
-body[data-page^="tts"] .brand { color: var(--ink); }
-body[data-page^="tts"] .brand .slash, body[data-page^="tts"] .brand em { color: var(--ember); }
+body[data-kind="surveyed"] .topbar a { color: var(--ink-dim); }
+body[data-kind="surveyed"] .topbar a:hover { color: var(--ink); }
+body[data-kind="surveyed"] .topbar a.active { color: var(--ember); background: var(--ember-dim); }
+body[data-kind="surveyed"] .brand { color: var(--ink); }
+body[data-kind="surveyed"] .brand .slash, body[data-kind="surveyed"] .brand em { color: var(--ember); }
 
 /* the scope card states what this section is NOT before showing any data */
 .tts-scope { border-left: 2px solid var(--cool); }
@@ -1274,3 +1291,72 @@ dl.tts-spec dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--in
   margin: 8px 0 0; max-width: 74ch;
   font-size: 12.5px; line-height: 1.6; color: var(--muted);
 }
+
+
+/* ---- empty state --------------------------------------------------------- */
+/* Used sparingly and on purpose. The character earns its place where the page
+   has nothing to show — a dead end is the one moment a reference site can
+   afford a face, and the button matters more than the mascot. */
+.state-empty {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 34px 20px; text-align: center;
+}
+.state-empty .state-bot { opacity: 0.85; filter: saturate(0.9); }
+.state-empty p { margin: 0; color: var(--ink-dim); }
+
+/* ---- evidence dot -------------------------------------------------------- */
+/* One primitive, used in the nav and the pipeline strip: FILLED means we
+   measured it, HOLLOW means we surveyed it. Shape rather than colour, so the
+   distinction survives greyscale, a thumbnail and colourblindness — colour
+   alone was already carrying it and colour alone is not enough for the one
+   claim the whole site rests on. */
+.ev {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  margin-right: 6px; vertical-align: 0.06em; flex: 0 0 auto;
+}
+.ev.solid  { background: var(--ember); border: 1px solid var(--ember); }
+.ev.hollow { background: transparent; border: 1px solid var(--cool); }
+.nav a { display: inline-flex; align-items: center; }
+
+/* ---- pipeline strip ------------------------------------------------------ */
+/* Three adjacent nav links are not a walk. This names the stage you are on, the
+   job each one does, and restates the evidence status at every step — so the
+   boundary is never more than one glance away, rather than living once in a
+   card the reader may have scrolled past. */
+.pipeline {
+  display: flex; align-items: stretch; justify-content: center;
+  flex-wrap: wrap; gap: 4px; margin: 22px auto 0; max-width: 62rem;
+}
+.pipe-step {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 9px 15px; border-radius: var(--radius);
+  border: 1px solid transparent; min-width: 8.5rem;
+}
+a.pipe-step:hover { background: var(--surface); border-color: var(--border); }
+.pipe-step.is-here { background: var(--surface); border-color: var(--border); }
+.pipe-job {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--muted);
+}
+.pipe-name { font-size: 14px; font-weight: 600; color: var(--ink-dim); }
+a.pipe-step:hover .pipe-name { color: var(--ink); }
+.pipe-step.is-here .pipe-name { color: var(--ink); }
+.pipe-ev {
+  display: flex; align-items: center;
+  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+}
+.pipe-arrow { align-self: center; color: var(--muted); opacity: .5; }
+@media (max-width: 700px) {
+  .pipeline { gap: 2px; }
+  .pipe-arrow { display: none; }
+  .pipe-step { min-width: 0; flex: 1 1 8rem; padding: 8px 10px; }
+}
+
+/* ---- section sub-row ----------------------------------------------------- */
+/* Pages that belong to one section and would be noise in a bar shared with two
+   others. Sits under the hero that owns them. */
+.subnav {
+  margin: 14px 0 0; font-family: var(--font-mono); font-size: 12px;
+  color: var(--muted);
+}
+.subnav .sep { margin: 0 8px; opacity: .55; }

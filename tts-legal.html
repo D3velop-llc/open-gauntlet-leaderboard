@@ -6,21 +6,24 @@
   <meta name="color-scheme" content="dark">
   <title>TTS licensing, consent &amp; law — OpenGauntlet</title>
   
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="static/site.css?v=ea17140a86">
+  <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
+  <link rel="apple-touch-icon" href="static/img/bot-head.png">
+  <link rel="stylesheet" href="static/site.css?v=d3a7c36b53">
   
 </head>
-<body data-page="tts-legal">
+
+<body data-page="tts-legal" data-kind="surveyed">
   <header class="topbar">
     <div class="wrap">
       <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
       <nav class="nav">
-        <a href="index.html">Leaderboard</a>
-        <a href="methodology.html">Methodology</a>
-        <a href="compare.html">Compare</a>
         
-        <a href="tts.html" class="active">Voices</a>
-        <a href="asr.html">Listening</a>
+        <a href="asr.html"
+           ><span class="ev hollow" aria-hidden="true"></span>Listening</a>
+        <a href="index.html"
+           ><span class="ev solid" aria-hidden="true"></span>Words</a>
+        <a href="tts.html" class="active"
+           ><span class="ev hollow" aria-hidden="true"></span>Voices</a>
       </nav>
     </div>
   </header>
@@ -243,13 +246,13 @@
 
   <footer class="foot">
     <div class="wrap">
-      <span class="foot-brand">OpenGauntlet — which self-hosted open model is the best to actually talk to.</span>
+      <span class="foot-brand">OpenGauntlet — which self-hosted open model is the best to actually talk to. Voices and Listening are surveyed, not benchmarked.</span>
       <nav class="foot-nav">
-        <a href="index.html">Leaderboard</a><span class="sep">·</span>
+        <a href="asr.html">Listening</a><span class="sep">·</span>
+        <a href="index.html">Words</a><span class="sep">·</span>
+        <a href="tts.html">Voices</a><span class="sep">·</span>
         <a href="methodology.html">How it works</a><span class="sep">·</span>
-        <a href="compare.html">Compare</a><span class="sep">·</span>
-        <a href="tts.html">Voices</a>
-        <a href="asr.html">Listening</a>
+        <a href="compare.html">Head to head</a>
       </nav>
       
       <span class="foot-prov">Updated <span data-generated-at>2026-07-31 07:56 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
@@ -257,6 +260,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=dec1c1149b" defer></script>
+  <script src="static/site.js?v=59fb781e30" defer></script>
 </body>
 </html>

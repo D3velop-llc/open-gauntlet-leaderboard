@@ -2271,7 +2271,20 @@ function renderTtsMatrix(mount, rows, state) {
   });
 
   if (!shown.length) {
-    mount.replaceChildren(el("div", { class: "state" }, "No system matches that filter."));
+    // A dead end is where a page most needs a human touch and most often gets a
+    // bare sentence. The way out matters more than the sympathy, so the state
+    // carries a button that actually clears the filters.
+    const back = el("button", { class: "pill sm", text: "Clear the filters" });
+    back.addEventListener("click", () => {
+      state.cats.clear(); state.facets.clear(); state.hw = null; state.q = "";
+      ttsSavePrefs(state);
+      if (state.onPick) state.onPick();
+    });
+    mount.replaceChildren(el("div", { class: "state state-empty" },
+      el("img", { src: "static/img/bot-head.png", alt: "", width: "72", height: "72",
+                  class: "state-bot", loading: "lazy" }),
+      el("p", { text: "Nothing matches all of those at once." }),
+      back));
     return;
   }
 

@@ -6,21 +6,24 @@
   <meta name="color-scheme" content="dark">
   <title>Listening — speech-to-text compared · OpenGauntlet</title>
   
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
-  <link rel="stylesheet" href="static/site.css?v=ea17140a86">
+  <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
+  <link rel="apple-touch-icon" href="static/img/bot-head.png">
+  <link rel="stylesheet" href="static/site.css?v=d3a7c36b53">
   
 </head>
-<body data-page="asr">
+
+<body data-page="asr" data-kind="surveyed">
   <header class="topbar">
     <div class="wrap">
       <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
       <nav class="nav">
-        <a href="index.html">Leaderboard</a>
-        <a href="methodology.html">Methodology</a>
-        <a href="compare.html">Compare</a>
         
-        <a href="tts.html">Voices</a>
-        <a href="asr.html" class="active">Listening</a>
+        <a href="asr.html" class="active"
+           ><span class="ev hollow" aria-hidden="true"></span>Listening</a>
+        <a href="index.html"
+           ><span class="ev solid" aria-hidden="true"></span>Words</a>
+        <a href="tts.html"
+           ><span class="ev hollow" aria-hidden="true"></span>Voices</a>
       </nav>
     </div>
   </header>
@@ -28,17 +31,37 @@
   
   <div class="wrap">
     <section class="hero hero-lede">
-      <div class="eyebrow"><span class="tick">//</span> the other half of a voice product</div>
+      <div class="eyebrow"><span class="tick">//</span> surveyed, not benchmarked — 111 systems</div>
       <h1>First it has to <span class="warm">hear you</span></h1>
       <p class="lede">
-        A voice product is three pieces of software, and only one of them is the model on the
-        leaderboard. Recognition is the piece that fails first and fails quietly — it does not
+        A voice product is three pieces of software, and only one of them is the model we
+        measure. Recognition is the piece that fails first and fails quietly — it does not
         crash, it just returns the wrong words, and everything downstream reasons about them
         confidently. Here is every speech-to-text system that matters, on the axes that actually
         decide a project.
       </p>
       <div id="asr-dateline" class="tts-dateline"></div>
     </section>
+  
+
+<nav class="pipeline" aria-label="The three stages of a voice product">
+  
+    <span class="pipe-step is-here" aria-current="page">
+      <span class="pipe-job">what it hears</span>
+      <span class="pipe-name">Listening</span>
+      <span class="pipe-ev"><span class="ev hollow"
+        aria-hidden="true"></span>surveyed &middot; 111</span></span><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
+    <a class="pipe-step" href="index.html">
+      <span class="pipe-job">what it says</span>
+      <span class="pipe-name">Words</span>
+      <span class="pipe-ev"><span class="ev solid"
+        aria-hidden="true"></span>measured &middot; 32</span></a><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
+    <a class="pipe-step" href="tts.html">
+      <span class="pipe-job">how it sounds</span>
+      <span class="pipe-name">Voices</span>
+      <span class="pipe-ev"><span class="ev hollow"
+        aria-hidden="true"></span>surveyed &middot; 168</span></a>
+</nav>
   </div>
 
   <div class="wrap wrap-wide">
@@ -113,13 +136,13 @@
 
   <footer class="foot">
     <div class="wrap">
-      <span class="foot-brand">OpenGauntlet — which self-hosted open model is the best to actually talk to.</span>
+      <span class="foot-brand">OpenGauntlet — which self-hosted open model is the best to actually talk to. Voices and Listening are surveyed, not benchmarked.</span>
       <nav class="foot-nav">
-        <a href="index.html">Leaderboard</a><span class="sep">·</span>
+        <a href="asr.html">Listening</a><span class="sep">·</span>
+        <a href="index.html">Words</a><span class="sep">·</span>
+        <a href="tts.html">Voices</a><span class="sep">·</span>
         <a href="methodology.html">How it works</a><span class="sep">·</span>
-        <a href="compare.html">Compare</a><span class="sep">·</span>
-        <a href="tts.html">Voices</a>
-        <a href="asr.html">Listening</a>
+        <a href="compare.html">Head to head</a>
       </nav>
       
       <span class="foot-prov">Updated <span data-generated-at>2026-07-31 07:56 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
@@ -127,6 +150,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=dec1c1149b" defer></script>
+  <script src="static/site.js?v=59fb781e30" defer></script>
 </body>
 </html>
