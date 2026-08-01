@@ -1887,24 +1887,23 @@ const TTS_COL_PRESETS = [
    reader configures once and returns to, and re-picking eight checkboxes every
    visit is the kind of friction that makes them stop returning. Storage is
    wrapped because it throws outright in some private-browsing modes. */
-const TTS_PREFS_KEY = "og.tts.prefs.v1";
 function ttsLoadPrefs() {
   try {
-    const raw = localStorage.getItem(TTS_PREFS_KEY);
+    const raw = localStorage.getItem(SPEC.prefsKey);
     if (!raw) return null;
     const p = JSON.parse(raw);
     // Drop anything unrecognised rather than trusting stored keys: a column
     // renamed since the visit would otherwise render a blank column forever.
-    const known = new Set(TTS_COLS.map((c) => c.key));
+    const known = new Set(SPEC.cols.map((c) => c.key));
     const cols = Array.isArray(p.cols) ? p.cols.filter((k) => known.has(k)) : [];
-    const facets = Array.isArray(p.facets) ? p.facets.filter((f) => f in TTS_FACET_LABEL) : [];
+    const facets = Array.isArray(p.facets) ? p.facets.filter((f) => f in SPEC.facetLabel) : [];
     const hw = p.hw && p.hw in TTS_HW_LADDER ? p.hw : null;
     return { cols: cols.length ? cols : null, facets, hw };
   } catch (e) { return null; }
 }
 function ttsSavePrefs(state) {
   try {
-    localStorage.setItem(TTS_PREFS_KEY, JSON.stringify({
+    localStorage.setItem(SPEC.prefsKey, JSON.stringify({
       cols: [...state.cols], facets: [...state.facets], hw: state.hw,
     }));
   } catch (e) { /* storage disabled or full — the page still works, unremembered */ }
@@ -1931,6 +1930,185 @@ const TTS_PANELS = [
     ["latency_note", "Latency"],
   ] },
 ];
+
+
+/* Every field worth putting side by side, in the order a decision gets made:
+   can I use it, will it run, what does it do, what does it cost, is it alive. */
+const TTS_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["hardware", "Needs"], ["runs_on", "Runs on"], ["vram", "VRAM"],
+  ["params", "Parameters"], ["architecture", "Architecture"], ["codec", "Codec"],
+  ["cloning", "Cloning"], ["emotion", "Emotion control"],
+  ["languages_note", "Languages"], ["streaming", "Streaming"],
+  ["max_generation", "Max generation"], ["latency_note", "Latency"],
+  ["multi_speaker", "Multi-speaker"], ["timestamps", "Timestamps"],
+  ["ssml", "SSML"], ["lexicon", "Pronunciation control"],
+  ["quantisation", "Quantisation"], ["fine_tuning", "Fine-tuning"], ["watermark", "Watermark"],
+  ["price_note", "Cost"], ["billing_unit", "Billed by"], ["free_tier", "Free tier"],
+  ["concurrency", "Concurrency"], ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ["rating", "External rating"], ["benchmarks", "Benchmarks"], ["adoption", "Adoption"],
+  ["released", "Released"], ["status", "Status"], ["verification", "Evidence"],
+  ["best_for", "Best for"],
+];
+
+/* ---------------- Listening (ASR) ---------------------------------------- */
+const ASR_CATS = [
+  { key: "cloud",   label: "Cloud API" },
+  { key: "hyper",   label: "Hyperscaler" },
+  { key: "open",    label: "Open weights" },
+  { key: "device",  label: "On-device" },
+  { key: "rt",      label: "Streaming" },
+  // Neither recognises speech on its own terms. A runtime serves someone
+  // else's checkpoint; a diarizer answers who spoke, not what was said.
+  { key: "runtime", label: "Runtime" },
+  { key: "diar",    label: "Diarization" },
+  { key: "legacy",  label: "Classical" },
+];
+const ASR_CAT_LABEL = Object.fromEntries(ASR_CATS.map((c) => [c.key, c.label]));
+
+const ASR_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Phone / edge"],
+    ["browser", "In-browser"], ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+  ] },
+  { title: "Can do", facets: [
+    ["diarization", "Speaker labels built in"], ["diarization-addon", "Speakers, but extra"],
+    ["no-diarization", "No speaker labels"],
+    ["streaming", "True streaming"], ["word-timestamps", "Word timestamps"],
+    ["punctuation", "Punctuation & casing"], ["custom-vocab", "Custom vocabulary"],
+    ["translation", "Translates too"], ["code-switching", "Mid-sentence language switch"],
+    ["long-form", "Long-form"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+  { title: "Languages", facets: [["multilingual", "10+ languages"], ["english-only", "English only"]] },
+];
+const ASR_FACET_LABEL = Object.fromEntries(ASR_FACET_GROUPS.flatMap((g) => g.facets));
+
+const ASR_COLS = [
+  { key: "name",           label: "System",           txt: true, def: true, fixed: true },
+  { key: "standout",       label: "What's different", txt: true, def: true, wide: true },
+  { key: "category",       label: "Kind",             txt: true, def: true },
+  { key: "licence",        label: "Licence",          txt: true, def: true },
+  // Accuracy leads with the sortable figure and reads as the prose that states
+  // its conditions — the same numeric-twin split price and languages use.
+  { key: "wer_sort",       label: "WER",              txt: true, def: true, cell: "accuracy_note", wide: true },
+  { key: "diarization",    label: "Speakers",         txt: true, def: true, wide: true },
+  { key: "price_sort",     label: "Cost / audio hr",  txt: true, def: true, cell: "price_note" },
+  { key: "hardware",       label: "Needs",                       def: true },
+  { key: "languages_sort", label: "Langs",                       cell: "languages_note" },
+  { key: "streaming",      label: "Streaming",        txt: true, wide: true },
+  { key: "latency_note",   label: "Latency",          txt: true, wide: true },
+  { key: "timestamps",     label: "Timestamps",       txt: true, wide: true },
+  { key: "punctuation",    label: "Punctuation",      txt: true, wide: true },
+  { key: "custom_vocab",   label: "Custom vocab",     txt: true, wide: true },
+  { key: "translation",    label: "Translation",      txt: true, wide: true },
+  { key: "audio_limits",   label: "Audio limits",     txt: true, wide: true },
+  { key: "params",         label: "Params",           txt: true },
+  { key: "architecture",   label: "Architecture",     txt: true, wide: true },
+  { key: "vram",           label: "VRAM",             txt: true },
+  { key: "quantisation",   label: "Quantisation",     txt: true, wide: true },
+  { key: "fine_tuning",    label: "Fine-tuning",      txt: true, wide: true },
+  { key: "runs_on",        label: "Runs on",          txt: true, wide: true },
+  { key: "self_host",      label: "Self-host",        txt: true, wide: true },
+  { key: "status",         label: "Status",           txt: true },
+  { key: "verification",   label: "Evidence",         txt: true },
+  { key: "watch",          label: "The catch",        txt: true, wide: true },
+];
+const ASR_COL_DEFAULT = ASR_COLS.filter((c) => c.def).map((c) => c.key);
+const ASR_COL_PRESETS = [
+  { key: "default", label: "Default", cols: ASR_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "wer_sort", "diarization", "price_sort", "watch"] },
+  { key: "agent",   label: "For a voice agent",
+    cols: ["name", "streaming", "latency_note", "price_sort", "diarization", "hardware"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "params", "architecture", "vram", "quantisation", "fine_tuning", "runs_on"] },
+  { key: "all",     label: "Everything", cols: ASR_COLS.map((c) => c.key) },
+];
+
+const ASR_PANELS = [
+  { title: "Accuracy", fields: [
+    ["accuracy_note", "Accuracy"], ["benchmarks", "Benchmarks"], ["robustness", "Robustness"],
+  ] },
+  { title: "Technical", fields: [
+    ["params", "Parameters"], ["architecture", "Architecture"], ["vram", "VRAM"],
+    ["quantisation", "Quantisation"], ["fine_tuning", "Fine-tuning"],
+    ["streaming", "Streaming"], ["latency_note", "Latency"],
+    ["realtime_factor", "Realtime factor"], ["audio_limits", "Audio limits"],
+  ] },
+  { title: "What comes back", fields: [
+    ["timestamps", "Timestamps"], ["punctuation", "Punctuation"],
+    ["custom_vocab", "Custom vocabulary"], ["output_formats", "Output formats"],
+    ["translation", "Translation"],
+  ] },
+  { title: "Commercial", fields: [
+    ["billing_unit", "Billing unit"], ["free_tier", "Free tier"], ["concurrency", "Concurrency"],
+    ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ] },
+  { title: "Evidence", fields: [
+    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const ASR_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["accuracy_note", "Accuracy"], ["wer_sort", "WER"], ["benchmarks", "Benchmarks"],
+  ["diarization", "Speaker labels"], ["streaming", "Streaming"], ["latency_note", "Latency"],
+  ["timestamps", "Timestamps"], ["punctuation", "Punctuation"],
+  ["custom_vocab", "Custom vocabulary"], ["translation", "Translation"],
+  ["languages_note", "Languages"], ["audio_limits", "Audio limits"],
+  ["hardware", "Needs"], ["runs_on", "Runs on"], ["vram", "VRAM"],
+  ["params", "Parameters"], ["architecture", "Architecture"], ["quantisation", "Quantisation"],
+  ["fine_tuning", "Fine-tuning"],
+  ["price_note", "Cost"], ["billing_unit", "Billed by"], ["free_tier", "Free tier"],
+  ["concurrency", "Concurrency"], ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
+  ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
+/* The six things that differ. Everything else is shared. */
+const MATRIX_SPECS = {
+  tts: {
+    key: "tts", dataUrl: "data/tts.json", prefsKey: "og.tts.prefs.v1",
+    cats: TTS_CATS, catLabel: TTS_CAT_LABEL,
+    facetGroups: TTS_FACET_GROUPS, facetLabel: TTS_FACET_LABEL,
+    cols: TTS_COLS, colDefault: TTS_COL_DEFAULT, colPresets: TTS_COL_PRESETS,
+    panels: TTS_PANELS, compareFields: TTS_COMPARE_FIELDS,
+    kindHint: "Nine kinds of speech product. Leave all off for everything.",
+  },
+  asr: {
+    key: "asr", dataUrl: "data/asr.json", prefsKey: "og.asr.prefs.v1",
+    cats: ASR_CATS, catLabel: ASR_CAT_LABEL,
+    facetGroups: ASR_FACET_GROUPS, facetLabel: ASR_FACET_LABEL,
+    cols: ASR_COLS, colDefault: ASR_COL_DEFAULT, colPresets: ASR_COL_PRESETS,
+    panels: ASR_PANELS, compareFields: ASR_COMPARE_FIELDS,
+    kindHint: "Eight kinds. Runtime and Diarization recognise nothing themselves — one serves another model, the other answers who spoke.",
+  },
+};
+
+/* ------------------------------------------------------------------------
+   Two matrices, one renderer.
+
+   Voices and Listening differ in exactly six things — categories, facets,
+   columns, expander panels, compare fields and the prefs key. Licence chips,
+   the hardware ladder, magnitude sorting, popovers, compare and the whole
+   600-line table are identical, and a second copy would be a second copy to
+   keep in sync.
+
+   SPEC is module-level rather than threaded through fifteen signatures because
+   a page renders exactly ONE matrix: the router picks it from `data-page`, and
+   there is no path on which two coexist. A test asserts that.
+   ------------------------------------------------------------------------ */
+let SPEC = null;
 
 /* Columns whose text leads with a magnitude-suffixed number. Sorting these as
    strings ranks "82 M" above "5 B", because it compares "8" against "5" and never
@@ -1960,16 +2138,24 @@ function ttsMagnitude(str) {
   return isNaN(n) ? NaN : n * TTS_SCALE[m[2].toLowerCase()];
 }
 
+/* Columns whose value is numeric, across both matrices. Adding a *_sort field
+   without adding it here is a silent text sort, which looks plausible and is
+   wrong in a way nobody checks. */
+const TTS_NUMERIC_COLS = new Set([
+  "price_sort", "languages_sort", "rating", "wer_sort",
+]);
+
 /* Sort value for a column. Numeric columns read their dedicated *_sort field so
    the order matches the label; magnitude columns parse their unit; everything
    else compares as lowercased text. */
 function ttsSortVal(row, key) {
-  // `rating` joins the numeric keys: as a string it would sort "1310" below
-  // "980", and it is the one column where a reader will trust the order blindly.
-  if (key === "price_sort" || key === "languages_sort" || key === "rating") {
-    return row[key] == null ? null : row[key];
-  }
-  if (key === "category") return TTS_CAT_LABEL[row.category] || row.category;
+  // Every column whose value is a NUMBER has to be compared as one. As strings
+  // "1310" sorts below "980", and these are the columns a reader trusts the
+  // order of without checking. `wer_sort` is the newest member and was missed
+  // once: it fell through to the text branch, where `String(undefined)` made
+  // every unmeasured row sort as the literal "undefined".
+  if (TTS_NUMERIC_COLS.has(key)) return row[key] == null ? null : row[key];
+  if (key === "category") return SPEC.catLabel[row.category] || row.category;
   // Sort by position on the hardware ladder, not alphabetically: "browser"
   // before "cpu" before "gpu-8" is the useful order, and the alphabet gives
   // browser, cpu, gpu-16, gpu-24, gpu-48, gpu-8 — with 8 GB last.
@@ -1989,12 +2175,12 @@ function ttsSortVal(row, key) {
 function ttsMatches(row, q) {
   if (!q) return true;
   const hay = [
-    row.name, row.variants, TTS_CAT_LABEL[row.category], row.licence, row.price_note,
+    row.name, row.variants, SPEC.catLabel[row.category], row.licence, row.price_note,
     row.cloning, row.emotion, row.languages_note, row.runs_on, row.latency_note,
     row.best_for, row.watch, row.standout,
     // Facets are searchable by their READABLE label, so typing "no gpu" finds
     // what the chip labelled "No GPU needed" would have selected.
-    ...(row.facets || []).map((f) => `${f} ${TTS_FACET_LABEL[f] || ""}`),
+    ...(row.facets || []).map((f) => `${f} ${SPEC.facetLabel[f] || ""}`),
   ].filter(Boolean).join(" ").toLowerCase();
   return hay.includes(q);
 }
@@ -2025,7 +2211,7 @@ function ttsDetailRow(row, colCount) {
     const chips = el("div", { class: "tts-facet-chips" });
     // Ordered by the group list, not by however the yaml happened to list them,
     // so "runs on" always reads before "can I ship it" across every row.
-    TTS_FACET_GROUPS.flatMap((g) => g.facets).forEach(([key, label]) => {
+    SPEC.facetGroups.flatMap((g) => g.facets).forEach(([key, label]) => {
       if (!row.facets.includes(key)) return;
       chips.appendChild(el("span", { class: "chip fct fct-" + key, text: label }));
     });
@@ -2041,7 +2227,7 @@ function ttsDetailRow(row, colCount) {
   }
 
   const grid = el("div", { class: "tts-panels" });
-  TTS_PANELS.forEach((panel) => {
+  SPEC.panels.forEach((panel) => {
     // A panel whose every field is absent is omitted entirely rather than
     // rendered as a heading over four dashes.
     const present = panel.fields.filter(([k]) => row[k]);
@@ -2058,7 +2244,7 @@ function ttsDetailRow(row, colCount) {
 
   // Absence is a finding, not a gap in the page. Say which fields the sources
   // did not state, rather than letting the reader assume we simply omitted them.
-  const missing = TTS_PANELS.flatMap((p) => p.fields).filter(([k]) => !row[k]).length;
+  const missing = SPEC.panels.flatMap((p) => p.fields).filter(([k]) => !row[k]).length;
   if (missing) {
     body.appendChild(el("p", { class: "tts-nodata" },
       `${missing} further ${missing === 1 ? "field is" : "fields are"} not published for this system.`));
@@ -2089,10 +2275,10 @@ function renderTtsMatrix(mount, rows, state) {
     return;
   }
 
-  // Order follows TTS_COLS, not click order, so the table does not reshuffle as
+  // Order follows SPEC.cols, not click order, so the table does not reshuffle as
   // the reader toggles. `fixed` columns cannot be hidden — a row with no name is
   // not a row.
-  const cols = TTS_COLS.filter((c) => c.fixed || state.cols.has(c.key));
+  const cols = SPEC.cols.filter((c) => c.fixed || state.cols.has(c.key));
 
   const thead = el("thead");
   const htr = el("tr");
@@ -2156,14 +2342,14 @@ function renderTtsMatrix(mount, rows, state) {
       },
     });
 
-    // Cells are built FROM the column list, so adding a column to TTS_COLS is the
+    // Cells are built FROM the column list, so adding a column to SPEC.cols is the
     // only edit needed to surface a new field — the previous hand-written cell
     // list silently ignored anything added to the header.
     cols.forEach((c) => {
       if (c.key === "name") { tr.appendChild(nameCell); return; }
       if (c.key === "category") {
         tr.appendChild(el("td", { class: "txt" },
-          el("span", { class: "chip", text: TTS_CAT_LABEL[row.category] || row.category })));
+          el("span", { class: "chip", text: SPEC.catLabel[row.category] || row.category })));
         return;
       }
       if (c.key === "licence") {
@@ -2273,7 +2459,7 @@ function ttsPopover(label, badge, cls, ...body) {
 
 function ttsKindPicker(rows, state, onChange) {
   const box = el("div", { class: "tts-optgrid" });
-  TTS_CATS.forEach((c) => {
+  SPEC.cats.forEach((c) => {
     const n = rows.filter((r) => r.category === c.key).length;
     if (!n) return;
     const cb = el("input", { type: "checkbox", id: "ttscat-" + c.key });
@@ -2286,13 +2472,13 @@ function ttsKindPicker(rows, state, onChange) {
       el("span", { text: c.label }), el("span", { class: "pill-n", text: String(n) })));
   });
   return ttsPopover("Kind", state.cats.size || "", "tts-pop-kind",
-    el("p", { class: "tts-pop-hint", text: "Nine kinds of speech product. Leave all off for everything." }),
+    el("p", { class: "tts-pop-hint", text: SPEC.kindHint }),
     box);
 }
 
 function ttsFacetPicker(rows, state, onChange) {
   const wrap = el("div", { class: "tts-facets" });
-  TTS_FACET_GROUPS.forEach((group) => {
+  SPEC.facetGroups.forEach((group) => {
     const row = el("div", { class: "tts-facet-group" },
       el("span", { class: "tts-facet-gl", text: group.title }));
     let shown = 0;
@@ -2353,13 +2539,13 @@ function ttsActiveFilters(rows, state, onChange) {
   };
 
   state.cats.forEach((k) =>
-    wrap.appendChild(chip(TTS_CAT_LABEL[k] || k, () => state.cats.delete(k))));
+    wrap.appendChild(chip(SPEC.catLabel[k] || k, () => state.cats.delete(k))));
   if (state.hw) {
     wrap.appendChild(chip("Runs on " + TTS_HW_LABEL[state.hw], () => { state.hw = null; }));
   }
   // Ordered by the group list, not click order, so the chip row does not
   // reshuffle under the cursor as you add filters.
-  TTS_FACET_GROUPS.flatMap((g) => g.facets).forEach(([key, label]) => {
+  SPEC.facetGroups.flatMap((g) => g.facets).forEach(([key, label]) => {
     if (state.facets.has(key)) {
       wrap.appendChild(chip(label, () => state.facets.delete(key)));
     }
@@ -2389,7 +2575,7 @@ function ttsActiveFilters(rows, state, onChange) {
 function ttsColumnPicker(state, onChange) {
   const box = el("div", { class: "tts-colgrid" });
 
-  TTS_COLS.forEach((c) => {
+  SPEC.cols.forEach((c) => {
     if (c.fixed) return;
     const id = "ttscol-" + c.key;
     const cb = el("input", { type: "checkbox", id });
@@ -2406,7 +2592,7 @@ function ttsColumnPicker(state, onChange) {
   });
 
   const presets = el("div", { class: "tts-presets" });
-  TTS_COL_PRESETS.forEach((p) => {
+  SPEC.colPresets.forEach((p) => {
     const b = el("button", { class: "pill sm", text: p.label });
     b.addEventListener("click", () => {
       state.cols = new Set(p.cols);
@@ -2417,7 +2603,7 @@ function ttsColumnPicker(state, onChange) {
     presets.appendChild(b);
   });
 
-  const n = TTS_COLS.filter((c) => c.fixed || state.cols.has(c.key)).length;
+  const n = SPEC.cols.filter((c) => c.fixed || state.cols.has(c.key)).length;
   return el("details", { class: "tts-colpick" },
     el("summary", { class: "pill" }, "Columns", el("span", { class: "pill-n", text: String(n) })),
     el("div", { class: "tts-colpanel" },
@@ -2425,25 +2611,6 @@ function ttsColumnPicker(state, onChange) {
       presets, box));
 }
 
-/* Every field worth putting side by side, in the order a decision gets made:
-   can I use it, will it run, what does it do, what does it cost, is it alive. */
-const TTS_COMPARE_FIELDS = [
-  ["standout", "What's different"],
-  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
-  ["hardware", "Needs"], ["runs_on", "Runs on"], ["vram", "VRAM"],
-  ["params", "Parameters"], ["architecture", "Architecture"], ["codec", "Codec"],
-  ["cloning", "Cloning"], ["emotion", "Emotion control"],
-  ["languages_note", "Languages"], ["streaming", "Streaming"],
-  ["max_generation", "Max generation"], ["latency_note", "Latency"],
-  ["multi_speaker", "Multi-speaker"], ["timestamps", "Timestamps"],
-  ["ssml", "SSML"], ["lexicon", "Pronunciation control"],
-  ["quantisation", "Quantisation"], ["fine_tuning", "Fine-tuning"], ["watermark", "Watermark"],
-  ["price_note", "Cost"], ["billing_unit", "Billed by"], ["free_tier", "Free tier"],
-  ["concurrency", "Concurrency"], ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
-  ["rating", "External rating"], ["benchmarks", "Benchmarks"], ["adoption", "Adoption"],
-  ["released", "Released"], ["status", "Status"], ["verification", "Evidence"],
-  ["best_for", "Best for"],
-];
 
 function ttsCompareValue(row, key) {
   if (key === "hardware") {
@@ -2452,7 +2619,7 @@ function ttsCompareValue(row, key) {
   if (key === "rating") {
     return row.rating == null ? null : `${row.rating} · ${row.rating_source || ""}`.trim();
   }
-  if (key === "category") return TTS_CAT_LABEL[row.category] || row.category;
+  if (key === "category") return SPEC.catLabel[row.category] || row.category;
   return row[key] == null || row[key] === "" ? null : String(row[key]);
 }
 
@@ -2489,10 +2656,10 @@ function ttsComparePanel(mount, rows, state, onChange) {
   // same 28 rows.
   const anyValue = (f) => picked.some((r) => ttsCompareValue(r, f[0]) != null);
   const fields = state.diffOnly
-    ? TTS_COMPARE_FIELDS.filter((f) => anyValue(f) && differs(f))
-    : TTS_COMPARE_FIELDS.slice();
-  const same = TTS_COMPARE_FIELDS.filter((f) => anyValue(f) && !differs(f)).length;
-  const blank = TTS_COMPARE_FIELDS.filter((f) => !anyValue(f)).length;
+    ? SPEC.compareFields.filter((f) => anyValue(f) && differs(f))
+    : SPEC.compareFields.slice();
+  const same = SPEC.compareFields.filter((f) => anyValue(f) && !differs(f)).length;
+  const blank = SPEC.compareFields.filter((f) => !anyValue(f)).length;
 
   const head = el("div", { class: "tts-cmp-head" },
     el("h3", { text: `Comparing ${picked.length}` }));
@@ -2538,7 +2705,7 @@ function ttsComparePanel(mount, rows, state, onChange) {
   if (same) parts.push(`${same} identical`);
   if (blank) parts.push(`${blank} unpublished by all ${picked.length}`);
   const foot = el("p", { class: "note tts-cmp-foot", text: state.diffOnly
-    ? `${fields.length} of ${TTS_COMPARE_FIELDS.length} fields differ`
+    ? `${fields.length} of ${SPEC.compareFields.length} fields differ`
       + (parts.length ? ` — ${parts.join(", ")} hidden. ` : ". ")
       + "The reason to compare is to find what separates them."
     : `All ${fields.length} fields, including ${blank} that none of these `
@@ -2598,7 +2765,7 @@ function renderTtsRatingCoverage(mount, rows) {
       + "read the same way. Arena standings also move in weeks, and the boards "
       + "disagree with each other — see the corrections below.",
     ),
-    el("p", { class: "tts-rating-cov note" },
+    SPEC.key !== "tts" ? null : el("p", { class: "tts-rating-cov note" },
       "These are human-preference scores. Word error rate is deliberately excluded: "
       + "it correlates negatively with perceived quality (ρ ≈ −0.11 to −0.45 across "
       + "~11,800 ratings), because over-articulated, recogniser-friendly speech scores "
@@ -2639,21 +2806,25 @@ function renderTtsDateline(mount, doc) {
   );
 }
 
-async function initTts() {
-  const matrix = $("#tts-matrix");
-  const controls = $("#tts-controls");
+/* One init for both matrices. `key` selects the spec and every mount id is
+   derived from it, so adding a third section is a spec plus a template — not
+   another copy of this function. */
+async function initMatrix(key) {
+  SPEC = MATRIX_SPECS[key];
+  const matrix = $(`#${key}-matrix`);
+  const controls = $(`#${key}-controls`);
   let doc;
   try {
-    doc = await getJSON("data/tts.json");
+    doc = await getJSON(SPEC.dataUrl);
   } catch (e) {
-    fail(matrix, "The voices matrix could not be loaded.");
+    fail(matrix, "That matrix could not be loaded.");
     return;
   }
   const rows = doc.systems || [];
   const prefs = ttsLoadPrefs();
   const state = {
     cats: new Set(), q: "", sort: "name", desc: false,
-    cols: new Set(prefs && prefs.cols ? prefs.cols : TTS_COL_DEFAULT),
+    cols: new Set(prefs && prefs.cols ? prefs.cols : SPEC.colDefault),
     facets: new Set(prefs ? prefs.facets : []),
     hw: prefs ? prefs.hw : null,
     // Comparison is transient by design — it is a question you are asking right
@@ -2664,19 +2835,19 @@ async function initTts() {
   const rerender = () => {
     renderTtsControls(controls, rows, state, rerender);
     renderTtsMatrix(matrix, rows, state);
-    ttsComparePanel($("#tts-compare"), rows, state, rerender);
+    ttsComparePanel($(`#${key}-compare`), rows, state, rerender);
   };
   state.onPick = rerender;
   rerender();
-  renderTtsRatingCoverage($("#tts-rating-coverage"), rows);
-  renderTtsDateline($("#tts-dateline"), doc);
-  renderTtsCorrections($("#tts-corrections"), doc.corrections);
-  renderTtsGaps($("#tts-gaps"), doc.gaps);
+  renderTtsRatingCoverage($(`#${key}-rating-coverage`), rows);
+  renderTtsDateline($(`#${key}-dateline`), doc);
+  renderTtsCorrections($(`#${key}-corrections`), doc.corrections);
+  renderTtsGaps($(`#${key}-gaps`), doc.gaps);
 
   // Provenance: the edition and compile date belong on the page, because every
   // figure in the table is only true as of that date.
   const foot = $("[data-generated-at]");
-  if (foot && doc.compiled) foot.textContent = `${doc.compiled} · voices edition ${doc.edition}`;
+  if (foot && doc.compiled) foot.textContent = `${doc.compiled} · ${key} edition ${doc.edition}`;
 }
 
 /* ------------------------------ router ---------------------------------- */
@@ -2686,5 +2857,5 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
-  else if (page === "tts") initTts();
+  else if (page === "tts" || page === "asr") initMatrix(page);
 });

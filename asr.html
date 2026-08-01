@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>Voices — text-to-speech compared · OpenGauntlet</title>
+  <title>Listening — speech-to-text compared · OpenGauntlet</title>
   
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230c0f14'/%3E%3Ctext x='16' y='23' font-family='monospace' font-size='20' font-weight='700' text-anchor='middle' fill='%23f2a65a'%3E/%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="static/site.css?v=f5c59c1f74">
   
 </head>
-<body data-page="tts">
+<body data-page="asr">
   <header class="topbar">
     <div class="wrap">
       <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
@@ -19,8 +19,8 @@
         <a href="methodology.html">Methodology</a>
         <a href="compare.html">Compare</a>
         
-        <a href="tts.html" class="active">Voices</a>
-        <a href="asr.html">Listening</a>
+        <a href="tts.html">Voices</a>
+        <a href="asr.html" class="active">Listening</a>
       </nav>
     </div>
   </header>
@@ -28,16 +28,16 @@
   
   <div class="wrap">
     <section class="hero hero-lede">
-      <div class="eyebrow"><span class="tick">//</span> the half the leaderboard doesn't measure</div>
-      <h1>Now make it <span class="warm">speak</span></h1>
+      <div class="eyebrow"><span class="tick">//</span> the other half of a voice product</div>
+      <h1>First it has to <span class="warm">hear you</span></h1>
       <p class="lede">
-        The leaderboard scores how human a model reads. It says nothing about how a model
-        <em>sounds</em> — that is a different piece of software entirely, and choosing it badly
-        is where most voice projects go wrong. Here is every text-to-speech system that matters,
-        on the axes that actually decide a project.
+        A voice product is three pieces of software, and only one of them is the model on the
+        leaderboard. Recognition is the piece that fails first and fails quietly — it does not
+        crash, it just returns the wrong words, and everything downstream reasons about them
+        confidently. Here is every speech-to-text system that matters, on the axes that actually
+        decide a project.
       </p>
-      
-      <div id="tts-dateline" class="tts-dateline"></div>
+      <div id="asr-dateline" class="tts-dateline"></div>
     </section>
   </div>
 
@@ -48,16 +48,22 @@
         <h3>Read this before the table</h3>
         <p class="prose">
           <strong>None of this is benchmarked here.</strong> OpenGauntlet measures
-          <em>Conversational Language Humanlikeness</em> — transcript-level qualities like word
-          choice, warmth and emotional reasoning. It deliberately does not score prosody,
-          intonation or timing. This section is a <strong>sourced survey</strong> of the speech
-          market, not a trial. Where a claim could not be verified against a primary source, it
-          says so rather than smoothing it over.
+          <em>Conversational Language Humanlikeness</em> in text. This section is a
+          <strong>sourced survey</strong> of the recognition market, not a trial. Where a claim
+          could not be verified against a primary source, it says so rather than smoothing it over.
         </p>
         <p class="prose">
-          <a href="tts-guide.html">How to read these numbers →</a>
-          <span class="sep">·</span>
-          <a href="tts-legal.html">What you're allowed to do with them →</a>
+          <strong>Word error rate is the right metric here</strong> — and that is the opposite of
+          the rule on <a href="tts.html">Voices</a>, where WER correlates <em>negatively</em> with
+          how good speech sounds. Recognition's job is getting the words right, so WER measures
+          exactly the thing you care about. It is only ever quoted here with the test set that
+          produced it: every vendor publishes a number, and they are measured on different audio.
+        </p>
+        <p class="prose">
+          <strong>Diarization is not included by default.</strong> Knowing <em>who</em> spoke is a
+          separate capability from knowing <em>what</em> was said — frequently a paid add-on, often
+          an entirely separate model, and sometimes simply absent. Every row states which, because
+          assuming it comes free is the most common and most expensive mistake in this market.
         </p>
       </div>
 
@@ -71,10 +77,10 @@
         </span>
       </div>
 
-      <div id="tts-controls"></div>
-      <div id="tts-compare"></div>
-      <div id="tts-matrix"><div class="state">Loading…</div></div>
-      <div id="tts-rating-coverage" class="tts-rating-coverage"></div>
+      <div id="asr-controls"></div>
+      <div id="asr-compare"></div>
+      <div id="asr-matrix"><div class="state">Loading…</div></div>
+      <div id="asr-rating-coverage" class="tts-rating-coverage"></div>
 
       <div class="legend tts-legend">
         <span><span class="lic-key lic-open" aria-hidden="true"></span> commercial-safe weights</span>
@@ -91,7 +97,7 @@
         <h2>Claims this corrects</h2>
         <span class="note">Each of these is repeated widely, and each is wrong.</span>
       </div>
-      <div id="tts-corrections"></div>
+      <div id="asr-corrections"></div>
     </section>
 
     <section class="block">
@@ -100,7 +106,7 @@
         <h2>What we couldn't establish</h2>
         <span class="note">A comparison that hides its gaps is less useful than one that names them.</span>
       </div>
-      <div id="tts-gaps"></div>
+      <div id="asr-gaps"></div>
     </section>
   </div>
 
