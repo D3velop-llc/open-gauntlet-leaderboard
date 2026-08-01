@@ -1378,14 +1378,63 @@ a.pipe-step:hover .pipe-name { color: var(--ink); }
 .subnav .sep { margin: 0 8px; opacity: .55; }
 
 
-/* ---- the mark ------------------------------------------------------------
-   Small enough to read as a logo rather than a cartoon, and dimmed a touch so
-   it sits behind the wordmark rather than competing with it. */
-.brand { gap: 7px; }
-.brand-bot {
-  width: 26px; height: 26px; flex: 0 0 auto;
-  opacity: .92; align-self: center;
-  transition: opacity .15s, transform .15s;
+/* The mark is NOT in the nav. A head cropped to 26px reads as a grey blob
+   rather than a character — the detail that makes him legible is the visor and
+   the headset, and neither survives at that size. He appears full-figure in the
+   hero instead, where he is big enough to be himself. */
+
+/* ---- hero signal band ----------------------------------------------------
+   One engine, three states. Listening shows speech arriving and flowing INTO
+   him; Words quantises the same signal into blocks, which is what tokenisation
+   looks like; Voices smooths it out and sends it away. The three read as one
+   signal moving through a pipeline. */
+.hero-signal {
+  display: flex; align-items: center; justify-content: center; gap: 18px;
+  max-width: 50rem; margin: 26px auto 0; padding: 0 4px;
 }
-.brand:hover .brand-bot { opacity: 1; transform: translateY(-1px); }
-@media (max-width: 620px) { .brand-bot { width: 22px; height: 22px; } }
+.hero-bot {
+  width: 132px; height: auto; flex: 0 0 auto;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .45));
+}
+.hero-viz {
+  flex: 1 1 auto; min-width: 0; height: 88px; display: block;
+}
+@media (max-width: 620px) {
+  .hero-signal { gap: 10px; }
+  .hero-bot { width: 84px; }
+  .hero-viz { height: 62px; }
+}
+
+/* ---- scope line + dialog --------------------------------------------------
+   Three paragraphs in a bordered box sat between the reader and the table. The
+   boundary matters; a wall nobody reads does not carry it. One line states the
+   fact, and the detail is a click away for anyone who wants it. */
+.scope-line {
+  display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap;
+  margin: 0 0 18px; color: var(--ink-dim); font-size: 13.5px;
+}
+.scope-line strong { color: var(--ink); }
+.linkish {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; color: var(--cool); text-decoration: underline;
+  text-underline-offset: 2px; text-decoration-thickness: 1px;
+}
+.linkish:hover { color: #8ecdf0; }
+
+.og-dialog {
+  max-width: 46rem; width: calc(100vw - 2rem);
+  background: var(--surface); color: var(--ink);
+  border: 1px solid var(--border); border-radius: 12px;
+  padding: 22px 26px 26px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .55);
+}
+.og-dialog::backdrop { background: rgba(4, 6, 10, .72); backdrop-filter: blur(2px); }
+.og-dialog h3 { margin: 0 0 12px; font-size: 17px; }
+.og-dialog .prose + .prose { margin-top: 12px; }
+.dialog-x {
+  position: absolute; top: 12px; right: 14px;
+  background: none; border: 0; color: var(--muted);
+  font-size: 22px; line-height: 1; cursor: pointer; padding: 2px 6px;
+}
+.dialog-x:hover { color: var(--ink); }
+

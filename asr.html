@@ -8,16 +8,14 @@
   
   <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
   <link rel="apple-touch-icon" href="static/img/bot-head.png">
-  <link rel="stylesheet" href="static/site.css?v=37fa680e38">
+  <link rel="stylesheet" href="static/site.css?v=85421154ba">
   
 </head>
 
 <body data-page="asr" data-kind="surveyed">
   <header class="topbar">
     <div class="wrap">
-      <a class="brand" href="index.html">
-        <img class="brand-bot" src="static/img/bot-head.png" alt="" width="26" height="26">
-        <span class="slash">//</span>open<em>gauntlet</em></a>
+      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
       <nav class="nav">
         
         <a href="asr.html" class="active"
@@ -43,6 +41,11 @@
         decide a project.
       </p>
     </section>
+  <div class="hero-signal hero-signal--listening">
+    <canvas class="hero-viz" data-viz="listening" aria-hidden="true"></canvas>
+    <img class="hero-bot" src="static/img/bot.webp" alt=""
+         width="132" height="132" loading="eager" decoding="async">
+  </div>
   
 
 <nav class="pipeline" aria-label="The three stages of a voice product">
@@ -68,8 +71,17 @@
   <div class="wrap wrap-wide">
     <section class="block">
       
-      <div class="card explainer tts-scope">
-        <h3>Read this before the table</h3>
+      
+      <p class="scope-line">
+        <span class="ev hollow" aria-hidden="true"></span>
+        <strong>Surveyed, not benchmarked.</strong> Nothing on this page was measured by
+        OpenGauntlet.
+        <button type="button" class="linkish" data-dialog="scope-asr">What that means &rarr;</button>
+      </p>
+
+      <dialog id="scope-asr" class="og-dialog">
+        <form method="dialog"><button class="dialog-x" aria-label="Close">&times;</button></form>
+        <h3>How to read this section</h3>
         <p class="prose">
           <strong>None of this is benchmarked here.</strong> OpenGauntlet measures
           <em>Conversational Language Humanlikeness</em> in text. This section is a
@@ -89,7 +101,7 @@
           an entirely separate model, and sometimes simply absent. Every row states which, because
           assuming it comes free is the most common and most expensive mistake in this market.
         </p>
-      </div>
+      </dialog>
 
       <div class="section-head">
         <span class="idx">//</span>
@@ -153,6 +165,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=2c2be36da1" defer></script>
+  <script src="static/site.js?v=d0cb875044" defer></script>
 </body>
 </html>

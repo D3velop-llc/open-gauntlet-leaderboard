@@ -8,16 +8,14 @@
   
   <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
   <link rel="apple-touch-icon" href="static/img/bot-head.png">
-  <link rel="stylesheet" href="static/site.css?v=37fa680e38">
+  <link rel="stylesheet" href="static/site.css?v=85421154ba">
   
 </head>
 
 <body data-page="tts" data-kind="surveyed">
   <header class="topbar">
     <div class="wrap">
-      <a class="brand" href="index.html">
-        <img class="brand-bot" src="static/img/bot-head.png" alt="" width="26" height="26">
-        <span class="slash">//</span>open<em>gauntlet</em></a>
+      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
       <nav class="nav">
         
         <a href="asr.html"
@@ -41,8 +39,12 @@
         is where most voice projects go wrong. Here is every text-to-speech system that matters,
         on the axes that actually decide a project.
       </p>
-      
     </section>
+  <div class="hero-signal hero-signal--voices">
+    <img class="hero-bot" src="static/img/pose-b0.webp" alt=""
+         width="132" height="132" loading="eager" decoding="async">
+    <canvas class="hero-viz" data-viz="voices" aria-hidden="true"></canvas>
+  </div>
   
 
 <nav class="pipeline" aria-label="The three stages of a voice product">
@@ -68,8 +70,17 @@
   <div class="wrap wrap-wide">
     <section class="block">
       
-      <div class="card explainer tts-scope">
-        <h3>Read this before the table</h3>
+      
+      <p class="scope-line">
+        <span class="ev hollow" aria-hidden="true"></span>
+        <strong>Surveyed, not benchmarked.</strong> Nothing on this page was measured by
+        OpenGauntlet.
+        <button type="button" class="linkish" data-dialog="scope-tts">What that means &rarr;</button>
+      </p>
+
+      <dialog id="scope-tts" class="og-dialog">
+        <form method="dialog"><button class="dialog-x" aria-label="Close">&times;</button></form>
+        <h3>How to read this section</h3>
         <p class="prose">
           <strong>None of this is benchmarked here.</strong> OpenGauntlet measures
           <em>Conversational Language Humanlikeness</em> — transcript-level qualities like word
@@ -79,11 +90,11 @@
           says so rather than smoothing it over.
         </p>
         <p class="prose">
-          <a href="tts-guide.html">How to read these numbers →</a>
-          <span class="sep">·</span>
-          <a href="tts-legal.html">What you're allowed to do with them →</a>
+          <a href="tts-guide.html">How to read these numbers &rarr;</a>
+          <span class="sep">&middot;</span>
+          <a href="tts-legal.html">What you're allowed to do with them &rarr;</a>
         </p>
-      </div>
+      </dialog>
 
       <div class="section-head">
         <span class="idx">//</span>
@@ -147,6 +158,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=2c2be36da1" defer></script>
+  <script src="static/site.js?v=d0cb875044" defer></script>
 </body>
 </html>

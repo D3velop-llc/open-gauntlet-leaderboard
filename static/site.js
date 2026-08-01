@@ -2281,7 +2281,7 @@ function renderTtsMatrix(mount, rows, state) {
       if (state.onPick) state.onPick();
     });
     mount.replaceChildren(el("div", { class: "state state-empty" },
-      el("img", { src: "static/img/bot-head.png", alt: "", width: "72", height: "72",
+      el("img", { src: "static/img/pose-a3.webp", alt: "", width: "120", height: "72",
                   class: "state-bot", loading: "lazy" }),
       el("p", { text: "Nothing matches all of those at once." }),
       back));
@@ -2908,9 +2908,141 @@ async function initMatrix(key) {
   if (foot && doc.compiled) foot.textContent = `${doc.compiled} · ${key} edition ${doc.edition}`;
 }
 
+
+/* ---------------------------------------------------------------------------
+   Hero signal.
+
+   One engine, three states, because the three sections ARE one signal in three
+   states — heard, thought, spoken. Listening draws speech arriving as raw
+   amplitude and flowing INTO the character. Words quantises that same signal
+   into discrete blocks, which is what tokenisation looks like. Voices smooths
+   it back out and sends it away again. Watching all three in sequence teaches
+   the pipeline without a caption.
+
+   Canvas rather than DOM: sixty-odd bars at 60fps is a repaint storm as
+   elements and a single draw call as pixels. No library — this is ~90 lines and
+   a dependency would be larger than the thing it draws.
+   --------------------------------------------------------------------------- */
+const VIZ_BARS = 56;
+
+/* Speech-like amplitude. Three detuned sines plus a slow envelope gives the
+   burst-and-pause rhythm of someone talking; pure noise reads as static and a
+   single sine reads as a test tone. Deterministic, so it never flickers oddly
+   on a slow frame. */
+function vizAmp(i, t, mode) {
+  const p = i / VIZ_BARS;
+  const speech =
+    0.50 * Math.sin(p * 7.1 + t * 2.3) +
+    0.30 * Math.sin(p * 17.3 - t * 3.1) +
+    0.20 * Math.sin(p * 31.7 + t * 1.3);
+  // the envelope is what makes it read as talking rather than humming
+  const env = 0.55 + 0.45 * Math.sin(t * 1.15 + p * 1.6);
+  let v = Math.abs(speech) * env;
+  if (mode === "words") {
+    // tokenisation: continuous amplitude collapsed onto discrete steps
+    v = Math.round(v * 5) / 5;
+  } else if (mode === "voices") {
+    // synthesis: smoother, more even — the signal has been cleaned up
+    v = 0.35 + v * 0.65;
+  }
+  return Math.max(0.06, Math.min(1, v));
+}
+
+function initHeroViz() {
+  const canvas = $(".hero-viz");
+  if (!canvas) return;
+  const mode = canvas.dataset.viz || "listening";
+  const ctx = canvas.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const css = getComputedStyle(document.documentElement);
+  const cool = (css.getPropertyValue("--cool") || "#4AA8D8").trim();
+  const ember = (css.getPropertyValue("--ember") || "#F5A34B").trim();
+  const tint = mode === "words" ? ember : cool;
+
+  let w = 0, h = 0, dpr = 1;
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    const r = canvas.getBoundingClientRect();
+    w = Math.max(1, Math.round(r.width));
+    h = Math.max(1, Math.round(r.height));
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function draw(t) {
+    ctx.clearRect(0, 0, w, h);
+    const gap = 3;
+    const bw = Math.max(1.5, (w - gap * (VIZ_BARS - 1)) / VIZ_BARS);
+    const mid = h / 2;
+    for (let i = 0; i < VIZ_BARS; i++) {
+      const a = vizAmp(i, t, mode);
+      const bh = a * (h * 0.86);
+      const x = i * (bw + gap);
+      // Fade toward the character rather than away from it: on Listening the
+      // signal is arriving and strongest where it lands, on Voices it is
+      // leaving and strongest where it starts.
+      const along = mode === "voices" ? 1 - i / VIZ_BARS : i / VIZ_BARS;
+      ctx.globalAlpha = 0.18 + 0.62 * along;
+      ctx.fillStyle = tint;
+      const y = mid - bh / 2;
+      if (mode === "words") {
+        ctx.fillRect(x, y, bw, bh);                       // hard-edged tokens
+      } else {
+        ctx.beginPath();
+        const r = Math.min(bw / 2, 2);
+        ctx.roundRect(x, y, bw, bh, r);
+        ctx.fill();
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  size();
+  // Always paint one frame synchronously. Waiting for the first rAF leaves a
+  // blank box on the first paint, and in any context where rAF never fires at
+  // all — a background tab, a non-compositing embed — it would stay blank
+  // forever rather than degrading to a still image.
+  draw(0);
+  if (still) return;                        // honour reduced motion: no loop
+
+  let raf = 0, running = true;
+  const tick = (ms) => { if (running) { draw(ms / 1000); raf = requestAnimationFrame(tick); } };
+  raf = requestAnimationFrame(tick);
+
+  // Stop when it cannot be seen. A hero animation running behind a scrolled
+  // page is pure battery cost for something nobody is looking at.
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver((es) => {
+      const vis = es[0].isIntersecting;
+      if (vis && !running) { running = true; raf = requestAnimationFrame(tick); }
+      else if (!vis && running) { running = false; cancelAnimationFrame(raf); }
+    }, { threshold: 0 }).observe(canvas);
+  }
+  addEventListener("resize", () => { size(); draw(performance.now() / 1000); },
+    { passive: true });   // resizing clears the backing store
+}
+
+/* Native <dialog> for the detail that used to be a wall of text above the
+   table. The browser gives focus trapping, Escape and the backdrop for free —
+   a hand-rolled modal would be more code and worse. */
+function initDialogs() {
+  document.querySelectorAll("[data-dialog]").forEach((btn) => {
+    const dlg = document.getElementById(btn.getAttribute("data-dialog"));
+    if (!dlg) return;
+    btn.addEventListener("click", () => dlg.showModal());
+    // Clicking the backdrop closes it. The dialog element itself fills only its
+    // own box, so a click whose target IS the dialog landed outside the content.
+    dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+  });
+}
+
 /* ------------------------------ router ---------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const page = document.body.getAttribute("data-page");
+  initHeroViz();
+  initDialogs();
   if (page === "leaderboard") initLeaderboard();
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
