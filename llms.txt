@@ -1,0 +1,19 @@
+# OpenGauntlet
+
+> Independent results and research for locally hosted conversational AI, speech recognition, and text-to-speech systems.
+
+## Primary pages
+
+- [Conversational AI leaderboard](https://opengauntlet.com/): Measured local open-weight language models.
+- [Methodology](https://opengauntlet.com/methodology.html): Scenarios, judging, ratings, calibration, and reproducibility.
+- [Speech-to-text research](https://opengauntlet.com/asr.html): Sourced ASR system comparison.
+- [Text-to-speech research](https://opengauntlet.com/tts.html): Sourced TTS system comparison.
+- [TTS comparison guide](https://opengauntlet.com/tts-guide.html): How to interpret TTS evidence.
+- [TTS legal guide](https://opengauntlet.com/tts-legal.html): Licensing, consent, and legal-risk research.
+
+## Machine-readable data
+
+- [Leaderboard JSON](https://opengauntlet.com/data/leaderboard.json)
+- [Methodology JSON](https://opengauntlet.com/data/methodology.json)
+- [ASR research JSON](https://opengauntlet.com/data/asr.json)
+- [TTS research JSON](https://opengauntlet.com/data/tts.json)

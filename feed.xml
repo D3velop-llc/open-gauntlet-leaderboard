@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>OpenGauntlet updates</title>
+    <link>https://opengauntlet.com/</link>
+    <description>New conversational AI benchmarks and sourced speech-system research.</description>
+    <item>
+      <title>OpenGauntlet conversational AI leaderboard</title>
+      <link>https://opengauntlet.com/</link>
+      <guid isPermaLink="true">https://opengauntlet.com/</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
+      <title>Compare models head to head</title>
+      <link>https://opengauntlet.com/compare.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/compare.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
+      <title>Benchmark methodology</title>
+      <link>https://opengauntlet.com/methodology.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/methodology.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
+      <title>Listening: speech-to-text research</title>
+      <link>https://opengauntlet.com/asr.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/asr.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
+      <title>Voices: text-to-speech research</title>
+      <link>https://opengauntlet.com/tts.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/tts.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
+      <title>How to compare text-to-speech systems</title>
+      <link>https://opengauntlet.com/tts-guide.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/tts-guide.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
+      <title>TTS licensing, consent, and legal risks</title>
+      <link>https://opengauntlet.com/tts-legal.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/tts-legal.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
