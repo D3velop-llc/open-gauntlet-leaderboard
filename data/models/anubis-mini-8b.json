@@ -94,7 +94,7 @@
       "params_active_b": 8.0,
       "architecture": "dense",
       "quant": "unknown",
-      "file": "/home/imprynt/models/anubis-mini-8b",
+      "file": "~/models/anubis-mini-8b",
       "file_sha256": "auto",
       "backend": "sglang",
       "backend_version": "unknown",

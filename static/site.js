@@ -1122,14 +1122,25 @@ function renderVerdictStrip(models) {
       el("span", { class: "fp-ci-n", text: `±${Math.round((p.hi - p.lo) / 2)}` }),
       el("span", { class: "fp-rank", text: rd ? `#${rd.med}` : (rb === rw ? `#${rb}` : `#${rb}–${rw}`) }));
 
+    // A percentile interval can EXCLUDE its own point estimate when the bootstrap
+    // distribution is skewed — which happens to models with few comparisons, where
+    // resampling plus the ridge pulls the replicates back toward the middle of the
+    // field. It is real information, not a rendering fault, but an unexplained tick
+    // sitting outside its bar reads as a bug, so the row says which way it leans.
+    const skew = p.elo < p.lo ? "below" : (p.elo > p.hi ? "above" : "");
     const row = el("div", {
-      class: "fp-row" + (isContender ? " is-contender" : ""),
+      class: "fp-row" + (isContender ? " is-contender" : "") + (skew ? " is-skewed" : ""),
       title: `${p.m.display_name}: ${Math.round(p.elo)} Elo, 95% interval `
         + `${Math.round(p.lo)}–${Math.round(p.hi)}. `
         + (rd
             ? `Finished #${rd.med} in the median of ${rd.n} bootstrap replicates, `
               + `and first in ${vsPct(rd.p)} of them.`
-            : `Consistent with ranks ${rb}–${rw} of ${pts.length}.`),
+            : `Consistent with ranks ${rb}–${rw} of ${pts.length}.`)
+        + (skew
+            ? ` The estimate sits ${skew} its own interval: almost every resample put this `
+              + `model ${skew === "below" ? "higher" : "lower"}, which happens when a model `
+              + `has few comparisons. Read the interval, not the point.`
+            : ""),
     }, name, plot, nums);
     body.appendChild(row);
 

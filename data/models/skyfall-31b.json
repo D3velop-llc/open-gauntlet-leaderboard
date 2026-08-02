@@ -94,7 +94,7 @@
       "params_active_b": 31.0,
       "architecture": "dense",
       "quant": "unknown",
-      "file": "/home/imprynt/models/skyfall-31b",
+      "file": "~/models/skyfall-31b",
       "file_sha256": "auto",
       "backend": "sglang",
       "backend_version": "unknown",

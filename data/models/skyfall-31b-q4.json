@@ -98,13 +98,13 @@
       "params_active_b": 31.0,
       "architecture": "dense",
       "quant": "Q4_K_M",
-      "file": "/home/imprynt/models/skyfall-31b-q4/Skyfall-31B-v4y-Q4_K_M.gguf",
+      "file": "~/models/skyfall-31b-q4/Skyfall-31B-v4y-Q4_K_M.gguf",
       "file_sha256": "auto",
       "backend": "llama.cpp",
       "backend_version": "b9893",
       "endpoint": "http://127.0.0.1:8080/v1",
       "launch": "llama-server",
-      "launch_cmd": "/home/imprynt/models/llama.cpp-b9893/build-gpu/bin/llama-server -m /home/imprynt/models/skyfall-31b-q4/Skyfall-31B-v4y-Q4_K_M.gguf --host 127.0.0.1 --port 8080 -c 16384 -ngl 999 --jinja",
+      "launch_cmd": "~/models/llama.cpp-b9893/build-gpu/bin/llama-server -m ~/models/skyfall-31b-q4/Skyfall-31B-v4y-Q4_K_M.gguf --host 127.0.0.1 --port 8080 -c 16384 -ngl 999 --jinja",
       "context_window": 16384,
       "max_tokens": 1024,
       "request_timeout_s": 300.0,
@@ -117,7 +117,7 @@
         "repeat_penalty": 1.05
       },
       "system_prompt_profile": "persona_default",
-      "notes": "Controlled precision A/B against skyfall-31b (BF16, same v4.2 weights). Serve with LD_LIBRARY_PATH=/home/imprynt/models/llama.cpp-b9893/build-gpu/bin — the on-PATH llama-server is broken (stale libs)."
+      "notes": "Controlled precision A/B against skyfall-31b (BF16, same v4.2 weights). Serve with LD_LIBRARY_PATH=~/models/llama.cpp-b9893/build-gpu/bin — the on-PATH llama-server is broken (stale libs)."
     }
   },
   "perf_curve": [

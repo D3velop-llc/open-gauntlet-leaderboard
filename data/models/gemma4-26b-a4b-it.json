@@ -94,7 +94,7 @@
       "params_active_b": 4.0,
       "architecture": "moe",
       "quant": "unknown",
-      "file": "/home/imprynt/models/gemma4-26b-a4b-it",
+      "file": "~/models/gemma4-26b-a4b-it",
       "file_sha256": "auto",
       "backend": "vllm",
       "backend_version": "unknown",

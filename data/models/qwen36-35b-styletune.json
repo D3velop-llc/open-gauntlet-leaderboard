@@ -94,7 +94,7 @@
       "params_active_b": 35.0,
       "architecture": "dense",
       "quant": "unknown",
-      "file": "/home/imprynt/models/qwen36-35b-styletune",
+      "file": "~/models/qwen36-35b-styletune",
       "file_sha256": "auto",
       "backend": "vllm",
       "backend_version": "unknown",

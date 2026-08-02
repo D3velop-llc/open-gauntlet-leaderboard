@@ -94,7 +94,7 @@
       "params_active_b": 16.0,
       "architecture": "dense",
       "quant": "unknown",
-      "file": "/home/imprynt/models/rocinante-xl-16b",
+      "file": "~/models/rocinante-xl-16b",
       "file_sha256": "auto",
       "backend": "sglang",
       "backend_version": "unknown",

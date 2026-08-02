@@ -23,7 +23,7 @@
       "params_active_b": 24.0,
       "architecture": "dense",
       "quant": "BF16",
-      "file": "/home/imprynt/models/magistry-24b-v1-1",
+      "file": "~/models/magistry-24b-v1-1",
       "file_sha256": "auto",
       "backend": "vllm",
       "backend_version": "unknown",

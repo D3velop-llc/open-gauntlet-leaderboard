@@ -94,7 +94,7 @@
       "params_active_b": 27.0,
       "architecture": "dense",
       "quant": "unknown",
-      "file": "/home/imprynt/models/bluestar-27b",
+      "file": "~/models/bluestar-27b",
       "file_sha256": "auto",
       "backend": "sglang",
       "backend_version": "unknown",

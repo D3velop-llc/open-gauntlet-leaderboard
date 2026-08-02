@@ -94,7 +94,7 @@
       "params_active_b": 35.0,
       "architecture": "dense",
       "quant": "unknown",
-      "file": "/home/imprynt/models/ornith-35b-nvfp4",
+      "file": "~/models/ornith-35b-nvfp4",
       "file_sha256": "auto",
       "backend": "vllm",
       "backend_version": "unknown",
