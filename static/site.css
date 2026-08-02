@@ -861,6 +861,8 @@ footer.foot {
 }
 footer.foot .wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px 24px; align-items: center; }
 .foot-brand { color: var(--muted); }
+.foot-brand a { color: var(--ink-dim); border-bottom: 1px dotted var(--border-2); }
+.foot-brand a:hover { color: var(--ember); border-bottom-color: var(--ember); }
 .foot-nav { justify-self: center; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
 .foot-nav a { color: var(--ink-dim); }
 .foot-nav a:hover { color: var(--ember); }
