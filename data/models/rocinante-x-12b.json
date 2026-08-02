@@ -1,6 +1,7 @@
 {
   "slug": "rocinante-x-12b",
   "display_name": "rocinante-x-12b",
+  "source_url": "https://huggingface.co/TheDrummer/Rocinante-X-12B-v1",
   "criteria": [
     {
       "criterion": "assistant_smell",

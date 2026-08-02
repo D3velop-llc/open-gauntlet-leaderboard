@@ -1,6 +1,7 @@
 {
   "slug": "skyfall-31b",
   "display_name": "skyfall-31b",
+  "source_url": "https://huggingface.co/TheDrummer/Skyfall-31B-v4.2",
   "criteria": [
     {
       "criterion": "assistant_smell",

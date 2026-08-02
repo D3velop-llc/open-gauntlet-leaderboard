@@ -1,6 +1,7 @@
 {
   "slug": "magistry-24b-v1-1",
   "display_name": "magistry-24b-v1.1",
+  "source_url": "https://huggingface.co/sophosympatheia/Magistry-24B-v1.1",
   "criteria": [],
   "category_breakdown": [],
   "reproducibility": {

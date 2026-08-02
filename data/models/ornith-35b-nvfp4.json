@@ -1,6 +1,7 @@
 {
   "slug": "ornith-35b-nvfp4",
   "display_name": "ornith-35b-nvfp4",
+  "source_url": null,
   "criteria": [
     {
       "criterion": "assistant_smell",

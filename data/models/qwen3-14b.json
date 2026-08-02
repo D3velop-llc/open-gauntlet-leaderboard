@@ -1,6 +1,7 @@
 {
   "slug": "qwen3-14b",
   "display_name": "qwen3-14b",
+  "source_url": "https://huggingface.co/Qwen/Qwen3-14B",
   "criteria": [
     {
       "criterion": "assistant_smell",

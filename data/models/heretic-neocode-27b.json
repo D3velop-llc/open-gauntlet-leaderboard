@@ -1,6 +1,7 @@
 {
   "slug": "heretic-neocode-27b",
   "display_name": "heretic-neocode-27b",
+  "source_url": null,
   "criteria": [
     {
       "criterion": "assistant_smell",

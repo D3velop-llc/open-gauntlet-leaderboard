@@ -1,6 +1,7 @@
 {
   "slug": "gemma4-31b-lilarest-nvfp4-turbo",
   "display_name": "Gemma 4 31B LilaRest NVFP4 Turbo",
+  "source_url": null,
   "criteria": [
     {
       "criterion": "assistant_smell",

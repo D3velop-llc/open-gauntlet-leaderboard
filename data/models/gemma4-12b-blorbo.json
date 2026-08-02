@@ -1,6 +1,7 @@
 {
   "slug": "gemma4-12b-blorbo",
   "display_name": "gemma4-12b-blorbo",
+  "source_url": "https://huggingface.co/allura-org/gemma-4-12b-blorbo",
   "criteria": [
     {
       "criterion": "assistant_smell",

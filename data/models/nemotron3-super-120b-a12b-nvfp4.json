@@ -1,6 +1,7 @@
 {
   "slug": "nemotron3-super-120b-a12b-nvfp4",
   "display_name": "NVIDIA Nemotron 3 Super 120B-A12B NVFP4",
+  "source_url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-NVFP4",
   "criteria": [
     {
       "criterion": "assistant_smell",

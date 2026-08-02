@@ -1,6 +1,7 @@
 {
   "slug": "fable-fusion-27b",
   "display_name": "fable-fusion-27b",
+  "source_url": "https://huggingface.co/DavidAU/Qwen3.6-27B-Fable-Fusion-711-Uncensored-Heretic-NM-DAU-MTP",
   "criteria": [
     {
       "criterion": "assistant_smell",

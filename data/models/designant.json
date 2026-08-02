@@ -1,6 +1,7 @@
 {
   "slug": "designant",
   "display_name": "designant",
+  "source_url": "https://huggingface.co/allura-org/Q3-30B-A3B-Designant",
   "criteria": [
     {
       "criterion": "assistant_smell",

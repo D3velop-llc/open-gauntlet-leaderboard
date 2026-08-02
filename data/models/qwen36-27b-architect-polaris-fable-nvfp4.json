@@ -1,6 +1,7 @@
 {
   "slug": "qwen36-27b-architect-polaris-fable-nvfp4",
   "display_name": "Qwen 3.6 27B Architect Polaris Fable NVFP4",
+  "source_url": null,
   "criteria": [
     {
       "criterion": "assistant_smell",

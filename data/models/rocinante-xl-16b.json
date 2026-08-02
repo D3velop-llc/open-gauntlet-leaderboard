@@ -1,6 +1,7 @@
 {
   "slug": "rocinante-xl-16b",
   "display_name": "rocinante-xl-16b",
+  "source_url": "https://huggingface.co/TheDrummer/Rocinante-XL-16B-v1",
   "criteria": [
     {
       "criterion": "assistant_smell",

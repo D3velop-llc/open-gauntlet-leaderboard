@@ -1,6 +1,7 @@
 {
   "slug": "pantheon-proto-rp-1-8-30b-a3b",
   "display_name": "pantheon-proto-rp-1.8-30b-a3b",
+  "source_url": "https://huggingface.co/Gryphe/Pantheon-Proto-RP-1.8-30B-A3B",
   "criteria": [
     {
       "criterion": "assistant_smell",

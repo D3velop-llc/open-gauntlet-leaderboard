@@ -1,6 +1,7 @@
 {
   "slug": "qwen3-5-27b",
   "display_name": "qwen3.5-27b",
+  "source_url": "https://huggingface.co/Qwen/Qwen3.5-27B",
   "criteria": [
     {
       "criterion": "assistant_smell",

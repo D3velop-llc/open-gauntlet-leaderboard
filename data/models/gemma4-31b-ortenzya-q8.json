@@ -1,6 +1,7 @@
 {
   "slug": "gemma4-31b-ortenzya-q8",
   "display_name": "Gemma 4 31B Ortenzya Creative Wordsmith Q8",
+  "source_url": "https://huggingface.co/llmfan46/gemma-4-Ortenzya-The-Creative-Wordsmith-31B-it-uncensored-heretic",
   "criteria": [
     {
       "criterion": "assistant_smell",

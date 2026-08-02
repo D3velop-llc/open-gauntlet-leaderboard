@@ -1,6 +1,7 @@
 {
   "slug": "gemma4-26b-a4b-aeon-uncensored-nvfp4",
   "display_name": "Gemma 4 26B-A4B AEON Uncensored NVFP4",
+  "source_url": "https://huggingface.co/AEON-7/Gemma-4-26B-A4B-it-Uncensored-NVFP4",
   "criteria": [
     {
       "criterion": "assistant_smell",

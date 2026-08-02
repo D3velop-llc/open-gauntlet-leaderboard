@@ -1,6 +1,7 @@
 {
   "slug": "hivemind-32b-preview",
   "display_name": "hivemind-32b-preview",
+  "source_url": "https://huggingface.co/HiveLabsAI/hivemind-32b-preview",
   "criteria": [
     {
       "criterion": "assistant_smell",

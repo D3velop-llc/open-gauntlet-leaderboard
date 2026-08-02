@@ -1,6 +1,7 @@
 {
   "slug": "gemma4-26b-a4b-unsloth-nvfp4",
   "display_name": "Gemma 4 26B-A4B Unsloth NVFP4",
+  "source_url": null,
   "criteria": [
     {
       "criterion": "assistant_smell",

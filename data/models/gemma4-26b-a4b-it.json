@@ -1,6 +1,7 @@
 {
   "slug": "gemma4-26b-a4b-it",
   "display_name": "gemma4-26b-a4b-it",
+  "source_url": "https://huggingface.co/google/gemma-4-26B-A4B-it",
   "criteria": [
     {
       "criterion": "assistant_smell",

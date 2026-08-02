@@ -1,6 +1,7 @@
 {
   "slug": "bluestar-27b",
   "display_name": "bluestar-27b",
+  "source_url": "https://huggingface.co/zerofata/Q3.5-BlueStar-27B",
   "criteria": [
     {
       "criterion": "assistant_smell",

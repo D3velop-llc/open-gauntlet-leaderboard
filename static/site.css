@@ -330,6 +330,34 @@ td.hw-nofit { color: var(--muted); font-style: italic; }
   grid-column: 2; font-size: 10px; letter-spacing: .04em; color: var(--muted);
   border-top: 1px solid rgba(245, 163, 75, .2); padding-top: 7px;
 }
+/* ── Source link ────────────────────────────────────────────────────────────
+   "Go and look at it yourself." It appears in two places — under the model
+   headline on Words, and as the first line of a drill-down on Voices and
+   Listening — and is the same object in both, because it makes the same
+   promise: everything else on the page is this project's reading of the
+   system, and this is the system speaking for itself.
+
+   Named by destination rather than labelled "link": a Hugging Face model card,
+   a GitHub repo and a vendor product page are three different kinds of answer,
+   and the reader should know which one they are about to get. */
+.src-link {
+  display: inline-flex; align-items: baseline; gap: 3px;
+  font-family: var(--font-mono); font-size: 11.5px;
+  color: var(--cool); text-decoration: none;
+  border-bottom: 1px solid rgba(74, 168, 216, .28);
+}
+.src-link:hover { border-bottom-color: var(--cool); }
+.src-arrow { font-size: 10px; opacity: .7; }
+/* leading position in a drill-down carries a little more weight */
+.src-link-lead { font-size: 12px; }
+
+.detail-source { margin: 6px 0 2px; }
+.detail-source .src-link { font-size: 12.5px; }
+/* Nothing to show is nothing to see: no empty box, no stray margin. */
+.detail-source:empty { display: none; }
+
+.tts-source { margin: 0 0 10px; }
+
 /* ── Who is actually first ──────────────────────────────────────────────────
    The forest plot is honest but it answers "by how much"; a reader arrives
    asking "who won". The bootstrap can answer that directly — rank inside each

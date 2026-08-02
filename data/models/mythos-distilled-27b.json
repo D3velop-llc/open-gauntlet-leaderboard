@@ -1,6 +1,7 @@
 {
   "slug": "mythos-distilled-27b",
   "display_name": "mythos-distilled-27b",
+  "source_url": null,
   "criteria": [
     {
       "criterion": "assistant_smell",

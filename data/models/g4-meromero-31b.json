@@ -1,6 +1,7 @@
 {
   "slug": "g4-meromero-31b",
   "display_name": "g4-meromero-31b",
+  "source_url": "https://huggingface.co/zerofata/G4-MeroMero-31B",
   "criteria": [
     {
       "criterion": "assistant_smell",

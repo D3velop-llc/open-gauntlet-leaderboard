@@ -1,6 +1,7 @@
 {
   "slug": "qwen36-35b-styletune",
   "display_name": "qwen36-35b-styletune",
+  "source_url": "https://huggingface.co/Gryphe/Qwen3.6-35B-A3B-StyleTune",
   "criteria": [
     {
       "criterion": "assistant_smell",

@@ -1,6 +1,7 @@
 {
   "slug": "gemma4-26b-a4b-heretic-qat-nvfp4-gguf",
   "display_name": "Gemma 4 26B-A4B Heretic QAT NVFP4 GGUF",
+  "source_url": "https://huggingface.co/llmfan46/gemma-4-26B-A4B-it-qat-q4_0-uncensored-heretic-NVFP4-GGUF",
   "criteria": [
     {
       "criterion": "assistant_smell",

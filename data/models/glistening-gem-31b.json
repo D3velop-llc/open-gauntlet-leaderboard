@@ -1,6 +1,7 @@
 {
   "slug": "glistening-gem-31b",
   "display_name": "glistening-gem-31b",
+  "source_url": "https://huggingface.co/sophosympatheia/Glistening-Gem-31B-v1.0",
   "criteria": [
     {
       "criterion": "assistant_smell",

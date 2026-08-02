@@ -1,6 +1,7 @@
 {
   "slug": "anubis-mini-8b",
   "display_name": "anubis-mini-8b",
+  "source_url": "https://huggingface.co/TheDrummer/Anubis-Mini-8B-v1",
   "criteria": [
     {
       "criterion": "assistant_smell",

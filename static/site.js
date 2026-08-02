@@ -976,6 +976,39 @@ function vsSplitName(name) {
   return m && m[2] ? [m[1], m[2]] : [name, ""];
 }
 
+/* The "go and look at it yourself" link.
+
+   Renders NOTHING when there is no verified URL. That is the whole design: a
+   guessed link that 404s, or that lands on a same-named different project, is
+   worse than no link at all, because it looks checked. The field is null until
+   a human-or-agent-verified URL exists for that exact system.
+
+   The label names the destination rather than saying "link", because where it
+   goes changes what you get: a Hugging Face model card, a GitHub repo and a
+   vendor product page are three different kinds of answer.
+*/
+function sourceHost(url) {
+  try {
+    const h = new URL(url).hostname.replace(/^www\./, "");
+    if (h === "huggingface.co") return "Hugging Face";
+    if (h === "github.com") return "GitHub";
+    if (h.endsWith("arxiv.org")) return "arXiv";
+    return h;
+  } catch { return null; }
+}
+
+function sourceLink(url, cls) {
+  if (!url || typeof url !== "string") return null;
+  const host = sourceHost(url);
+  if (!host) return null;                       // unparseable is not publishable
+  const a = el("a", { class: cls || "src-link", href: url,
+                      target: "_blank", rel: "noopener noreferrer" });
+  a.append(el("span", { class: "src-host", text: host }),
+           el("span", { class: "src-arrow", "aria-hidden": "true", text: " ↗" }));
+  a.setAttribute("title", url);
+  return a;
+}
+
 function renderVerdictStrip(models) {
   const mount = document.getElementById("verdict-strip");
   if (!mount) return;
@@ -1472,6 +1505,10 @@ async function initModel() {
     ]);
     window.OG_HARDWARE = (lb && lb.hardware) || window.OG_HARDWARE || [];
     $("[data-model-name]").textContent = d.display_name || slug;
+    // Under the headline, above the slug line: the reader has just been told
+    // WHICH model this is, and the next question is where it came from.
+    const srcMount = $("[data-model-source]");
+    if (srcMount) srcMount.replaceChildren(sourceLink(d.source_url) || "");
     $("[data-model-slug]").textContent = slug;
     document.title = `${d.display_name || slug} — OpenGauntlet`;
     mount.replaceChildren();   // clear the "Loading…" placeholder
@@ -2416,6 +2453,13 @@ function ttsVisible(rows, state, extraFacet) {
 
 function ttsDetailRow(row, colCount) {
   const body = el("div", { class: "tts-detail-body" });
+
+  // First thing in the panel. Everything below it is this survey's reading of
+  // the system; this is the system speaking for itself, and a reader who
+  // distrusts a row should be one click from checking it.
+  const src = sourceLink(row.source_url, "src-link src-link-lead");
+  if (src) body.appendChild(el("p", { class: "tts-source" },
+    el("span", { class: "tts-dt", text: "Source" }), " ", src));
 
   if (row.facets && row.facets.length) {
     const chips = el("div", { class: "tts-facet-chips" });
