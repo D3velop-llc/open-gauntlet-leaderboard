@@ -2535,6 +2535,87 @@ const RUNTIME_COMPARE_FIELDS = [
   ["best_for", "Best for"],
 ];
 
+const ORCHESTRATOR_CATS = [
+  { key: "framework",         label: "Framework" },
+  { key: "platform",          label: "Platform" },
+  { key: "telephony-focused", label: "Telephony-focused" },
+];
+const ORCHESTRATOR_CAT_LABEL = Object.fromEntries(ORCHESTRATOR_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror ORCHESTRATOR_FACETS in config.py (CORE_FACETS plus a small
+   domain extension — telephony/multi-agent/tool-calling/observability are
+   the axes a builder actually filters on here). */
+const ORCHESTRATOR_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+  ] },
+  { title: "Can do", facets: [
+    ["telephony-integration", "Telephony (SIP/PSTN)"], ["multi-agent", "Multi-agent"],
+    ["tool-calling-native", "Tool-calling"], ["observability-builtin", "Built-in observability"],
+    ["streaming", "Streaming"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+];
+const ORCHESTRATOR_FACET_LABEL = Object.fromEntries(ORCHESTRATOR_FACET_GROUPS.flatMap((g) => g.facets));
+
+const ORCHESTRATOR_COLS = [
+  { key: "name",          label: "Framework",        txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",      label: "What's different", txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",      label: "Kind",             txt: true, def: true, group: "Core" },
+  { key: "licence",       label: "Licence",          txt: true, def: true, group: "Core" },
+  { key: "transport",     label: "Transport",        txt: true, def: true, wide: true, group: "Core" },
+  { key: "tool_calling",  label: "Tool-calling",     txt: true, def: true, wide: true, group: "Core" },
+  { key: "self_host",     label: "Deployment",       txt: true, def: true, group: "Core" },
+  { key: "price_sort",    label: "Cost",             txt: true, cell: "price_note", group: "Commercial" },
+  { key: "architecture",  label: "Architecture",     txt: true, wide: true, group: "Technical" },
+  { key: "observability", label: "Observability",    txt: true, wide: true, group: "Technical" },
+  { key: "sdk_languages", label: "SDK languages",    txt: true, group: "Technical" },
+  { key: "runs_on",       label: "Runs on",          txt: true, wide: true, group: "Technical" },
+  { key: "integration",   label: "Integrates with",  txt: true, wide: true, group: "Technical" },
+  { key: "status",        label: "Status",           txt: true, group: "Evidence" },
+  { key: "verification",  label: "Evidence",         txt: true, group: "Evidence" },
+  { key: "adoption",      label: "Adoption",         txt: true, wide: true, group: "Evidence" },
+  { key: "watch",         label: "The catch",        txt: true, wide: true, group: "Evidence" },
+];
+const ORCHESTRATOR_COL_DEFAULT = ORCHESTRATOR_COLS.filter((c) => c.def).map((c) => c.key);
+
+const ORCHESTRATOR_COL_PRESETS = [
+  { key: "default", label: "Default", cols: ORCHESTRATOR_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "transport", "tool_calling", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "architecture", "observability", "sdk_languages", "runs_on", "integration"] },
+  { key: "all",     label: "Everything", cols: ORCHESTRATOR_COLS.map((c) => c.key) },
+];
+
+const ORCHESTRATOR_PANELS = [
+  { title: "Technical", fields: [
+    ["architecture", "Architecture"], ["observability", "Observability"],
+    ["sdk_languages", "SDK languages"], ["runs_on", "Runs on"], ["integration", "Integrates with"],
+  ] },
+  { title: "Evidence", fields: [
+    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const ORCHESTRATOR_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["transport", "Transport"], ["tool_calling", "Tool-calling"], ["self_host", "Deployment"],
+  ["architecture", "Architecture"], ["observability", "Observability"],
+  ["sdk_languages", "SDK languages"], ["runs_on", "Runs on"], ["integration", "Integrates with"],
+  ["price_note", "Cost"],
+  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
+  ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
 const MATRIX_SPECS = {
   tts: {
     key: "tts", dataUrl: "data/tts.json", prefsKey: "og.tts.prefs.v1",
@@ -2568,16 +2649,24 @@ const MATRIX_SPECS = {
     panels: RUNTIME_PANELS, compareFields: RUNTIME_COMPARE_FIELDS,
     kindHint: "Four kinds: local engines run one user at a time, serving engines handle many concurrently, quant specialists are built around one format, and platform engines target one specific hardware family.",
   },
+  orchestrators: {
+    key: "orchestrators", dataUrl: "data/orchestrators.json", prefsKey: "og.orchestrators.prefs.v1",
+    cats: ORCHESTRATOR_CATS, catLabel: ORCHESTRATOR_CAT_LABEL,
+    facetGroups: ORCHESTRATOR_FACET_GROUPS, facetLabel: ORCHESTRATOR_FACET_LABEL,
+    cols: ORCHESTRATOR_COLS, colDefault: ORCHESTRATOR_COL_DEFAULT, colPresets: ORCHESTRATOR_COL_PRESETS,
+    panels: ORCHESTRATOR_PANELS, compareFields: ORCHESTRATOR_COMPARE_FIELDS,
+    kindHint: "Three kinds: frameworks are open-source and self-hosted, platforms are hosted and managed, and telephony-focused tools are built specifically around SIP/PSTN voice calling rather than general deployment.",
+  },
 };
 
 /* ------------------------------------------------------------------------
-   Four matrices, one renderer.
+   Five matrices, one renderer.
 
-   Voices, Listening, Turns and Runtimes differ in exactly six things —
+   Voices, Listening, Turns, Runtimes and Orchestrators differ in exactly six things —
    categories, facets, columns, expander panels, compare fields and the prefs
    key. Licence chips, the hardware ladder, magnitude sorting, popovers,
-   compare and the whole 600-line table are identical, and a second (or
-   third, or fourth) copy would be a copy to keep in sync.
+   compare and the whole 600-line table are identical, and a second, third,
+   fourth, or fifth copy would be a copy to keep in sync.
 
    SPEC is module-level rather than threaded through fifteen signatures because
    a page renders exactly ONE matrix: the router picks it from `data-page`, and
@@ -3004,8 +3093,17 @@ function ttsFacetPicker(rows, state, onChange) {
 
 /* One <select>, not twelve chips. The ladder needs real rungs (a 5090 is 32 GB,
    DGX Spark is 128) and twelve chips is exactly the clutter this pass exists to
-   remove — a single control both names your hardware and shows the choice. */
+   remove — a single control both names your hardware and shows the choice.
+
+   Sections like Orchestrators have no meaningful hardware floor at all — every
+   row is a hosted platform or a framework with no GPU/CPU requirement worth
+   stating, so no row ever sets `hardware`. Rendering the picker there would
+   list all eleven tiers at an identical count and change nothing when clicked:
+   a dead control ahead of the column picker. Skip it whenever the section's
+   own data never populates the field; sections that do (Turns, Runtimes) are
+   unaffected. */
 function ttsHardwarePicker(rows, state, onChange) {
+  if (!rows.some((r) => r.hardware != null)) return null;
   const sel = el("select", { class: "tts-hwsel", "aria-label": "Hardware you have" });
   sel.appendChild(el("option", { value: "", text: "Runs on: anything" }));
   TTS_HARDWARE.forEach((h) => {
@@ -3669,6 +3767,6 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
-  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes") initMatrix(page);
+  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators") initMatrix(page);
   else if (page === "hardware") initHardwareTable();
 });

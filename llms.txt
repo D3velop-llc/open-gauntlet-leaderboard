@@ -10,6 +10,7 @@
 - [Turn-taking research](https://opengauntlet.com/turns.html): Sourced VAD and endpointing system comparison.
 - [Inference engine research](https://opengauntlet.com/runtimes.html): Sourced LLM serving/runtime comparison, including a first-party vLLM vs SGLang benchmark.
 - [Hardware reference](https://opengauntlet.com/hardware.html): GPU and hardware VRAM/bandwidth reference, model-agnostic.
+- [Orchestrator research](https://opengauntlet.com/orchestrators.html): Sourced voice-agent framework and platform comparison.
 - [Text-to-speech research](https://opengauntlet.com/tts.html): Sourced TTS system comparison.
 - [TTS comparison guide](https://opengauntlet.com/tts-guide.html): How to interpret TTS evidence.
 - [TTS legal guide](https://opengauntlet.com/tts-legal.html): Licensing, consent, and legal-risk research.
@@ -22,4 +23,5 @@
 - [Turns research JSON](https://opengauntlet.com/data/turns.json)
 - [Runtimes research JSON](https://opengauntlet.com/data/runtimes.json)
 - [Hardware reference JSON](https://opengauntlet.com/data/hardware-catalog.json)
+- [Orchestrators research JSON](https://opengauntlet.com/data/orchestrators.json)
 - [TTS research JSON](https://opengauntlet.com/data/tts.json)
