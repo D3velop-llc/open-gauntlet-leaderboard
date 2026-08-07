@@ -1,0 +1,160 @@
+{
+  "edition": "2026.1",
+  "compiled": "2026-08-07",
+  "scope_note": "A model-agnostic reference for VRAM budgets and memory bandwidth across real GPUs and hardware platforms, spanning the same hardware tiers every other survey page on this site already filters by. This catalog does not claim any model's actual speed on any of these cards — for that, see a specific model's page, which shows real measured throughput on the project's own reference hardware.",
+  "method_note": "GPU specifications (VRAM, memory bandwidth, memory type) are sourced from vendor spec sheets and verified before publication. Consumer GPU prices move constantly and are omitted or marked \"Not published\" rather than guessed. One entry, the DGX Spark, carries this project's own measured effective bandwidth rather than only a vendor figure, since it is the primary machine this benchmark runs on.",
+  "entries": [
+    {
+      "name": "GeForce RTX 4060",
+      "tier": "gpu-8",
+      "vram_gb": 8.0,
+      "memory_bandwidth_gbps": 272.0,
+      "memory_type": "GDDR6",
+      "category": "consumer",
+      "best_for": "The entry point for local LLM inference — enough VRAM for small (7-8B) models at 4-bit quantization, and the narrowest 128-bit bus on this list, which caps how much a bigger model can help even when it technically fits.",
+      "price_note": "Not published; prices vary by region and retailer.",
+      "source_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4060-4060ti/",
+      "notes": "8 GB on a 128-bit bus at 17 Gbps GDDR6, giving 272 GB/s. The bus width, not the VRAM capacity, is what limits this tier's ceiling on decode speed.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "GeForce RTX 4070",
+      "tier": "gpu-12",
+      "vram_gb": 12.0,
+      "memory_bandwidth_gbps": 504.0,
+      "memory_type": "GDDR6X",
+      "category": "consumer",
+      "best_for": "Comfortable single-GPU room for 8-13B models at 4-8 bit quantization with headroom for a real context window, without stepping up to a 24 GB card.",
+      "price_note": "Not published; prices vary by region and retailer.",
+      "source_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4070-family/",
+      "notes": "12 GB on a 192-bit bus at 21 Gbps GDDR6X, giving 504 GB/s. NVIDIA later shipped a second RTX 4070 SKU with slower 20 Gbps GDDR6 instead of GDDR6X (480 GB/s) under the identical \"RTX 4070\" name with no model-number change — the two are not interchangeable for a bandwidth-sensitive workload, and a buyer should check the memory type on the box, not just the model name.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "GeForce RTX 5060 Ti 16GB",
+      "tier": "gpu-16",
+      "vram_gb": 16.0,
+      "memory_bandwidth_gbps": 448.0,
+      "memory_type": "GDDR7",
+      "category": "consumer",
+      "best_for": "The cheapest way onto this list's 16 GB rung — enough capacity for most 13-14B models at 4-bit and some 8-bit, though its 128-bit bus keeps bandwidth below the older (384-bit) RTX 3090 despite the newer, faster GDDR7 chips.",
+      "price_note": "Not published; prices vary by region and retailer.",
+      "source_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5060-family/",
+      "notes": "16 GB on a 128-bit bus at 28 Gbps GDDR7, giving 448 GB/s. A narrower bus than the 24 GB tier below it, illustrating that VRAM capacity and bus width are independent numbers that a generation refresh does not automatically both improve.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "GeForce RTX 3090",
+      "tier": "gpu-24",
+      "vram_gb": 24.0,
+      "memory_bandwidth_gbps": 936.0,
+      "memory_type": "GDDR6X",
+      "category": "consumer",
+      "best_for": "The lowest-cost route to 24 GB of VRAM on this list — two generations old, but its 384-bit bus keeps it within ~7% of the RTX 4090's bandwidth at the same capacity, which is the whole point of pairing these two rows.",
+      "price_note": "Not published; prices vary by region and retailer.",
+      "source_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3090-3090ti/",
+      "notes": "24 GB on a 384-bit bus at 19.5 Gbps GDDR6X, giving 936 GB/s. Compare directly against the RTX 4090 below — same VRAM tier, same bus width, and a bandwidth gap far smaller than the generational marketing gap between Ampere and Ada Lovelace would suggest.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "GeForce RTX 4090",
+      "tier": "gpu-24",
+      "vram_gb": 24.0,
+      "memory_bandwidth_gbps": 1008.0,
+      "memory_type": "GDDR6X",
+      "category": "consumer",
+      "best_for": "The fastest 24 GB consumer card available new, for anyone who wants this list's top gpu-24 bandwidth rather than its lowest price.",
+      "price_note": "Not published; prices vary by region and retailer.",
+      "source_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/40-series/rtx-4090/",
+      "notes": "24 GB on a 384-bit bus at 21 Gbps GDDR6X, giving 1008 GB/s (theoretical peak; sustained read bandwidth in practice is commonly measured somewhat lower). See the RTX 3090 entry above for the same-tier comparison this pairing exists to make.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "GeForce RTX 5090",
+      "tier": "gpu-32",
+      "vram_gb": 32.0,
+      "memory_bandwidth_gbps": 1792.0,
+      "memory_type": "GDDR7",
+      "category": "consumer",
+      "best_for": "The largest-VRAM, highest-bandwidth card a single consumer PCIe slot gets you as of this writing — the ceiling before a buyer has to move to workstation or datacenter cards.",
+      "price_note": "Not published; prices vary by region and retailer.",
+      "source_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5090/",
+      "notes": "32 GB on a 512-bit bus at 28 Gbps GDDR7, giving 1792 GB/s — nearly double the RTX 4090 despite only a 33% VRAM increase, because both the bus width and the per-pin speed grade went up at once.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "RTX 6000 Ada Generation",
+      "tier": "gpu-48",
+      "vram_gb": 48.0,
+      "memory_bandwidth_gbps": 960.0,
+      "memory_type": "GDDR6 (ECC)",
+      "category": "prosumer",
+      "best_for": "A single-card 48 GB workstation option for models too large for any consumer card's VRAM, without moving to SXM/rack-mount datacenter hardware — ECC memory and a blower cooler built for sustained, unattended workstation or server-chassis operation.",
+      "price_note": "Not published; workstation channel pricing, not a consumer MSRP.",
+      "source_url": "https://www.nvidia.com/en-us/products/workstations/rtx-6000/",
+      "notes": "48 GB on a 384-bit bus at 20 Gbps GDDR6, giving 960 GB/s. ECC (error-correcting code) memory, unlike every GeForce card above — a workstation reliability feature, not a performance one.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "NVIDIA A100 80GB SXM",
+      "tier": "gpu-80",
+      "vram_gb": 80.0,
+      "memory_bandwidth_gbps": 2039.0,
+      "memory_type": "HBM2e",
+      "category": "datacenter",
+      "best_for": "A datacenter-class card for workloads that need HBM-class bandwidth and 80 GB in a single accelerator, where NVLink/multi-GPU scaling and enterprise support matter more than unit price.",
+      "price_note": "Not published; enterprise/OEM pricing, not sold at retail.",
+      "source_url": "https://www.nvidia.com/en-us/data-center/a100/",
+      "notes": "80 GB HBM2e across five stacks, giving 2039 GB/s in the SXM form factor (the PCIe variant, in the same slot form factor as the consumer cards above, is lower at 1935 GB/s — the SXM number is quoted here since it is the variant NVIDIA's own page highlights).",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "NVIDIA H100 SXM",
+      "tier": "gpu-80",
+      "vram_gb": 80.0,
+      "memory_bandwidth_gbps": 3350.0,
+      "memory_type": "HBM3",
+      "category": "datacenter",
+      "best_for": "The step up from A100 at the same 80 GB capacity — HBM3 nearly doubles bandwidth over HBM2e at an unchanged VRAM tier, which is the comparison this row exists to make alongside the A100 entry above.",
+      "price_note": "Not published; enterprise/OEM pricing, not sold at retail.",
+      "source_url": "https://www.nvidia.com/en-us/data-center/h100/",
+      "notes": "80 GB HBM3, giving 3.35 TB/s (3350 GB/s) in the SXM5 form factor. A separate 94 GB \"H100 NVL\" PCIe variant exists at a slightly higher 3.9 TB/s and is not the SKU quoted here.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "DGX Spark (GB10)",
+      "tier": "gpu-128",
+      "vram_gb": 128.0,
+      "memory_bandwidth_gbps": 210.0,
+      "memory_type": "LPDDR5x unified",
+      "category": "unified",
+      "best_for": "The largest single-box unified-memory budget on this list, and the machine this benchmark itself runs on — the right choice for models too large for any single consumer GPU where datacenter-card pricing isn't an option.",
+      "price_note": "$3,999 at its October 2025 launch, raised to $4,699 (Founders Edition MSRP) in February 2026 — NVIDIA attributed the increase to memory-supply constraints, the same DRAM shortage that pushed Apple to withdraw its highest-memory Mac Studio configurations. Sold direct to individual buyers via nvidia.com/NVIDIA Marketplace and through retail and OEM partners (Amazon, Best Buy, Micro Center, Acer, ASUS, Dell, Gigabyte, HP, Lenovo, MSI) — not exclusively enterprise procurement.",
+      "source_url": "https://www.nvidia.com/en-us/products/workstations/dgx-spark/",
+      "notes": "Vendor spec quotes 273 GB/s theoretical peak bandwidth. This project measured effective decode bandwidth of ~150-210 GB/s directly on its own DGX Spark during benchmark development — the 210 GB/s figure here reflects that measurement, not the spec-sheet number, since decode throughput tracks effective bandwidth, not the theoretical peak.",
+      "bandwidth_measured": true
+    },
+    {
+      "name": "AMD Instinct MI300X",
+      "tier": "gpu-128",
+      "vram_gb": 192.0,
+      "memory_bandwidth_gbps": 5300.0,
+      "memory_type": "HBM3",
+      "category": "datacenter",
+      "best_for": "The largest single-accelerator memory pool on this list by a wide margin, for models or KV caches too large even for an 80 GB datacenter card — and, alongside the DGX Spark entry above, a demonstration that \"128 GB+\" hardware spans everything from a 210 GB/s unified-memory desktop box to a 5.3 TB/s datacenter accelerator at the same headline VRAM figure.",
+      "price_note": "Not published; enterprise/OEM pricing, not sold at retail.",
+      "source_url": "https://lenovopress.lenovo.com/lp1943-thinksystem-amd-mi300x-192gb-750w-8-gpu-board",
+      "notes": "192 GB of on-package HBM3 shared across the accelerator, giving 5.3 TB/s (5300 GB/s) peak on-package bandwidth. AMD's own product page states these figures; this project fetched an official partner (Lenovo ThinkSystem) product guide directly, since AMD's page timed out during verification, and cross-checked it against multiple independent secondary sources — all converged on the same 192 GB / 5.3 TB/s figures.",
+      "bandwidth_measured": false
+    }
+  ],
+  "corrections": [],
+  "gaps": [
+    "This catalog is intentionally small (~10-15 entries) rather than exhaustive — it covers one or two representative cards per hardware tier, not every SKU a vendor has ever shipped.",
+    "No Apple Silicon entry is included. Apple's Mac Studio (M3 Ultra) is the obvious gpu-128 candidate — 819 GB/s unified-memory bandwidth per Apple's own tech-specs page — but as of this edition's compile date Apple has withdrawn its 256 GB and 512 GB memory configurations from sale (reported by multiple outlets as a memory-supply constraint) and sells only a 96 GB configuration, which belongs at the gpu-80 tier, not gpu-128. Rather than list a 128 GB+ configuration that is not currently purchasable, this edition omits the Apple Silicon row and substitutes AMD Instinct MI300X for gpu-128 vendor diversity; revisit this once Apple's higher-memory configurations return to sale.",
+    "No CPU-only tier entry is included — \"a modern laptop CPU\" is not a single verifiable SKU with one spec sheet, unlike every other row on this list."
+  ],
+  "counts": {
+    "total": 11
+  }
+}

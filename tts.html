@@ -40,7 +40,7 @@
   
   <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
   <link rel="apple-touch-icon" href="static/img/bot-head.png">
-  <link rel="stylesheet" href="static/site.css?v=ae3fb9e6f6">
+  <link rel="stylesheet" href="static/site.css?v=1ee69a0ba2">
   
 </head>
 
@@ -52,10 +52,14 @@
         
         <a href="asr.html"
            ><span class="ev hollow" aria-hidden="true"></span>Listening</a>
+        <a href="turns.html"
+           ><span class="ev hollow" aria-hidden="true"></span>Turns</a>
         <a href="index.html"
            ><span class="ev solid" aria-hidden="true"></span>Words</a>
         <a href="tts.html" class="active"
            ><span class="ev hollow" aria-hidden="true"></span>Voices</a>
+        <a href="runtimes.html"
+           ><span class="ev hollow" aria-hidden="true"></span>Runtimes</a>
       </nav>
     </div>
   </header>
@@ -79,13 +83,18 @@
   </div>
   
 
-<nav class="pipeline" aria-label="The three stages of a voice product">
+<nav class="pipeline" aria-label="The stages of a voice product, and what runs them">
   
     <a class="pipe-step" href="asr.html">
       <span class="pipe-job">what it hears</span>
       <span class="pipe-name">Listening</span>
       <span class="pipe-ev"><span class="ev hollow"
         aria-hidden="true"></span>surveyed &middot; 106</span></a><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
+    <a class="pipe-step" href="turns.html">
+      <span class="pipe-job">whose turn it is</span>
+      <span class="pipe-name">Turns</span>
+      <span class="pipe-ev"><span class="ev hollow"
+        aria-hidden="true"></span>surveyed &middot; 35</span></a><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
     <a class="pipe-step" href="index.html">
       <span class="pipe-job">what it says</span>
       <span class="pipe-name">Words</span>
@@ -95,7 +104,12 @@
       <span class="pipe-job">how it sounds</span>
       <span class="pipe-name">Voices</span>
       <span class="pipe-ev"><span class="ev hollow"
-        aria-hidden="true"></span>surveyed &middot; 168</span></span>
+        aria-hidden="true"></span>surveyed &middot; 168</span></span><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
+    <a class="pipe-step" href="runtimes.html">
+      <span class="pipe-job">how it runs</span>
+      <span class="pipe-name">Runtimes</span>
+      <span class="pipe-ev"><span class="ev hollow"
+        aria-hidden="true"></span>surveyed &middot; 31</span></a>
 </nav>
   </div>
 
@@ -191,11 +205,14 @@
 
   <footer class="foot">
     <div class="wrap">
-      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. Words are measured here; Voices and Listening are sourced surveys.</span>
+      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. Words are measured here; Voices, Listening, Turns, Runtimes, and Hardware Reference are sourced surveys.</span>
       <nav class="foot-nav">
         <a href="asr.html">Listening</a><span class="sep">·</span>
+        <a href="turns.html">Turns</a><span class="sep">·</span>
         <a href="index.html">Words</a><span class="sep">·</span>
         <a href="tts.html">Voices</a><span class="sep">·</span>
+        <a href="runtimes.html">Runtimes</a><span class="sep">·</span>
+        <a href="hardware.html">What fits where</a><span class="sep">·</span>
         <a href="methodology.html">How it works</a><span class="sep">·</span>
         <a href="compare.html">Head to head</a><span class="sep">·</span>
         <a href="feed.xml">Updates</a><span class="sep">·</span>
@@ -207,6 +224,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=e3934c4e5f" defer></script>
+  <script src="static/site.js?v=bc46651de9" defer></script>
 </body>
 </html>

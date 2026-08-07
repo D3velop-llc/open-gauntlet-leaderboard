@@ -1473,6 +1473,76 @@ dl.tts-spec dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--in
 }
 .tts-dateline-note { margin: 6px 0 0; max-width: 74ch; }
 
+/* ============================ HARDWARE REFERENCE TABLE ===================
+   Standalone sortable table (renderHardwareTable in site.js) — same visual
+   language as table.lb (sticky-free, since the table itself never scrolls
+   vertically) so a reader who has already met the leaderboard recognizes it
+   as sortable without a new convention to learn. Wrapped in the same
+   .table-scroll box every other table on the site uses, for the border,
+   radius, and horizontal-scroll-instead-of-page-overflow behavior. */
+table.hardware-table {
+  border-collapse: separate; border-spacing: 0;
+  width: 100%; min-width: 760px;
+  font-size: var(--fs-data);
+}
+table.hardware-table thead th {
+  background: var(--surface-2);
+  color: var(--ink-dim);
+  font-family: var(--font-mono);
+  font-weight: 600; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+  text-align: left;
+  padding: 11px 13px;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border-2);
+  cursor: pointer;
+  user-select: none;
+}
+table.hardware-table thead th:hover { color: var(--ink); }
+table.hardware-table thead th.sorted { color: var(--ember); }
+table.hardware-table thead th .arrow { color: var(--ember); opacity: 0; margin-left: 4px; font-size: 10px; }
+table.hardware-table thead th[aria-sort] .arrow { opacity: 1; }
+table.hardware-table tbody td {
+  padding: 9px 13px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+table.hardware-table tbody tr:last-child td { border-bottom: none; }
+table.hardware-table tbody tr:hover td { background: rgba(255, 255, 255, 0.022); }
+/* best_for is prose (observed up to ~230 chars, e.g. the DGX Spark row), not a short
+   value like every other column — the table's default nowrap makes that one cell the
+   longest thing in the table and drags the whole table's width with it (measured
+   ~2738px wide, ~5x a normal viewport). Wrap it and cap its width instead; every
+   other column keeps the nowrap short-value behavior above.
+   min-width matters as much as max-width here: table-layout stays auto (so the
+   short nowrap columns keep sizing themselves to content), which leaves this column
+   whatever space is left over — without a floor the six nowrap columns crowd it down
+   to ~1 word per line, wrapping a long entry to 15+ short lines and dragging every
+   row in the table up to that height even for rows with a short best_for value. */
+table.hardware-table td.col-best-for, table.hardware-table th.col-best-for {
+  white-space: normal;
+  min-width: 26ch;
+  max-width: 40ch;
+}
+/* Rows are clickable — reuses the same tts-detail/tts-detail-body/tts-dt CSS
+   the survey matrices already ship for their expanded rows, since it is
+   generic and this page needs the identical shape at a smaller scale. */
+table.hardware-table tbody tr.hw-row { cursor: pointer; }
+table.hardware-table tbody tr.hw-row:focus-visible { outline: 2px solid var(--cool); outline-offset: -2px; }
+table.hardware-table tbody tr.hw-row.open td { background: rgba(74, 168, 216, 0.075); border-bottom-color: transparent; }
+/* Marks the one Bandwidth figure that is this project's own measurement
+   rather than a vendor theoretical-peak spec (today: DGX Spark) — see the
+   comment on `bandwidth_measured` in config.py for why this matters. */
+.hw-measured-badge {
+  display: inline-block; margin-left: 7px; padding: 1px 6px;
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--cool); border: 1px solid currentColor;
+  border-radius: 3px; vertical-align: middle;
+}
+.hw-footnote { margin: 10px 0 0; }
+
 
 
 /* ---- empty state --------------------------------------------------------- */

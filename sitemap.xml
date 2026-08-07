@@ -21,6 +21,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://opengauntlet.com/turns.html</loc>
+    <lastmod>2026-08-02</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://opengauntlet.com/tts.html</loc>
     <lastmod>2026-08-02</lastmod>
     <priority>0.8</priority>
@@ -34,5 +39,15 @@
     <loc>https://opengauntlet.com/tts-legal.html</loc>
     <lastmod>2026-08-02</lastmod>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://opengauntlet.com/runtimes.html</loc>
+    <lastmod>2026-08-02</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://opengauntlet.com/hardware.html</loc>
+    <lastmod>2026-08-02</lastmod>
+    <priority>0.7</priority>
   </url>
 </urlset>

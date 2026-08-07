@@ -29,6 +29,12 @@
       <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
     </item>
     <item>
+      <title>Turns: turn-taking and endpointing research</title>
+      <link>https://opengauntlet.com/turns.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/turns.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
       <title>Voices: text-to-speech research</title>
       <link>https://opengauntlet.com/tts.html</link>
       <guid isPermaLink="true">https://opengauntlet.com/tts.html</guid>
@@ -44,6 +50,18 @@
       <title>TTS licensing, consent, and legal risks</title>
       <link>https://opengauntlet.com/tts-legal.html</link>
       <guid isPermaLink="true">https://opengauntlet.com/tts-legal.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
+      <title>Runtimes: LLM inference engine research</title>
+      <link>https://opengauntlet.com/runtimes.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/runtimes.html</guid>
+      <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
+    </item>
+    <item>
+      <title>What fits where: GPU and hardware reference</title>
+      <link>https://opengauntlet.com/hardware.html</link>
+      <guid isPermaLink="true">https://opengauntlet.com/hardware.html</guid>
       <pubDate>Sun, 02 Aug 2026 03:14:06 +0000</pubDate>
     </item>
   </channel>

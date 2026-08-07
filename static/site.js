@@ -2200,6 +2200,116 @@ const TTS_COMPARE_FIELDS = [
 ];
 
 /* ---------------- Listening (ASR) ---------------------------------------- */
+
+/* Turns (turn-taking, VAD, endpointing) is declared here, ahead of ASR_CATS,
+   only so MATRIX_SPECS below can reference TURNS_* as already-initialised
+   consts — `const` bindings are not hoisted, so anything MATRIX_SPECS.turns
+   reads must be defined earlier in file order than that object literal
+   executes. Logically it is a peer of Voices/Listening; see MATRIX_SPECS for
+   the actual three-way grouping. */
+const TURNS_CATS = [
+  { key: "vad",            label: "VAD model" },
+  { key: "turn-detector",  label: "Turn detector" },
+  { key: "orchestrator",   label: "Orchestrator" },
+  { key: "commercial-api", label: "Commercial API" },
+];
+const TURNS_CAT_LABEL = Object.fromEntries(TURNS_CATS.map((c) => [c.key, c.label]));
+
+/* Turns needs no domain-specific facets — every axis in CORE_FACETS already
+   applies (deployment, legal, lifecycle, language, streaming). MUST mirror
+   TURNS_FACETS in config.py. */
+const TURNS_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Phone / edge"],
+    ["browser", "In-browser"], ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+  ] },
+  { title: "Can do", facets: [
+    ["streaming", "Streaming / incremental"], ["long-form", "Long-form"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+  { title: "Languages", facets: [["multilingual", "Multiple languages"], ["english-only", "English only"]] },
+];
+const TURNS_FACET_LABEL = Object.fromEntries(TURNS_FACET_GROUPS.flatMap((g) => g.facets));
+
+const TURNS_COLS = [
+  { key: "name",           label: "System",           txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",       label: "What's different", txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",       label: "Kind",             txt: true, def: true, group: "Core" },
+  { key: "licence",        label: "Licence",          txt: true, def: true, group: "Core" },
+  { key: "latency_sort",   label: "Latency",          txt: true, def: true, cell: "latency_note", wide: true, group: "Core" },
+  { key: "accuracy_note",  label: "Accuracy",         txt: true, def: true, wide: true, group: "Core" },
+  { key: "hardware",       label: "Needs",                       def: true, group: "Core" },
+  { key: "price_sort",     label: "Cost",             txt: true, cell: "price_note", group: "Commercial" },
+  { key: "runs_on",        label: "Runs on",          txt: true, wide: true, group: "Technical" },
+  { key: "languages_sort", label: "Langs",                       cell: "languages_note", group: "Capability" },
+  { key: "integration",    label: "Ships with",       txt: true, wide: true, group: "Technical" },
+  { key: "architecture",   label: "Architecture",     txt: true, wide: true, group: "Technical" },
+  { key: "model_size",     label: "Model size",       txt: true, group: "Technical" },
+  { key: "frame_ms",       label: "Frame size",       txt: true, group: "Technical" },
+  { key: "lookahead_ms",   label: "Lookahead",        txt: true, group: "Technical" },
+  { key: "streaming",      label: "Streaming",        txt: true, group: "Capability" },
+  { key: "input_type",     label: "Input",            txt: true, wide: true, group: "Capability" },
+  { key: "quantisation",   label: "Quantisation",     txt: true, wide: true, group: "Technical" },
+  { key: "fine_tuning",    label: "Fine-tuning",      txt: true, wide: true, group: "Technical" },
+  { key: "tunables",       label: "Tunable knobs",    txt: true, wide: true, group: "Capability" },
+  { key: "status",         label: "Status",           txt: true, group: "Evidence" },
+  { key: "verification",   label: "Evidence",         txt: true, group: "Evidence" },
+  { key: "watch",          label: "The catch",        txt: true, wide: true, group: "Evidence" },
+];
+const TURNS_COL_DEFAULT = TURNS_COLS.filter((c) => c.def).map((c) => c.key);
+
+const TURNS_COL_PRESETS = [
+  { key: "default", label: "Default", cols: TURNS_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "latency_sort", "accuracy_note", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "architecture", "model_size", "frame_ms", "lookahead_ms", "integration", "runs_on"] },
+  { key: "all",     label: "Everything", cols: TURNS_COLS.map((c) => c.key) },
+];
+
+const TURNS_PANELS = [
+  { title: "Technical", fields: [
+    ["architecture", "Architecture"], ["model_size", "Model size"], ["frame_ms", "Frame size"],
+    ["lookahead_ms", "Lookahead"], ["streaming", "Streaming"], ["integration", "Ships with"],
+    ["input_type", "Input"], ["quantisation", "Quantisation"], ["fine_tuning", "Fine-tuning"],
+  ] },
+  { title: "Commercial", fields: [
+    ["billing_unit", "Billing unit"], ["free_tier", "Free tier"],
+    ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ] },
+  { title: "Control surface", fields: [
+    ["tunables", "Tunable knobs"],
+  ] },
+  { title: "Evidence", fields: [
+    ["benchmarks", "Benchmarks"], ["adoption", "Adoption"], ["released", "Released"],
+    ["verification_note", "What was verified"],
+  ] },
+];
+
+const TURNS_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["latency_note", "Latency"], ["accuracy_note", "Accuracy"],
+  ["hardware", "Needs"], ["runs_on", "Runs on"],
+  ["architecture", "Architecture"], ["model_size", "Model size"],
+  ["frame_ms", "Frame size"], ["lookahead_ms", "Lookahead"],
+  ["streaming", "Streaming"], ["integration", "Ships with"], ["input_type", "Input"],
+  ["quantisation", "Quantisation"], ["fine_tuning", "Fine-tuning"], ["tunables", "Tunable knobs"],
+  ["languages_note", "Languages"],
+  ["price_note", "Cost"], ["billing_unit", "Billed by"], ["free_tier", "Free tier"],
+  ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ["benchmarks", "Benchmarks"], ["adoption", "Adoption"],
+  ["released", "Released"], ["status", "Status"], ["verification", "Evidence"],
+  ["best_for", "Best for"],
+];
+
 const ASR_CATS = [
   { key: "cloud",   label: "Cloud API" },
   { key: "hyper",   label: "Hyperscaler" },
@@ -2323,6 +2433,108 @@ const ASR_COMPARE_FIELDS = [
 ];
 
 /* The six things that differ. Everything else is shared. */
+/* ---------------- Runtimes (LLM inference engines) ----------------------- */
+const RUNTIME_CATS = [
+  { key: "local",            label: "Local engine" },
+  { key: "serving",          label: "Serving engine" },
+  { key: "quant-specialist", label: "Quant specialist" },
+  { key: "platform",         label: "Platform-specific" },
+];
+const RUNTIME_CAT_LABEL = Object.fromEntries(RUNTIME_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror RUNTIME_FACETS in config.py (CORE_FACETS plus a quant-format
+   extension — which formats an engine loads is a hard gate, not a preference,
+   and the single most decision-relevant filterable fact in this domain). */
+const RUNTIME_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Phone / edge"],
+    ["browser", "In-browser"], ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+  ] },
+  { title: "Loads", facets: [
+    ["gguf-support", "GGUF"], ["awq-support", "AWQ"], ["gptq-support", "GPTQ"],
+    ["exl2-support", "EXL2"], ["fp8-support", "FP8"], ["nvfp4-support", "NVFP4"],
+  ] },
+  { title: "Can do", facets: [
+    ["streaming", "Streaming"], ["openai-api-compatible", "OpenAI-compatible API"],
+    ["multi-gpu-tensor-parallel", "Multi-GPU"], ["long-form", "Long-form"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+];
+const RUNTIME_FACET_LABEL = Object.fromEntries(RUNTIME_FACET_GROUPS.flatMap((g) => g.facets));
+
+const RUNTIME_COLS = [
+  { key: "name",              label: "Engine",           txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",          label: "What's different", txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",          label: "Kind",             txt: true, def: true, group: "Core" },
+  { key: "licence",           label: "Licence",          txt: true, def: true, group: "Core" },
+  { key: "model_formats",     label: "Loads",            txt: true, def: true, wide: true, group: "Core" },
+  { key: "hardware_support",  label: "Hardware",         txt: true, def: true, wide: true, group: "Core" },
+  { key: "api_note",          label: "API",              txt: true, def: true, wide: true, group: "Core" },
+  { key: "price_sort",        label: "Cost",             txt: true, cell: "price_note", group: "Commercial" },
+  { key: "runs_on",           label: "Runs on",          txt: true, wide: true, group: "Technical" },
+  { key: "architecture",      label: "Architecture",     txt: true, wide: true, group: "Technical" },
+  { key: "throughput_note",   label: "Throughput",       txt: true, wide: true, group: "Technical" },
+  { key: "multi_gpu",         label: "Multi-GPU",        txt: true, group: "Technical" },
+  { key: "streaming",         label: "Streaming",        txt: true, group: "Capability" },
+  { key: "context_note",      label: "Context",          txt: true, wide: true, group: "Technical" },
+  { key: "quantisation",      label: "Quantisation",     txt: true, wide: true, group: "Technical" },
+  { key: "tunables",          label: "Tunable knobs",    txt: true, wide: true, group: "Capability" },
+  { key: "status",            label: "Status",           txt: true, group: "Evidence" },
+  { key: "verification",      label: "Evidence",         txt: true, group: "Evidence" },
+  { key: "benchmarks",        label: "Benchmarks",       txt: true, wide: true, group: "Evidence" },
+  { key: "watch",             label: "The catch",        txt: true, wide: true, group: "Evidence" },
+];
+const RUNTIME_COL_DEFAULT = RUNTIME_COLS.filter((c) => c.def).map((c) => c.key);
+
+const RUNTIME_COL_PRESETS = [
+  { key: "default", label: "Default", cols: RUNTIME_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "model_formats", "hardware_support", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "architecture", "throughput_note", "multi_gpu", "context_note", "quantisation"] },
+  { key: "all",     label: "Everything", cols: RUNTIME_COLS.map((c) => c.key) },
+];
+
+const RUNTIME_PANELS = [
+  { title: "Technical", fields: [
+    ["architecture", "Architecture"], ["throughput_note", "Throughput"], ["multi_gpu", "Multi-GPU"],
+    ["streaming", "Streaming"], ["context_note", "Context"], ["quantisation", "Quantisation"],
+    ["fine_tuning", "Fine-tuning"],
+  ] },
+  { title: "Commercial", fields: [
+    ["billing_unit", "Billing unit"], ["free_tier", "Free tier"],
+    ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ] },
+  { title: "Control surface", fields: [
+    ["tunables", "Tunable knobs"],
+  ] },
+  { title: "Evidence", fields: [
+    ["benchmarks", "Benchmarks"], ["adoption", "Adoption"], ["released", "Released"],
+    ["verification_note", "What was verified"],
+  ] },
+];
+
+const RUNTIME_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["model_formats", "Loads"], ["hardware_support", "Hardware"], ["api_note", "API"],
+  ["runs_on", "Runs on"], ["architecture", "Architecture"], ["throughput_note", "Throughput"],
+  ["multi_gpu", "Multi-GPU"], ["streaming", "Streaming"], ["context_note", "Context"],
+  ["quantisation", "Quantisation"], ["tunables", "Tunable knobs"],
+  ["price_note", "Cost"], ["billing_unit", "Billed by"], ["free_tier", "Free tier"],
+  ["self_host", "Self-host"], ["data_policy", "Trains on your data?"],
+  ["benchmarks", "Benchmarks"], ["adoption", "Adoption"],
+  ["released", "Released"], ["status", "Status"], ["verification", "Evidence"],
+  ["best_for", "Best for"],
+];
+
 const MATRIX_SPECS = {
   tts: {
     key: "tts", dataUrl: "data/tts.json", prefsKey: "og.tts.prefs.v1",
@@ -2340,16 +2552,32 @@ const MATRIX_SPECS = {
     panels: ASR_PANELS, compareFields: ASR_COMPARE_FIELDS,
     kindHint: "Eight kinds. Runtime and Diarization recognise nothing themselves — one serves another model, the other answers who spoke.",
   },
+  turns: {
+    key: "turns", dataUrl: "data/turns.json", prefsKey: "og.turns.prefs.v1",
+    cats: TURNS_CATS, catLabel: TURNS_CAT_LABEL,
+    facetGroups: TURNS_FACET_GROUPS, facetLabel: TURNS_FACET_LABEL,
+    cols: TURNS_COLS, colDefault: TURNS_COL_DEFAULT, colPresets: TURNS_COL_PRESETS,
+    panels: TURNS_PANELS, compareFields: TURNS_COMPARE_FIELDS,
+    kindHint: "Four kinds: VAD models decide speech-vs-silence, turn detectors decide whose turn it is, orchestrators ship a bundled detector, and commercial APIs offer endpointing as a feature.",
+  },
+  runtimes: {
+    key: "runtimes", dataUrl: "data/runtimes.json", prefsKey: "og.runtimes.prefs.v1",
+    cats: RUNTIME_CATS, catLabel: RUNTIME_CAT_LABEL,
+    facetGroups: RUNTIME_FACET_GROUPS, facetLabel: RUNTIME_FACET_LABEL,
+    cols: RUNTIME_COLS, colDefault: RUNTIME_COL_DEFAULT, colPresets: RUNTIME_COL_PRESETS,
+    panels: RUNTIME_PANELS, compareFields: RUNTIME_COMPARE_FIELDS,
+    kindHint: "Four kinds: local engines run one user at a time, serving engines handle many concurrently, quant specialists are built around one format, and platform engines target one specific hardware family.",
+  },
 };
 
 /* ------------------------------------------------------------------------
-   Two matrices, one renderer.
+   Four matrices, one renderer.
 
-   Voices and Listening differ in exactly six things — categories, facets,
-   columns, expander panels, compare fields and the prefs key. Licence chips,
-   the hardware ladder, magnitude sorting, popovers, compare and the whole
-   600-line table are identical, and a second copy would be a second copy to
-   keep in sync.
+   Voices, Listening, Turns and Runtimes differ in exactly six things —
+   categories, facets, columns, expander panels, compare fields and the prefs
+   key. Licence chips, the hardware ladder, magnitude sorting, popovers,
+   compare and the whole 600-line table are identical, and a second (or
+   third, or fourth) copy would be a copy to keep in sync.
 
    SPEC is module-level rather than threaded through fifteen signatures because
    a page renders exactly ONE matrix: the router picks it from `data-page`, and
@@ -2389,7 +2617,7 @@ function ttsMagnitude(str) {
    without adding it here is a silent text sort, which looks plausible and is
    wrong in a way nobody checks. */
 const TTS_NUMERIC_COLS = new Set([
-  "price_sort", "languages_sort", "rating", "wer_sort",
+  "price_sort", "languages_sort", "rating", "wer_sort", "latency_sort",
 ]);
 
 /* Sort value for a column. Numeric columns read their dedicated *_sort field so
@@ -3088,7 +3316,7 @@ function renderTtsRatingCoverage(mount, rows) {
   );
 }
 
-function renderTtsDateline(mount, doc) {
+function renderTtsDateline(mount, doc, label = "systems") {
   if (!mount || !doc.compiled) return;
   const compiled = new Date(doc.compiled + "T00:00:00Z");
   const days = Math.max(0, Math.floor((Date.now() - compiled.getTime()) / 86400000));
@@ -3105,7 +3333,7 @@ function renderTtsDateline(mount, doc) {
   const stale = days > 90;
 
   const line = el("p", { class: "tts-dateline-line" + (stale ? " stale" : "") },
-    el("span", { class: "mono", text: `${doc.counts ? doc.counts.total : doc.systems.length} systems` }),
+    el("span", { class: "mono", text: `${doc.counts ? doc.counts.total : doc.systems.length} ${label}` }),
     el("span", { class: "sep", text: "·" }),
     el("span", { class: "mono", text: `edition ${doc.edition}` }),
     el("span", { class: "sep", text: "·" }),
@@ -3160,6 +3388,146 @@ async function initMatrix(key) {
   // figure in the table is only true as of that date.
   const foot = $("[data-generated-at]");
   if (foot && doc.compiled) foot.textContent = `${doc.compiled} · ${key} edition ${doc.edition}`;
+}
+
+/* ---------------- Hardware Reference (GPU/hardware catalog) --------------
+   Deliberately standalone, not a MATRIX_SPECS entry — a ~10-15 row table has
+   no need for the facet/column-picker/compare machinery built for 30+ row
+   catalogs. Plain fetch, plain sortable table, nothing more — except an
+   expandable detail row (source link, price note, notes), reusing the exact
+   `tts-detail`/`tts-detail-body`/`tts-dt` CSS the survey matrices already
+   ship, since that machinery is generic and this page needs the same shape
+   at a much smaller scale. */
+
+/* Bandwidth cell + row detail. `bandwidth_measured` marks the ONE entry
+   (today: DGX Spark) whose figure is this project's own measured effective
+   bandwidth rather than a vendor theoretical-peak spec — the page's own
+   methodology tells the reader to divide by this column, so an unmarked
+   mixed column could cause a real over-prediction of that machine's speed. */
+function hardwareDetailRow(row, colCount) {
+  const body = el("div", { class: "tts-detail-body" });
+  const src = sourceLink(row.source_url, "src-link src-link-lead");
+  if (src) body.appendChild(el("p", { class: "tts-source" },
+    el("span", { class: "tts-dt", text: "Source" }), " ", src));
+  if (row.price_note) body.appendChild(el("p", {},
+    el("span", { class: "tts-dt", text: "Price" }), " ", row.price_note));
+  if (row.notes) body.appendChild(el("p", {},
+    el("span", { class: "tts-dt", text: "Notes" }), " ", row.notes));
+  if (!src && !row.price_note && !row.notes) {
+    body.appendChild(el("p", { class: "tts-nodata", text: "No further detail published for this entry." }));
+  }
+  const td = el("td", { class: "tts-detail-cell", colspan: String(colCount) }, body);
+  return el("tr", { class: "tts-detail", hidden: "hidden" }, td);
+}
+
+function renderHardwareTable(mount, rows, sortKey, sortDesc, onSort) {
+  const cols = [
+    ["name", "Card"], ["tier", "Tier"], ["vram_gb", "VRAM (GB)"],
+    ["memory_bandwidth_gbps", "Bandwidth (GB/s)"], ["memory_type", "Memory"],
+    ["category", "Kind"], ["best_for", "Best for"],
+  ];
+  // Sort the Tier column by real hardware capacity, not alphabetically — reuse
+  // TTS_HW_LADDER directly rather than duplicate it (see its own comment: the
+  // alphabet puts "gpu-8" after "gpu-48"/"gpu-80", the exact bug this avoids).
+  const sortVal = (row, key) => (key === "tier" ? TTS_HW_LADDER[row.tier] : row[key]);
+  const sorted = [...rows].sort((a, b) => {
+    const av = sortVal(a, sortKey), bv = sortVal(b, sortKey);
+    const cmp = typeof av === "number" && typeof bv === "number"
+      ? av - bv : String(av ?? "").localeCompare(String(bv ?? ""));
+    return sortDesc ? -cmp : cmp;
+  });
+  const anyMeasured = rows.some((r) => r.bandwidth_measured);
+  const table = el("table", { class: "hardware-table" },
+    el("thead", {}, el("tr", {}, ...cols.map(([key, label]) => {
+      const active = key === sortKey;
+      // best_for is free-text prose (observed up to ~230 chars) rather than the
+      // short values every other column holds — it needs its own wrap/max-width
+      // rule (see .col-best-for in site.css) instead of the table's default nowrap.
+      const classes = [active ? "sorted" : "", key === "best_for" ? "col-best-for" : ""]
+        .filter(Boolean).join(" ");
+      return el("th", {
+        onclick: () => onSort(key),
+        class: classes,
+        "aria-sort": active ? (sortDesc ? "descending" : "ascending") : null,
+      }, label, el("span", { class: "arrow", text: active ? (sortDesc ? " ▼" : " ▲") : "" }));
+    }))),
+    el("tbody", {}, ...sorted.flatMap((row) => {
+      const detail = hardwareDetailRow(row, cols.length);
+      const tr = el("tr", {
+        class: "hw-row",
+        tabindex: "0",
+        role: "button",
+        "aria-expanded": "false",
+        onclick: () => {
+          const open = detail.hasAttribute("hidden");
+          if (open) detail.removeAttribute("hidden"); else detail.setAttribute("hidden", "hidden");
+          tr.setAttribute("aria-expanded", open ? "true" : "false");
+          tr.classList.toggle("open", open);
+        },
+        onkeydown: (e) => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); e.target.click(); }
+        },
+      }, ...cols.map(([key]) => {
+        if (key === "tier") {
+          return el("td", { text: TTS_HW_LABEL[row.tier] || row.tier });
+        }
+        if (key === "memory_bandwidth_gbps") {
+          const kids = [String(row[key] ?? "not published")];
+          if (row.bandwidth_measured) {
+            kids.push(el("span", {
+              class: "hw-measured-badge",
+              title: "This project's own measured effective decode bandwidth on its own "
+                + "hardware — every other figure in this column is a vendor theoretical-peak spec.",
+              text: "measured",
+            }));
+          }
+          return el("td", {}, ...kids);
+        }
+        return el("td", {
+          class: key === "best_for" ? "col-best-for" : "",
+          text: String(row[key] ?? "not published"),
+        });
+      }));
+      return [tr, detail];
+    })));
+  const parts = [el("div", { class: "table-scroll" }, table)];
+  // The most important line on this page: without it, the Bandwidth column
+  // silently mixes this project's own measurement with ten vendor specs, and
+  // the methodology section above tells the reader to divide by exactly this
+  // number — a mixed column with no marker is how someone over-predicts the
+  // Spark's real decode speed.
+  if (anyMeasured) {
+    parts.push(el("p", { class: "note hw-footnote" },
+      "Bandwidth figures are vendor theoretical-peak specifications, except the row marked ",
+      el("span", { class: "hw-measured-badge", text: "measured" }),
+      ", which carries this project's own measured effective decode bandwidth from its own "
+      + "hardware, not a vendor number. Click a row for its source and further notes."));
+  }
+  mount.replaceChildren(...parts);
+}
+
+async function initHardwareTable() {
+  const mount = $("#hardware-table");
+  let doc;
+  try {
+    doc = await getJSON("data/hardware-catalog.json");
+  } catch (e) {
+    fail(mount, "That table could not be loaded.");
+    return;
+  }
+  const rows = doc.entries || [];
+  let sortKey = "vram_gb", sortDesc = false;
+  const onSort = (key) => {
+    sortDesc = sortKey === key ? !sortDesc : false;
+    sortKey = key;
+    renderHardwareTable(mount, rows, sortKey, sortDesc, onSort);
+  };
+  renderHardwareTable(mount, rows, sortKey, sortDesc, onSort);
+  // This catalog's array is "entries" (real GPUs plus non-GPU unified-memory
+  // platforms like DGX Spark), not "systems" — override the default label.
+  renderTtsDateline($("#hardware-dateline"), doc, "entries");
+  renderTtsCorrections($("#hardware-corrections"), doc.corrections);
+  renderTtsGaps($("#hardware-gaps"), doc.gaps);
 }
 
 
@@ -3301,5 +3669,6 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
-  else if (page === "tts" || page === "asr") initMatrix(page);
+  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes") initMatrix(page);
+  else if (page === "hardware") initHardwareTable();
 });

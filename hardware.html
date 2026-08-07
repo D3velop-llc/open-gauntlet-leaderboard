@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0B0E14">
+  <meta name="description" content="A model-agnostic reference for VRAM budgets and memory bandwidth across real GPUs and hardware platforms, plus why memory bandwidth is usually the real constraint on local LLM speed.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <title>What fits where — hardware reference · OpenGauntlet</title>
+  <link rel="canonical" href="https://opengauntlet.com/hardware.html">
+  <link rel="alternate" type="application/rss+xml" title="OpenGauntlet updates" href="https://opengauntlet.com/feed.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OpenGauntlet">
+  <meta property="og:title" content="What fits where — GPU and hardware reference · OpenGauntlet">
+  <meta property="og:description" content="A model-agnostic reference for VRAM budgets and memory bandwidth across real GPUs and hardware platforms, plus why memory bandwidth is usually the real constraint on local LLM speed.">
+  <meta property="og:url" content="https://opengauntlet.com/hardware.html">
+  <meta property="og:image" content="https://opengauntlet.com/static/img/social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="OpenGauntlet — local AI, measured">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What fits where — GPU and hardware reference · OpenGauntlet">
+  <meta name="twitter:description" content="A model-agnostic reference for VRAM budgets and memory bandwidth across real GPUs and hardware platforms, plus why memory bandwidth is usually the real constraint on local LLM speed.">
+  <meta name="twitter:image" content="https://opengauntlet.com/static/img/social-card.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "OpenGauntlet",
+    "url": "https://opengauntlet.com/",
+    "description": "Independent rankings and research for locally hosted conversational AI, speech recognition, and text-to-speech systems.",
+    "creator": {
+      "@type": "Organization",
+      "name": "D3velop",
+      "url": "https://d3velop.com/"
+    }
+  }
+  </script>
+  
+  <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
+  <link rel="apple-touch-icon" href="static/img/bot-head.png">
+  <link rel="stylesheet" href="static/site.css?v=1ee69a0ba2">
+  
+</head>
+
+<body data-page="hardware" data-kind="surveyed">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav">
+        
+        <a href="asr.html"
+           ><span class="ev hollow" aria-hidden="true"></span>Listening</a>
+        <a href="turns.html"
+           ><span class="ev hollow" aria-hidden="true"></span>Turns</a>
+        <a href="index.html"
+           ><span class="ev solid" aria-hidden="true"></span>Words</a>
+        <a href="tts.html"
+           ><span class="ev hollow" aria-hidden="true"></span>Voices</a>
+        <a href="runtimes.html"
+           ><span class="ev hollow" aria-hidden="true"></span>Runtimes</a>
+      </nav>
+    </div>
+  </header>
+
+  
+  <div class="wrap">
+    <section class="hero hero-lede">
+      <div class="eyebrow"><span class="tick">//</span> surveyed, not benchmarked</div>
+      <h1>What actually <span class="warm">fits where</span></h1>
+      <p class="lede">
+        VRAM is the number everyone checks first, and it is the wrong one to stop at. Memory
+        bandwidth is usually the real constraint on how fast a model decodes — two cards with
+        identical VRAM can differ by 2x in real speed, and a model's active parameter count, not
+        its total size, is what a mixture-of-experts model actually reads per token. This page is
+        the reference for that reasoning, not a claim about how fast any specific model runs —
+        for that, see the model's own page.
+      </p>
+    </section>
+  </div>
+
+  <div class="wrap wrap-wide">
+    <section class="block">
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>Why bandwidth, not VRAM, is the real ceiling</h2>
+      </div>
+      <p class="prose">
+        Decoding one token means reading every active weight from memory once. That work is
+        <strong>memory-bandwidth-bound</strong>, not compute-bound, for the batch-size-one,
+        one-token-at-a-time pattern local inference almost always runs: the GPU spends most of
+        its time waiting on memory, not doing math. So the number that predicts decode speed is
+        roughly:
+      </p>
+      <p class="prose"><code>tokens/sec &asymp; effective memory bandwidth &divide; bytes read per token</code></p>
+      <p class="prose">
+        "Bytes read per token" is the model's <strong>active</strong> parameter count at its
+        quantization &mdash; not its total parameter count. This is the detail that trips up
+        mixture-of-experts (MoE) models specifically: a MoE model with 30B total parameters but
+        only 3B active per token reads roughly a tenth as much memory per token as a 30B
+        <em>dense</em> model would, and decodes proportionally faster. Two models can be labeled
+        with the same total size and behave completely differently at inference time depending on
+        this one distinction.
+      </p>
+      <p class="prose">
+        This also works as a sanity check in the other direction: given a card's real bandwidth
+        and a model's claimed active-parameter count and quantization, you can predict roughly
+        what tok/s it should decode at. If a model implies a bandwidth <em>above</em> what the
+        hardware is physically capable of, the metadata is wrong &mdash; not the hardware.
+      </p>
+      <p class="prose">
+        One row in the table below is not a vendor spec at all: the DGX Spark's bandwidth figure
+        is this project's own measured effective decode bandwidth, taken on the exact machine
+        this benchmark runs on &mdash; not the vendor's theoretical-peak number every other row
+        carries. It is marked <span class="hw-measured-badge">measured</span> in the table so it
+        is never read as the same kind of figure as its neighbors.
+      </p>
+    </section>
+
+    <section class="block">
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>GPU and hardware reference</h2>
+        <span class="note">VRAM budget and memory bandwidth for real hardware, spanning the tiers
+          every survey page on this site already filters by.</span>
+        <div id="hardware-dateline" class="tts-dateline"></div>
+      </div>
+      <div id="hardware-table"><div class="state">Loading…</div></div>
+    </section>
+
+    <section class="block">
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>Claims this corrects</h2>
+        <span class="note">Each of these is repeated widely, and each is wrong.</span>
+      </div>
+      <div id="hardware-corrections"></div>
+    </section>
+
+    <section class="block">
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>Known gaps</h2>
+        <span class="note">A catalog that hides its gaps is less useful than one that names them.</span>
+      </div>
+      <div id="hardware-gaps"></div>
+    </section>
+  </div>
+
+
+  <aside class="community-cta" aria-labelledby="community-title">
+    <div class="wrap community-cta-inner">
+      <div>
+        <div class="eyebrow"><span class="tick">//</span> help choose the next run</div>
+        <h2 id="community-title">What should face the gauntlet next?</h2>
+        <p>Request a model, inspect the published results, or flag a claim that needs another look.</p>
+      </div>
+      <div class="community-actions">
+        <a class="cta cta-primary" href="https://github.com/D3velop-llc/open-gauntlet-leaderboard/issues/new?title=Model%20request%3A%20" target="_blank" rel="noopener">Request a model <span aria-hidden="true">↗</span></a>
+        <a class="cta" href="data/leaderboard.json">Download results</a>
+        <a class="cta cta-quiet" href="https://github.com/D3velop-llc/open-gauntlet-leaderboard/issues/new?title=Correction%3A%20" target="_blank" rel="noopener">Report a correction <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. Words are measured here; Voices, Listening, Turns, Runtimes, and Hardware Reference are sourced surveys.</span>
+      <nav class="foot-nav">
+        <a href="asr.html">Listening</a><span class="sep">·</span>
+        <a href="turns.html">Turns</a><span class="sep">·</span>
+        <a href="index.html">Words</a><span class="sep">·</span>
+        <a href="tts.html">Voices</a><span class="sep">·</span>
+        <a href="runtimes.html">Runtimes</a><span class="sep">·</span>
+        <a href="hardware.html">What fits where</a><span class="sep">·</span>
+        <a href="methodology.html">How it works</a><span class="sep">·</span>
+        <a href="compare.html">Head to head</a><span class="sep">·</span>
+        <a href="feed.xml">Updates</a><span class="sep">·</span>
+        <a href="https://github.com/D3velop-llc/open-gauntlet-leaderboard" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+      
+      <span class="foot-prov">Updated <span data-generated-at>2026-08-02 03:14 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
+    </div>
+  </footer>
+
+  
+  <script src="static/site.js?v=bc46651de9" defer></script>
+</body>
+</html>
