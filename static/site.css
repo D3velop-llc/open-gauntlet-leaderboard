@@ -1744,3 +1744,24 @@ a.pipe-step:hover .pipe-name { color: var(--ink); }
   .fp-sep-l { grid-column: 1; }
   .fp-plot { height: 16px; }
 }
+
+/* ============================== UTILITIES ================================= */
+/* The Utilities page's tab bar (three matrices — speaker verification, wake
+   word, speech enhancement — one page). Same visual language as the header
+   .nav (mono, small, letter-spaced, rounded hover/active states) since both
+   are "pick which view you're in" controls, but .util-tab is a <button>, not
+   an <a>, so it also needs the default button chrome reset. */
+.util-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin: 24px 0 0; }
+.util-tab {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.util-tab:hover { color: var(--ink); background: var(--surface-2); }
+.util-tab.is-active { color: var(--ember); background: var(--ember-dim); }

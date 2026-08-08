@@ -2781,6 +2781,236 @@ const QUANTIZATION_COMPARE_FIELDS = [
   ["verification", "Evidence"], ["best_for", "Best for"],
 ];
 
+const SPEAKERID_CATS = [
+  { key: "metric",           label: "Metric" },
+  { key: "embedding-model",  label: "Embedding model" },
+  { key: "verification-api", label: "Verification API" },
+];
+const SPEAKERID_CAT_LABEL = Object.fromEntries(SPEAKERID_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror SPEAKERID_FACETS in config.py (CORE_FACETS plus a small domain
+   extension — real-time-capable and cross-lingual). Every member of
+   SPEAKERID_FACETS needs a home below, or it becomes unreachable in the
+   filter UI and invisible in the row expander — the same bidirectional
+   contract Quantization's own whole-branch review had to add after shipping
+   with an incomplete group list. */
+const SPEAKERID_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Edge/embedded"], ["browser", "Browser/WASM"],
+  ] },
+  { title: "Can do", facets: [
+    ["real-time-capable", "Real-time capable"], ["cross-lingual", "Cross-lingual"],
+    ["streaming", "Streaming / incremental"], ["long-form", "Long-form"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+  { title: "Languages", facets: [["multilingual", "Multiple languages"], ["english-only", "English only"]] },
+];
+const SPEAKERID_FACET_LABEL = Object.fromEntries(SPEAKERID_FACET_GROUPS.flatMap((g) => g.facets));
+
+const SPEAKERID_COLS = [
+  { key: "name",            label: "System",            txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",        label: "What's different",  txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",        label: "Kind",               txt: true, def: true, group: "Core" },
+  { key: "licence",         label: "Licence",            txt: true, def: true, group: "Core" },
+  { key: "method",          label: "Method",             txt: true, def: true, wide: true, group: "Core" },
+  { key: "benchmark_note",  label: "Benchmark",          txt: true, wide: true, group: "Core" },
+  { key: "price_sort",      label: "Cost",               txt: true, cell: "price_note", group: "Commercial" },
+  { key: "embedding_dim",   label: "Embedding size",     txt: true, group: "Technical" },
+  { key: "availability",    label: "Availability",       txt: true, group: "Technical" },
+  { key: "status",          label: "Status",              txt: true, group: "Evidence" },
+  { key: "verification",    label: "Evidence",            txt: true, group: "Evidence" },
+  { key: "adoption",        label: "Adoption",            txt: true, wide: true, group: "Evidence" },
+  { key: "watch",           label: "The catch",           txt: true, wide: true, group: "Evidence" },
+];
+const SPEAKERID_COL_DEFAULT = SPEAKERID_COLS.filter((c) => c.def).map((c) => c.key);
+
+const SPEAKERID_COL_PRESETS = [
+  { key: "default", label: "Default", cols: SPEAKERID_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "method", "benchmark_note", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "method", "benchmark_note", "embedding_dim", "availability"] },
+  { key: "all",     label: "Everything", cols: SPEAKERID_COLS.map((c) => c.key) },
+];
+
+const SPEAKERID_PANELS = [
+  { title: "Technical", fields: [
+    ["embedding_dim", "Embedding size"], ["availability", "Availability"],
+  ] },
+  { title: "Evidence", fields: [
+    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const SPEAKERID_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["method", "Method"], ["benchmark_note", "Benchmark"], ["embedding_dim", "Embedding size"],
+  ["availability", "Availability"], ["price_note", "Cost"],
+  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
+  ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
+const WAKEWORD_CATS = [
+  { key: "open-source",   label: "Open source" },
+  { key: "commercial-sdk", label: "Commercial SDK" },
+];
+const WAKEWORD_CAT_LABEL = Object.fromEntries(WAKEWORD_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror WAKEWORD_FACETS in config.py (CORE_FACETS plus a small domain
+   extension — custom-phrase-trainable and multi-wake-word). Same
+   bidirectional coverage contract as SPEAKERID_FACET_GROUPS above. */
+const WAKEWORD_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Edge/embedded"], ["browser", "Browser/WASM"],
+  ] },
+  { title: "Can do", facets: [
+    ["custom-phrase-trainable", "Custom phrase trainable"], ["multi-wake-word", "Multiple wake words"],
+    ["streaming", "Streaming / incremental"], ["long-form", "Long-form"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+  { title: "Languages", facets: [["multilingual", "Multiple languages"], ["english-only", "English only"]] },
+];
+const WAKEWORD_FACET_LABEL = Object.fromEntries(WAKEWORD_FACET_GROUPS.flatMap((g) => g.facets));
+
+const WAKEWORD_COLS = [
+  { key: "name",              label: "Engine",             txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",          label: "What's different",   txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",          label: "Kind",                txt: true, def: true, group: "Core" },
+  { key: "licence",           label: "Licence",             txt: true, def: true, group: "Core" },
+  { key: "method",            label: "Method",              txt: true, def: true, wide: true, group: "Core" },
+  { key: "accuracy_note",     label: "Accuracy",            txt: true, def: true, wide: true, group: "Core" },
+  { key: "price_sort",        label: "Cost",                txt: true, cell: "price_note", group: "Commercial" },
+  { key: "custom_wake_word",  label: "Custom phrase",       txt: true, wide: true, group: "Technical" },
+  { key: "footprint",         label: "Footprint",           txt: true, group: "Technical" },
+  { key: "availability",      label: "Availability",        txt: true, group: "Technical" },
+  { key: "status",            label: "Status",               txt: true, group: "Evidence" },
+  { key: "verification",      label: "Evidence",             txt: true, group: "Evidence" },
+  { key: "adoption",          label: "Adoption",             txt: true, wide: true, group: "Evidence" },
+  { key: "watch",             label: "The catch",            txt: true, wide: true, group: "Evidence" },
+];
+const WAKEWORD_COL_DEFAULT = WAKEWORD_COLS.filter((c) => c.def).map((c) => c.key);
+
+const WAKEWORD_COL_PRESETS = [
+  { key: "default", label: "Default", cols: WAKEWORD_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "method", "accuracy_note", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "method", "custom_wake_word", "footprint", "availability"] },
+  { key: "all",     label: "Everything", cols: WAKEWORD_COLS.map((c) => c.key) },
+];
+
+const WAKEWORD_PANELS = [
+  { title: "Technical", fields: [
+    ["custom_wake_word", "Custom phrase"], ["footprint", "Footprint"], ["availability", "Availability"],
+  ] },
+  { title: "Evidence", fields: [
+    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const WAKEWORD_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["method", "Method"], ["accuracy_note", "Accuracy"], ["custom_wake_word", "Custom phrase"],
+  ["footprint", "Footprint"], ["availability", "Availability"], ["price_note", "Cost"],
+  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
+  ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
+const ENHANCEMENT_CATS = [
+  { key: "noise-suppression", label: "Noise suppression" },
+  { key: "echo-cancellation", label: "Echo cancellation" },
+  { key: "commercial-suite",  label: "Commercial suite" },
+];
+const ENHANCEMENT_CAT_LABEL = Object.fromEntries(ENHANCEMENT_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror ENHANCEMENT_FACETS in config.py (CORE_FACETS plus a small
+   domain extension — streaming-capable and low-latency; note "streaming"
+   itself is also a CORE_FACETS member, distinct from "streaming-capable",
+   and both need their own home below). Same bidirectional coverage contract
+   as the two domains above. */
+const ENHANCEMENT_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Edge/embedded"], ["browser", "Browser/WASM"],
+  ] },
+  { title: "Can do", facets: [
+    ["streaming-capable", "Streaming"], ["low-latency", "Low latency"],
+    ["streaming", "Streaming / incremental"], ["long-form", "Long-form"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+  { title: "Languages", facets: [["multilingual", "Multiple languages"], ["english-only", "English only"]] },
+];
+const ENHANCEMENT_FACET_LABEL = Object.fromEntries(ENHANCEMENT_FACET_GROUPS.flatMap((g) => g.facets));
+
+const ENHANCEMENT_COLS = [
+  { key: "name",           label: "Tool",               txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",       label: "What's different",   txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",       label: "Kind",                txt: true, def: true, group: "Core" },
+  { key: "licence",        label: "Licence",             txt: true, def: true, group: "Core" },
+  { key: "method",         label: "Method",              txt: true, def: true, wide: true, group: "Core" },
+  { key: "quality_note",   label: "Quality",             txt: true, def: true, wide: true, group: "Core" },
+  { key: "price_sort",     label: "Cost",                txt: true, cell: "price_note", group: "Commercial" },
+  { key: "latency_note",   label: "Latency",             txt: true, wide: true, group: "Technical" },
+  { key: "availability",   label: "Availability",        txt: true, group: "Technical" },
+  { key: "status",         label: "Status",               txt: true, group: "Evidence" },
+  { key: "verification",   label: "Evidence",             txt: true, group: "Evidence" },
+  { key: "adoption",       label: "Adoption",             txt: true, wide: true, group: "Evidence" },
+  { key: "watch",          label: "The catch",            txt: true, wide: true, group: "Evidence" },
+];
+const ENHANCEMENT_COL_DEFAULT = ENHANCEMENT_COLS.filter((c) => c.def).map((c) => c.key);
+
+const ENHANCEMENT_COL_PRESETS = [
+  { key: "default", label: "Default", cols: ENHANCEMENT_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "method", "quality_note", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "method", "quality_note", "latency_note", "availability"] },
+  { key: "all",     label: "Everything", cols: ENHANCEMENT_COLS.map((c) => c.key) },
+];
+
+const ENHANCEMENT_PANELS = [
+  { title: "Technical", fields: [
+    ["latency_note", "Latency"], ["availability", "Availability"],
+  ] },
+  { title: "Evidence", fields: [
+    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const ENHANCEMENT_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["method", "Method"], ["quality_note", "Quality"], ["latency_note", "Latency"],
+  ["availability", "Availability"], ["price_note", "Cost"],
+  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
+  ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
 const MATRIX_SPECS = {
   tts: {
     key: "tts", dataUrl: "data/tts.json", prefsKey: "og.tts.prefs.v1",
@@ -2838,20 +3068,50 @@ const MATRIX_SPECS = {
     panels: QUANTIZATION_PANELS, compareFields: QUANTIZATION_COMPARE_FIELDS,
     kindHint: "Three kinds: generic algorithms are apply-it-yourself PTQ libraries, format-native tools are built into one serving ecosystem, and vendor toolchains are vendor-shipped or training-integrated.",
   },
+  speakerid: {
+    key: "speakerid", dataUrl: "data/speakerid.json", prefsKey: "og.speakerid.prefs.v1",
+    cats: SPEAKERID_CATS, catLabel: SPEAKERID_CAT_LABEL,
+    facetGroups: SPEAKERID_FACET_GROUPS, facetLabel: SPEAKERID_FACET_LABEL,
+    cols: SPEAKERID_COLS, colDefault: SPEAKERID_COL_DEFAULT, colPresets: SPEAKERID_COL_PRESETS,
+    panels: SPEAKERID_PANELS, compareFields: SPEAKERID_COMPARE_FIELDS,
+    kindHint: "Three kinds: a metric is a pure formula (e.g. SECS itself), an embedding model is a trained model you run yourself, and a verification API is a packaged or hosted service.",
+  },
+  wakeword: {
+    key: "wakeword", dataUrl: "data/wakeword.json", prefsKey: "og.wakeword.prefs.v1",
+    cats: WAKEWORD_CATS, catLabel: WAKEWORD_CAT_LABEL,
+    facetGroups: WAKEWORD_FACET_GROUPS, facetLabel: WAKEWORD_FACET_LABEL,
+    cols: WAKEWORD_COLS, colDefault: WAKEWORD_COL_DEFAULT, colPresets: WAKEWORD_COL_PRESETS,
+    panels: WAKEWORD_PANELS, compareFields: WAKEWORD_COMPARE_FIELDS,
+    kindHint: "Two kinds: open-source engines you self-host and customize, and commercial SDKs with their own licensing terms.",
+  },
+  enhancement: {
+    key: "enhancement", dataUrl: "data/enhancement.json", prefsKey: "og.enhancement.prefs.v1",
+    cats: ENHANCEMENT_CATS, catLabel: ENHANCEMENT_CAT_LABEL,
+    facetGroups: ENHANCEMENT_FACET_GROUPS, facetLabel: ENHANCEMENT_FACET_LABEL,
+    cols: ENHANCEMENT_COLS, colDefault: ENHANCEMENT_COL_DEFAULT, colPresets: ENHANCEMENT_COL_PRESETS,
+    panels: ENHANCEMENT_PANELS, compareFields: ENHANCEMENT_COMPARE_FIELDS,
+    kindHint: "Three kinds: noise suppression removes background sound, echo cancellation removes acoustic echo, and commercial suites often bundle both.",
+  },
 };
 
 /* ------------------------------------------------------------------------
-   Seven matrices, one renderer.
+   Ten matrices, one renderer.
 
-   Voices, Listening, Turns, Runtimes, Orchestrators, Memory and Quantization differ in exactly six things —
+   Voices, Listening, Turns, Runtimes, Orchestrators, Memory, Quantization and Utilities differ in exactly six things —
    categories, facets, columns, expander panels, compare fields and the prefs
    key. Licence chips, the hardware ladder, magnitude sorting, popovers,
    compare and the whole 600-line table are identical, and a second, third,
-   fourth, fifth, sixth, or seventh copy would be a copy to keep in sync.
+   fourth, fifth, sixth, seventh, eighth, ninth, or tenth copy would be a copy to keep in sync.
 
    SPEC is module-level rather than threaded through fifteen signatures because
    a page renders exactly ONE matrix: the router picks it from `data-page`, and
-   there is no path on which two coexist. A test asserts that.
+   there is no path on which two coexist. A test asserts that. Utilities is the
+   first page where `initMatrix` is called more than once per page load — its
+   tab switcher (`initUtilitiesPage` below) calls it once per tab, sequentially,
+   on that tab's first activation, never concurrently — so the "no path on
+   which two matrices coexist" invariant still holds: only one tab is ever
+   visible/interactive at a time. What changed is a page's *lifetime* can now
+   include more than one *sequential* `initMatrix` call.
    ------------------------------------------------------------------------ */
 let SPEC = null;
 
@@ -3628,16 +3888,30 @@ function renderTtsDateline(mount, doc, label = "systems") {
   }
 }
 
+/* Returns true on a successful render, false when the fetch failed (so a
+   caller — today, only initUtilitiesPage's activate() — can tell "loaded"
+   apart from "gave up and showed an error", and avoid marking a failed tab
+   permanently loaded). The five single-matrix pages call this by name and
+   ignore the return value, which is safe: the fire-and-forget call at the
+   bottom of the router never inspected the (previously undefined) result. */
 async function initMatrix(key) {
   SPEC = MATRIX_SPECS[key];
   const matrix = $(`#${key}-matrix`);
   const controls = $(`#${key}-controls`);
   let doc;
   try {
+    // Deliberately NOT re-asserting `SPEC = MATRIX_SPECS[key]` after this
+    // await: on the Utilities page, if the user switches tabs while this
+    // fetch is in flight, re-asserting here would point SPEC at a hidden
+    // panel's schema right as it resolves. Leaving it alone means SPEC keeps
+    // tracking whichever tab activate() most recently made visible — this
+    // panel's own mounts are hidden and key-scoped regardless, so a stale
+    // render here is harmless, and utilActiveKey (see initUtilitiesPage)
+    // still blocks marking this tab "loaded" if the user has moved on.
     doc = await getJSON(SPEC.dataUrl);
   } catch (e) {
     fail(matrix, "That matrix could not be loaded.");
-    return;
+    return false;
   }
   const rows = doc.systems || [];
   const prefs = ttsLoadPrefs();
@@ -3667,6 +3941,74 @@ async function initMatrix(key) {
   // figure in the table is only true as of that date.
   const foot = $("[data-generated-at]");
   if (foot && doc.compiled) foot.textContent = `${doc.compiled} · ${key} edition ${doc.edition}`;
+  return true;
+}
+
+/* ---------------- Utilities: three matrices, one page ---------------------
+   The first page to host more than one MATRIX_SPECS entry. initMatrix(key)'s
+   own body is untouched apart from returning a success boolean (see comment
+   on initMatrix) — this function only decides WHICH key to call it with and
+   WHEN, by showing/hiding each tab's <section id="{key}-panel"> and lazily
+   calling initMatrix(key) the first time a tab is activated.
+   utilActiveKey guards against a slow first fetch resolving after the user
+   has already switched to a different tab and overwriting its freshly-
+   rendered DOM with the wrong matrix's data.
+   `activate()` sets SPEC itself, unconditionally, before anything else runs
+   (see comment inside it) — it cannot rely on initMatrix's own `SPEC = ...`
+   line, because that only runs on a tab's FIRST activation. Revisiting an
+   already-loaded tab skips initMatrix entirely, so without this, interacting
+   with the visible tab (sort, search, facets) would read whichever spec a
+   later tab's first load had most recently pointed the shared global at. */
+let utilActiveKey = null;
+// initMatrix writes the shared footer's [data-generated-at] text once, on a
+// tab's first successful load. A revisit skips initMatrix entirely (the
+// matrix is already loaded), so without a cache the footer would keep
+// showing whichever OTHER tab most recently first-loaded — this caches each
+// tab's own footer text so activate() can restore it on every revisit too.
+const utilFooterCache = {};
+
+function initUtilitiesPage() {
+  const UTIL_TABS = ["speakerid", "wakeword", "enhancement"];
+  const tabBtns = [...document.querySelectorAll("[data-util-tab]")];
+  const activate = async (key) => {
+    // SPEC is the single module-level global every interactive render function
+    // (sort, search, facet toggles) reads on every call, not just at load time.
+    // It must point at the TAB NOW VISIBLE on every activation — first visit
+    // *and* revisit — because a revisit skips the `initMatrix` call below (the
+    // matrix is already loaded) and would otherwise leave SPEC pointed at
+    // whichever tab was most recently first-loaded, silently applying the
+    // wrong schema to the right domain's rows.
+    SPEC = MATRIX_SPECS[key];
+    utilActiveKey = key;
+    UTIL_TABS.forEach((k) => {
+      const panel = document.getElementById(`${k}-panel`);
+      if (panel) panel.hidden = k !== key;
+    });
+    tabBtns.forEach((b) => {
+      const active = b.dataset.utilTab === key;
+      b.classList.toggle("is-active", active);
+      b.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    const matrixEl = document.getElementById(`${key}-matrix`);
+    if (matrixEl && !matrixEl.dataset.loaded) {
+      const requestedKey = key;
+      const ok = await initMatrix(key);
+      if (utilActiveKey !== requestedKey) return;   // user switched away before this resolved
+      // Only a successful fetch earns the permanent "loaded" mark — a failed
+      // fetch must stay retryable on the next visit to this tab, not require
+      // a full page reload.
+      if (ok) {
+        matrixEl.dataset.loaded = "1";
+        const foot = $("[data-generated-at]");
+        if (foot) utilFooterCache[key] = foot.textContent;
+      }
+    } else if (utilFooterCache[key]) {
+      const foot = $("[data-generated-at]");
+      if (foot) foot.textContent = utilFooterCache[key];
+    }
+  };
+  tabBtns.forEach((b) => b.addEventListener("click", () => activate(b.dataset.utilTab)));
+  activate(UTIL_TABS[0]);
 }
 
 /* ---------------- Hardware Reference (GPU/hardware catalog) --------------
@@ -3949,5 +4291,6 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
   else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory" || page === "quantization") initMatrix(page);
+  else if (page === "utilities") initUtilitiesPage();
   else if (page === "hardware") initHardwareTable();
 });

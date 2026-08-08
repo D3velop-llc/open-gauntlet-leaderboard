@@ -13,6 +13,7 @@
 - [Orchestrator research](https://opengauntlet.com/orchestrators.html): Sourced voice-agent framework and platform comparison.
 - [Memory research](https://opengauntlet.com/memory.html): Sourced vector database and agent-memory system comparison.
 - [Quantization research](https://opengauntlet.com/quantization.html): Sourced quantization toolchain comparison.
+- [Utilities research](https://opengauntlet.com/utilities.html): Sourced speaker-verification, wake-word, and speech-enhancement comparison.
 - [Text-to-speech research](https://opengauntlet.com/tts.html): Sourced TTS system comparison.
 - [TTS comparison guide](https://opengauntlet.com/tts-guide.html): How to interpret TTS evidence.
 - [TTS legal guide](https://opengauntlet.com/tts-legal.html): Licensing, consent, and legal-risk research.
@@ -28,4 +29,7 @@
 - [Orchestrators research JSON](https://opengauntlet.com/data/orchestrators.json)
 - [Memory research JSON](https://opengauntlet.com/data/memory.json)
 - [Quantization research JSON](https://opengauntlet.com/data/quantization.json)
+- [Speaker verification research JSON](https://opengauntlet.com/data/speakerid.json)
+- [Wake word research JSON](https://opengauntlet.com/data/wakeword.json)
+- [Speech enhancement research JSON](https://opengauntlet.com/data/enhancement.json)
 - [TTS research JSON](https://opengauntlet.com/data/tts.json)
