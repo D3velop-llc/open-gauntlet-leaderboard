@@ -2616,6 +2616,86 @@ const ORCHESTRATOR_COMPARE_FIELDS = [
   ["verification", "Evidence"], ["best_for", "Best for"],
 ];
 
+const MEMORY_CATS = [
+  { key: "vector-db",        label: "Vector DB" },
+  { key: "memory-framework", label: "Memory framework" },
+  { key: "graph-memory",     label: "Graph memory" },
+];
+const MEMORY_CAT_LABEL = Object.fromEntries(MEMORY_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror MEMORY_FACETS in config.py (CORE_FACETS plus a small domain
+   extension — hybrid search, metadata filtering, built-in embeddings,
+   graph-structured memory, and a real decay policy are the axes a builder
+   actually filters on here). */
+const MEMORY_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Edge/embedded"],
+  ] },
+  { title: "Can do", facets: [
+    ["hybrid-search", "Hybrid search"], ["metadata-filtering", "Metadata filtering"],
+    ["built-in-embeddings", "Built-in embeddings"], ["graph-structured", "Graph-structured"],
+    ["decay-policy", "Forgetting/decay policy"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+];
+const MEMORY_FACET_LABEL = Object.fromEntries(MEMORY_FACET_GROUPS.flatMap((g) => g.facets));
+
+const MEMORY_COLS = [
+  { key: "name",                 label: "System",            txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",             label: "What's different",  txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",             label: "Kind",              txt: true, def: true, group: "Core" },
+  { key: "licence",              label: "Licence",           txt: true, def: true, group: "Core" },
+  { key: "retrieval_mechanics",  label: "Retrieval",         txt: true, def: true, wide: true, group: "Core" },
+  { key: "self_host",            label: "Deployment",        txt: true, def: true, group: "Core" },
+  { key: "price_sort",           label: "Cost",              txt: true, cell: "price_note", group: "Commercial" },
+  { key: "memory_policy",        label: "Memory policy",     txt: true, wide: true, group: "Technical" },
+  { key: "embedding_model",      label: "Embeddings",        txt: true, group: "Technical" },
+  { key: "scale_note",           label: "Scale",             txt: true, wide: true, group: "Technical" },
+  { key: "integration",          label: "Integrates with",   txt: true, wide: true, group: "Technical" },
+  { key: "status",               label: "Status",            txt: true, group: "Evidence" },
+  { key: "verification",         label: "Evidence",          txt: true, group: "Evidence" },
+  { key: "adoption",             label: "Adoption",          txt: true, wide: true, group: "Evidence" },
+  { key: "watch",                label: "The catch",         txt: true, wide: true, group: "Evidence" },
+];
+const MEMORY_COL_DEFAULT = MEMORY_COLS.filter((c) => c.def).map((c) => c.key);
+
+const MEMORY_COL_PRESETS = [
+  { key: "default", label: "Default", cols: MEMORY_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "retrieval_mechanics", "memory_policy", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "retrieval_mechanics", "memory_policy", "embedding_model", "scale_note", "integration"] },
+  { key: "all",     label: "Everything", cols: MEMORY_COLS.map((c) => c.key) },
+];
+
+const MEMORY_PANELS = [
+  { title: "Technical", fields: [
+    ["memory_policy", "Memory policy"], ["embedding_model", "Embeddings"],
+    ["scale_note", "Scale"], ["integration", "Integrates with"],
+  ] },
+  { title: "Evidence", fields: [
+    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const MEMORY_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["retrieval_mechanics", "Retrieval"], ["memory_policy", "Memory policy"],
+  ["embedding_model", "Embeddings"], ["self_host", "Deployment"], ["scale_note", "Scale"],
+  ["integration", "Integrates with"], ["price_note", "Cost"],
+  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
+  ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
 const MATRIX_SPECS = {
   tts: {
     key: "tts", dataUrl: "data/tts.json", prefsKey: "og.tts.prefs.v1",
@@ -2657,16 +2737,24 @@ const MATRIX_SPECS = {
     panels: ORCHESTRATOR_PANELS, compareFields: ORCHESTRATOR_COMPARE_FIELDS,
     kindHint: "Three kinds: frameworks are open-source and self-hosted, platforms are hosted and managed, and telephony-focused tools are built specifically around SIP/PSTN voice calling rather than general deployment.",
   },
+  memory: {
+    key: "memory", dataUrl: "data/memory.json", prefsKey: "og.memory.prefs.v1",
+    cats: MEMORY_CATS, catLabel: MEMORY_CAT_LABEL,
+    facetGroups: MEMORY_FACET_GROUPS, facetLabel: MEMORY_FACET_LABEL,
+    cols: MEMORY_COLS, colDefault: MEMORY_COL_DEFAULT, colPresets: MEMORY_COL_PRESETS,
+    panels: MEMORY_PANELS, compareFields: MEMORY_COMPARE_FIELDS,
+    kindHint: "Three kinds: vector databases are general-purpose similarity search, memory frameworks add an opinionated layer deciding what's worth remembering, and graph memory does the same with a knowledge-graph structure instead of flat vectors.",
+  },
 };
 
 /* ------------------------------------------------------------------------
-   Five matrices, one renderer.
+   Six matrices, one renderer.
 
-   Voices, Listening, Turns, Runtimes and Orchestrators differ in exactly six things —
+   Voices, Listening, Turns, Runtimes, Orchestrators and Memory differ in exactly six things —
    categories, facets, columns, expander panels, compare fields and the prefs
    key. Licence chips, the hardware ladder, magnitude sorting, popovers,
    compare and the whole 600-line table are identical, and a second, third,
-   fourth, or fifth copy would be a copy to keep in sync.
+   fourth, fifth, or sixth copy would be a copy to keep in sync.
 
    SPEC is module-level rather than threaded through fifteen signatures because
    a page renders exactly ONE matrix: the router picks it from `data-page`, and
@@ -3767,6 +3855,6 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
-  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators") initMatrix(page);
+  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory") initMatrix(page);
   else if (page === "hardware") initHardwareTable();
 });
