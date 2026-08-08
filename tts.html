@@ -40,28 +40,44 @@
   
   <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
   <link rel="apple-touch-icon" href="static/img/bot-head.png">
-  <link rel="stylesheet" href="static/site.css?v=c583a1741b">
+  <link rel="stylesheet" href="static/site.css?v=00f3b70328">
   
 </head>
 
 <body data-page="tts" data-kind="surveyed">
   <header class="topbar">
     <div class="wrap">
-      <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
+      <a class="brand" href="index.html"><canvas class="hero-viz topbar-viz" data-viz="words" aria-hidden="true"></canvas><span class="slash">//</span>open<em>gauntlet</em></a>
       <nav class="nav">
         
-        <a href="asr.html"
+        <a href="asr.html" title="Listening — speech-to-text: what it hears"
            ><span class="ev hollow" aria-hidden="true"></span>Listening</a>
-        <a href="turns.html"
+        <a href="turns.html" title="Turns — turn-taking: whose turn it is"
            ><span class="ev hollow" aria-hidden="true"></span>Turns</a>
-        <a href="index.html"
+        <a href="index.html" title="Words — the LLM leaderboard: what it says"
            ><span class="ev solid" aria-hidden="true"></span>Words</a>
-        <a href="tts.html" class="active"
+        <a href="tts.html" title="Voices — text-to-speech: how it sounds" class="active"
            ><span class="ev hollow" aria-hidden="true"></span>Voices</a>
-        <a href="runtimes.html"
+        <a href="runtimes.html" title="Runtimes — inference engines: how it runs"
            ><span class="ev hollow" aria-hidden="true"></span>Runtimes</a>
-        <a href="memory.html"
+        <a href="memory.html" title="Memory — retrieval systems: what it remembers"
            ><span class="ev hollow" aria-hidden="true"></span>Memory</a>
+        <details class="nav-more"><summary>Reference</summary>
+          <div class="nav-more-panel">
+            <a href="hardware.html">What fits where<span class="nm-sub">hardware</span></a>
+            <a href="quantization.html">How models get compressed<span class="nm-sub">quantization</span></a>
+            <a href="orchestrators.html">Wiring it together<span class="nm-sub">orchestrators</span></a>
+            <a href="utilities.html">The parts around the edges<span class="nm-sub">utilities</span></a>
+          </div>
+        </details>
+        <details class="nav-more"><summary>About</summary>
+          <div class="nav-more-panel">
+            <a href="methodology.html">How it works<span class="nm-sub">methodology</span></a>
+            <a href="compare.html">Head to head<span class="nm-sub">two models, same chat</span></a>
+            <a href="tts-guide.html">Reading the voice numbers<span class="nm-sub">guide</span></a>
+            <a href="tts-legal.html">What you may ship<span class="nm-sub">voice licences</span></a>
+          </div>
+        </details>
       </nav>
     </div>
   </header>
@@ -235,6 +251,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=042316fa29" defer></script>
+  <script src="static/site.js?v=8b8d0bb60f" defer></script>
 </body>
 </html>

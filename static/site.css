@@ -1765,3 +1765,170 @@ a.pipe-step:hover .pipe-name { color: var(--ink); }
 }
 .util-tab:hover { color: var(--ink); background: var(--surface-2); }
 .util-tab.is-active { color: var(--ember); background: var(--ember-dim); }
+
+
+/* ==================== 2026-08 usability pass (audit R1,R5,R9,R10,R12,R15) ====================
+   R1  nav Reference / About groups     R5  matrix preset tabs
+   R9  glossary dialog                  R10 pinned System column
+   R12 Simple/Technical pill toggle     R15 plain-word nav tooltips (HTML only) */
+
+/* R1: nav dropdown groups */
+@media (min-width: 900px) { .topbar .nav { overflow: visible; } }
+/* With eight nav items the bar needs slack before the phone layout kicks in */
+@media (max-width: 1000px) {
+  .topbar .wrap { gap: 14px; }
+  .nav { gap: 2px; }
+  .nav a, details.nav-more > summary { padding: 8px 8px; font-size: 12px; }
+}
+details.nav-more { position: relative; flex: 0 0 auto; }
+details.nav-more > summary {
+  list-style: none; cursor: pointer; white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 12.5px; letter-spacing: 0.04em;
+  color: var(--ink-dim); padding: 8px 12px; border-radius: 8px;
+}
+details.nav-more > summary::-webkit-details-marker { display: none; }
+details.nav-more > summary::after { content: "\25BE"; font-size: 9px; opacity: .6; }
+details.nav-more > summary:hover, details.nav-more[open] > summary { color: var(--ink); background: var(--surface-2); }
+details.nav-more:has(a.active) > summary { color: var(--ember); }
+.nav-more-panel {
+  position: absolute; right: 0; top: calc(100% + 8px); z-index: 40;
+  min-width: 250px; background: var(--surface); border: 1px solid var(--border-2);
+  border-radius: 10px; padding: 8px; display: grid; gap: 2px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+}
+.nav-more-panel a {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  padding: 7px 10px; border-radius: 6px; color: var(--ink-dim);
+  font-family: var(--font-sans); font-size: 13px; white-space: nowrap;
+}
+.nav-more-panel a:hover { background: var(--surface-2); color: var(--ink); }
+.nav-more-panel a.active { color: var(--ember); background: var(--ember-dim); }
+.nav-more-panel .nm-sub { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+
+/* R5: preset tabs above every matrix */
+.preset-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 12px;
+  font-family: var(--font-mono); font-size: 12px; }
+.preset-tabs .pt-lbl { font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin-right: 4px; }
+body[data-kind="surveyed"] .preset-tabs .pill.on { background: var(--cool); color: #08131a; border-color: var(--cool); }
+
+/* R9: glossary */
+.glossary-line { margin: 0 0 14px; font-size: 13px; }
+.og-glossary { max-width: 42rem; }
+.og-glossary dl { margin: 0; display: grid; gap: 13px; max-height: 62vh; overflow-y: auto; padding-right: 8px; }
+.og-glossary dt { font-family: var(--font-mono); font-size: 12.5px; color: var(--ember); }
+body[data-kind="surveyed"] .og-glossary dt { color: var(--cool); }
+.og-glossary dd { margin: 2px 0 0; font-size: 13.5px; color: var(--ink-dim); line-height: 1.6; }
+
+/* R10: the System column stays pinned while the matrix scrolls sideways */
+table.lb.tts thead th:first-child { position: sticky; left: 0; z-index: 4; }
+table.lb.tts tbody td.tts-name { position: sticky; left: 0; z-index: 1; background: var(--surface); }
+table.lb.tts tbody tr:hover td.tts-name,
+table.lb.tts tbody tr.tts-row.open td.tts-name { background: #141A26; }
+
+/* R12: view toggle */
+.view-toggle { display: flex; align-items: center; gap: 8px; margin: 0 0 14px;
+  font-family: var(--font-mono); font-size: 12px; }
+
+
+/* ==================== 2026-08 avatar + topbar signal pass ====================
+   The mascot moves from under the lede to BESIDE the heading — one fixed size
+   everywhere, alternating sides page to page. The orange word-stream leaves the
+   heroes and docks next to the wordmark, so the site's pulse is on every page. */
+.hero-lede.has-bot {
+  display: grid; align-items: center; column-gap: 56px; row-gap: 0;
+  max-width: none;   /* the 50rem lede cap is for text-only heroes; with the
+                        mascot beside the heading the pair needs the full wrap */
+}
+.hero-lede.has-bot .lede { max-width: 52rem; margin-left: auto; margin-right: auto;
+  font-size: 1.12rem; line-height: 1.65; }
+.hero-lede.has-bot h1 { font-size: clamp(38px, 5vw, 60px); }
+.hero-lede.has-bot { justify-content: center; }
+.hero-lede.bot-left  { grid-template-columns: auto minmax(0, 54rem); }
+.hero-lede.bot-right { grid-template-columns: minmax(0, 54rem) auto; }
+.hero-lede.has-bot .hero-bot-side { grid-row: 1 / span 3; align-self: center;
+  width: 264px; height: 264px; object-fit: contain;
+  filter: drop-shadow(0 10px 26px rgba(0, 0, 0, 0.45)); }
+.hero-lede.bot-left  .hero-bot-side { grid-column: 1; }
+.hero-lede.bot-right .hero-bot-side { grid-column: 2; }
+.hero-lede.bot-left  > :not(.hero-bot-side) { grid-column: 2; }
+.hero-lede.bot-right > :not(.hero-bot-side) { grid-column: 1; }
+@media (max-width: 760px) {
+  .hero-lede.has-bot { display: block; }
+  .hero-lede.has-bot .hero-bot-side { display: block; width: 124px; height: 124px; margin: 0 auto 10px; }
+}
+
+/* The word-stream, docked by the wordmark. Decorative: hidden from readers and
+   from narrow screens, where the nav needs every pixel. */
+.brand { display: inline-flex; align-items: center; gap: 10px; line-height: 1; }
+.topbar-viz { display: block; align-self: center; width: 96px; height: 20px; flex: 0 0 auto; opacity: 0.9; }
+@media (max-width: 1240px) { .topbar-viz { display: none; } }
+
+
+/* The pre-table band reads as one centered column now: the scope line joins the
+   centered pipeline above it instead of hanging off the left edge, and the
+   glossary link rides inside the section head's own sentence (site.js). */
+.scope-line { justify-content: center; text-align: center; margin: 26px 0 26px; }
+.glossary-line { text-align: center; }
+
+/* The stage strip earns its width: larger names, balanced two-line jobs (no
+   orphaned single word), more room between stops. */
+@media (min-width: 720px) {
+  .pipeline { max-width: none; margin-top: 42px; }
+  .pipe-step { padding-top: 34px; gap: 5px; }
+  .pipe-step::before { width: 14px; height: 14px; top: 6px; }
+  .pipe-step::after { top: 12.5px; }
+  .pipe-name { font-size: 20px; }
+  .pipe-job { font-size: 11.5px; letter-spacing: .12em; }
+  .pipe-ev { font-size: 11.5px; }
+}
+.pipe-job { text-wrap: balance; }
+
+/* The page-subject section head stacks and centres, matching the centered
+   hero + pipeline column above it, instead of jostling serif h2, sans note
+   and mono meta on one left-anchored line. */
+.section-head--centre { margin-top: 6px; }
+.section-head--centre .note { max-width: 66ch; }
+
+
+/* Reference-page explainer prose: fills the wide wrap as balanced columns
+   instead of one 74ch rope down the left edge. Below ~2 columns' worth of
+   width it collapses back to a single readable column. */
+.prose-cols { columns: 2 34rem; column-gap: 64px; }
+.prose-cols .prose { max-width: none; break-inside: avoid; margin-top: 0; }
+.prose-cols .prose + .prose { margin-top: 14px; }
+
+
+/* The matrix band: wording card left, controls card right (site.js builds the
+   wrapper). Below ~1000px the cards stack. */
+.matrix-topbar {
+  display: grid; grid-template-columns: minmax(280px, 2fr) minmax(0, 3fr);
+  gap: 16px; align-items: stretch; margin: 4px 0 18px;
+}
+.matrix-topbar .section-head {
+  margin: 0; align-content: flex-start;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); padding: 18px 20px;
+}
+.matrix-topbar .section-head .note { max-width: none; }
+.matrix-topbar [id$="-controls"] {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); padding: 16px 18px;
+  display: flex; flex-direction: column; justify-content: center; gap: 0;
+}
+.matrix-topbar [id$="-controls"] .preset-tabs { margin-bottom: 10px; }
+@media (max-width: 1000px) { .matrix-topbar { grid-template-columns: 1fr; } }
+
+
+/* Inside the controls card: tabs row, search on its own full row, then the
+   filter buttons in one aligned row, count line last. */
+.matrix-topbar [id$="-controls"] .tts-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.matrix-topbar [id$="-controls"] .tts-search { flex: 1 1 100%; }
+.matrix-topbar .tts-count-slot { margin-top: 10px; }
+.matrix-topbar .tts-count-slot .tts-count { margin: 0; }
+
+
+/* Columns group on the tabs row, right-justified; the count line spans the card */
+.preset-tabs .show-cols { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
+.matrix-topbar .tts-count-slot .tts-count { max-width: none; }

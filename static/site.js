@@ -1226,17 +1226,31 @@ function renderBoardToggle(models) {
   const mount = document.getElementById("board-toggle");
   const lb = document.getElementById("leaderboard");
   if (!mount || !lb) return;
+  // R12: a real, persistent two-state control instead of an underlined text link.
   let simple = true;
-  const btn = el("button", { class: "btn-tech", type: "button" });
+  try { simple = localStorage.getItem("og.view.v1") !== "technical"; } catch (e) {}
+  const bSimple = el("button", { class: "pill", type: "button",
+    title: "Five columns: the rating as a bar, what it runs on, how fast", text: "Simple" });
+  const bTech = el("button", { class: "pill", type: "button",
+    title: "Every column we record, with the heatmap and rank-by controls", text: "Technical" });
   const chrome = () => [document.getElementById("rank-by"), document.querySelector(".legend")];
   const apply = () => {
-    btn.textContent = simple ? "Show the technical view" : "Back to the simple view";
-    btn.setAttribute("aria-pressed", String(!simple));
+    bSimple.classList.toggle("on", simple);
+    bTech.classList.toggle("on", !simple);
+    bSimple.setAttribute("aria-pressed", String(simple));
+    bTech.setAttribute("aria-pressed", String(!simple));
     chrome().forEach((n) => { if (n) n.style.display = simple ? "none" : ""; });
     lb.replaceChildren(renderLeaderboard(models, null, simple));
   };
-  btn.addEventListener("click", () => { simple = !simple; apply(); });
-  mount.replaceChildren(btn);
+  const set = (v) => {
+    simple = v;
+    try { localStorage.setItem("og.view.v1", simple ? "simple" : "technical"); } catch (e) {}
+    apply();
+  };
+  bSimple.addEventListener("click", () => set(true));
+  bTech.addEventListener("click", () => set(false));
+  mount.replaceChildren(el("div", { class: "view-toggle" },
+    el("span", { class: "rankby-lbl", text: "View:" }), bSimple, bTech));
   apply();
 }
 
@@ -3441,7 +3455,20 @@ function renderTtsMatrix(mount, rows, state) {
     `${shown.length} of ${rows.length} systems shown. Click any row for what it is best at — and the catch.`
     + (picked === 1 ? "  Pick one more to compare."
       : picked > 1 ? `  Comparing ${picked}.` : "  Use + to compare."));
-  mount.replaceChildren(count, wrapEl);
+  // When the two-card band exists, the count belongs in the controls card —
+  // a lone grey sentence floating between the band and the table reads as
+  // clutter. The slot survives control re-renders because the matrix always
+  // renders after the controls.
+  const sec = mount.closest("section");
+  const box = sec && sec.querySelector(".matrix-topbar [id$='-controls']");
+  if (box) {
+    let slot = box.querySelector(".tts-count-slot");
+    if (!slot) { slot = el("div", { class: "tts-count-slot" }); box.appendChild(slot); }
+    slot.replaceChildren(count);
+    mount.replaceChildren(wrapEl);
+  } else {
+    mount.replaceChildren(count, wrapEl);
+  }
 }
 
 /* Controls.
@@ -3454,6 +3481,26 @@ function renderTtsMatrix(mount, rows, state) {
    So: everything stays, nothing is on screen until asked for. Four controls and
    a search box; whatever you have actually picked appears underneath as
    removable chips. You see your filter, not the filter vocabulary. */
+/* R5: the column presets, surfaced as a visible tab row instead of living two
+   clicks deep inside the Columns popover. Clicking one applies its column set;
+   the Columns picker stays for fine-tuning. */
+function ttsPresetTabs(state, onChange) {
+  const row = el("div", { class: "preset-tabs" }, el("span", { class: "pt-lbl", text: "View" }));
+  const active = (cols) => cols.length === state.cols.size && cols.every((k) => state.cols.has(k));
+  SPEC.colPresets.forEach((p) => {
+    const label = p.key === "default" ? "Standard" : p.label;
+    const b = el("button", { class: "pill" + (active(p.cols) ? " on" : ""), type: "button" }, label);
+    b.addEventListener("click", () => {
+      state.cols = new Set(p.cols);
+      if (!state.cols.has(state.sort) && state.sort !== "name") { state.sort = "name"; state.desc = false; }
+      ttsSavePrefs(state);
+      onChange();
+    });
+    row.appendChild(b);
+  });
+  return row;
+}
+
 function renderTtsControls(mount, rows, state, onChange) {
   const search = el("input", {
     class: "tts-search", type: "search", "aria-label": "Search every field",
@@ -3462,13 +3509,20 @@ function renderTtsControls(mount, rows, state, onChange) {
   search.value = state.q;
   search.addEventListener("input", () => { state.q = search.value.trim().toLowerCase(); onChange(); });
 
+  const tabs = ttsPresetTabs(state, onChange);
+  // Columns rides the tabs row, right-justified with its own SHOW label —
+  // alone at the end of the filter row it read as misplaced.
+  const showGroup = el("span", { class: "show-cols" },
+    el("span", { class: "pt-lbl", text: "Show" }),
+    ttsColumnPicker(rows, state, onChange));
+  tabs.appendChild(showGroup);
   mount.replaceChildren(
+    tabs,
     el("div", { class: "tts-controls" },
       search,
       ttsKindPicker(rows, state, onChange),
       ttsFacetPicker(rows, state, onChange),
-      ttsHardwarePicker(rows, state, onChange),
-      ttsColumnPicker(rows, state, onChange)),
+      ttsHardwarePicker(rows, state, onChange)),
     ttsActiveFilters(rows, state, onChange),
   );
 }
@@ -4281,11 +4335,95 @@ function initDialogs() {
   });
 }
 
+/* ---------------- R9: the glossary -----------------------------------------
+   The jargon translations were already written — in title= attributes nobody
+   finds and touch never shows. One source of truth, one dialog, every page. */
+const GLOSSARY = [
+  ["Human score / Elo", "A chess-style rating built from head-to-head judging: models 'play' conversations against each other and the winner takes points. Higher is better; there is no maximum. Only gaps bigger than the margin of error mean anything."],
+  ["± / confidence interval", "The margin of error on a score. If two models' ranges overlap, treat them as tied — the test cannot separate them."],
+  ["Parameters (7B, 26B…)", "The model's size, in billions of internal values. Bigger usually means more capable and slower. '26B (uses 4B/reply)' means only part of the model works on each reply — faster, but it still needs the full size in memory."],
+  ["Quantization (Q4_K_M, NVFP4…)", "Compressing a model so it fits in less memory and runs faster, at some cost to quality. The codes name the compression recipe — the number is roughly bits per value, so Q4 is more compressed than Q8."],
+  ["Full precision", "The model's original, uncompressed weights. Shown brighter in the Precision column because it is the original — not because it scores better."],
+  ["VRAM / 'Runs on'", "The memory on your graphics card, which decides what you can run. Under ~12 GB fits most gaming GPUs; 24 GB needs a high-end card; 48 GB+ is server-class."],
+  ["Wait for 1st word (TTFT)", "How long before the model starts replying. The other speed number is how fast it writes once started — most people read about 4 words a second, so anything above that arrives faster than you can read."],
+  ["Streaming", "Results arrive while still being produced — words as they are written, audio as it is spoken — instead of all at once at the end. Essential for anything conversational."],
+  ["Voice cloning", "Making a text-to-speech system speak in a specific person's voice, from a sample of them talking."],
+  ["Speaker verification", "Confirming WHO is talking — matching a voice against a known voiceprint. The flip side of cloning, and the defence against it."],
+  ["Wake word", "A tiny always-listening model that only wakes the real system when it hears its phrase — 'Hey…'. Judged by false accepts and missed wakes, not WER."],
+  ["WER / accuracy", "Word error rate: the fraction of words a speech recogniser gets wrong. Lower is better, and the test conditions matter more than the digits — a quiet-room number says nothing about a noisy phone call."],
+  ["Diarization", "Labelling who spoke when in a recording — 'speaker 1 said…, speaker 2 said…'."],
+  ["SSML", "A markup language for controlling speech output: pauses, emphasis, pronunciation."],
+  ["Licence colours", "Green: weights you may ship commercially. Amber: permissive, with a catch worth reading. Red: not usable commercially. Grey: a proprietary service — no weights at all."],
+  ["Measured vs surveyed", "A filled dot means OpenGauntlet ran the benchmark itself, on its own hardware. A hollow dot means a sourced research survey — the numbers come from vendors, papers and public arenas, with the source named."],
+];
+let glossaryDlg = null;
+function getGlossaryDialog() {
+  if (glossaryDlg) return glossaryDlg;
+  const dl = el("dl");
+  GLOSSARY.forEach(([term, def]) => {
+    dl.appendChild(el("div", {}, el("dt", { text: term }), el("dd", { text: def })));
+  });
+  glossaryDlg = el("dialog", { class: "og-dialog og-glossary" },
+    el("form", { method: "dialog" }, el("button", { class: "dialog-x", "aria-label": "Close", text: "×" })),
+    el("h3", { text: "The jargon, in plain words" }), dl);
+  glossaryDlg.addEventListener("click", (e) => { if (e.target === glossaryDlg) glossaryDlg.close(); });
+  document.body.appendChild(glossaryDlg);
+  return glossaryDlg;
+}
+function initGlossary(page) {
+  const btn = el("button", { class: "linkish", type: "button", text: "What do these terms mean? →" });
+  btn.addEventListener("click", () => getGlossaryDialog().showModal());
+  // Prefer riding inside the lede sentence of the section that owns the table
+  // — a lone left-justified line floating between centered hero and controls
+  // reads as a mistake. Fall back to the standalone line where there is none.
+  const ownerSec = Array.from(document.querySelectorAll("section.block"))
+    .find((s) => s.querySelector("[id$='-controls'], #board-toggle, #hardware-table"));
+  const lede = (ownerSec && ownerSec.querySelector(".section-head .note"))
+    || document.querySelector(".section-head .note") || document.querySelector(".section-head .lede");
+  if (lede) { lede.appendChild(document.createTextNode(" ")); lede.appendChild(btn); return; }
+  const anchor = document.getElementById("board-toggle")
+    || document.getElementById(`${page}-controls`)
+    || document.querySelector(".util-tabs")
+    || document.getElementById("hardware-table");
+  if (!anchor) return;
+  anchor.insertAdjacentElement("beforebegin", el("p", { class: "glossary-line" }, btn));
+}
+
+/* R1: close the nav dropdowns on an outside click — <details> otherwise stays
+   open, and two open panels can overlap. */
+function initNavMore() {
+  const drops = document.querySelectorAll("details.nav-more");
+  if (!drops.length) return;
+  document.addEventListener("click", (e) => {
+    drops.forEach((d) => { if (d.open && !d.contains(e.target)) d.open = false; });
+  });
+}
+
 /* ------------------------------ router ---------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const page = document.body.getAttribute("data-page");
   initHeroViz();
   initDialogs();
+  initNavMore();
+  initGlossary(page);
+  // The page-subject section head (the one that owns the matrix controls)
+  // centres, joining the centered hero + pipeline column above it.
+  // Matrix pages: the section head (title + what-this-is + dateline) sits in a
+  // card on the left; the view tabs / search / filters sit in a card on the
+  // right — one organized band instead of loose stacked fragments. Pages with a
+  // table but no controls (hardware, the board) keep the centered head.
+  document.querySelectorAll("section.block").forEach((sec) => {
+    const controls = sec.querySelector("[id$='-controls']");
+    const sh = sec.querySelector(".section-head");
+    if (!sh) return;
+    if (controls) {
+      const bar = el("div", { class: "matrix-topbar" });
+      sec.insertBefore(bar, sh);
+      bar.append(sh, controls);
+    } else if (sec.querySelector("#board-toggle, #hardware-table")) {
+      sh.classList.add("section-head--centre");
+    }
+  });
   if (page === "leaderboard") initLeaderboard();
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
