@@ -2696,6 +2696,91 @@ const MEMORY_COMPARE_FIELDS = [
   ["verification", "Evidence"], ["best_for", "Best for"],
 ];
 
+const QUANTIZATION_CATS = [
+  { key: "generic-algorithm", label: "Generic algorithm" },
+  { key: "format-native",     label: "Format-native" },
+  { key: "vendor-toolchain",  label: "Vendor toolchain" },
+];
+const QUANTIZATION_CAT_LABEL = Object.fromEntries(QUANTIZATION_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror QUANTIZATION_FACETS in config.py (CORE_FACETS plus a small
+   domain extension — calibration-free, sub-4-bit, QAT-capable, and
+   MoE-aware are the axes a builder actually filters on here). Every member
+   of QUANTIZATION_FACETS needs a home in some group below, or it becomes
+   unreachable in the filter UI and invisible in the row expander —
+   test_every_quantization_facet_has_a_home_in_the_js_facet_groups enforces
+   this in both directions. */
+const QUANTIZATION_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Edge/embedded"], ["browser", "Browser/WASM"],
+  ] },
+  { title: "Can do", facets: [
+    ["calibration-free", "Calibration-free"], ["sub-4-bit", "Sub-4-bit"],
+    ["qat-capable", "QAT-capable"], ["moe-aware", "MoE-aware"],
+    ["streaming", "Streaming / incremental"], ["long-form", "Long-form"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+  { title: "Languages", facets: [["multilingual", "Multiple languages"], ["english-only", "English only"]] },
+];
+const QUANTIZATION_FACET_LABEL = Object.fromEntries(QUANTIZATION_FACET_GROUPS.flatMap((g) => g.facets));
+
+const QUANTIZATION_COLS = [
+  { key: "name",            label: "Tool",              txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",        label: "What's different",  txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",        label: "Kind",               txt: true, def: true, group: "Core" },
+  { key: "licence",         label: "Licence",            txt: true, def: true, group: "Core" },
+  { key: "method",          label: "Method",             txt: true, def: true, wide: true, group: "Core" },
+  { key: "calibration",     label: "Calibration",        txt: true, def: true, group: "Core" },
+  { key: "price_sort",      label: "Cost",               txt: true, cell: "price_note", group: "Commercial" },
+  { key: "bit_widths",      label: "Bit-widths",         txt: true, wide: true, group: "Technical" },
+  { key: "accuracy_note",   label: "Accuracy",           txt: true, wide: true, group: "Technical" },
+  { key: "kernel_support",  label: "Kernel support",     txt: true, wide: true, group: "Technical" },
+  { key: "output_format",   label: "Output format",      txt: true, group: "Technical" },
+  { key: "availability",    label: "Availability",       txt: true, group: "Technical" },
+  { key: "status",          label: "Status",              txt: true, group: "Evidence" },
+  { key: "verification",    label: "Evidence",            txt: true, group: "Evidence" },
+  { key: "adoption",        label: "Adoption",            txt: true, wide: true, group: "Evidence" },
+  { key: "watch",           label: "The catch",           txt: true, wide: true, group: "Evidence" },
+];
+const QUANTIZATION_COL_DEFAULT = QUANTIZATION_COLS.filter((c) => c.def).map((c) => c.key);
+
+const QUANTIZATION_COL_PRESETS = [
+  { key: "default", label: "Default", cols: QUANTIZATION_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "method", "calibration", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "bit_widths", "accuracy_note", "kernel_support", "output_format", "availability"] },
+  { key: "all",     label: "Everything", cols: QUANTIZATION_COLS.map((c) => c.key) },
+];
+
+const QUANTIZATION_PANELS = [
+  { title: "Technical", fields: [
+    ["bit_widths", "Bit-widths"], ["accuracy_note", "Accuracy"],
+    ["kernel_support", "Kernel support"], ["output_format", "Output format"],
+  ] },
+  { title: "Evidence", fields: [
+    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const QUANTIZATION_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["method", "Method"], ["calibration", "Calibration"], ["bit_widths", "Bit-widths"],
+  ["accuracy_note", "Accuracy"], ["kernel_support", "Kernel support"],
+  ["output_format", "Output format"], ["availability", "Availability"], ["price_note", "Cost"],
+  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
+  ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
 const MATRIX_SPECS = {
   tts: {
     key: "tts", dataUrl: "data/tts.json", prefsKey: "og.tts.prefs.v1",
@@ -2745,16 +2830,24 @@ const MATRIX_SPECS = {
     panels: MEMORY_PANELS, compareFields: MEMORY_COMPARE_FIELDS,
     kindHint: "Three kinds: vector databases are general-purpose similarity search, memory frameworks add an opinionated layer deciding what's worth remembering, and graph memory does the same with a knowledge-graph structure instead of flat vectors.",
   },
+  quantization: {
+    key: "quantization", dataUrl: "data/quantization.json", prefsKey: "og.quantization.prefs.v1",
+    cats: QUANTIZATION_CATS, catLabel: QUANTIZATION_CAT_LABEL,
+    facetGroups: QUANTIZATION_FACET_GROUPS, facetLabel: QUANTIZATION_FACET_LABEL,
+    cols: QUANTIZATION_COLS, colDefault: QUANTIZATION_COL_DEFAULT, colPresets: QUANTIZATION_COL_PRESETS,
+    panels: QUANTIZATION_PANELS, compareFields: QUANTIZATION_COMPARE_FIELDS,
+    kindHint: "Three kinds: generic algorithms are apply-it-yourself PTQ libraries, format-native tools are built into one serving ecosystem, and vendor toolchains are vendor-shipped or training-integrated.",
+  },
 };
 
 /* ------------------------------------------------------------------------
-   Six matrices, one renderer.
+   Seven matrices, one renderer.
 
-   Voices, Listening, Turns, Runtimes, Orchestrators and Memory differ in exactly six things —
+   Voices, Listening, Turns, Runtimes, Orchestrators, Memory and Quantization differ in exactly six things —
    categories, facets, columns, expander panels, compare fields and the prefs
    key. Licence chips, the hardware ladder, magnitude sorting, popovers,
    compare and the whole 600-line table are identical, and a second, third,
-   fourth, fifth, or sixth copy would be a copy to keep in sync.
+   fourth, fifth, sixth, or seventh copy would be a copy to keep in sync.
 
    SPEC is module-level rather than threaded through fifteen signatures because
    a page renders exactly ONE matrix: the router picks it from `data-page`, and
@@ -3855,6 +3948,6 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
-  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory") initMatrix(page);
+  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory" || page === "quantization") initMatrix(page);
   else if (page === "hardware") initHardwareTable();
 });

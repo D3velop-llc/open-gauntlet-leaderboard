@@ -12,6 +12,7 @@
 - [Hardware reference](https://opengauntlet.com/hardware.html): GPU and hardware VRAM/bandwidth reference, model-agnostic.
 - [Orchestrator research](https://opengauntlet.com/orchestrators.html): Sourced voice-agent framework and platform comparison.
 - [Memory research](https://opengauntlet.com/memory.html): Sourced vector database and agent-memory system comparison.
+- [Quantization research](https://opengauntlet.com/quantization.html): Sourced quantization toolchain comparison.
 - [Text-to-speech research](https://opengauntlet.com/tts.html): Sourced TTS system comparison.
 - [TTS comparison guide](https://opengauntlet.com/tts-guide.html): How to interpret TTS evidence.
 - [TTS legal guide](https://opengauntlet.com/tts-legal.html): Licensing, consent, and legal-risk research.
@@ -26,4 +27,5 @@
 - [Hardware reference JSON](https://opengauntlet.com/data/hardware-catalog.json)
 - [Orchestrators research JSON](https://opengauntlet.com/data/orchestrators.json)
 - [Memory research JSON](https://opengauntlet.com/data/memory.json)
+- [Quantization research JSON](https://opengauntlet.com/data/quantization.json)
 - [TTS research JSON](https://opengauntlet.com/data/tts.json)

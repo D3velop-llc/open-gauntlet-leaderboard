@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0B0E14">
-  <meta name="description" content="A sourced comparison of voice-agent orchestration frameworks and hosted platforms — transport options, tool-calling and multi-agent architecture, observability, and deployment model.">
+  <meta name="description" content="A sourced comparison of quantization tools and algorithms — the software that turns a full-precision checkpoint into a quantized one — on method, calibration cost, bit-width flexibility, accuracy retention, and hardware kernel support.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-  <title>Wiring it together — orchestrators compared · OpenGauntlet</title>
-  <link rel="canonical" href="https://opengauntlet.com/orchestrators.html">
+  <title>Quantization toolchains compared · OpenGauntlet</title>
+  <link rel="canonical" href="https://opengauntlet.com/quantization.html">
   <link rel="alternate" type="application/rss+xml" title="OpenGauntlet updates" href="https://opengauntlet.com/feed.xml">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="OpenGauntlet">
-  <meta property="og:title" content="Wiring it together — orchestrators &amp; pipeline frameworks compared · OpenGauntlet">
-  <meta property="og:description" content="A sourced comparison of voice-agent orchestration frameworks and hosted platforms — transport options, tool-calling and multi-agent architecture, observability, and deployment model.">
-  <meta property="og:url" content="https://opengauntlet.com/orchestrators.html">
+  <meta property="og:title" content="Quantization toolchains — how models get compressed · OpenGauntlet">
+  <meta property="og:description" content="A sourced comparison of quantization tools and algorithms — the software that turns a full-precision checkpoint into a quantized one — on method, calibration cost, bit-width flexibility, accuracy retention, and hardware kernel support.">
+  <meta property="og:url" content="https://opengauntlet.com/quantization.html">
   <meta property="og:image" content="https://opengauntlet.com/static/img/social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="OpenGauntlet — local AI, measured">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Wiring it together — orchestrators &amp; pipeline frameworks compared · OpenGauntlet">
-  <meta name="twitter:description" content="A sourced comparison of voice-agent orchestration frameworks and hosted platforms — transport options, tool-calling and multi-agent architecture, observability, and deployment model.">
+  <meta name="twitter:title" content="Quantization toolchains — how models get compressed · OpenGauntlet">
+  <meta name="twitter:description" content="A sourced comparison of quantization tools and algorithms — the software that turns a full-precision checkpoint into a quantized one — on method, calibration cost, bit-width flexibility, accuracy retention, and hardware kernel support.">
   <meta name="twitter:image" content="https://opengauntlet.com/static/img/social-card.png">
   <script type="application/ld+json">
   {
@@ -44,7 +44,7 @@
   
 </head>
 
-<body data-page="orchestrators" data-kind="surveyed">
+<body data-page="quantization" data-kind="surveyed">
   <header class="topbar">
     <div class="wrap">
       <a class="brand" href="index.html"><span class="slash">//</span>open<em>gauntlet</em></a>
@@ -70,11 +70,13 @@
   <div class="wrap">
     <section class="hero hero-lede">
       <div class="eyebrow"><span class="tick">//</span> surveyed, not benchmarked</div>
-      <h1>Wiring it <span class="warm">together</span></h1>
+      <h1>How models get <span class="warm">compressed</span></h1>
       <p class="lede">
-        Turns already tells you which turn-detector is best. This page is what assembles the rest
-        of the pipeline: transport (WebRTC, WebSocket, SIP/PSTN), tool-calling and multi-agent
-        architecture, observability, and whether you self-host it or buy it as a managed platform.
+        Every row on the leaderboard already names a quant format, and Runtimes tells you which
+        server can load it. Neither says how that quantized checkpoint got made, or what a builder
+        gives up doing it. Here is every quantization tool and algorithm we could verify against a
+        primary source, on the axes that decide a project — calibration cost, bit-width, accuracy
+        retention, and which hardware runs the result fast.
       </p>
     </section>
   </div>
@@ -85,41 +87,48 @@
         <span class="ev hollow" aria-hidden="true"></span>
         <strong>Surveyed, not benchmarked.</strong> Nothing on this page was measured by
         OpenGauntlet's judge pipeline.
-        <button type="button" class="linkish" data-dialog="scope-orchestrators">What that means &rarr;</button>
+        <button type="button" class="linkish" data-dialog="scope-quantization">What that means &rarr;</button>
       </p>
 
-      <dialog id="scope-orchestrators" class="og-dialog">
+      <dialog id="scope-quantization" class="og-dialog">
         <form method="dialog"><button class="dialog-x" aria-label="Close">&times;</button></form>
         <h3>How to read this section</h3>
         <p class="prose">
           <strong>None of this is scored by the judge pipeline.</strong> OpenGauntlet measures
           <em>Conversational Language Humanlikeness</em> in text. This section is a
-          <strong>sourced survey</strong> of orchestration frameworks and platforms, not a trial.
-          Where a claim could not be verified against a primary source, it says so rather than
-          smoothing it over.
+          <strong>sourced survey</strong> of quantization tools and algorithms, not a trial. Where
+          a claim could not be verified against a primary source, it says so rather than smoothing
+          it over.
         </p>
         <p class="prose">
-          <strong>Turn-taking behavior is covered elsewhere.</strong> Several tools here — Pipecat,
-          LiveKit Agents, Rasa, Bolna — also appear on the Turns page with a row scoped ONLY to
-          their turn-detection/interruption-handling behavior. This page covers everything else:
-          transport, tool-calling, architecture, observability, deployment.
+          <strong>Serving is covered elsewhere.</strong> Runtimes' "quant specialist" engines
+          (ExLlamaV3, AutoGPTQ, GPTQModel, and others) answer "can a server load this format." This
+          page answers a different question — how the checkpoint gets produced, and what a builder
+          gives up doing it. A tool that does both may appear on both pages, describing itself
+          through each page's own questions.
+        </p>
+        <p class="prose">
+          <strong>Accuracy figures are mostly vendor-reported.</strong> This project does not run
+          its own perplexity/quality benchmarks. Where a row's accuracy claim could not be
+          independently confirmed, its evidence field says so rather than presenting a vendor
+          number as measured fact.
         </p>
       </dialog>
 
       <div class="section-head">
         <span class="idx">//</span>
-        <h2>Every framework and platform, compared</h2>
+        <h2>Every tool, compared</h2>
         <span class="note">
           Filter by kind, pick the columns you care about, search any field, click a heading to
           sort. Every row carries the one thing a buyer would otherwise find out too late.
         </span>
-        <div id="orchestrators-dateline" class="tts-dateline"></div>
+        <div id="quantization-dateline" class="tts-dateline"></div>
       </div>
 
-      <div id="orchestrators-controls"></div>
-      <div id="orchestrators-compare"></div>
-      <div id="orchestrators-matrix"><div class="state">Loading…</div></div>
-      <div id="orchestrators-rating-coverage" class="tts-rating-coverage"></div>
+      <div id="quantization-controls"></div>
+      <div id="quantization-compare"></div>
+      <div id="quantization-matrix"><div class="state">Loading…</div></div>
+      <div id="quantization-rating-coverage" class="tts-rating-coverage"></div>
 
       <div class="legend tts-legend">
         <span><span class="lic-key lic-open" aria-hidden="true"></span> commercial-safe weights</span>
@@ -136,7 +145,7 @@
         <h2>Claims this corrects</h2>
         <span class="note">Each of these is repeated widely, and each is wrong.</span>
       </div>
-      <div id="orchestrators-corrections"></div>
+      <div id="quantization-corrections"></div>
     </section>
 
     <section class="block">
@@ -145,7 +154,7 @@
         <h2>What we couldn't establish</h2>
         <span class="note">A comparison that hides its gaps is less useful than one that names them.</span>
       </div>
-      <div id="orchestrators-gaps"></div>
+      <div id="quantization-gaps"></div>
     </section>
   </div>
 
