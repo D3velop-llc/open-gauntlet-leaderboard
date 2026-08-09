@@ -3891,7 +3891,7 @@ function renderTtsRatingCoverage(mount, rows) {
     el("p", { class: "tts-rating-cov" },
       el("strong", { text: `${rated.length} of ${rows.length} systems carry an external rating.` }),
       " Ratings come from ", sources.join(" and "), when,
-      ". Nothing on this page is measured by OpenGauntlet. A blank is a system that "
+      ". Nothing in this market matrix is measured by OpenGauntlet. A blank is a system that "
       + "source has not measured — not a low-scoring one, and the two must not be read "
       + "the same way. "
       + (SPEC.key === "tts"
@@ -3942,6 +3942,44 @@ function renderTtsDateline(mount, doc, label = "systems") {
   }
 }
 
+function renderTtsLab(mount, lab) {
+  if (!mount || !lab || !Array.isArray(lab.results)) return;
+  const fmt = (v, digits = 3) => v == null ? "—" : Number(v).toFixed(digits).replace(/\.?0+$/, "");
+  const body = el("tbody", {}, ...lab.results.map((r) =>
+    el("tr", {},
+      el("td", { text: r.model }),
+      el("td", { text: fmt(r.baseline_mean) }),
+      el("td", { text: fmt(r.feature_mean) }),
+      el("td", { text: fmt(r.rtf_p50) }),
+      el("td", { text: r.vram_mib == null ? "—" : `${(r.vram_mib / 1024).toFixed(1)} GiB` }),
+      el("td", { text: r.continuity || "—" }))));
+  const table = el("div", { class: "table-scroll" },
+    el("table", { class: "lb tts-lab-table" },
+      el("thead", {}, el("tr", {},
+        el("th", { text: "Model" }), el("th", { text: "Baseline /5" }),
+        el("th", { text: "Features /5" }), el("th", { text: "RTF p50" }),
+        el("th", { text: "Peak VRAM" }), el("th", { text: "Continuity ratings" }))), body));
+  const standout = lab.standout ? el("div", { class: "tts-lab-standout" },
+    el("span", { class: "tts-lab-score", text: `${lab.standout.score}/5` }),
+    el("p", {}, el("strong", { text: `${lab.standout.model} · ${lab.standout.condition}. ` }),
+      lab.standout.detail)) : null;
+  const next = lab.next_round ? el("p", { class: "tts-lab-next" },
+    el("strong", { text: `${lab.next_round.status === "complete" ? "Latest round complete" : "Now rating"}: ${lab.next_round.completed.join(", ")}. ` }),
+    `${lab.next_round.items} blind clips; ${lab.next_round.excluded.join("; ")}. `,
+    el("a", { href: lab.next_round.receipt_url, text: "Round receipt →" })) : null;
+  mount.replaceChildren(el("div", { class: "tts-lab" },
+    el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }),
+      el("h2", { text: lab.title || "OpenGauntlet Lab" }),
+      el("span", { class: "note", text: `${lab.measured_at} · ${lab.host} · ${lab.gpu} · ${lab.reference_voice} reference` })),
+    el("p", { class: "tts-lab-boundary" },
+      el("strong", { text: "Measured locally; experimental, not a population leaderboard. " }),
+      `${lab.blind_ratings} blind ratings from ${lab.listener_count} owner-listener. ${lab.note || ""}`),
+    standout, next, table,
+    el("p", { class: "tts-lab-links" },
+      el("a", { href: lab.method_url, text: "Baseline method and receipts →" }), " · ",
+      el("a", { href: lab.feature_method_url, text: "Feature and continuity method →" }))));
+}
+
 /* Returns true on a successful render, false when the fetch failed (so a
    caller — today, only initUtilitiesPage's activate() — can tell "loaded"
    apart from "gave up and showed an error", and avoid marking a failed tab
@@ -3987,6 +4025,7 @@ async function initMatrix(key) {
   state.onPick = rerender;
   rerender();
   renderTtsRatingCoverage($(`#${key}-rating-coverage`), rows);
+  if (key === "tts") renderTtsLab($("#tts-lab"), doc.lab);
   renderTtsDateline($(`#${key}-dateline`), doc);
   renderTtsCorrections($(`#${key}-corrections`), doc.corrections);
   renderTtsGaps($(`#${key}-gaps`), doc.gaps);

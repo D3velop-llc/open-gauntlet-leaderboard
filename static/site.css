@@ -1328,6 +1328,25 @@ table.lb.tts td.tts-rating { min-width: 6.4rem; }
 .tts-rating-cov strong { color: var(--ink); }
 .tts-rating-cov.note { border-left-color: var(--border); color: var(--muted); font-size: 12px; }
 
+/* Measured Lab receipts are visually and structurally separate from the sourced survey. */
+.tts-lab { margin: 0 0 30px; padding: 20px; border: 1px solid rgba(122, 192, 137, .42);
+  border-radius: var(--radius); background: rgba(122, 192, 137, .045); }
+.tts-lab .section-head { margin-bottom: 10px; }
+.tts-lab-boundary { max-width: 82ch; margin: 0 0 14px; color: var(--ink-dim); font-size: 13px; line-height: 1.6; }
+.tts-lab-boundary strong { color: var(--good); }
+.tts-lab-standout { display: flex; gap: 12px; align-items: flex-start; margin: 0 0 16px;
+  padding: 12px 14px; border-left: 3px solid var(--good); background: rgba(122, 192, 137, .08); }
+.tts-lab-score { flex: none; color: var(--good); font: 700 18px var(--font-mono); }
+.tts-lab-standout p { margin: 0; color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
+.tts-lab-standout strong { color: var(--ink); }
+.tts-lab-next { margin: 0 0 14px; padding: 9px 12px; border: 1px solid var(--border);
+  color: var(--ink-dim); font-size: 12px; line-height: 1.55; }
+.tts-lab-next strong { color: var(--ember); }
+table.tts-lab-table { min-width: 780px; }
+table.tts-lab-table th, table.tts-lab-table td { text-align: left; }
+table.tts-lab-table td:not(:first-child) { font-family: var(--font-mono); }
+.tts-lab-links { margin: 12px 0 0; font-size: 12px; }
+
 /* ---- the matrix --------------------------------------------------------- */
 /* table.lb is built for numeric scanning: nowrap, right-aligned. Half these
    columns are prose, so they wrap and align left, and the table gets a wider
