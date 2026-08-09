@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "bundle_id": "listening-features-20260809",
+  "completed_at": "2026-08-09T18:13:14.521Z",
+  "ratings_sha256": "3b798140a0995b1008db790c0b8a4480f7450b658fa5721c07b41641f62eed0f",
+  "key_sha256": "a1017f3639e152baec2eeaf63960a3c515850c165ba40c467af49682ae14d226",
+  "rated": 37,
+  "available": 37,
+  "winner_selections": 0,
+  "missing": [],
+  "owner_headline": {
+    "threshold": "amazing",
+    "score": 5,
+    "only_score_at_threshold": true,
+    "statement_id": "continuity_stateless",
+    "model_key": "higgs_v3",
+    "mechanism": "four independent clause-controlled requests concatenated without inserted silence"
+  },
+  "model_means": {
+    "chatterbox_turbo": {"mean":3.286,"rated":7,"available":7},
+    "voxcpm2": {"mean":3.25,"rated":8,"available":8},
+    "higgs_v3": {"mean":2.857,"rated":7,"available":7},
+    "qwen3_tts": {"mean":2.857,"rated":7,"available":7},
+    "moss_realtime": {"mean":2.5,"rated":8,"available":8}
+  },
+  "continuity_scores": {
+    "chatterbox_turbo": {"whole":4,"stateless":3,"stateful":null},
+    "higgs_v3": {"whole":2,"stateless":5,"stateful":null},
+    "moss_realtime": {"whole":3,"stateless":4,"stateful":3},
+    "qwen3_tts": {"whole":2,"stateless":4,"stateful":null},
+    "voxcpm2": {"whole":4,"stateless":3,"stateful":3}
+  },
+  "status": "experiment_required"
+}

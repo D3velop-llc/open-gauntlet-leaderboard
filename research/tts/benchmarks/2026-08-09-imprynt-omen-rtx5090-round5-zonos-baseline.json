@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "reference_wav_sha256": "d9b12c040f284c251fae88813a0459391933519fdc191ccfec4ca731c1c31a65",
+  "reference_text_sha256": "dc3f861b7e98e2d98f5e5eb582be4e38a98ca6e529b3bfa525ce7545a65c998e",
+  "statements_sha256": "dce124a3a5fbf89544f69b90ca145f2cf25ce25bf305e9165f75014849bd8055",
+  "results": [
+    {
+      "model_key": "zonos2",
+      "label": "ZONOS2",
+      "run_id": "20260809T211802Z-zonos2",
+      "status": "COMPLETE",
+      "n": 13,
+      "load_seconds": 0.002321592008229345,
+      "elapsed_p50_seconds": 2.8826475339592434,
+      "elapsed_p95_seconds": 7.5000858655781375,
+      "rtf_p50": 0.3738738097685886,
+      "rtf_p95": 0.5258078614600887,
+      "rtf_max": 0.5750768361490652,
+      "total_audio_seconds": 121.83510204081632,
+      "sample_rates": [
+        44100
+      ],
+      "torch_peak_allocated_bytes": 0,
+      "gpu_memory_peak_mib": 24543.0,
+      "gpu_utilization_peak_percent": 88.0,
+      "gpu_power_peak_watts": 279.3,
+      "gpu_temperature_peak_c": 44.0,
+      "gpu_sm_clock_peak_mhz": 2932.0
+    }
+  ]
+}

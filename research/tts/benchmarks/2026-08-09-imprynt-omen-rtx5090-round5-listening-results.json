@@ -1,0 +1,1890 @@
+{
+  "schema_version": 1,
+  "bundle_id": "listening-round5-20260809-v2",
+  "completed_at": "2026-08-09T22:05:24.205Z",
+  "rated": 70,
+  "available": 70,
+  "winner_selections": 0,
+  "by_model": {
+    "chatterbox_original": {
+      "rated": 14,
+      "available": 14,
+      "mean": 2.286,
+      "median": 2.0,
+      "score_counts": {
+        "1": 3,
+        "2": 6,
+        "3": 3,
+        "4": 2
+      },
+      "flags": {
+        "sounds_like_brent": 7,
+        "natural": 5,
+        "bad_pacing": 5,
+        "audio_artifact": 2,
+        "voice_drift": 2,
+        "emotion_mismatch": 2,
+        "expressive": 1,
+        "emotion_match": 1,
+        "smooth_transition": 1,
+        "mispronunciation": 1,
+        "good_pacing": 1,
+        "robotic": 1
+      }
+    },
+    "cosyvoice3": {
+      "rated": 14,
+      "available": 14,
+      "mean": 1.071,
+      "median": 1.0,
+      "score_counts": {
+        "1": 13,
+        "2": 1
+      },
+      "flags": {
+        "robotic": 13,
+        "control_spoken": 10,
+        "emotion_mismatch": 5,
+        "bad_pacing": 3,
+        "voice_drift": 2,
+        "mispronunciation": 2
+      }
+    },
+    "fish_s2_pro": {
+      "rated": 14,
+      "available": 14,
+      "mean": 2.571,
+      "median": 3.0,
+      "score_counts": {
+        "2": 6,
+        "3": 8
+      },
+      "flags": {
+        "sounds_like_brent": 13,
+        "bad_pacing": 6,
+        "emotion_mismatch": 5,
+        "natural": 4,
+        "robotic": 3,
+        "boundary_seam": 1,
+        "good_pacing": 1
+      }
+    },
+    "higgs_v3": {
+      "rated": 14,
+      "available": 14,
+      "mean": 2.857,
+      "median": 3.0,
+      "score_counts": {
+        "1": 1,
+        "2": 4,
+        "3": 5,
+        "4": 4
+      },
+      "flags": {
+        "sounds_like_brent": 11,
+        "natural": 6,
+        "good_pacing": 2,
+        "robotic": 1,
+        "emotion_match": 1,
+        "voice_drift": 1,
+        "bad_pacing": 1,
+        "trailing_silence": 1,
+        "emotion_mismatch": 1
+      }
+    },
+    "zonos2": {
+      "rated": 14,
+      "available": 14,
+      "mean": 2.071,
+      "median": 2.0,
+      "score_counts": {
+        "1": 5,
+        "2": 4,
+        "3": 4,
+        "4": 1
+      },
+      "flags": {
+        "natural": 7,
+        "voice_drift": 6,
+        "good_pacing": 3,
+        "sounds_like_brent": 3,
+        "robotic": 2,
+        "audio_artifact": 1,
+        "emotion_mismatch": 1
+      }
+    }
+  },
+  "by_statement": {
+    "awkward_clause": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.4,
+        "median": 3,
+        "score_counts": {
+          "1": 1,
+          "2": 1,
+          "3": 3
+        },
+        "flags": {
+          "sounds_like_brent": 3,
+          "natural": 2,
+          "bad_pacing": 1,
+          "control_spoken": 1,
+          "robotic": 1,
+          "expressive": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 3,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 3,
+        "higgs_v3": 3,
+        "zonos2": 2
+      }
+    },
+    "continuity_stateless": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.6,
+        "median": 3,
+        "score_counts": {
+          "1": 2,
+          "3": 1,
+          "4": 2
+        },
+        "flags": {
+          "sounds_like_brent": 3,
+          "natural": 2,
+          "audio_artifact": 1,
+          "voice_drift": 1,
+          "emotion_match": 1,
+          "smooth_transition": 1,
+          "boundary_seam": 1,
+          "good_pacing": 1,
+          "bad_pacing": 1,
+          "robotic": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 4,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 3,
+        "higgs_v3": 4,
+        "zonos2": 1
+      }
+    },
+    "continuity_whole": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.6,
+        "median": 3,
+        "score_counts": {
+          "2": 2,
+          "3": 3
+        },
+        "flags": {
+          "sounds_like_brent": 4,
+          "robotic": 2,
+          "natural": 2,
+          "audio_artifact": 1,
+          "control_spoken": 1,
+          "good_pacing": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 3,
+        "cosyvoice3": 2,
+        "fish_s2_pro": 3,
+        "higgs_v3": 2,
+        "zonos2": 3
+      }
+    },
+    "controlled_calm": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.0,
+        "median": 2,
+        "score_counts": {
+          "1": 2,
+          "2": 1,
+          "3": 2
+        },
+        "flags": {
+          "robotic": 2,
+          "voice_drift": 1,
+          "sounds_like_brent": 1,
+          "control_spoken": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 2,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 3,
+        "higgs_v3": 3,
+        "zonos2": 1
+      }
+    },
+    "controlled_enthusiasm": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 1.6,
+        "median": 1,
+        "score_counts": {
+          "1": 3,
+          "2": 1,
+          "3": 1
+        },
+        "flags": {
+          "sounds_like_brent": 2,
+          "robotic": 2,
+          "voice_drift": 2,
+          "emotion_match": 1,
+          "natural": 1,
+          "control_spoken": 1,
+          "emotion_mismatch": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 1,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 2,
+        "higgs_v3": 3,
+        "zonos2": 1
+      }
+    },
+    "controlled_transition": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 1.6,
+        "median": 1,
+        "score_counts": {
+          "1": 3,
+          "2": 1,
+          "3": 1
+        },
+        "flags": {
+          "voice_drift": 3,
+          "robotic": 3,
+          "bad_pacing": 2,
+          "sounds_like_brent": 2,
+          "control_spoken": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 2,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 3,
+        "higgs_v3": 1,
+        "zonos2": 1
+      }
+    },
+    "emotional": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.6,
+        "median": 3,
+        "score_counts": {
+          "1": 1,
+          "3": 4
+        },
+        "flags": {
+          "sounds_like_brent": 4,
+          "bad_pacing": 2,
+          "emotion_mismatch": 2,
+          "natural": 2,
+          "control_spoken": 1,
+          "robotic": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 3,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 3,
+        "higgs_v3": 3,
+        "zonos2": 3
+      }
+    },
+    "names_acronyms": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 1.8,
+        "median": 2,
+        "score_counts": {
+          "1": 2,
+          "2": 2,
+          "3": 1
+        },
+        "flags": {
+          "voice_drift": 3,
+          "bad_pacing": 2,
+          "emotion_mismatch": 1,
+          "sounds_like_brent": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 1,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 3,
+        "higgs_v3": 2,
+        "zonos2": 2
+      }
+    },
+    "numbers_dates": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.4,
+        "median": 2,
+        "score_counts": {
+          "1": 1,
+          "2": 2,
+          "3": 1,
+          "4": 1
+        },
+        "flags": {
+          "natural": 2,
+          "sounds_like_brent": 2,
+          "bad_pacing": 2,
+          "mispronunciation": 2,
+          "robotic": 2,
+          "control_spoken": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 2,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 2,
+        "higgs_v3": 4,
+        "zonos2": 3
+      }
+    },
+    "paragraph": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.6,
+        "median": 2,
+        "score_counts": {
+          "1": 1,
+          "2": 2,
+          "4": 2
+        },
+        "flags": {
+          "sounds_like_brent": 3,
+          "good_pacing": 2,
+          "natural": 2,
+          "bad_pacing": 2,
+          "emotion_mismatch": 2,
+          "trailing_silence": 1,
+          "robotic": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 4,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 2,
+        "higgs_v3": 2,
+        "zonos2": 4
+      }
+    },
+    "question": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.0,
+        "median": 2,
+        "score_counts": {
+          "1": 2,
+          "2": 2,
+          "4": 1
+        },
+        "flags": {
+          "sounds_like_brent": 3,
+          "natural": 1,
+          "emotion_mismatch": 1,
+          "bad_pacing": 1,
+          "control_spoken": 1,
+          "robotic": 1,
+          "voice_drift": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 2,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 2,
+        "higgs_v3": 4,
+        "zonos2": 1
+      }
+    },
+    "semantic_amusement": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 1.6,
+        "median": 2,
+        "score_counts": {
+          "1": 2,
+          "2": 3
+        },
+        "flags": {
+          "emotion_mismatch": 4,
+          "robotic": 2,
+          "sounds_like_brent": 2,
+          "control_spoken": 1,
+          "mispronunciation": 1,
+          "natural": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 1,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 2,
+        "higgs_v3": 2,
+        "zonos2": 2
+      }
+    },
+    "semantic_empathy": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.2,
+        "median": 2,
+        "score_counts": {
+          "1": 1,
+          "2": 2,
+          "3": 2
+        },
+        "flags": {
+          "natural": 3,
+          "bad_pacing": 2,
+          "sounds_like_brent": 2,
+          "control_spoken": 1,
+          "emotion_mismatch": 1,
+          "robotic": 1,
+          "good_pacing": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 2,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 2,
+        "higgs_v3": 3,
+        "zonos2": 3
+      }
+    },
+    "short_reply": {
+      "summary": {
+        "rated": 5,
+        "available": 5,
+        "mean": 2.4,
+        "median": 2,
+        "score_counts": {
+          "1": 1,
+          "2": 2,
+          "3": 1,
+          "4": 1
+        },
+        "flags": {
+          "natural": 4,
+          "good_pacing": 2,
+          "sounds_like_brent": 2,
+          "emotion_mismatch": 2,
+          "robotic": 1,
+          "audio_artifact": 1
+        }
+      },
+      "scores": {
+        "chatterbox_original": 2,
+        "cosyvoice3": 1,
+        "fish_s2_pro": 3,
+        "higgs_v3": 4,
+        "zonos2": 2
+      }
+    }
+  },
+  "by_lane_model": {
+    "clause_continuity/chatterbox_original": {
+      "rated": 2,
+      "available": 2,
+      "mean": 3.5,
+      "median": 3.5,
+      "score_counts": {
+        "3": 1,
+        "4": 1
+      },
+      "flags": {
+        "sounds_like_brent": 2,
+        "emotion_match": 1,
+        "natural": 1,
+        "smooth_transition": 1,
+        "audio_artifact": 1
+      }
+    },
+    "clause_continuity/cosyvoice3": {
+      "rated": 2,
+      "available": 2,
+      "mean": 1.5,
+      "median": 1.5,
+      "score_counts": {
+        "1": 1,
+        "2": 1
+      },
+      "flags": {
+        "robotic": 2,
+        "bad_pacing": 1,
+        "control_spoken": 1
+      }
+    },
+    "clause_continuity/fish_s2_pro": {
+      "rated": 2,
+      "available": 2,
+      "mean": 3.0,
+      "median": 3.0,
+      "score_counts": {
+        "3": 2
+      },
+      "flags": {
+        "natural": 2,
+        "sounds_like_brent": 2,
+        "boundary_seam": 1
+      }
+    },
+    "clause_continuity/higgs_v3": {
+      "rated": 2,
+      "available": 2,
+      "mean": 3.0,
+      "median": 3.0,
+      "score_counts": {
+        "2": 1,
+        "4": 1
+      },
+      "flags": {
+        "sounds_like_brent": 2,
+        "good_pacing": 1,
+        "robotic": 1
+      }
+    },
+    "clause_continuity/zonos2": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.0,
+      "median": 2.0,
+      "score_counts": {
+        "1": 1,
+        "3": 1
+      },
+      "flags": {
+        "audio_artifact": 1,
+        "voice_drift": 1,
+        "good_pacing": 1,
+        "natural": 1,
+        "sounds_like_brent": 1
+      }
+    },
+    "default/chatterbox_original": {
+      "rated": 7,
+      "available": 7,
+      "mean": 2.429,
+      "median": 2,
+      "score_counts": {
+        "1": 1,
+        "2": 3,
+        "3": 2,
+        "4": 1
+      },
+      "flags": {
+        "sounds_like_brent": 4,
+        "bad_pacing": 3,
+        "natural": 3,
+        "expressive": 1,
+        "voice_drift": 1,
+        "mispronunciation": 1,
+        "good_pacing": 1,
+        "emotion_mismatch": 1,
+        "audio_artifact": 1
+      }
+    },
+    "default/cosyvoice3": {
+      "rated": 7,
+      "available": 7,
+      "mean": 1.0,
+      "median": 1,
+      "score_counts": {
+        "1": 7
+      },
+      "flags": {
+        "robotic": 6,
+        "control_spoken": 4,
+        "emotion_mismatch": 3,
+        "bad_pacing": 2,
+        "voice_drift": 1,
+        "mispronunciation": 1
+      }
+    },
+    "default/fish_s2_pro": {
+      "rated": 7,
+      "available": 7,
+      "mean": 2.571,
+      "median": 3,
+      "score_counts": {
+        "2": 3,
+        "3": 4
+      },
+      "flags": {
+        "sounds_like_brent": 6,
+        "bad_pacing": 4,
+        "emotion_mismatch": 3,
+        "natural": 2,
+        "robotic": 1,
+        "good_pacing": 1
+      }
+    },
+    "default/higgs_v3": {
+      "rated": 7,
+      "available": 7,
+      "mean": 3.143,
+      "median": 3,
+      "score_counts": {
+        "2": 2,
+        "3": 2,
+        "4": 3
+      },
+      "flags": {
+        "sounds_like_brent": 6,
+        "natural": 4,
+        "bad_pacing": 1,
+        "trailing_silence": 1,
+        "good_pacing": 1
+      }
+    },
+    "default/zonos2": {
+      "rated": 7,
+      "available": 7,
+      "mean": 2.429,
+      "median": 2,
+      "score_counts": {
+        "1": 1,
+        "2": 3,
+        "3": 2,
+        "4": 1
+      },
+      "flags": {
+        "natural": 4,
+        "sounds_like_brent": 2,
+        "voice_drift": 2,
+        "good_pacing": 1,
+        "emotion_mismatch": 1
+      }
+    },
+    "native_control/chatterbox_original": {
+      "rated": 3,
+      "available": 3,
+      "mean": 1.667,
+      "median": 2,
+      "score_counts": {
+        "1": 1,
+        "2": 2
+      },
+      "flags": {
+        "voice_drift": 1,
+        "bad_pacing": 1,
+        "sounds_like_brent": 1
+      }
+    },
+    "native_control/cosyvoice3": {
+      "rated": 3,
+      "available": 3,
+      "mean": 1.0,
+      "median": 1,
+      "score_counts": {
+        "1": 3
+      },
+      "flags": {
+        "control_spoken": 3,
+        "robotic": 3,
+        "voice_drift": 1
+      }
+    },
+    "native_control/fish_s2_pro": {
+      "rated": 3,
+      "available": 3,
+      "mean": 2.667,
+      "median": 3,
+      "score_counts": {
+        "2": 1,
+        "3": 2
+      },
+      "flags": {
+        "sounds_like_brent": 3,
+        "robotic": 2,
+        "emotion_mismatch": 1,
+        "bad_pacing": 1
+      }
+    },
+    "native_control/higgs_v3": {
+      "rated": 3,
+      "available": 3,
+      "mean": 2.333,
+      "median": 3,
+      "score_counts": {
+        "1": 1,
+        "3": 2
+      },
+      "flags": {
+        "emotion_match": 1,
+        "natural": 1,
+        "sounds_like_brent": 1,
+        "voice_drift": 1
+      }
+    },
+    "native_control/zonos2": {
+      "rated": 3,
+      "available": 3,
+      "mean": 1.0,
+      "median": 1,
+      "score_counts": {
+        "1": 3
+      },
+      "flags": {
+        "voice_drift": 3,
+        "robotic": 2
+      }
+    },
+    "semantic_emotion/chatterbox_original": {
+      "rated": 2,
+      "available": 2,
+      "mean": 1.5,
+      "median": 1.5,
+      "score_counts": {
+        "1": 1,
+        "2": 1
+      },
+      "flags": {
+        "emotion_mismatch": 1,
+        "robotic": 1,
+        "bad_pacing": 1,
+        "natural": 1
+      }
+    },
+    "semantic_emotion/cosyvoice3": {
+      "rated": 2,
+      "available": 2,
+      "mean": 1.0,
+      "median": 1.0,
+      "score_counts": {
+        "1": 2
+      },
+      "flags": {
+        "control_spoken": 2,
+        "emotion_mismatch": 2,
+        "robotic": 2,
+        "mispronunciation": 1
+      }
+    },
+    "semantic_emotion/fish_s2_pro": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.0,
+      "median": 2.0,
+      "score_counts": {
+        "2": 2
+      },
+      "flags": {
+        "sounds_like_brent": 2,
+        "emotion_mismatch": 1,
+        "bad_pacing": 1
+      }
+    },
+    "semantic_emotion/higgs_v3": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.5,
+      "median": 2.5,
+      "score_counts": {
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "sounds_like_brent": 2,
+        "emotion_mismatch": 1,
+        "natural": 1
+      }
+    },
+    "semantic_emotion/zonos2": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.5,
+      "median": 2.5,
+      "score_counts": {
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "natural": 2,
+        "good_pacing": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "zonos2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "higgs_v3",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "fish_s2_pro",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "control_spoken",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "chatterbox_original",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "expressive",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "A",
+      "model_key": "zonos2",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "audio_artifact",
+        "voice_drift"
+      ],
+      "notes": "voice changed multiple times",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "B",
+      "model_key": "chatterbox_original",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "C",
+      "model_key": "fish_s2_pro",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "boundary_seam",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "D",
+      "model_key": "higgs_v3",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "E",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "A",
+      "model_key": "higgs_v3",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "robotic",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "B",
+      "model_key": "chatterbox_original",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "audio_artifact",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "C",
+      "model_key": "cosyvoice3",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "D",
+      "model_key": "fish_s2_pro",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "E",
+      "model_key": "zonos2",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_calm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "chatterbox_original",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_calm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "zonos2",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_calm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "fish_s2_pro",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_calm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_calm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "higgs_v3",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "higgs_v3",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "fish_s2_pro",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "robotic",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "chatterbox_original",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "zonos2",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "higgs_v3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "zonos2",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "chatterbox_original",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "fish_s2_pro",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "robotic",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "fish_s2_pro",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "emotion_mismatch",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "chatterbox_original",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "emotion_mismatch",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "zonos2",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "higgs_v3",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "chatterbox_original",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "higgs_v3",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "fish_s2_pro",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "zonos2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "zonos2",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "chatterbox_original",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "mispronunciation"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "fish_s2_pro",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "higgs_v3",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "mispronunciation",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "zonos2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "higgs_v3",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "sounds_like_brent",
+        "trailing_silence"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "fish_s2_pro",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "emotion_mismatch",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "emotion_mismatch",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "chatterbox_original",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "higgs_v3",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "chatterbox_original",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "fish_s2_pro",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "zonos2",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_amusement",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "chatterbox_original",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_amusement",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "emotion_mismatch",
+        "mispronunciation",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_amusement",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "zonos2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_amusement",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "fish_s2_pro",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_amusement",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "higgs_v3",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "fish_s2_pro",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "emotion_mismatch",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "higgs_v3",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "zonos2",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "chatterbox_original",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "higgs_v3",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "fish_s2_pro",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "cosyvoice3",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "chatterbox_original",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "audio_artifact",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "zonos2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    }
+  ]
+}

@@ -1342,7 +1342,7 @@ table.lb.tts td.tts-rating { min-width: 6.4rem; }
 .tts-lab-next { margin: 0 0 14px; padding: 9px 12px; border: 1px solid var(--border);
   color: var(--ink-dim); font-size: 12px; line-height: 1.55; }
 .tts-lab-next strong { color: var(--ember); }
-table.tts-lab-table { min-width: 780px; }
+table.tts-lab-table { min-width: 860px; }
 table.tts-lab-table th, table.tts-lab-table td { text-align: left; }
 table.tts-lab-table td:not(:first-child) { font-family: var(--font-mono); }
 .tts-lab-links { margin: 12px 0 0; font-size: 12px; }

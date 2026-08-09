@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "status": "awaiting_blind_ratings",
+  "bundle_id": "listening-round3-20260809",
+  "items": 42,
+  "statements": 14,
+  "anonymous_models_per_statement": 3,
+  "completed_models": ["chatterbox_original", "cosyvoice3", "fish_s2_pro"],
+  "excluded": {
+    "indextts2": "FP16 and FP32 official paths segfaulted after autoregressive generation (exit 139)",
+    "orpheus_3b": "official inference package has no reference-audio cloning API; cannot meet same-Brent contract"
+  }
+}

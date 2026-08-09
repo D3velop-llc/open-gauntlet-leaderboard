@@ -3948,6 +3948,7 @@ function renderTtsLab(mount, lab) {
   const body = el("tbody", {}, ...lab.results.map((r) =>
     el("tr", {},
       el("td", { text: r.model }),
+      el("td", { text: r.rounds || "—" }),
       el("td", { text: fmt(r.baseline_mean) }),
       el("td", { text: fmt(r.feature_mean) }),
       el("td", { text: fmt(r.rtf_p50) }),
@@ -3956,7 +3957,7 @@ function renderTtsLab(mount, lab) {
   const table = el("div", { class: "table-scroll" },
     el("table", { class: "lb tts-lab-table" },
       el("thead", {}, el("tr", {},
-        el("th", { text: "Model" }), el("th", { text: "Baseline /5" }),
+        el("th", { text: "Model" }), el("th", { text: "Round" }), el("th", { text: "Baseline /5" }),
         el("th", { text: "Features /5" }), el("th", { text: "RTF p50" }),
         el("th", { text: "Peak VRAM" }), el("th", { text: "Continuity ratings" }))), body));
   const standout = lab.standout ? el("div", { class: "tts-lab-standout" },

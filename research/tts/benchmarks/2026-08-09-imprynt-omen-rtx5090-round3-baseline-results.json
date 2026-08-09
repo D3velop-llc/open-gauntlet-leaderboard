@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "reference_wav_sha256": "d9b12c040f284c251fae88813a0459391933519fdc191ccfec4ca731c1c31a65",
+  "reference_text_sha256": "dc3f861b7e98e2d98f5e5eb582be4e38a98ca6e529b3bfa525ce7545a65c998e",
+  "statements_sha256": "dce124a3a5fbf89544f69b90ca145f2cf25ce25bf305e9165f75014849bd8055",
+  "results": [
+    {
+      "model_key": "chatterbox_original",
+      "label": "Chatterbox 500M",
+      "run_id": "20260809T191938Z-chatterbox_original",
+      "status": "COMPLETE",
+      "n": 13,
+      "load_seconds": 7.502511089027394,
+      "elapsed_p50_seconds": 1.4342165749985725,
+      "elapsed_p95_seconds": 4.250543251191258,
+      "rtf_p50": 0.23388106998010458,
+      "rtf_p95": 0.2592498584092058,
+      "rtf_max": 0.2698440485169235,
+      "total_audio_seconds": 111.16,
+      "sample_rates": [
+        24000
+      ],
+      "torch_peak_allocated_bytes": 4741390336,
+      "gpu_memory_peak_mib": 6813.0,
+      "gpu_utilization_peak_percent": 98.0,
+      "gpu_power_peak_watts": 379.07,
+      "gpu_temperature_peak_c": 50.0,
+      "gpu_sm_clock_peak_mhz": 2925.0
+    },
+    {
+      "model_key": "cosyvoice3",
+      "label": "Fun-CosyVoice3 0.5B",
+      "run_id": "20260809T192145Z-cosyvoice3",
+      "status": "COMPLETE",
+      "n": 13,
+      "load_seconds": 8.887784781982191,
+      "elapsed_p50_seconds": 5.420903487014584,
+      "elapsed_p95_seconds": 10.059893842611915,
+      "rtf_p50": 0.44876386124815326,
+      "rtf_p95": 1.139654167727894,
+      "rtf_max": 1.142791394776459,
+      "total_audio_seconds": 175.76,
+      "sample_rates": [
+        24000
+      ],
+      "torch_peak_allocated_bytes": 4516514304,
+      "gpu_memory_peak_mib": 6671.0,
+      "gpu_utilization_peak_percent": 100.0,
+      "gpu_power_peak_watts": 320.99,
+      "gpu_temperature_peak_c": 53.0,
+      "gpu_sm_clock_peak_mhz": 2932.0
+    },
+    {
+      "model_key": "fish_s2_pro",
+      "label": "Fish Audio S2 Pro",
+      "run_id": "20260809T192622Z-fish_s2_pro",
+      "status": "COMPLETE",
+      "n": 13,
+      "load_seconds": 0.0023682399769313633,
+      "elapsed_p50_seconds": 17.800011618994176,
+      "elapsed_p95_seconds": 60.83284358060909,
+      "rtf_p50": 2.881889216685426,
+      "rtf_p95": 2.986756105356733,
+      "rtf_max": 3.002355239172516,
+      "total_audio_seconds": 112.38458049886621,
+      "sample_rates": [
+        44100
+      ],
+      "torch_peak_allocated_bytes": 0,
+      "gpu_memory_peak_mib": 25231.0,
+      "gpu_utilization_peak_percent": 100.0,
+      "gpu_power_peak_watts": 453.97,
+      "gpu_temperature_peak_c": 71.0,
+      "gpu_sm_clock_peak_mhz": 2910.0
+    }
+  ]
+}

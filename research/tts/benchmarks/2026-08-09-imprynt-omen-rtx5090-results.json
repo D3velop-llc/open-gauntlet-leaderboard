@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "reference_wav_sha256": "d9b12c040f284c251fae88813a0459391933519fdc191ccfec4ca731c1c31a65",
+  "reference_text_sha256": "dc3f861b7e98e2d98f5e5eb582be4e38a98ca6e529b3bfa525ce7545a65c998e",
+  "statements_sha256": "dce124a3a5fbf89544f69b90ca145f2cf25ce25bf305e9165f75014849bd8055",
+  "results": [
+    {"model_key":"chatterbox_turbo","run_id":"20260809T160803Z-chatterbox_turbo","n":13,"load_seconds":3.948057494009845,"rtf_p50":0.11248474857810917,"rtf_p95":0.12654703899855502,"rtf_max":0.12679770347570907,"total_audio_seconds":106.4,"sample_rate":24000,"gpu_memory_peak_mib":5671.0,"gpu_power_peak_watts":233.42},
+    {"model_key":"higgs_v3","run_id":"20260809T161003Z-higgs_v3","n":13,"load_seconds":0.003318189992569387,"rtf_p50":0.16190376375720555,"rtf_p95":0.18766552647456333,"rtf_max":0.19264538733599088,"total_audio_seconds":164.4,"sample_rate":24000,"gpu_memory_peak_mib":29443.0,"gpu_power_peak_watts":456.26},
+    {"model_key":"voxcpm2","run_id":"20260809T160830Z-voxcpm2","n":13,"load_seconds":34.295743067981675,"rtf_p50":0.18833566709315852,"rtf_p95":0.20064259463781906,"rtf_max":0.20321521816575636,"total_audio_seconds":123.84,"sample_rate":48000,"gpu_memory_peak_mib":8683.0,"gpu_power_peak_watts":409.46},
+    {"model_key":"moss_realtime","run_id":"20260809T160652Z-moss_realtime","n":13,"load_seconds":1.8451098820078187,"rtf_p50":0.453672295269506,"rtf_p95":0.46752023478778726,"rtf_max":0.4733844039636585,"total_audio_seconds":126.56,"sample_rate":24000,"gpu_memory_peak_mib":13133.0,"gpu_power_peak_watts":232.74},
+    {"model_key":"qwen3_tts","run_id":"20260809T160538Z-qwen3_tts","n":13,"load_seconds":1.7244940760429017,"rtf_p50":0.5602407241115414,"rtf_p95":0.563793572684647,"rtf_max":0.5652101803596971,"total_audio_seconds":102.32000000000001,"sample_rate":24000,"gpu_memory_peak_mib":6809.0,"gpu_power_peak_watts":175.73}
+  ]
+}
