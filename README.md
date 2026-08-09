@@ -6,7 +6,7 @@ roughly a year of research and testing while building [Imprynt](https://imprynt.
 It has since grown into a full directory for local and hosted conversational
 AI: one directly measured leaderboard, plus nine sourced survey catalogs
 covering every other piece of software a real voice or chat product needs —
-**490 systems in total.**
+**498 systems in total.**
 
 ## Directly measured: the LLM leaderboard
 
@@ -16,7 +16,7 @@ measurements from an **NVIDIA DGX Spark (GB10 Grace-Blackwell, aarch64,
 128 GB unified memory)**, plus additional measurements from RTX 5090 and
 RTX 5080 hardware where available.
 
-Each model runs 25 multi-turn, emotionally demanding scenarios judged for
+Each model runs 30 multi-turn, emotionally demanding scenarios judged for
 conversational realism, emotional reasoning, persona consistency, memory,
 boundaries, and suitability for spoken interaction. Published results
 include:
@@ -44,17 +44,17 @@ otherwise find out too late:
 | [Listening](https://opengauntlet.com/asr.html) | What it hears — speech-to-text accuracy, latency, languages, licensing, deployment | 106 |
 | [Turns](https://opengauntlet.com/turns.html) | Whose turn it is — VAD, semantic turn detectors, and endpointing systems | 35 |
 | [Voices](https://opengauntlet.com/tts.html) | How it sounds — text-to-speech quality, cloning, languages, pricing, licensing | 168 |
-| [Runtimes](https://opengauntlet.com/runtimes.html) | How it runs — LLM inference engines and serving runtimes, incl. a first-party vLLM vs. SGLang benchmark | 31 |
-| [Memory](https://opengauntlet.com/memory.html) | What it remembers — vector databases, agent-memory frameworks, graph memory | 23 |
-| [Hardware Reference](https://opengauntlet.com/hardware.html) | What fits where — VRAM budgets and real memory bandwidth across GPUs | 11 |
+| [Runtimes](https://opengauntlet.com/runtimes.html) | How it runs — LLM inference engines and serving runtimes, incl. a first-party vLLM vs. SGLang benchmark | 34 |
+| [Memory](https://opengauntlet.com/memory.html) | What it remembers — vector databases, agent-memory frameworks, graph memory | 25 |
+| [Hardware Reference](https://opengauntlet.com/hardware.html) | What fits where — VRAM budgets and real memory bandwidth across GPUs | 12 |
 | [Quantization](https://opengauntlet.com/quantization.html) | How models get compressed — the tools and algorithms, not the serving side | 23 |
-| [Orchestrators](https://opengauntlet.com/orchestrators.html) | Wiring it together — voice-agent orchestration frameworks and hosted platforms | 27 |
+| [Orchestrators](https://opengauntlet.com/orchestrators.html) | Wiring it together — voice-agent orchestration frameworks and hosted platforms | 29 |
 | [Utilities](https://opengauntlet.com/utilities.html) | The parts around the edges — speaker verification, wake word, speech enhancement | 34 |
 
 **Important:** only the LLM leaderboard contains direct OpenGauntlet
 benchmark results. Every catalog above is a **sourced research survey, not
 a benchmark** — each page states this on load, and no claim ships without
-a source. They do not claim that all 458 cataloged systems were run
+a source. They do not claim that all 466 cataloged systems were run
 through OpenGauntlet's judge pipeline; they exist so a builder can compare
 licences, hardware requirements, and capabilities in one place instead of
 across two hundred vendor pages.
