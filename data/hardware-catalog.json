@@ -1,6 +1,6 @@
 {
   "edition": "2026.1",
-  "compiled": "2026-08-07",
+  "compiled": "2026-08-08",
   "scope_note": "A model-agnostic reference for VRAM budgets and memory bandwidth across real GPUs and hardware platforms, spanning the same hardware tiers every other survey page on this site already filters by. This catalog does not claim any model's actual speed on any of these cards — for that, see a specific model's page, which shows real measured throughput on the project's own reference hardware.",
   "method_note": "GPU specifications (VRAM, memory bandwidth, memory type) are sourced from vendor spec sheets and verified before publication. Consumer GPU prices move constantly and are omitted or marked \"Not published\" rather than guessed. One entry, the DGX Spark, carries this project's own measured effective bandwidth rather than only a vendor figure, since it is the primary machine this benchmark runs on.",
   "entries": [
@@ -41,6 +41,19 @@
       "price_note": "Not published; prices vary by region and retailer.",
       "source_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5060-family/",
       "notes": "16 GB on a 128-bit bus at 28 Gbps GDDR7, giving 448 GB/s. A narrower bus than the 24 GB tier below it, illustrating that VRAM capacity and bus width are independent numbers that a generation refresh does not automatically both improve.",
+      "bandwidth_measured": false
+    },
+    {
+      "name": "GeForce RTX 5080",
+      "tier": "gpu-16",
+      "vram_gb": 16.0,
+      "memory_bandwidth_gbps": 960.0,
+      "memory_type": "GDDR7",
+      "category": "consumer",
+      "best_for": "At this list's 16 GB tier, more than double the bandwidth of the RTX 5060 Ti above it thanks to a 256-bit bus against that card's 128-bit — and, together with DGX Spark and the RTX 5090, one of the three hardware platforms this project's own leaderboard benchmarks every model on, so a reader can compare this row's theoretical spec against real measured throughput on any model's page.",
+      "price_note": "Not published; prices vary by region and retailer.",
+      "source_url": "https://www.nvidia.com/en-us/geforce/graphics-cards/50-series/rtx-5080/",
+      "notes": "16 GB on a 256-bit bus at 30 Gbps GDDR7, giving 960 GB/s — more than double the RTX 5060 Ti 16GB's 448 GB/s at the identical 16 GB capacity, which is entirely a bus-width difference (256-bit vs 128-bit) rather than a per-pin speed difference (both run GDDR7 at a similar rate).",
       "bandwidth_measured": false
     },
     {
@@ -155,6 +168,6 @@
     "No CPU-only tier entry is included — \"a modern laptop CPU\" is not a single verifiable SKU with one spec sheet, unlike every other row on this list."
   ],
   "counts": {
-    "total": 11
+    "total": 12
   }
 }

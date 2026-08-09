@@ -1,6 +1,6 @@
 {
   "edition": "2026.1",
-  "compiled": "2026-08-07",
+  "compiled": "2026-08-08",
   "scope_note": "A sourced comparison of vector databases, purpose-built agent-memory frameworks, and graph-based memory systems — what actually works for episodic recall across a conversation, not generic RAG-benchmark scoring. This project runs no retrieval benchmarks of its own; scale and performance claims are attributed and marked accordingly.",
   "method_note": "Every claim is checked against the vendor's own documentation or source repository before publication, then adversarially audited in a second pass that actively tries to refute each field rather than confirm it, followed by a dedicated facet-recheck pass verifying every facet against the row's own (possibly-corrected) text. Scale/performance figures are mostly vendor-reported and marked verification: vendor-claim unless independently confirmed.",
   "systems": [
@@ -30,7 +30,7 @@
       "embedding_model": "Built-in default (all-MiniLM-L6-v2, local ONNX), with a pluggable embedding-function interface for OpenAI/Cohere/etc.",
       "scale_note": "Chroma's own current docs give a linear RAM-based capacity formula for single-node OSS (~0.245M vectors per GB of RAM), demonstrate ~15M vectors on a 64GB instance, and state they found no strict upper bound up to the ~7M vectors they stress-tested; their newer single-node guide advertises support 'approaching tens of millions of embeddings' on adequate hardware. The often-cited '5-10M vector ceiling' is a rough community figure for common 16-32GB deployments, not Chroma's own stated hard limit. Chroma Cloud is a real distributed rearchitecture (SPANN/SPFresh index over object storage, per Chroma's engineering posts), though customer-facing sharding/replication controls are not detailed in public docs.",
       "integration": "Python/JS clients; LangChain, LlamaIndex, and most agent-framework vector-store integrations.",
-      "adoption": "~26k+ GitHub stars; founded 2022, raised $18M seed in 2023.",
+      "adoption": "29.0k GitHub stars (chroma-core/chroma, verified via GitHub API, Aug 2026); founded 2022, raised $18M seed in 2023.",
       "released": "2022",
       "status": "active",
       "verification": "mixed",
@@ -123,7 +123,7 @@
       "embedding_model": "Bring-your-own; pymilvus ships optional 'Function' helpers (BM25 sparse, wrappers around external embedding providers) but requires your own API keys/models.",
       "scale_note": "Milvus 2.6 (the generation this scale claim is based on) is marketed as scaling cost-effectively into the tens of billions of vectors; Milvus's own benchmark reports 90% recall at ~200ms median latency (50 concurrent queries, top-100) using VectorDBBench - a benchmark closely associated with the Zilliz/Milvus ecosystem, so treat as vendor-reported rather than independently confirmed. Note: Zilliz announced Milvus 3.0 in July 2026 - a 'lake-native' architecture (vector data left in open formats such as Lance/Iceberg/Parquet/Vortex on object storage, via a new 'Loon' storage engine) that is a materially different scaling/storage model from the 2.6 figures cited above; whether the tens-of-billions/VectorDBBench numbers have been re-validated under 3.0 could not be confirmed from available sources.",
       "integration": "LangChain, LlamaIndex, and Haystack integrations; graduated to top-level Linux Foundation AI & Data project status in June 2021.",
-      "adoption": "40k+ GitHub stars and 100M+ downloads per Milvus's own count (vendor-claim).",
+      "adoption": "45.6k GitHub stars (milvus-io/milvus, verified via GitHub API, Aug 2026) and 100M+ downloads per Milvus's own count (vendor-claim).",
       "released": "2019",
       "status": "active",
       "verification": "mixed",
@@ -187,7 +187,7 @@
       "embedding_model": "Self-hosted: bring-your-own vectors, aside from server-side BM25 sparse-vector generation; optional client-side FastEmbed library (ONNX, default BAAI/bge-small-en-v1.5) for local dense embedding generation. Qdrant Cloud additionally offers a managed 'Cloud Inference' service (since July 2025) that generates dense/sparse/multimodal embeddings server-side for supported models (MiniLM, SPLADE, BM25, Mixedbread Embed-Large, CLIP).",
       "scale_note": "Vendor markets it for billion-vector scale via sharding/replication; no independent benchmark verified here.",
       "integration": "LangChain, LlamaIndex, Haystack, and most agent-framework connectors; gRPC/REST APIs with Python/JS/Rust/Go clients.",
-      "adoption": "~30k+ GitHub stars; founded 2021 in Berlin.",
+      "adoption": "33.9k GitHub stars (qdrant/qdrant, verified via GitHub API, Aug 2026); founded 2021 in Berlin.",
       "released": "2021",
       "status": "active",
       "verification": "mixed",
@@ -423,7 +423,7 @@
       "self_host": "Yes — fully self-hostable, Apache-2.0, Python 3.10+.",
       "best_for": "Teams wanting a self-hosted, graph-native memory engine with an explicit forget/re-weighting loop and broad first-party data-source ingestion (Slack/Notion/Drive).",
       "watch": "forget() is selective, not dataset-only: it supports item-level (data_id), dataset-level, memory-only, and account-wide scopes. An opt-in 'Detect contradictions' task exists in the cognify pipeline (off by default), but it's undocumented whether it resolves conflicts or only flags them — Cognee's own guidance still recommends manual replacement of outdated facts. No automatic decay/aging-out of stale facts is documented either way.",
-      "standout": "The only system here with an explicit, named forget() operation and a continuous confidence re-weighting loop (importance/frequency/feedback) as a first-class part of the API rather than an afterthought.",
+      "standout": "Not the only system here with memory-lifecycle controls - mem0, elsewhere in this catalog, already ships an explicit delete()/delete_all() API plus a named Memory Decay feature that continuously down-weights a stale memory's relevance by recency. What stays distinct about Cognee is its forget() granularity (item-level, dataset-level, memory-only, or account-wide) and a re-weighting loop that considers importance, frequency, and feedback together, not recency alone.",
       "facets": [
         "actively-maintained",
         "built-in-embeddings",
@@ -564,6 +564,69 @@
       "verification": "mixed",
       "verification_note": null,
       "source_url": "https://github.com/mem0ai/mem0"
+    },
+    {
+      "name": "MemoryOS",
+      "category": "memory-framework",
+      "licence": "Apache-2.0",
+      "licence_class": "open",
+      "price_note": "No pricing - Apache-2.0 open-source Python package (pip install memoryos-pro), Docker image, and MCP server only; no hosted product or managed service exists for the memory engine itself. A companion Playground web UI was open-sourced in September 2025 as a self-hosted demo, not a paid tier. Cost is entirely whatever LLM (an OpenAI-compatible API endpoint is required) and embedding provider you configure it to call.",
+      "price_sort": 0.0,
+      "retrieval_mechanics": "OS-inspired three-tier pipeline rather than a single vector index. Short-term memory (STM) is a fixed-length FIFO queue of recent dialogue pages; mid-term memory (MTM) groups pages into topic segments via a segmented-paging strategy and scores each segment with a heat value (visit frequency, interaction length, and recency); segments whose heat crosses a threshold are LLM-summarized and promoted into long-term personal memory (LPM, a persistent user profile/persona plus a knowledge base). Retrieval draws from all three tiers plus the LPM profile to assemble context, backed by a Chromadb vector store.",
+      "self_host": "Yes - self-hostable only, Apache-2.0, via pip (pip install memoryos-pro), a Docker image, or by running the MCP server locally; no cloud-hosted version of the memory engine exists (LLM calls still require an OpenAI-compatible API endpoint and key, configured by the operator).",
+      "best_for": "Teams wanting a self-hosted, research-grounded (EMNLP 2025 oral) hierarchical memory layer with an explicit heat-based promotion/eviction policy across short/mid/long-term tiers, rather than a flat vector store or a single add()/search() API.",
+      "watch": "Mid-term segments that never cross the heat threshold are evicted, not archived, once MTM's own capacity is exceeded - there is no separate long-term \"cold storage\" for low-heat content, so an infrequently-revisited topic can be lost outright rather than merely deprioritized. The project is young (repository created May 2025) and appears to be maintained by a single academic lab (BAI-LAB, Beijing University of Posts and Telecommunications); production adoption beyond the paper's own benchmarks is not established.",
+      "standout": "One of few systems in this set to frame memory management explicitly as an operating-system problem - short-term, mid-term, and long-term tiers with paging-style promotion and heat-based eviction, rather than a flat add()/search() call pair or a single vector index.",
+      "facets": [
+        "self-hostable",
+        "commercially-safe",
+        "actively-maintained",
+        "decay-policy"
+      ],
+      "hardware": null,
+      "memory_policy": "A three-tier hierarchy handles promotion and forgetting differently at each boundary. Short-term memory (STM) holds the most recent dialogue turns in a fixed-length FIFO queue; when STM's capacity is exceeded, the oldest page moves into mid-term memory (MTM), where a segmented-paging strategy groups related pages into topic segments. Each MTM segment accumulates a heat score from three factors - visit frequency, interaction length, and recency - and a segment whose heat crosses a configurable threshold is LLM-summarized and promoted into long-term personal memory (LPM, a persistent user profile/persona plus a knowledge base). When MTM's own capacity is exceeded, the segments with the lowest heat are evicted outright rather than promoted; the paper and README do not describe promoted LPM content itself being pruned or decaying further, so forgetting happens only at the mid-term eviction step, not from long-term storage once written.",
+      "embedding_model": "Pluggable - ships support for BAAI/bge-m3, Qwen/Qwen3-Embedding-0.6B, and all-MiniLM-L6-v2 as embedding options, backed by a Chromadb vector store; LLM calls (separate from embeddings) go through an OpenAI-compatible interface, so the model doing extraction can be any OpenAI-compatible endpoint.",
+      "scale_note": "Vendor/paper-reported only - the MemoryOS paper (arXiv:2506.06326, \"Memory OS of AI Agent\") reports +49.11% F1 and +46.18% BLEU-1 over baselines on the LoCoMo long-term-dialogue benchmark using GPT-4o-mini. No independent benchmark or production-scale figure was found.",
+      "integration": "Python package plus a dedicated MCP server (three tools - add_memory, retrieve_memory, and get_user_profile) for Claude and other agent tool use; all LLM calls go through an OpenAI-compatible API interface, so OpenAI, Anthropic, Deepseek-R1, Qwen3, vLLM, or Llama Factory can all be pointed at it via base_url, decoupled from the separately-configured embedding backend.",
+      "adoption": "1.5k GitHub stars, 153 forks (BAI-LAB/MemoryOS, verified via GitHub API, Aug 2026); accepted as an EMNLP 2025 oral presentation (Aug 21, 2025, per the repo's own description); cited in subsequent survey literature alongside Letta/MemGPT and A-MEM as a distinct agentic-memory paradigm (e.g. arXiv:2607.29433).",
+      "released": "Repository created May 30, 2025; accepted to the EMNLP 2025 main conference (oral) on August 21, 2025.",
+      "status": "active",
+      "verification": "mixed",
+      "verification_note": null,
+      "source_url": "https://github.com/BAI-LAB/MemoryOS"
+    },
+    {
+      "name": "Supermemory",
+      "category": "memory-framework",
+      "licence": "MIT",
+      "licence_class": "open",
+      "price_note": "Free, self-hosted via the MIT-licensed single binary (curl install or npx supermemory local; no Docker, database, or config file required). Hosted platform: Free $0/mo (~$5/mo usage credit) → Pro $19/mo (~$20/mo usage credit, unlimited storage/users, 2 teammates, Google Drive/Notion/OneDrive connectors) → Max $100/mo (~$130/mo usage credit, adds Gmail/Granola connectors) → Scale $399/mo (~$600/mo usage credit, up to 10 teammates, all connectors, SOC 2/HIPAA BAA, and a listed 'self-hosted option') → custom Enterprise (air-gapped self-hosting, committed-spend pricing). The self-hosting docs describe the open-source binary itself as free with no stated limits, but the pricing page separately lists 'a self-hosted option' as a Scale-and-up feature and 'air-gapped self-hosting' as Enterprise-only - worth clarifying with the vendor which capabilities the free binary covers versus what the paid tiers add on top of self-hosting.",
+      "price_sort": 0.0,
+      "retrieval_mechanics": "Hybrid vector + keyword search with, per Supermemory's own site, \"sub-300ms latency\" - a context-aware reranker lets a strong keyword match short-circuit a full approximate-nearest-neighbor pass rather than forcing every query through it. Facts are additionally organized into a memory graph: an UPDATES relationship links a new fact to the one it supersedes, with an isLatest flag keeping retrieval on the current fact \"without erasing the past\" (per Supermemory's docs). Local embeddings default to Xenova/bge-base-en-v1.5 (768-dimensional, runs fully offline).",
+      "self_host": "Yes - MIT-licensed, a single binary with, per vendor, zero external dependencies: \"No Docker. No database to provision. No config files.\" An embedded graph engine and local embedding model are created automatically on first boot; the identical API is used locally (http://localhost:6767) or against the hosted platform by changing the base URL.",
+      "best_for": "Teams wanting a self-hostable, framework-agnostic memory API with contradiction resolution and automatic forgetting documented as first-class, named mechanisms in the API itself, rather than something built by hand on top of a raw vector store.",
+      "watch": "The free/self-hosted OSS path and the commercial platform's tiered \"self-hosted option\" are not obviously the same thing: the open binary self-hosts with no published limits, but the pricing page lists a \"self-hosted option\" only from the $399/mo Scale tier up (with full air-gapped deployment reserved for Enterprise) - confirm exactly which connectors, graph features, and support are actually included when self-hosting for free versus paying for the tiered \"self-hosted option\" before assuming parity. Contradiction resolution is described only at the level of \"new fact replaces old\" via the UPDATES/isLatest graph relationship; no documentation was found on how a contradiction is detected (embedding similarity vs. LLM judgment), or on any policy for facts that go stale without an explicit superseding update (only explicitly time-bound facts are forgotten automatically).",
+      "standout": "Combines two named, first-class mechanisms most competitors in this category document only one of: contradiction resolution (an UPDATES graph relationship with an isLatest flag) and automatic time-based forgetting of expired facts - backed by a \"sub-300ms\" hybrid-retrieval latency claim published on Supermemory's own site.",
+      "facets": [
+        "self-hostable",
+        "commercially-safe",
+        "hybrid-search",
+        "built-in-embeddings",
+        "graph-structured",
+        "decay-policy",
+        "actively-maintained"
+      ],
+      "hardware": null,
+      "memory_policy": "Contradiction handling and forgetting are both named, documented mechanisms rather than developer-built add-ons. A new fact that supersedes an old one is linked via an UPDATES graph relationship; per Supermemory's own docs, \"New fact replaces what was true before for search purposes; history can remain for audit,\" with an isLatest flag keeping retrieval on the current fact \"without erasing the past.\" Two forgetting modes are documented: time-based (a temporary fact such as \"meeting at 3pm today\" or \"exam tomorrow\" is dropped once it expires) and noise filtering (casual, non-meaningful chatter is less likely to become a durable memory in the first place). No detail is published on how a contradiction is detected (embedding similarity vs. LLM judgment), and no policy is documented for a fact that simply goes stale without an explicit superseding update.",
+      "embedding_model": "Local by default (Xenova/bge-base-en-v1.5, 768-dimensional, runs offline with no API key); OpenAI, Google Gemini, or Ollama can be configured instead for embeddings, and Ollama, LM Studio, vLLM, or llama.cpp can serve the LLM side fully offline.",
+      "scale_note": "28.8k GitHub stars, 2.5k forks (supermemoryai/supermemory, verified via GitHub API, Aug 2026). Supermemory's own LongMemEval-S research page reports 95% Recall@15 (with aggregation) at roughly 720 mean tokens added to context, against baselines of 71.2% (Zep) and 60.2% (full-context, no retrieval). Other secondary aggregator sites report additional comparative figures against Mem0 and on LoCoMo that could not be traced to a primary Supermemory page and are omitted here as unverified. All performance figures are vendor-reported and self-published, not independently audited.",
+      "integration": "REST API plus SDKs; documented framework integrations for the Vercel AI SDK, LangChain, LangGraph, the OpenAI Agents SDK, Mastra, and Agno; an MCP server (mcp.supermemory.ai) usable from Claude Desktop, Cursor, VS Code, and Windsurf; first-party connectors for Google Drive, Gmail, Notion, OneDrive, GitHub, and a web crawler.",
+      "adoption": "28.8k GitHub stars, 2.5k forks (supermemoryai/supermemory, verified via GitHub API, Aug 2026); $2.6M seed round (announced October 2025, led by Susa Ventures, Browder Capital, and SF1.vc; angel investors reported by TechCrunch to include Google AI chief Jeff Dean and Cloudflare CTO Dane Knecht, among others) - some secondary outlets round this to \"$3M.\"",
+      "released": "Repository created February 27, 2024; company founded by Dhravya Shah.",
+      "status": "active",
+      "verification": "mixed",
+      "verification_note": null,
+      "source_url": "https://github.com/supermemoryai/supermemory"
     },
     {
       "name": "FalkorDB + GraphRAG-SDK",
@@ -719,17 +782,22 @@
       "source_url": "https://github.com/whyhow-ai/knowledge-graph-studio"
     }
   ],
-  "corrections": [],
+  "corrections": [
+    {
+      "claim": "Cognee is the only system in this catalog with an explicit, named forget() operation and a continuous confidence re-weighting loop as a first-class part of the API.",
+      "reality": "mem0's own row in this catalog documents an explicit delete()/delete_all() API plus a named Memory Decay feature (shipped 2026-07-31) that continuously down-weights a stale memory's relevance score by recency. Cognee's forget() is more granular in scope (item-level, dataset-level, memory-only, or account-wide) and its re-weighting considers importance, frequency, and feedback together rather than recency alone - genuinely distinct, but not unique in kind."
+    }
+  ],
   "gaps": [
     "Cognee is architecturally both a memory-framework and a graph-memory system (it unifies graph, vector, and relational storage in one pipeline) — research initially produced two separate rows, one per category; they were merged into a single memory-framework row with graph-structured in its facets, rather than published as two entries under one name.",
     "Letta's initial research described its superseded legacy server (Postgres+pgvector archival memory); a follow-up research pass corrected the row to describe the current flagship product, Letta Code, and its git-backed Context Repository / MemFS memory architecture.",
-    "This catalog does not attempt to be exhaustive — it covers 23 systems (24 found by research, minus one row lost to the Cognee merge above) across three categories (13 vector-db, 5 memory-framework, 5 graph-memory), not every vector database or memory framework that exists."
+    "This catalog does not attempt to be exhaustive — it covers 25 systems (26 found by research, minus one row lost to the Cognee merge above) across three categories (13 vector-db, 7 memory-framework, 5 graph-memory), not every vector database or memory framework that exists."
   ],
   "counts": {
-    "total": 23,
+    "total": 25,
     "by_category": {
       "vector-db": 13,
-      "memory-framework": 5,
+      "memory-framework": 7,
       "graph-memory": 5
     }
   }

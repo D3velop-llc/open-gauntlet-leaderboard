@@ -1,6 +1,6 @@
 {
   "edition": "2026.1",
-  "compiled": "2026-08-07",
+  "compiled": "2026-08-08",
   "scope_note": "A sourced comparison of voice-agent orchestration frameworks and hosted platforms — what assembles ASR, an LLM, and TTS into a working pipeline, plus turn-taking. Turn-taking behavior itself (interruption handling, semantic VAD) is covered on the Turns page; several tools appear on both pages by design, each scoped to a different slice of the same tool.",
   "method_note": "Every claim is checked against the vendor's own documentation, source repository, or pricing page before publication, then adversarially audited in a second pass that actively tries to refute each field rather than confirm it. Where a figure could not be verified, the row says so in its `watch` field rather than omitting the caveat.",
   "systems": [
@@ -258,7 +258,7 @@
       "sdk_languages": "Python.",
       "runs_on": "Raspberry Pi 3B+ and other embedded boards, Linux desktop, Docker; a dedicated buildroot image for headless devices.",
       "integration": null,
-      "adoption": null,
+      "adoption": "283 GitHub stars, 31 forks on ovos-core (verified via GitHub API, last pushed August 4, 2026) — a small count next to Pipecat, TEN Framework, or LiveKit Agents, consistent with a niche embedded/smart-speaker successor project rather than a mainstream framework.",
       "released": null,
       "status": "active",
       "verification": "verified",
@@ -431,6 +431,41 @@
       "source_url": "https://www.bland.ai/"
     },
     {
+      "name": "Ultravox AI",
+      "category": "platform",
+      "licence": "Proprietary hosted service (built on the MIT-licensed, open-weight Ultravox speech-LLM, which is published separately on GitHub/Hugging Face and can be run independently of the hosted platform)",
+      "licence_class": "closed",
+      "price_note": "Pay As You Go: first 30 min free, then $0.05/min for bundled voice (Ultravox's speech-native model plus hosted TTS, no separate STT step), up to 5 concurrent calls; SIP telephony is billed separately at $0.005/min. Pro plan ($100/mo): same $0.05/min voice rate, SIP drops to $0.0048/min, higher concurrency. Text-only \"Realtime\" API usage (Threads) is billed separately at $2/1M input tokens ($0 for cached input) and $15/1M output tokens. Enterprise is custom-priced.",
+      "price_sort": 0.05,
+      "transport": "WebRTC for browser/mobile clients, plus built-in integrations with major telephony providers and a documented SIP variant; no self-hosted transport layer of its own.",
+      "tool_calling": "Native \"Tools\" (function-calling) let the agent reach external systems mid-call, plus a separate Knowledge/RAG feature for grounding responses in custom content; both are dashboard- and API-configurable.",
+      "self_host": "This is Ultravox's managed hosted platform (telephony, SIP, dashboard, webhooks) — cloud-only, no self-host option for the platform itself; the vendor states it runs its own full inference stack. The underlying Ultravox speech-LLM (MIT-licensed) is published separately on GitHub/Hugging Face and can be run independently of this hosted product.",
+      "best_for": "Teams that want a speech-native agent (audio fed directly to the model, no separate ASR hop) for latency-sensitive phone/voice deployments, and are comfortable with a fully managed, telephony-integrated platform rather than self-hosting.",
+      "watch": "Fixie.ai rebranded to Ultravox AI on June 25, 2025 alongside the Ultravox v0.6 launch — older material and some SDK package names (ultravox-client, the ai.fixie Maven group) still carry the Fixie name, so don't assume a \"Fixie.ai\" reference is a different, older product. Also note the Pay-As-You-Go tier caps at 5 concurrent calls; real production volume needs the $100/mo Pro plan or an Enterprise quote.",
+      "standout": "Speech-native, audio-to-LLM architecture (built on the open-weight Ultravox model family, most recently v0.6/v0.7) skips the separate ASR step that cascaded platforms like Deepgram Voice Agent or Vapi/Retell run, which the vendor credits for ~150ms time-to-first-token and for preserving paralinguistic signal (tone, cadence) a text-transcription step would discard.",
+      "facets": [
+        "api-only",
+        "telephony-integration",
+        "tool-calling-native",
+        "observability-builtin",
+        "streaming",
+        "multilingual",
+        "actively-maintained"
+      ],
+      "hardware": null,
+      "architecture": "Speech-native multimodal LLM (a pretrained text LLM backbone — Llama, Gemma, or Qwen variants — fused with a Whisper-large-v3-turbo speech encoder) that converts audio directly into the model's token space rather than transcribing to text first, wrapped in Ultravox's own hosted realtime/telephony infrastructure.",
+      "observability": "Conversation history with full audio recordings and transcripts, plus webhooks for realtime call events; no separately-named analytics/QA dashboard product (comparable to Vapi's Boards or Retell's post-call scoring) was found on the public site reviewed.",
+      "sdk_languages": "Official client SDKs for JavaScript/TypeScript (npm ultravox-client), Python (pip ultravox-client), Flutter, React Native, and Kotlin; a documented WebSocket protocol underlies all of them.",
+      "runs_on": "Ultravox's own managed cloud inference stack; no self-hosting option for the hosted platform itself.",
+      "integration": "Runs Ultravox's own speech-native model end-to-end rather than orchestrating third-party STT/LLM/TTS providers — the same vertically-integrated model as ElevenLabs Conversational AI or PolyAI, not the bring-your-own-provider pattern Vapi/Retell/Synthflow use.",
+      "adoption": null,
+      "released": null,
+      "status": "active",
+      "verification": "verified",
+      "verification_note": null,
+      "source_url": "https://www.ultravox.ai/"
+    },
+    {
       "name": "Synthflow",
       "category": "platform",
       "licence": "Proprietary (SaaS)",
@@ -498,6 +533,39 @@
       "verification": "verified",
       "verification_note": null,
       "source_url": "https://elevenlabs.io/conversational-ai"
+    },
+    {
+      "name": "Deepgram Voice Agent API",
+      "category": "platform",
+      "licence": "Proprietary (SaaS)",
+      "licence_class": "closed",
+      "price_note": "Bundled full stack (Deepgram's own STT + a pluggable LLM + Deepgram's own Aura TTS): $4.50/hr flat, i.e. the same $0.075/min as the Standard pay-as-you-go tier, billed on websocket connection time. Swapping in your own components discounts it further: Standard BYO TTS $0.065/min, Custom BYO LLM $0.059/min, Custom BYO LLM + TTS $0.050/min; a higher-accuracy Advanced STT tier runs $0.163/min standard or $0.122/min BYO TTS. A Growth plan cuts each of those up to ~20% (e.g. Standard to $0.068/min, Advanced to $0.146/min).",
+      "price_sort": 0.075,
+      "transport": "Native WebSocket API for real-time bidirectional audio streaming; telephony reach comes through documented carrier integrations (Twilio Media Streams for PSTN/SIP/WhatsApp, among others) rather than a SIP endpoint Deepgram operates itself.",
+      "tool_calling": "Native function-calling — the LLM layer can invoke developer-defined functions mid-conversation; Deepgram emits a function-call event, the developer's server executes it and returns the result over the same socket, and the agent incorporates it into its next turn.",
+      "self_host": "Managed cloud by default; also sold as dedicated single-tenant, in-VPC, or fully self-hosted (Docker/Kubernetes) deployments for enterprises with HIPAA/GDPR/data-residency requirements — broader deployment flexibility than the managed-cloud-only Retell/Bland/Synthflow, though the per-minute pricing above applies to the managed-cloud tier specifically.",
+      "best_for": "Teams that want Deepgram's own STT (Nova-3/Flux) and Aura TTS pre-wired together with a pluggable LLM in one billed-per-minute pipeline, without assembling separate STT/LLM/TTS vendors by hand.",
+      "watch": "The advertised $4.50/hr is exactly the Standard pay-as-you-go rate restated per hour ($0.075/min x 60), not a separate discount tier — the higher-accuracy Advanced STT tier more than doubles that to $0.163/min, and the cheapest combination (bring your own LLM AND your own TTS) floors out at $0.050/min, before any Growth-plan volume discount is applied on top.",
+      "standout": "Deepgram owns and runs every layer itself (Nova/Flux STT, Aura TTS) rather than repackaging third-party models, which is the pitch it markets directly against ElevenLabs Conversational AI (owns TTS but not STT) and OpenAI Realtime (bundled speech-to-speech with no per-layer swap) — a single-vendor stack with per-component BYO opt-outs instead of an all-or-nothing bundle.",
+      "facets": [
+        "api-only",
+        "telephony-integration",
+        "tool-calling-native",
+        "streaming",
+        "actively-maintained"
+      ],
+      "hardware": null,
+      "architecture": "Cascaded pipeline exposed as a single voice-to-voice WebSocket connection: Deepgram's own Nova-3/Flux STT feeds a configurable LLM (Deepgram-hosted or bring-your-own), whose output is spoken by Deepgram's own Aura TTS, with built-in barge-in detection and turn-taking handled inside the same socket rather than as three separately-integrated services.",
+      "observability": "Not published as a dedicated dashboard product on the marketing site reviewed; conversation-level logs and function-call events are available over the same WebSocket session, but no standalone analytics/QA product comparable to Vapi's Boards or Retell's post-call scoring was found.",
+      "sdk_languages": "Server-side quickstarts and reference implementations in Python, JavaScript/Node.js, C#, and Go; the API itself is a documented WebSocket protocol, so any language with websocket support can integrate directly.",
+      "runs_on": "Deepgram's managed multi-region cloud by default; dedicated single-tenant, customer VPC, or self-hosted Docker/Kubernetes for enterprise compliance needs.",
+      "integration": "Deepgram's own Nova-3/Flux STT and Aura TTS wired in by default; supports bring-your-own LLM and/or bring-your-own TTS, each unlocking a lower per-minute rate than the fully-bundled tier.",
+      "adoption": null,
+      "released": null,
+      "status": "active",
+      "verification": "verified",
+      "verification_note": null,
+      "source_url": "https://deepgram.com/product/voice-agent-api"
     },
     {
       "name": "Pipecat Cloud",
@@ -911,10 +979,10 @@
     "This catalog does not attempt to be exhaustive — it covers 27 systems found through a structured research pass across three categories, not every voice-agent orchestration tool that exists."
   ],
   "counts": {
-    "total": 27,
+    "total": 29,
     "by_category": {
       "framework": 10,
-      "platform": 9,
+      "platform": 11,
       "telephony-focused": 8
     }
   }

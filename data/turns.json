@@ -1,6 +1,6 @@
 {
   "edition": "2026.1",
-  "compiled": "2026-08-05",
+  "compiled": "2026-08-08",
   "scope_note": "Every turn-taking, voice-activity-detection, and endpointing system that decides when a speaker has finished — frame-level VAD models, semantic turn-detection models, the orchestrators that bundle one, and commercial APIs offering endpointing as a feature — on the axes that actually decide whether a voice product feels conversational.",
   "method_note": "Nothing here is benchmarked by OpenGauntlet. Figures come from primary sources — vendor docs, model cards, repositories, and papers. 32 of these 35 rows were added through a research-then-adversarial-audit pass instructed to refute rather than confirm before publication, the same discipline applied to the Voices and Listening sections; the remaining 3 (the original seed rows) predate that pass and have not yet been re-audited to the same standard. Latency is this domain's headline number and is quoted here with its source, and with the hardware or frame size where the source states them.",
   "systems": [
@@ -296,12 +296,12 @@
       "price_sort": 0.0,
       "latency_note": "Not published as a standardized benchmark figure on the official model card",
       "latency_sort": null,
-      "accuracy_note": "Not published as a standardized benchmark figure against a named test set on the official model card",
+      "accuracy_note": "Not published as a standardized benchmark figure against a named test set on the official model card, but an independent academic benchmark now exists — the Semantic-Aware Interruption Detection Benchmark (arXiv 2603.24144, Table II, p.5) gives FSMN-VAD its first independently-measured accuracy figure anywhere — average false-interruption rate 0.840 (over 0.90 in conversational contexts specifically), average penalty time 3.627s — the worst-performing baseline tested in that paper",
       "languages_note": "Model card tags both Chinese and English; underlying detection is acoustic, but the training corpus composition is not fully detailed on the card",
       "languages_sort": null,
       "runs_on": "CPU via PyTorch or ONNX Runtime, used through the FunASR toolkit; 16kHz mono input",
       "best_for": "Teams already using Alibaba's FunASR pipeline (Paraformer ASR, punctuation, speaker tasks) who want the matching VAD front-end that ships with it, especially for Chinese-language audio.",
-      "watch": "Model card is thin on hard numbers — no published latency or accuracy benchmark — and it is only practical to run through the FunASR runtime, not as a drop-in single-file model the way Silero or ONNX-only VADs are.",
+      "watch": "Model card is thin on hard numbers — no published latency or accuracy benchmark from FunASR itself — and it is only practical to run through the FunASR runtime, not as a drop-in single-file model the way Silero or ONNX-only VADs are. The only accuracy figure that exists anywhere comes from an independent third-party benchmark (Semantic-Aware Interruption Detection Benchmark, arXiv 2603.24144) that found it the worst-performing baseline tested, not from FunASR's own evaluation.",
       "standout": "Uses an FSMN (Feedforward Sequential Memory Network) architecture, a different family from the CNN/RNN VADs elsewhere on this list, and is the default VAD paired with FunASR's widely used Paraformer ASR models.",
       "facets": [
         "cpu-capable",
@@ -323,12 +323,12 @@
       "self_host": null,
       "data_policy": null,
       "tunables": null,
-      "benchmarks": null,
+      "benchmarks": "Semantic-Aware Interruption Detection Benchmark (arXiv 2603.24144), Table II, p.5 — average false-interruption rate and average penalty time on a shared conversational test set, independently measured (not FunASR's own)",
       "adoption": "Approx. 2,974 monthly downloads on Hugging Face at time of check",
       "released": null,
       "status": "active",
       "verification": "verified",
-      "verification_note": "Licence (Apache-2.0) and architecture description read directly from the official Hugging Face model card (huggingface.co/funasr/fsmn-vad, maintained by the FunASR org).",
+      "verification_note": "Licence (Apache-2.0) and architecture description read directly from the official Hugging Face model card (huggingface.co/funasr/fsmn-vad, maintained by the FunASR org). The accuracy figure cited above comes from an independent third-party paper (arXiv 2603.24144), not from FunASR's own materials.",
       "source_url": "https://huggingface.co/funasr/fsmn-vad"
     },
     {
@@ -432,9 +432,9 @@
       "licence_class": "open",
       "price_note": "Free, open source; self-hosted or via a hosted fal.ai endpoint",
       "price_sort": 0.0,
-      "latency_note": "v3: ~12ms CPU inference on modern CPUs, ~60ms on a low-cost AWS c8g.medium Graviton instance — a ~100x speedup vs v2 on the same instance (Daily.co blog, Sept 2025)",
+      "latency_note": "v3: ~12ms CPU inference on modern CPUs, ~60ms on a low-cost AWS c8g.medium Graviton instance — a ~100x speedup vs v2 on the same instance (Daily.co blog, Sept 2025). That ~12ms figure is model compute time only, not full pipeline latency: an independent reproduction (Hierarchical End-of-Turn Model, arXiv 2603.13379) measured Smart Turn's real-world median end-to-end detection latency — including buffering — at 900ms, two orders of magnitude above the compute-only figure.",
       "latency_sort": null,
-      "accuracy_note": "v3 per-language accuracy 81.27% (Vietnamese) to 97.10% (Turkish) on the project's own smart-turn-data test sets (self-reported HF model card); v3.2 (Jan 2026) cuts short-utterance ('yes'/'okay') misclassification 40% vs v3.1 on the public smart-turn-data-v3.2-test set",
+      "accuracy_note": "v3 per-language accuracy 81.27% (Vietnamese) to 97.10% (Turkish) on the project's own smart-turn-data test sets (self-reported HF model card); v3.2 (Jan 2026) cuts short-utterance ('yes'/'okay') misclassification 40% vs v3.1 on the public smart-turn-data-v3.2-test set. Independent academic reproduction paints a different picture: Next-Turn (arXiv 2606.18094, Table 2, p.4) independently benchmarks Smart Turn v2 and v3.2 under one streaming protocol and finds both have WORSE early-interruption rates (59.6% / 64.5%) than a plain fixed-threshold Silero VAD baseline (27.0% at a 640ms threshold) — a materially different picture than either vendor-reported figure above.",
       "languages_note": "23 languages: English, Arabic, Bengali, Chinese, Danish, Dutch, German, Finnish, French, Hindi, Indonesian, Italian, Japanese, Korean, Marathi, Norwegian, Polish, Portuguese, Russian, Spanish, Turkish, Ukrainian, Vietnamese",
       "languages_sort": 23,
       "runs_on": "CPU (int8 ONNX, 8MB) or GPU (fp32, 32MB, ~1% accuracy gain)",
@@ -463,12 +463,12 @@
       "self_host": null,
       "data_policy": null,
       "tunables": null,
-      "benchmarks": "Self-reported per-language accuracy table (HF pipecat-ai/smart-turn-v3 card); v3.2 vs v3.1 short-utterance miscategorization -40% on smart-turn-data-v3.2-test",
+      "benchmarks": "Self-reported per-language accuracy table (HF pipecat-ai/smart-turn-v3 card); v3.2 vs v3.1 short-utterance miscategorization -40% on smart-turn-data-v3.2-test; independently, Next-Turn (arXiv 2606.18094) benchmarks v2 and v3.2 under a common streaming protocol against Silero and Easy Turn, and Hierarchical End-of-Turn Model (arXiv 2603.13379) measures real-world end-to-end detection latency",
       "adoption": null,
       "released": "v1 (2024) -> v2 -> v3 (Sept 11 2025) -> v3.1 -> v3.2 (Jan 7 2026)",
       "status": "active",
       "verification": "vendor-claim",
-      "verification_note": "Numbers are Daily.co/Pipecat's own blog posts and HF model-card benchmark tables; no independent third-party replication found.",
+      "verification_note": "Numbers are Daily.co/Pipecat's own blog posts and HF model-card benchmark tables. Independent third-party replication now exists for the streaming early-interruption behavior (Next-Turn, arXiv 2606.18094) and for real-world end-to-end detection latency (Hierarchical End-of-Turn Model, arXiv 2603.13379); neither the per-language accuracy table above nor the ~12ms compute-time figure itself has been independently reproduced on its own terms.",
       "source_url": "https://github.com/pipecat-ai/smart-turn"
     },
     {
@@ -528,7 +528,7 @@
       "price_sort": 0.0,
       "latency_note": "263ms average inference time (self-reported, single RTX 4090, 2,559MB GPU memory)",
       "latency_sort": null,
-      "accuracy_note": "Self-reported on the Easy Turn testset (also released by the project): complete 96.33%, incomplete 97.67%, backchannel 91%, wait 98% — compared on the same test set to Smart Turn v2 (78.67% complete) and TEN Turn Detection (86.67% complete, no backchannel class)",
+      "accuracy_note": "Self-reported on the Easy Turn testset (also released by the project): complete 96.33%, incomplete 97.67%, backchannel 91%, wait 98% — compared on the same test set to Smart Turn v2 (78.67% complete) and TEN Turn Detection (86.67% complete, no backchannel class). Independent academic reproduction corroborates the directional claim: Next-Turn (arXiv 2606.18094) finds Easy Turn outperforms Smart Turn v2 and v3.2 under a common streaming protocol (31.1% early-interruption rate vs. 59.6% / 64.5%), though at the cost of its much larger 850M-parameter model and 263ms latency. CoDeTT (arXiv 2603.25434) separately benchmarks Easy Turn alongside Smart-Turn-v3.",
       "languages_note": "Chinese and English",
       "languages_sort": 2,
       "runs_on": "GPU — tested on a single RTX 4090",
@@ -555,12 +555,12 @@
       "self_host": null,
       "data_policy": null,
       "tunables": null,
-      "benchmarks": "Easy Turn testset (self-released); head-to-head vs Smart Turn v2 and TEN Turn Detection on the same set",
+      "benchmarks": "Easy Turn testset (self-released); head-to-head vs Smart Turn v2 and TEN Turn Detection on the same set; independently benchmarked against Smart Turn v2/v3.2 by Next-Turn (arXiv 2606.18094) and against Smart-Turn-v3 by CoDeTT (arXiv 2603.25434)",
       "adoption": "Not published",
       "released": null,
       "status": "active",
       "verification": "vendor-claim",
-      "verification_note": "The comparison numbers against Smart Turn v2 and TEN Turn Detection come from the Easy Turn paper's own evaluation on its own test set, not from those systems' own reported numbers — a self-reported head-to-head.",
+      "verification_note": "The comparison numbers against Smart Turn v2 and TEN Turn Detection come from the Easy Turn paper's own evaluation on its own test set, not from those systems' own reported numbers — a self-reported head-to-head. Next-Turn (arXiv 2606.18094) is an independent, non-vendor reproduction that reaches a directionally similar conclusion (Easy Turn beats Smart Turn v2/v3.2 on early-interruption rate) under its own streaming protocol.",
       "source_url": "https://github.com/ASLP-lab/Easy-Turn"
     },
     {
@@ -1280,7 +1280,7 @@
       "price_sort": null,
       "latency_note": "turnEndpointDelay defaults to 0.384s (only multiples of 32ms are meaningful, per Ultravox's own docs); minimumInterruptionDuration defaults to 0.09s.",
       "latency_sort": null,
-      "accuracy_note": "Not applicable — this is a VAD/turn-detection feature, not a transcription accuracy metric.",
+      "accuracy_note": "Not applicable to the vadSettings feature itself — turnEndpointDelay and its siblings are config knobs, not a benchmarked classifier. But the underlying model has been independently benchmarked on turn-taking behavior: Full-Duplex-Bench-v3 (arXiv 2604.04847, April 2026) independently evaluates Ultravox v0.7 on turn-take rate and interruption-avoidance alongside GPT-Realtime, Gemini Live 2.5/3.1, Grok, and a cascaded pipeline — the only third-party academic benchmark found for any commercial-api row in this matrix.",
       "languages_note": "Not specified for VAD settings specifically in the pages reviewed; the separately open-sourced UltraVAD endpointing model is described elsewhere by Fixie as covering 26 languages, but that figure applies to the open model, not confirmed identical to the hosted API's default VAD.",
       "languages_sort": null,
       "runs_on": "Cloud API (real-time multimodal voice API)",
@@ -1306,12 +1306,12 @@
       "self_host": "No for the hosted API; the underlying UltraVAD model has been released as open-weight separately by Fixie.",
       "data_policy": null,
       "tunables": "turnEndpointDelay (default 0.384s, 32ms increments), minimumTurnDuration (default 0s), minimumInterruptionDuration (default 0.09s), frameActivationThreshold (0.1-1.0, default 0.1).",
-      "benchmarks": null,
+      "benchmarks": "Full-Duplex-Bench-v3 (arXiv 2604.04847, April 2026) — independent turn-take-rate and interruption-avoidance comparison of Ultravox v0.7 against GPT-Realtime, Gemini Live 2.5/3.1, Grok, and a cascaded pipeline",
       "adoption": null,
       "released": null,
       "status": "active",
       "verification": "verified",
-      "verification_note": "Confirmed directly against docs.ultravox.ai/noise/understanding-vad, including every default value listed.",
+      "verification_note": "Confirmed directly against docs.ultravox.ai/noise/understanding-vad, including every default value listed. The Full-Duplex-Bench-v3 comparison cited in accuracy_note is an independent academic source, not Ultravox/Fixie's own materials.",
       "source_url": "https://docs.ultravox.ai/noise/understanding-vad"
     },
     {
@@ -1579,9 +1579,14 @@
       "source_url": "https://help.genesys.cloud/articles/speech-recognition-overview/"
     }
   ],
-  "corrections": [],
+  "corrections": [
+    {
+      "claim": "No latency or accuracy figure anywhere in this matrix has been independently reproduced.",
+      "reality": "That holds for every commercial-api row in this matrix except Ultravox (Fixie), but it does not hold for the VAD/turn-detector category as a whole. Independent, non-vendor academic papers have since reproduced several of these rows' own numbers, in places contradicting the vendor's self-reported figures: Next-Turn (arXiv 2606.18094) found Smart Turn v2 and v3.2 have markedly worse early-interruption rates under a common streaming protocol than a plain fixed-threshold Silero baseline, and worse than Easy Turn; the Semantic-Aware Interruption Detection Benchmark (arXiv 2603.24144) gave FSMN-VAD its first independently-measured accuracy figure anywhere, finding it the worst-performing baseline tested; and Full-Duplex-Bench-v3 (arXiv 2604.04847) independently benchmarked Ultravox v0.7's turn-taking behavior. See the accuracy_note fields on Smart Turn, Easy Turn, FSMN-VAD, and Ultravox (Fixie) below."
+    }
+  ],
   "gaps": [
-    "No latency or accuracy figure anywhere in this matrix has been independently reproduced — every number, even on rows marked `verification: verified`, is the vendor's own self-reported benchmark or the vendor's own documented config default. \"Verified\" here means the parameter names and defaults were confirmed against a primary source, not that the number itself was checked by a third party.",
+    "Independent (non-vendor) academic reproductions do exist for several of this matrix's VAD/turn-detector rows, and for one commercial-api row — see the accuracy_note fields on Smart Turn, Easy Turn, FSMN-VAD, and Ultravox (Fixie) below, each of which now cites a peer-reviewed paper that independently re-benchmarks it, in places with a materially different result than the row's own vendor-reported figure. That does not extend to any other commercial-api row in this matrix: no latency or accuracy figure on those rows has been independently reproduced, and even on rows marked `verification: verified`, \"verified\" means the parameter names and defaults were confirmed against a primary source, not that the number itself was checked by a third party.",
     "Two turn-detector rows (Phoenix-VAD, Thai Semantic End-of-Turn Detection) are unreleased academic research with no public code, model, or dataset confirmed available — they are included because they are the only published work found on their respective angles (a dialogue-model-agnostic semantic endpointer; Thai-language end-of-turn detection), not because either is a usable system today.",
     "Almost none of the commercial-api rows publish an accuracy or false-trigger rate for their own turn-detection feature — the pattern across that category is a documented config knob (a silence-duration default, a confidence threshold) with no measured detection-quality number attached. LiveKit Agents (orchestrator) is the only row in the whole matrix with a self-published, named-competitor benchmark for turn-detection quality itself.",
     "Seven systems the original research brief named as \"include at minimum\" were researched but did not survive the audit, and are absent from this roster: Vocode, TEN Framework, Twilio, Vapi, ElevenLabs Conversational AI, SpeechBrain VAD, and NVIDIA NeMo/MarbleNet. OpenAI's own Realtime API is present only via the Azure-hosted variant (Azure OpenAI Realtime API), not as a direct OpenAI-hosted row. These are considered-and-not-found, not never-researched.",

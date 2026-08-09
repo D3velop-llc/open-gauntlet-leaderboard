@@ -1,6 +1,6 @@
 {
   "edition": "2026.3",
-  "compiled": "2026-08-01",
+  "compiled": "2026-08-08",
   "scope_note": "Every speech-to-text system that matters in 2026 — hosted APIs, hyperscaler services, open weights, on-device engines, streaming recognisers, serving runtimes and speaker diarization — on the axes that actually decide a project.",
   "method_note": "Nothing here is benchmarked by OpenGauntlet. Figures come from primary sources — vendor pricing and documentation, model cards, repositories, papers and the Hugging Face Open ASR Leaderboard — and every extraction pass was followed by an audit instructed to refute rather than confirm, which applied 229 strikes before publication. Unlike the Voices section, WER IS the right primary metric here: recognition's job is getting the words right. A WER is only quoted with the test set that produced it.",
   "systems": [
@@ -3121,7 +3121,7 @@
     {
       "name": "NVIDIA Multitalker Parakeet Streaming 0.6B",
       "variants": null,
-      "category": "diar",
+      "category": "rt",
       "licence": "NVIDIA Open Model License Agreement (Hugging Face tags it license:other) — not the CC-BY-4.0 that covers the mainline Parakeet TDT checkpoints.",
       "licence_class": "warn",
       "price_note": "Free / self-host.",
@@ -6121,7 +6121,7 @@
     {
       "name": "Picovoice Falcon",
       "variants": null,
-      "category": "device",
+      "category": "diar",
       "licence": "The repo LICENSE is Apache-2.0 and that is what the GitHub API and badge report. What you actually run is lib/common/falcon_params.pv, a 6,184,091-byte (6.2 MB) binary model carrying no separate licence file, and it will not execute without a Picovoice AccessKey validated against Picovoice's licence servers. Read the Apache badge as covering the bindings, not the product.",
       "licence_class": "warn",
       "price_note": "Free tier through the Picovoice Console. A third-party aggregator (SaaSworthy, April 2026) reports 250 minutes/month free for Falcon with paid plans quote-based; Picovoice's own pricing page did not render to the fetcher on 1 Aug 2026 and the README routes continued use past the trial to Enterprise Sales. No per-minute rate was found on a primary source.",
@@ -6425,7 +6425,16 @@
       "rating_rank": null
     }
   ],
-  "corrections": [],
+  "corrections": [
+    {
+      "claim": "Picovoice Falcon is a device-category system, grouped with the on-device transcription engines (Vosk, Silero, Apple Speech, Android SpeechRecognizer, Picovoice's own Cheetah and Leopard).",
+      "reality": "Falcon does not transcribe anything. Its own diarization field says \"Built-in and standalone — it is only a diarizer,\" and Picovoice sells it explicitly as the speaker-label layer for someone else's ASR, Whisper included. Recategorised to diar, alongside pyannote and NVIDIA NeMo speaker diarization."
+    },
+    {
+      "claim": "NVIDIA Multitalker Parakeet Streaming 0.6B is a diar-category system.",
+      "reality": "NVIDIA's own model card is explicit that it does the opposite of diarizing — \"It does NOT diarize... It consumes another model's diarization output\" and returns speaker-attributed text from an externally supplied diarization signal. It is streaming, speaker-attributed transcription, not a diarizer. Recategorised to rt, alongside Deepgram Streaming and Soniox Realtime."
+    }
+  ],
   "gaps": [
     "APPLE PUBLISHES NO WER, no model size and no asset-download size for SpeechTranscriber. The only accuracy figure in existence comes from Argmax, who sell a competing SDK. The locale count also could not be pinned to an Apple page — 42 locales comes from a third-party enumeration of supportedLocales dated July 2025, while Argmax counted 10 at launch, so the number is moving and should be queried at runtime.",
     "Alibaba Paraformer ships no published error rate at all. The funasr/paraformer-zh distribution carries no CER or WER on its card and has no leaderboard entry. The Paraformer paper's numbers are from 2022 and are not the shipped 60,000-hour checkpoint. This model is genuinely unbenchmarked as distributed.",
@@ -6472,13 +6481,13 @@
     "total": 106,
     "by_category": {
       "cloud": 16,
-      "rt": 10,
+      "rt": 11,
       "legacy": 6,
       "hyper": 17,
       "open": 26,
-      "device": 11,
-      "diar": 8,
-      "runtime": 12
+      "device": 10,
+      "runtime": 12,
+      "diar": 8
     }
   }
 }

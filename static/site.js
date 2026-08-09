@@ -432,7 +432,7 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
     cols = cols.filter((c) => c.simple).map((c) => {
       if (c.key === "normalized_elo") return {
         key: "elo_bar", label: "How human", type: "bar", group: "", simple: true,
-        title: "How human the model sounds, judged across 25 conversations. Bars this close "
+        title: "How human the model sounds, judged across 30 conversations. Bars this close "
              + "together mean the test can't really separate them.",
       };
       // One machine's number can't be read on its own — 8 words/sec sounds slow until you
@@ -1312,7 +1312,7 @@ function renderShowcase(showcase) {
       // shown belong to the single displayed conversation, and claiming they tied would
       // overstate what's on screen.
       const verdict = fork.note === "tie"
-        ? `Close one. Across all 25 conversations these two are a statistical tie — and one of them is a fraction of the size of the other.`
+        ? `Close one. Across all 30 conversations these two are a statistical tie — and one of them is a fraction of the size of the other.`
         : picked === strong
           ? `That's the one ${judge} scored higher too.`
           : `${judge} scored the other one higher. Here's what it saw — read them again and judge for yourself.`;
@@ -1328,7 +1328,7 @@ function renderShowcase(showcase) {
           + "this — which is why the ranking below rests on hundreds of comparisons, not one." }));
       }
       kids.push(el("p", { class: "rv-handoff", text:
-        "We put 24 free models through 25 conversations like this one." }));
+        "We put 32 local models through 30 conversations like this one." }));
       reveal.replaceChildren(...kids);
       buttons.remove();
     };
@@ -1383,7 +1383,7 @@ async function initLeaderboard() {
 /* ============================ MODEL DETAIL =============================== */
 function critCard(criteria) {
   const card = el("div", { class: "card" }, el("h3", { text: "How it scored on each quality" }),
-    el("p", { class: "sub", text: "Judge's mean score out of 20, over 25 conversations. Higher is better on all nine. The whisker shows how much the score moved between repeat runs of the same conversation." }));
+    el("p", { class: "sub", text: "Judge's mean score out of 20, over 30 conversations. Higher is better on all nine. The whisker shows how much the score moved between repeat runs of the same conversation." }));
   for (const c of criteria) {
     const mean = c.mean, std = Math.sqrt(Math.max(0, c.variance || 0));
     const pct = (v) => Math.max(0, Math.min(100, (v / 20) * 100));
@@ -2108,7 +2108,7 @@ const TTS_COLS = [
   { key: "standout",       label: "What's different", txt: true, def: true, wide: true, group: "Core" },
   { key: "category",       label: "Kind",            txt: true, def: true, group: "Core" },
   { key: "licence",        label: "Licence",         txt: true, def: true, group: "Core" },
-  { key: "rating",         label: "Rating",           def: true, group: "Evidence" },
+  { key: "rating",         label: "Rating",                     group: "Evidence" },
   { key: "price_sort",     label: "Cost",            txt: true, cell: "price_note", group: "Commercial" },
   { key: "cloning",        label: "Cloning",         txt: true, def: true, wide: true, group: "Core" },
   { key: "hardware",       label: "Needs",                      def: true, group: "Core" },
@@ -3979,9 +3979,6 @@ async function initMatrix(key) {
     picked: new Set(),
     diffOnly: true,
   };
-  // R10: open ranked by the strongest available signal instead of the alphabet.
-  // Unrated rows sink (see renderTtsMatrix's null handling), so rated systems lead.
-  if (SPEC.key === "tts" && state.cols.has("rating")) { state.sort = "rating"; state.desc = true; }
   const rerender = () => {
     renderTtsControls(controls, rows, state, rerender);
     renderTtsMatrix(matrix, rows, state);

@@ -56,7 +56,7 @@
       "calibration": "Needs a calibration dataset (defaults to NeelNanda/pile-10k, 128 samples at 2048 tokens by default, 512 samples for the highest-accuracy mode). A 7B model quantizes in roughly 10 minutes on a single GPU in the default mode; a fast pure-RTN mode is available, and the highest-accuracy mode runs about 4-5x slower than default.",
       "bit_widths": "2, 3, 4, and 8-bit weight quantization (W2A16 through W8A16), plus FP8 and experimental MXFP4/NVFP4",
       "accuracy_note": "Intel reports \"leading results\" at 2-4 bit weight-only quantization versus other PTQ methods, and roughly 97.9% accuracy retention for DeepSeek-R1 at INT2-mixed precision; these are the vendor's own published benchmark numbers, not independently reproduced here.",
-      "kernel_support": "Ships its own inference kernel library, AutoRound Kernel (ARK), for Intel CPU (Xeon Scalable) and XPU (Arc B-series) — used automatically by default for any AutoRound-quantized model on those platforms, with no extra configuration, including MoE grouped-GEMM and flash-attention kernels. For other backends it reuses the destination format's kernels: AutoGPTQ/AutoAWQ (Marlin, ExLlamaV2, Triton) on CUDA, or llama.cpp on GGUF.",
+      "kernel_support": "Ships its own inference kernel library, AutoRound Kernel (ARK), for Intel CPU (Xeon Scalable) and XPU (Arc B-series) — used automatically by default for any AutoRound-quantized model on those platforms, with no extra configuration, including MoE grouped-GEMM and SageAttention kernels. For other backends it reuses the destination format's kernels: AutoGPTQ/AutoAWQ (Marlin, ExLlamaV2, Triton) on CUDA, or llama.cpp on GGUF.",
       "output_format": "Native AutoRound format, plus export to AutoGPTQ, AutoAWQ, GGUF, and llm-compressor / compressed-tensors",
       "adoption": "Intel-maintained; integrated into Hugging Face Transformers, vLLM, SGLang, and llm-compressor (the vLLM project has its own RFC to add AutoRound support).",
       "released": null,
@@ -327,7 +327,7 @@
       "availability": "Python library + CLI conversion script (convert.py); prebuilt wheels, PyPI, or build from source (needs PyTorch, flash-attn-2)",
       "best_for": "Running large models at very low bits-per-weight (sub-2-bit) on a single consumer GPU while staying coherent, where scalar quantizers degrade badly.",
       "watch": "Quantization is GPU-bound and needs PyTorch/flash-attn-2 built for your CUDA version — there is no CPU conversion path — and as an early-preview successor to EXL2 the project itself initially said it 'is not yet a viable replacement' for every EXL2 use case, so check current model/feature coverage before committing a production pipeline to it.",
-      "standout": "The only tool here using a trellis/codebook quantizer instead of scalar or group-wise rounding, which is what lets it stay coherent down to roughly 1.6 bits per weight on a 70B model.",
+      "standout": "One of three trellis/codebook-based quantizers in this catalog, not the only one -- QTIP (its direct ancestor) and VPTQ's vector-codebook approach are the other two. Per the project's own docs it shares QTIP's tail-biting-trellis/procedural-codebook scheme but diverges in how tensors are regularized and packed, and unlike QTIP and VPTQ (both dormant/frozen), EXL3 remains actively developed and is served in production via TabbyAPI.",
       "facets": [
         "actively-maintained",
         "calibration-free",
@@ -391,7 +391,7 @@
       "availability": "Python library + CLI (mlx_lm.convert, mlx_lm.dwq); pip install",
       "best_for": "Producing quantized checkpoints tuned to Apple Silicon's unified-memory architecture for on-device Mac inference.",
       "watch": "MLX quantized weights only run inside the MLX runtime on Apple Silicon — there's no CUDA or generic-CPU kernel for the format, so a model quantized here can't be redeployed to a Linux GPU box without re-quantizing from the original weights with a different tool.",
-      "standout": "The only quantizer here whose kernels are co-designed with Apple's own unified-memory GPU/Neural Engine path, so quantized MLX models keep the M-series memory-bandwidth advantage that GGUF or EXL2 running under emulation don't target.",
+      "standout": "The only quantizer here whose kernels are co-designed with Apple's own unified-memory GPU path via the MLX framework itself, so quantized MLX models keep the M-series memory-bandwidth advantage that GGUF or EXL2 running under emulation don't target.",
       "facets": [
         "self-hostable",
         "commercially-safe",
@@ -702,7 +702,7 @@
       "kernel_support": "Qualcomm Hexagon DSP/NPU via SNPE and QNN; Qualcomm reports 5-15x speedup there over the Kryo CPU for INT8 models",
       "output_format": "Quantized PyTorch or ONNX checkpoints (QuantSim-annotated), exported onward to SNPE/QNN for Qualcomm silicon",
       "adoption": null,
-      "released": "Open-sourced May 2020; actively releasing through 2026 (v2.33.0)",
+      "released": "Open-sourced May 2020; actively releasing through 2026 (v2.36.0, released July 29, 2026; AIMET ships roughly every 2 weeks on PyPI, so check pypi.org/project/aimet-torch for the current figure)",
       "status": "active",
       "verification": "mixed",
       "verification_note": "Method, licence, and hardware targets confirmed via the official qualcomm/aimet GitHub repo and Qualcomm developer docs; the ResNet-50 accuracy figure is Qualcomm's own reported number.",
@@ -731,18 +731,35 @@
       "hardware": "cpu",
       "calibration": "Uses a built-in curated calibration dataset (300K-1.5M tokens depending on model), not user-supplied; the conversion step supports CPU-only operation as well as GPU",
       "bit_widths": "1-bit through 8-bit GGUF quant types (IQ1_S/IQ1_M up to Q8_0), mixed per layer within one model",
-      "accuracy_note": "Unsloth reports its Gemma 3 12B Q4_0 GGUF scoring 67.07% on 5-shot MMLU vs 67.15% for the full bf16 model, and lower KL-divergence than standard imatrix and QAT quants across Llama 4/Gemma 3/Qwen3.5 -- vendor-reported, not independently reproduced",
+      "accuracy_note": "The often-cited 67.07% vs 67.15% Gemma 3 12B 5-shot MMLU figure is Google's own, not Unsloth's Dynamic 2.0 output -- it is Google's quantization-aware-trained (QAT) Q4_0 checkpoint versus its bf16 baseline, which Unsloth independently replicated and benchmarked. Unsloth's own claim for Dynamic 2.0 itself is lower KL-divergence than standard imatrix and QAT quants across Llama 4/Gemma 3/Qwen3.5 -- both vendor-reported, not independently reproduced here",
       "kernel_support": "llama.cpp and any llama.cpp-based runtime (Ollama, LM Studio, koboldcpp, Open WebUI)",
       "output_format": "GGUF",
       "adoption": null,
       "released": "Dynamic 2.0 announced 2025; Unsloth's original (MoE-only) Dynamic quantization predates it",
       "status": "active",
       "verification": "mixed",
-      "verification_note": "Method and format confirmed via Unsloth's official docs and blog; the MMLU/KL-divergence accuracy comparisons are Unsloth's own benchmark, not independently reproduced.",
+      "verification_note": "Method and format confirmed via Unsloth's official docs and blog; the KL-divergence comparison is Unsloth's own Dynamic 2.0 benchmark, not independently reproduced. The Gemma 3 12B MMLU figure (67.07% vs 67.15%) is Google's own QAT-checkpoint benchmark, which Unsloth's blog post replicates and reports -- it is not a Dynamic 2.0 output, and the accuracy_note has been corrected to attribute it correctly (see corrections).",
       "source_url": "https://unsloth.ai/blog/dynamic-v2"
     }
   ],
-  "corrections": [],
+  "corrections": [
+    {
+      "claim": "AutoRound Kernel (ARK) ships flash-attention kernels for Intel CPU/XPU (kernel_support, AutoRound row).",
+      "reality": "ARK's own README names its accelerated attention path as SageAttention -- INT8-quantized SDPA variants (sagev1, sagev1_pvi8, sage_dynquant) for Intel Arc GPUs. \"Flash attention\" appears only as a label for ARK's standard FP16/BF16 SDPA kernel, not as the differentiating technique. kernel_support has been corrected to name SageAttention."
+    },
+    {
+      "claim": "ExLlamaV3 (EXL3) is \"the only tool here using a trellis/codebook quantizer instead of scalar or group-wise rounding\" (standout, ExLlamaV3 row).",
+      "reality": "QTIP and VPTQ, both cataloged on this same page, are also trellis/vector-codebook methods, and EXL3's own method field already states it is derived from QTIP -- so EXL3 is one of three such quantizers here, not the only one. The standout field has been corrected to name what actually distinguishes it: unlike QTIP and VPTQ (both dormant/frozen), EXL3 remains actively developed and served in production via TabbyAPI, and per the project's own docs it diverges from its QTIP ancestor in how tensors are regularized and packed."
+    },
+    {
+      "claim": "MLX's kernels are co-designed with Apple's own unified-memory GPU/Neural Engine path (standout, MLX quantization row).",
+      "reality": "MLX does not use the Apple Neural Engine at all. The project's own README states device support is \"currently the CPU and GPU,\" and a maintainer closed the repo's ANE-support request (ml-explore/mlx#18) citing the Neural Engine's closed-source API. The standout field has been corrected to describe only MLX's unified-memory GPU kernel co-design, matching this row's own kernel_support field."
+    },
+    {
+      "claim": "Unsloth's Dynamic quantization scores 67.07% on 5-shot MMLU for Gemma 3 12B versus 67.15% for the full bf16 model (accuracy_note, Unsloth row).",
+      "reality": "That comparison is Google's own: Unsloth's blog post reports 67.07% for Google's quantization-aware-trained (QAT) Q4_0 checkpoint of Gemma 3 12B against the bf16 baseline, which Unsloth independently replicated and benchmarked -- it is not output from Unsloth's own Dynamic 2.0 algorithm. The accuracy_note has been corrected to attribute the figure to Google's QAT checkpoint and to state separately what Unsloth claims for Dynamic 2.0 itself (lower KL-divergence than standard imatrix and QAT quants)."
+    }
+  ],
   "gaps": [
     "coremltools (Apple's Core ML quantization/palettization toolkit) was independently researched under both format-native and vendor-toolchain -- it genuinely straddles both (a vendor-shipped toolkit that also produces one specific ecosystem's own format) -- and the two research passes were merged into a single format-native row rather than published as two disagreeing entries under slightly different names.",
     "This catalog does not attempt to be exhaustive -- it covers 23 tools found through a structured research pass across three categories (9 generic-algorithm, 7 format-native, 7 vendor-toolchain after the coremltools merge), not every quantization tool that exists. Runtimes' own quant-specialist rows (ExLlamaV3, GPTQModel, bitnet.cpp, VPTQ, QTIP) were each researched fresh here through this page's own production-focused questions rather than copied from that page. AutoGPTQ was not researched as its own row -- GPTQModel's own row documents it as AutoGPTQ's direct successor and fork, per the project's own history (\"fully supplanted AutoGPTQ and AutoAWQ\" for Hugging Face integration), so a separate AutoGPTQ row would have described a project whose own maintained continuation is already covered. QServe/OmniServe was judged, after research, to be primarily a serving system with no separable quantization-production story of its own distinct from the generic algorithms it applies, and was left off this page rather than forced in.",

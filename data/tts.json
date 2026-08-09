@@ -1,6 +1,6 @@
 {
   "edition": "2026.3",
-  "compiled": "2026-08-01",
+  "compiled": "2026-08-08",
   "scope_note": "Every text-to-speech system that matters in 2026 — hosted APIs, hyperscaler services, open-weights models, on-device engines, realtime speech-to-speech and voice conversion — on the axes that actually decide a project: what it sounds like, what it costs, what hardware it needs, what you are legally allowed to do with it, and where it quietly falls over.",
   "method_note": "Compiled from primary sources: vendor pricing and documentation pages, Hugging Face model cards, GitHub repositories, papers and public leaderboards. Azure figures come from the Azure Retail Prices API and AWS figures from the AWS Price List API rather than the pricing pages, which render via JavaScript and show placeholders to scrapers — the reason many published comparisons carry stale Azure numbers. Every pricing, latency and licence claim was re-checked against primary sources by a second pass instructed to refute rather than confirm. Where a figure could not be verified it is marked as such rather than smoothed over.",
   "systems": [
@@ -2426,7 +2426,7 @@
       "max_generation": "~40 s per chunk before degradation; a separate corpus note gives a max of ~40 s per generation",
       "quantisation": "ONNX export published for Turbo (ResembleAI/chatterbox-turbo-ONNX); no ONNX for the multilingual model",
       "fine_tuning": "LoRA via a community fork (davidbrowne17/chatterbox-streaming, lora.py) — drop WAVs in a folder and run lora.py; ~10 min of audio, ~1-3 h training, ~18 GB VRAM. Emotion survives fine-tuning per corpus testing.",
-      "watermark": null,
+      "watermark": "PerTh (Perceptual Threshold), Resemble's neural watermarker — an imperceptible, psychoacoustically-placed signal embedded on every generated file across Multilingual V3, Turbo and Nano, engineered to survive MP3 compression, resampling and editing. Resemble ships the PerTh detection library open on GitHub, so provenance is independently checkable rather than a vendor claim. As the watch field notes, the call lives in the MIT-licensed repository, not baked into the weights.",
       "billing_unit": null,
       "free_tier": null,
       "concurrency": null,
