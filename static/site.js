@@ -2108,7 +2108,7 @@ const TTS_COLS = [
   { key: "standout",       label: "What's different", txt: true, def: true, wide: true, group: "Core" },
   { key: "category",       label: "Kind",            txt: true, def: true, group: "Core" },
   { key: "licence",        label: "Licence",         txt: true, def: true, group: "Core" },
-  { key: "rating",         label: "Rating",                     group: "Evidence" },
+  { key: "rating",         label: "Rating",           def: true, group: "Evidence" },
   { key: "price_sort",     label: "Cost",            txt: true, cell: "price_note", group: "Commercial" },
   { key: "cloning",        label: "Cloning",         txt: true, def: true, wide: true, group: "Core" },
   { key: "hardware",       label: "Needs",                      def: true, group: "Core" },
@@ -3979,6 +3979,9 @@ async function initMatrix(key) {
     picked: new Set(),
     diffOnly: true,
   };
+  // R10: open ranked by the strongest available signal instead of the alphabet.
+  // Unrated rows sink (see renderTtsMatrix's null handling), so rated systems lead.
+  if (SPEC.key === "tts" && state.cols.has("rating")) { state.sort = "rating"; state.desc = true; }
   const rerender = () => {
     renderTtsControls(controls, rows, state, rerender);
     renderTtsMatrix(matrix, rows, state);
