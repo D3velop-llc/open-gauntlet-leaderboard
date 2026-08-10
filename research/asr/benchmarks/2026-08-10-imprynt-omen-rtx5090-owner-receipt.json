@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "completed_at": "2026-08-10T20:14:48.748Z",
+  "status": "analysis_complete_with_production_gates_remaining",
+  "run_id": "owner-20260810-jabra-usb",
+  "capture_sha256": "a05588ee7d2e41ef1d289321903c833963c99bc8873c2de704a1a7ec1971d0ab",
+  "matched_clips": 8,
+  "matched_audio_seconds_per_model": 465,
+  "models": 7,
+  "expected_outputs": 56,
+  "validated_outputs": 56,
+  "report_sha256": "30d3baed92cabdd6ab1620fa3c1b8e153fc4f4304e5636823cfa5a5440d11f99",
+  "consensus_summary_sha256": "9b39bd236f89f02657d2a66a6a9e0b5e8a590a85fcb0ca9184fc7ee6bb8eea",
+  "shortlist_for_true_streaming": [
+    "qwen3_asr_1_7b",
+    "nemotron_streaming",
+    "voxtral_mini_4b_realtime_2602"
+  ],
+  "offline_feature_reference": "moss_transcribe_diarize_0_9b",
+  "not_advanced_from_tested_operating_point": [
+    "moss_transcribe_preview_2b",
+    "fun_asr_nano_2512"
+  ],
+  "limitations": [
+    "No corrected human transcript; WER and entity accuracy are not available.",
+    "No manual speaker timeline; DER and cpWER are not available.",
+    "Realtime candidates executed whole-utterance or offline adapters; streaming latency is not measured.",
+    "Peer disagreement is a reference-free diagnostic, not accuracy."
+  ],
+  "moss_tts_active": false,
+  "moss_tts_enabled": false
+}

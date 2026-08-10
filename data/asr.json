@@ -2,7 +2,7 @@
   "edition": "2026.3",
   "compiled": "2026-08-08",
   "scope_note": "Every speech-to-text system that matters in 2026 — hosted APIs, hyperscaler services, open weights, on-device engines, streaming recognisers, serving runtimes and speaker diarization — on the axes that actually decide a project.",
-  "method_note": "Nothing here is benchmarked by OpenGauntlet. Figures come from primary sources — vendor pricing and documentation, model cards, repositories, papers and the Hugging Face Open ASR Leaderboard — and every extraction pass was followed by an audit instructed to refute rather than confirm, which applied 229 strikes before publication. Unlike the Voices section, WER IS the right primary metric here: recognition's job is getting the words right. A WER is only quoted with the test set that produced it.",
+  "method_note": "The market matrix is a sourced survey, separate from the explicitly labelled OpenGauntlet local Lab above it. Survey figures come from primary sources — vendor pricing and documentation, model cards, repositories, papers and the Hugging Face Open ASR Leaderboard — and every extraction pass was followed by an audit instructed to refute rather than confirm, which applied 229 strikes before publication. Unlike the Voices section, WER IS the right primary metric here: recognition's job is getting the words right. A WER is only quoted with the test set that produced it.",
   "systems": [
     {
       "name": "Deepgram Nova-3",
@@ -6489,5 +6489,148 @@
       "runtime": 12,
       "diar": 8
     }
+  },
+  "lab": {
+    "schema_version": 1,
+    "title": "OpenGauntlet ASR Lab — RTX 5090",
+    "measured_at": "2026-08-10",
+    "host": "imprynt-omen",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "microphone": "Jabra USB",
+    "recording_seconds": 465,
+    "clips": 8,
+    "speakers": 2,
+    "note": "Fourteen systems were scored against the same owner-approved 847-word reference. Native-streaming and accuracy lanes are labelled and must not be conflated.",
+    "standout_detail": "Qwen led the native-streaming finalists. The result applies only to this disclosed recording and operating point.",
+    "method_url": "research/asr/benchmarks/2026-08-10-imprynt-omen-rtx5090-owner.md",
+    "external_leaderboard_url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+    "results": [
+      {
+        "model": "Qwen3-ASR 1.7B",
+        "lane": "native streaming",
+        "wer_pct": 6.02,
+        "rtf_p50": 0.074678,
+        "vram_mib": 25262,
+        "first_partial_ms_p50": 1031.779,
+        "execution": "native stateful realtime replay"
+      },
+      {
+        "model": "Voxtral Mini 4B Realtime 2602",
+        "lane": "native streaming",
+        "wer_pct": 13.7,
+        "rtf_p50": null,
+        "vram_mib": 29894,
+        "first_partial_ms_p50": 3091.895,
+        "execution": "native stateful realtime replay"
+      },
+      {
+        "model": "Granite Speech 4.1 2B",
+        "lane": "accuracy",
+        "wer_pct": 13.93,
+        "rtf_p50": 0.020811,
+        "vram_mib": 4634,
+        "first_partial_ms_p50": null,
+        "execution": "official transformers whole utterance"
+      },
+      {
+        "model": "Parakeet TDT 0.6B v3",
+        "lane": "accuracy",
+        "wer_pct": 14.29,
+        "rtf_p50": 0.004516,
+        "vram_mib": 1459,
+        "first_partial_ms_p50": null,
+        "execution": "transformers pipeline whole utterance"
+      },
+      {
+        "model": "MOSS Transcribe Diarize 0.9B",
+        "lane": "feature",
+        "wer_pct": 16.06,
+        "rtf_p50": 0.049248,
+        "vram_mib": 1929,
+        "first_partial_ms_p50": null,
+        "execution": "whole utterance native diarization; max new tokens=2048; hotwords=Scotty, Krista, Silas"
+      },
+      {
+        "model": "Nemotron Speech Streaming 0.6B",
+        "lane": "native streaming",
+        "wer_pct": 17.36,
+        "rtf_p50": null,
+        "vram_mib": 2906,
+        "first_partial_ms_p50": 3321.957,
+        "execution": "native stateful realtime replay"
+      },
+      {
+        "model": "ARK-ASR 3B",
+        "lane": "accuracy",
+        "wer_pct": 19.13,
+        "rtf_p50": 0.020914,
+        "vram_mib": 7426,
+        "first_partial_ms_p50": null,
+        "execution": "official transformers 28s windows 2s overlap"
+      },
+      {
+        "model": "Higgs Audio v3 STT",
+        "lane": "accuracy",
+        "wer_pct": 24.09,
+        "rtf_p50": 0.029372,
+        "vram_mib": 6422,
+        "first_partial_ms_p50": null,
+        "execution": "official whole utterance"
+      },
+      {
+        "model": "Whisper Large v3 Turbo",
+        "lane": "accuracy",
+        "wer_pct": 24.44,
+        "rtf_p50": 0.014514,
+        "vram_mib": 1687,
+        "first_partial_ms_p50": null,
+        "execution": "native sequential long form generate"
+      },
+      {
+        "model": "SenseVoiceSmall",
+        "lane": "feature",
+        "wer_pct": 24.68,
+        "rtf_p50": 0.000851,
+        "vram_mib": 1177,
+        "first_partial_ms_p50": null,
+        "execution": "whole utterance under 30s"
+      },
+      {
+        "model": "Canary-Qwen 2.5B",
+        "lane": "accuracy",
+        "wer_pct": 24.91,
+        "rtf_p50": 0.022978,
+        "vram_mib": 5182,
+        "first_partial_ms_p50": null,
+        "execution": "official whole utterance"
+      },
+      {
+        "model": "MOSS Transcribe Preview 2B",
+        "lane": "accuracy",
+        "wer_pct": 35.18,
+        "rtf_p50": 0.014547,
+        "vram_mib": 5229,
+        "first_partial_ms_p50": null,
+        "execution": "whole utterance"
+      },
+      {
+        "model": "Hojo-ASR V1",
+        "lane": "accuracy",
+        "wer_pct": 42.27,
+        "rtf_p50": 0.027545,
+        "vram_mib": 14479,
+        "first_partial_ms_p50": null,
+        "execution": "official whole utterance"
+      },
+      {
+        "model": "Fun-ASR Nano 2512",
+        "lane": "realtime",
+        "wer_pct": 44.39,
+        "rtf_p50": 0.020152,
+        "vram_mib": 3438,
+        "first_partial_ms_p50": null,
+        "execution": "official pytorch smoke; vllm streaming target chunk ms=720"
+      }
+    ]
   }
 }

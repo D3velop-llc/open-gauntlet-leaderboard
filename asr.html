@@ -87,7 +87,7 @@
     <section class="hero hero-lede has-bot bot-left">
       <img class="hero-bot-side" src="static/img/bot.webp" alt=""
            width="264" height="264" loading="eager" decoding="async">
-      <div class="eyebrow"><span class="tick">//</span> surveyed, not benchmarked — 111 systems</div>
+      <div class="eyebrow"><span class="tick">//</span> 106 surveyed · 14 measured locally</div>
       <h1>First it has to <span class="warm">hear you</span></h1>
       <p class="lede">
         A voice product is three pieces of software, and only one of them is the model we
@@ -104,6 +104,8 @@
     <span class="pipe-step is-here" aria-current="page">
       <span class="pipe-job">what it hears</span>
       <span class="pipe-name">Listening</span>
+      <span class="pipe-ev pipe-ev-measured"><span class="ev solid"
+        aria-hidden="true"></span>measured &middot; 14</span>
       <span class="pipe-ev"><span class="ev hollow"
         aria-hidden="true"></span>surveyed &middot; 106</span></span><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
     <a class="pipe-step" href="turns.html">
@@ -137,13 +139,14 @@
   </div>
 
   <div class="wrap wrap-wide">
-    <section class="block">
+    <section class="block tts-lab-block">
+      <section id="asr-lab" aria-label="OpenGauntlet measured ASR results"></section>
       
       
       <p class="scope-line">
         <span class="ev hollow" aria-hidden="true"></span>
-        <strong>Surveyed, not benchmarked.</strong> Nothing on this page was measured by
-        OpenGauntlet.
+        <strong>Surveyed, not benchmarked.</strong> The market matrix below is separate from
+        the Lab measurements above, vendor claims, and external ratings.
         <button type="button" class="linkish" data-dialog="scope-asr">What that means &rarr;</button>
       </p>
 
@@ -151,10 +154,11 @@
         <form method="dialog"><button class="dialog-x" aria-label="Close">&times;</button></form>
         <h3>How to read this section</h3>
         <p class="prose">
-          <strong>None of this is benchmarked here.</strong> OpenGauntlet measures
-          <em>Conversational Language Humanlikeness</em> in text. This section is a
-          <strong>sourced survey</strong> of the recognition market, not a trial. Where a claim
-          could not be verified against a primary source, it says so rather than smoothing it over.
+          <strong>The market matrix is not benchmarked here.</strong> It is a
+          <strong>sourced survey</strong> of the recognition market. The separately labelled Lab
+          card is a local transcription experiment with its hardware, fixed recording, corrected
+          reference, execution mode, and limitations shown. Where a survey claim could not be
+          verified against a primary source, it says so rather than smoothing it over.
         </p>
         <p class="prose">
           <strong>Word error rate is the right metric here</strong> — and that is the opposite of
@@ -257,6 +261,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=82371ea7cd" defer></script>
+  <script src="static/site.js?v=8ea4d8149a" defer></script>
 </body>
 </html>

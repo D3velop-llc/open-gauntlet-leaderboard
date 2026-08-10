@@ -4005,6 +4005,44 @@ function renderTtsLab(mount, lab) {
       el("a", { href: lab.feature_method_url, text: "Feature and continuity method →" }))));
 }
 
+function renderAsrLab(mount, lab) {
+  if (!mount || !lab || !Array.isArray(lab.results)) return;
+  const fmt = (v, digits = 2) => v == null ? "—" : Number(v).toFixed(digits).replace(/\.?0+$/, "");
+  const rows = [...lab.results].sort((a, b) => Number(a.wer_pct) - Number(b.wer_pct));
+  const body = el("tbody", {}, ...rows.map((r) =>
+    el("tr", {},
+      el("td", { text: r.model }),
+      el("td", { text: r.lane || "accuracy" }),
+      el("td", { text: `${fmt(r.wer_pct)}%` }),
+      el("td", { text: fmt(r.rtf_p50, 3) }),
+      el("td", { text: r.vram_mib == null ? "—" : `${(r.vram_mib / 1024).toFixed(1)} GiB` }),
+      el("td", { text: r.first_partial_ms_p50 == null ? "—" : `${fmt(r.first_partial_ms_p50, 0)} ms` }),
+      el("td", { text: r.execution || "—" }))));
+  const table = el("div", { class: "table-scroll" },
+    el("table", { class: "lb tts-lab-table" },
+      el("thead", {}, el("tr", {},
+        el("th", { text: "Model" }), el("th", { text: "Lane" }),
+        el("th", { text: "Owner WER" }), el("th", { text: "RTF p50" }),
+        el("th", { text: "Peak VRAM" }), el("th", { text: "1st partial p50" }),
+        el("th", { text: "Execution" }))), body));
+  const leader = rows[0];
+  const standout = leader ? el("div", { class: "tts-lab-standout" },
+    el("span", { class: "tts-lab-score", text: `${fmt(leader.wer_pct)}%` }),
+    el("p", {}, el("strong", { text: `${leader.model} · lowest corrected-reference WER. ` }),
+      lab.standout_detail || "This result applies to the disclosed owner recording and execution lane, not the whole ASR market.")) : null;
+  mount.replaceChildren(el("div", { class: "tts-lab" },
+    el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }),
+      el("h2", { text: lab.title || "OpenGauntlet ASR Lab" }),
+      el("span", { class: "note", text: `${lab.measured_at} · ${lab.host} · ${lab.gpu} · ${lab.microphone}` })),
+    el("p", { class: "tts-lab-boundary" },
+      el("strong", { text: "Measured locally; experimental, not a population leaderboard. " }),
+      `${lab.recording_seconds} seconds per model across ${lab.clips} approved clips and ${lab.speakers} speakers. ${lab.note || ""}`),
+    standout, table,
+    el("p", { class: "tts-lab-links" },
+      el("a", { href: lab.method_url, text: "Method, settings, and receipts →" }), " · ",
+      el("a", { href: lab.external_leaderboard_url, text: "Open ASR Leaderboard →" }))));
+}
+
 /* Returns true on a successful render, false when the fetch failed (so a
    caller — today, only initUtilitiesPage's activate() — can tell "loaded"
    apart from "gave up and showed an error", and avoid marking a failed tab
@@ -4051,6 +4089,7 @@ async function initMatrix(key) {
   rerender();
   renderTtsRatingCoverage($(`#${key}-rating-coverage`), rows);
   if (key === "tts") renderTtsLab($("#tts-lab"), doc.lab);
+  if (key === "asr") renderAsrLab($("#asr-lab"), doc.lab);
   renderTtsDateline($(`#${key}-dateline`), doc);
   renderTtsCorrections($(`#${key}-corrections`), doc.corrections);
   renderTtsGaps($(`#${key}-gaps`), doc.gaps);

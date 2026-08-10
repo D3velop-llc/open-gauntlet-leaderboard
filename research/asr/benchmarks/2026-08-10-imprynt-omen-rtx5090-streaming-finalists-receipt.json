@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "run_id": "owner-20260810-jabra-usb-streaming-finalists",
+  "completed_at": "2026-08-10T21:20:15.561346+00:00",
+  "scored_at": "2026-08-10T21:49:21.506374+00:00",
+  "hardware": "imprynt-omen NVIDIA GeForce RTX 5090 32 GB",
+  "scope": {
+    "clips": 8,
+    "speakers": 2,
+    "audio_seconds_per_model": 465.0,
+    "reference_approved_clips": 8
+  },
+  "normalization": "Unicode NFKC, lowercase, punctuation-to-space, lexical digits retained",
+  "models": [
+    {
+      "model_key": "qwen3_asr_1_7b_streaming",
+      "micro_wer": 0.060213,
+      "macro_wer": 0.068348,
+      "word_count_ratio": 1.008264,
+      "first_partial_ms_p50": 1031.779,
+      "finalization_latency_ms_p50": 91.444,
+      "compute_rtf_p50": 0.074678,
+      "cadence_rtf_p50": 1.001707,
+      "peak_vram_mib": 25262,
+      "revision_events": 233,
+      "revised_characters": 641,
+      "failures": 0
+    },
+    {
+      "model_key": "voxtral_mini_4b_realtime_2602",
+      "micro_wer": 0.136954,
+      "macro_wer": 0.135534,
+      "word_count_ratio": 0.90791,
+      "first_partial_ms_p50": 3091.895,
+      "finalization_latency_ms_p50": 176.981,
+      "cadence_rtf_p50": 1.002921,
+      "peak_vram_mib": 29894,
+      "revision_events": 0,
+      "failures": 0
+    },
+    {
+      "model_key": "nemotron_speech_streaming_0_6b",
+      "micro_wer": 0.173554,
+      "macro_wer": 0.184527,
+      "word_count_ratio": 0.898465,
+      "first_partial_ms_p50": 3321.957,
+      "finalization_latency_ms_p50": 0.0,
+      "cadence_rtf_p50": 0.996315,
+      "peak_vram_mib": 2906,
+      "revision_events": 0,
+      "failures": 0
+    }
+  ],
+  "qwen_low_memory_validation": {
+    "gpu_memory_utilization": 0.45,
+    "max_model_len": 8192,
+    "peak_vram_mib": 13978,
+    "scripted_40s_transcript_identical": true,
+    "longest_80s_transcript_identical": true,
+    "longest_80s_compute_rtf": 0.080427,
+    "longest_80s_finalization_latency_ms": 97.995
+  },
+  "decision": {
+    "accuracy_winner": "qwen3_asr_1_7b_streaming",
+    "production_status": "experiment_required",
+    "required_gates": [
+      "VAD-gated stable-prefix adapter",
+      "simultaneous MOSS-TTS co-residency and interruption test"
+    ]
+  },
+  "sha256": {
+    "qwen_jsonl": "f85c19f84e48244f306e281a749e166a7d57f7e7a1c85abdb93442cefd916bbf",
+    "nemotron_jsonl": "15541064067f5dbce28033578e26669dfc16ccc4d521b0a3f377600ed04e1b7f",
+    "voxtral_jsonl": "f9389b8804c0f40a9125536812fff94d1c5349a7a5119a65d6d8d0fc37619ad9",
+    "corrected_reference_json": "d32e9a53ff6b3b1731182e8d231415cc9034c18dde12f95d86737ad1e431094e",
+    "scoring_json": "ead359e601dc2bc21de172aabef0c3f3f2649f5441c27f2c5ff13522fd06b9dc",
+    "qwen_low_memory_40s_jsonl": "a47c97d21cd9862a0cd1664f879b045fda662884ee849ee0b463631b9ff3ca9f",
+    "qwen_low_memory_80s_jsonl": "21f776f4df12945c4078138ba9d72a907c7199ce3d5bd736c97e9585a1b366cb"
+  },
+  "remote_run_directory": "/home/imprynt/asr-bakeoff/results/owner-20260810-jabra-usb/streaming-finalists"
+}
