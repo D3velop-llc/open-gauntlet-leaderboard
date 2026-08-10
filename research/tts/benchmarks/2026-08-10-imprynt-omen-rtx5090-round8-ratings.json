@@ -1,0 +1,550 @@
+{
+  "schema_version": 1,
+  "bundle_id": "listening-round8-20260810",
+  "created_at": "2026-08-10T02:05:54.352196+00:00",
+  "updated_at": "2026-08-10T02:52:14.748381+00:00",
+  "completed_at": "2026-08-10T02:52:13.480Z",
+  "statements": {
+    "best_native_arc": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 4,
+          "flags": [
+            "good_pacing",
+            "natural",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 5,
+          "flags": [
+            "emotion_match",
+            "expressive",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 1,
+          "flags": [
+            "boundary_seam",
+            "emotion_mismatch",
+            "overacted"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 5,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "dry_joke": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 4,
+          "flags": [
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 5,
+          "flags": [
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 3,
+          "flags": [
+            "bad_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 3,
+          "flags": [
+            "bad_pacing",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 4,
+          "flags": [
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "embarrassed_repair": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 2,
+          "flags": [
+            "emotion_match",
+            "smooth_transition",
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 2,
+          "flags": [
+            "extra_or_repeated_words",
+            "mispronunciation",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 5,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 3,
+          "flags": [
+            "emotion_mismatch",
+            "natural",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "gentle_boundary": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "natural",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 2,
+          "flags": [
+            "emotion_mismatch",
+            "robotic"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 2,
+          "flags": [
+            "bad_pacing",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 2,
+          "flags": [
+            "emotion_mismatch",
+            "good_pacing",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "playful_tease": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "natural",
+            "smooth_transition"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 2,
+          "flags": [
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 3,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 5,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 3,
+          "flags": [
+            "natural",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "quiet_empathy": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 2,
+          "flags": [
+            "bad_pacing",
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 3,
+          "flags": [
+            "natural",
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 2,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 3,
+          "flags": [
+            "emotion_match",
+            "natural",
+            "smooth_transition"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 2,
+          "flags": [
+            "bad_pacing",
+            "voice_drift"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "restrained_excitement": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 1,
+          "flags": [
+            "omitted_words",
+            "sounds_like_brent",
+            "trailing_silence"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 2,
+          "flags": [
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 3,
+          "flags": [
+            "audio_artifact",
+            "emotion_match",
+            "good_pacing",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 1,
+          "flags": [
+            "audio_artifact",
+            "boundary_seam",
+            "voice_drift"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "sincere_apology": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 2,
+          "flags": [
+            "bad_pacing",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 3,
+          "flags": [
+            "audio_artifact",
+            "boundary_seam",
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 5,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 1,
+          "flags": [
+            "emotion_match",
+            "natural",
+            "smooth_transition",
+            "voice_drift"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "skeptical_question": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 2,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 1,
+          "flags": [
+            "expressive",
+            "overacted"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 5,
+          "flags": [
+            "clause_continuity",
+            "emotion_match",
+            "expressive",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        }
+      }
+    },
+    "suspense_story": {
+      "winner": null,
+      "notes": "",
+      "samples": {
+        "A": {
+          "overall": 2,
+          "flags": [
+            "bad_pacing",
+            "natural",
+            "omitted_words",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "B": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "C": {
+          "overall": 3,
+          "flags": [
+            "bad_pacing",
+            "expressive",
+            "natural",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        },
+        "D": {
+          "overall": 2,
+          "flags": [
+            "good_pacing",
+            "natural",
+            "voice_drift"
+          ],
+          "notes": ""
+        },
+        "E": {
+          "overall": 4,
+          "flags": [
+            "emotion_match",
+            "good_pacing",
+            "natural",
+            "smooth_transition",
+            "sounds_like_brent"
+          ],
+          "notes": ""
+        }
+      }
+    }
+  }
+}

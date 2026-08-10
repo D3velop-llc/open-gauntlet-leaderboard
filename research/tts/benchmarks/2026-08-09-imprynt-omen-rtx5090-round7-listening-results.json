@@ -1,0 +1,2335 @@
+{
+  "schema_version": 1,
+  "bundle_id": "listening-round7-20260809",
+  "completed_at": "2026-08-10T01:22:29.561Z",
+  "rated": 84,
+  "available": 84,
+  "winner_selections": 0,
+  "by_model": {
+    "audio8": {
+      "rated": 12,
+      "available": 12,
+      "mean": 2.25,
+      "median": 2.0,
+      "score_counts": {
+        "1": 2,
+        "2": 5,
+        "3": 5
+      },
+      "flags": {
+        "sounds_like_brent": 8,
+        "bad_pacing": 5,
+        "robotic": 4,
+        "emotion_mismatch": 2,
+        "boundary_seam": 1,
+        "natural": 1,
+        "mispronunciation": 1,
+        "omitted_words": 1
+      }
+    },
+    "indextts2": {
+      "rated": 12,
+      "available": 12,
+      "mean": 3.833,
+      "median": 4.0,
+      "score_counts": {
+        "3": 3,
+        "4": 8,
+        "5": 1
+      },
+      "flags": {
+        "natural": 12,
+        "sounds_like_brent": 11,
+        "emotion_match": 9,
+        "smooth_transition": 7,
+        "good_pacing": 4,
+        "expressive": 1,
+        "bad_pacing": 1,
+        "mispronunciation": 1,
+        "clause_continuity": 1
+      }
+    },
+    "kani_tts2": {
+      "rated": 12,
+      "available": 12,
+      "mean": 1.75,
+      "median": 2.0,
+      "score_counts": {
+        "1": 3,
+        "2": 9
+      },
+      "flags": {
+        "voice_drift": 8,
+        "bad_pacing": 4,
+        "natural": 4,
+        "robotic": 3,
+        "emotion_mismatch": 2,
+        "extra_or_repeated_words": 1,
+        "mispronunciation": 1,
+        "emotion_match": 1,
+        "good_pacing": 1,
+        "smooth_transition": 1
+      }
+    },
+    "moss_ttsd": {
+      "rated": 12,
+      "available": 12,
+      "mean": 2.417,
+      "median": 2.0,
+      "score_counts": {
+        "1": 3,
+        "2": 4,
+        "3": 3,
+        "4": 1,
+        "5": 1
+      },
+      "flags": {
+        "voice_drift": 8,
+        "emotion_match": 5,
+        "natural": 5,
+        "good_pacing": 4,
+        "sounds_like_brent": 4,
+        "smooth_transition": 3,
+        "robotic": 2,
+        "boundary_seam": 1,
+        "audio_artifact": 1
+      }
+    },
+    "orpheus_3b": {
+      "rated": 12,
+      "available": 12,
+      "mean": 1.417,
+      "median": 1.0,
+      "score_counts": {
+        "1": 8,
+        "2": 3,
+        "3": 1
+      },
+      "flags": {
+        "voice_drift": 11,
+        "mispronunciation": 5,
+        "omitted_words": 3,
+        "robotic": 3,
+        "emotion_mismatch": 2,
+        "bad_pacing": 2,
+        "control_spoken": 1,
+        "emotion_match": 1,
+        "natural": 1,
+        "smooth_transition": 1
+      }
+    },
+    "sesame_csm": {
+      "rated": 12,
+      "available": 12,
+      "mean": 2.5,
+      "median": 2.0,
+      "score_counts": {
+        "1": 3,
+        "2": 4,
+        "3": 2,
+        "4": 2,
+        "5": 1
+      },
+      "flags": {
+        "sounds_like_brent": 9,
+        "natural": 6,
+        "bad_pacing": 3,
+        "omitted_words": 3,
+        "extra_or_repeated_words": 2,
+        "emotion_match": 2,
+        "good_pacing": 2,
+        "audio_artifact": 1,
+        "boundary_seam": 1,
+        "voice_drift": 1,
+        "smooth_transition": 1,
+        "mispronunciation": 1
+      }
+    },
+    "step_audio_editx": {
+      "rated": 12,
+      "available": 12,
+      "mean": 2.5,
+      "median": 3.0,
+      "score_counts": {
+        "1": 1,
+        "2": 4,
+        "3": 7
+      },
+      "flags": {
+        "natural": 6,
+        "sounds_like_brent": 5,
+        "bad_pacing": 4,
+        "robotic": 2,
+        "emotion_match": 1,
+        "overacted": 1,
+        "good_pacing": 1
+      }
+    }
+  },
+  "by_statement": {
+    "awkward_clause": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.714,
+        "median": 3,
+        "score_counts": {
+          "1": 2,
+          "2": 1,
+          "3": 2,
+          "4": 1,
+          "5": 1
+        },
+        "flags": {
+          "sounds_like_brent": 5,
+          "natural": 3,
+          "emotion_match": 2,
+          "smooth_transition": 2,
+          "good_pacing": 1,
+          "audio_artifact": 1,
+          "extra_or_repeated_words": 1,
+          "bad_pacing": 1,
+          "voice_drift": 1
+        }
+      },
+      "scores": {
+        "audio8": 3,
+        "indextts2": 5,
+        "kani_tts2": 2,
+        "moss_ttsd": 4,
+        "orpheus_3b": 1,
+        "sesame_csm": 1,
+        "step_audio_editx": 3
+      }
+    },
+    "continuity_stateless": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.571,
+        "median": 3,
+        "score_counts": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 1
+        },
+        "flags": {
+          "sounds_like_brent": 4,
+          "emotion_match": 3,
+          "bad_pacing": 3,
+          "voice_drift": 3,
+          "boundary_seam": 3,
+          "natural": 2,
+          "expressive": 1,
+          "smooth_transition": 1
+        }
+      },
+      "scores": {
+        "audio8": 3,
+        "indextts2": 4,
+        "kani_tts2": 2,
+        "moss_ttsd": 1,
+        "orpheus_3b": 2,
+        "sesame_csm": 3,
+        "step_audio_editx": 3
+      }
+    },
+    "continuity_whole": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.143,
+        "median": 2,
+        "score_counts": {
+          "1": 1,
+          "2": 4,
+          "3": 2
+        },
+        "flags": {
+          "voice_drift": 3,
+          "sounds_like_brent": 3,
+          "bad_pacing": 2,
+          "natural": 1,
+          "emotion_mismatch": 1,
+          "omitted_words": 1,
+          "mispronunciation": 1
+        }
+      },
+      "scores": {
+        "audio8": 3,
+        "indextts2": 3,
+        "kani_tts2": 2,
+        "moss_ttsd": 2,
+        "orpheus_3b": 1,
+        "sesame_csm": 2,
+        "step_audio_editx": 2
+      }
+    },
+    "controlled_enthusiasm": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.286,
+        "median": 2,
+        "score_counts": {
+          "1": 1,
+          "2": 4,
+          "3": 1,
+          "4": 1
+        },
+        "flags": {
+          "voice_drift": 4,
+          "natural": 2,
+          "sounds_like_brent": 2,
+          "robotic": 2,
+          "emotion_match": 1,
+          "good_pacing": 1,
+          "emotion_mismatch": 1,
+          "mispronunciation": 1,
+          "omitted_words": 1
+        }
+      },
+      "scores": {
+        "audio8": 3,
+        "indextts2": 4,
+        "kani_tts2": 2,
+        "moss_ttsd": 2,
+        "orpheus_3b": 1,
+        "sesame_csm": 2,
+        "step_audio_editx": 2
+      }
+    },
+    "controlled_transition": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.714,
+        "median": 3,
+        "score_counts": {
+          "2": 3,
+          "3": 3,
+          "4": 1
+        },
+        "flags": {
+          "sounds_like_brent": 4,
+          "robotic": 3,
+          "natural": 2,
+          "extra_or_repeated_words": 1,
+          "control_spoken": 1,
+          "voice_drift": 1,
+          "emotion_match": 1,
+          "good_pacing": 1,
+          "smooth_transition": 1,
+          "overacted": 1,
+          "bad_pacing": 1
+        }
+      },
+      "scores": {
+        "audio8": 2,
+        "indextts2": 4,
+        "kani_tts2": 2,
+        "moss_ttsd": 3,
+        "orpheus_3b": 2,
+        "sesame_csm": 3,
+        "step_audio_editx": 3
+      }
+    },
+    "emotional": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.857,
+        "median": 3,
+        "score_counts": {
+          "1": 1,
+          "2": 2,
+          "3": 2,
+          "4": 1,
+          "5": 1
+        },
+        "flags": {
+          "sounds_like_brent": 4,
+          "voice_drift": 3,
+          "emotion_match": 3,
+          "natural": 2,
+          "smooth_transition": 2,
+          "good_pacing": 1,
+          "robotic": 1
+        }
+      },
+      "scores": {
+        "audio8": 3,
+        "indextts2": 4,
+        "kani_tts2": 1,
+        "moss_ttsd": 2,
+        "orpheus_3b": 2,
+        "sesame_csm": 5,
+        "step_audio_editx": 3
+      }
+    },
+    "names_acronyms": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.286,
+        "median": 2,
+        "score_counts": {
+          "1": 2,
+          "2": 2,
+          "3": 2,
+          "4": 1
+        },
+        "flags": {
+          "natural": 3,
+          "robotic": 3,
+          "sounds_like_brent": 2,
+          "emotion_mismatch": 2,
+          "good_pacing": 1,
+          "bad_pacing": 1,
+          "voice_drift": 1,
+          "mispronunciation": 1
+        }
+      },
+      "scores": {
+        "audio8": 2,
+        "indextts2": 3,
+        "kani_tts2": 1,
+        "moss_ttsd": 3,
+        "orpheus_3b": 1,
+        "sesame_csm": 4,
+        "step_audio_editx": 2
+      }
+    },
+    "numbers_dates": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 1.857,
+        "median": 1,
+        "score_counts": {
+          "1": 4,
+          "2": 1,
+          "3": 1,
+          "4": 1
+        },
+        "flags": {
+          "mispronunciation": 5,
+          "natural": 4,
+          "omitted_words": 3,
+          "sounds_like_brent": 3,
+          "voice_drift": 3,
+          "bad_pacing": 2,
+          "emotion_match": 2,
+          "extra_or_repeated_words": 1,
+          "good_pacing": 1,
+          "smooth_transition": 1
+        }
+      },
+      "scores": {
+        "audio8": 1,
+        "indextts2": 4,
+        "kani_tts2": 1,
+        "moss_ttsd": 2,
+        "orpheus_3b": 1,
+        "sesame_csm": 1,
+        "step_audio_editx": 3
+      }
+    },
+    "paragraph": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.143,
+        "median": 2,
+        "score_counts": {
+          "1": 2,
+          "2": 2,
+          "3": 3
+        },
+        "flags": {
+          "natural": 4,
+          "sounds_like_brent": 2,
+          "bad_pacing": 2,
+          "omitted_words": 2,
+          "emotion_match": 2,
+          "smooth_transition": 2,
+          "voice_drift": 2,
+          "robotic": 2,
+          "emotion_mismatch": 1,
+          "good_pacing": 1,
+          "mispronunciation": 1,
+          "clause_continuity": 1
+        }
+      },
+      "scores": {
+        "audio8": 2,
+        "indextts2": 3,
+        "kani_tts2": 2,
+        "moss_ttsd": 3,
+        "orpheus_3b": 1,
+        "sesame_csm": 1,
+        "step_audio_editx": 3
+      }
+    },
+    "question": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.571,
+        "median": 3,
+        "score_counts": {
+          "1": 2,
+          "2": 1,
+          "3": 2,
+          "4": 2
+        },
+        "flags": {
+          "natural": 5,
+          "voice_drift": 3,
+          "sounds_like_brent": 3,
+          "good_pacing": 3,
+          "audio_artifact": 1,
+          "robotic": 1,
+          "emotion_match": 1,
+          "smooth_transition": 1
+        }
+      },
+      "scores": {
+        "audio8": 1,
+        "indextts2": 4,
+        "kani_tts2": 2,
+        "moss_ttsd": 1,
+        "orpheus_3b": 3,
+        "sesame_csm": 4,
+        "step_audio_editx": 3
+      }
+    },
+    "semantic_empathy": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.0,
+        "median": 2,
+        "score_counts": {
+          "1": 2,
+          "2": 4,
+          "4": 1
+        },
+        "flags": {
+          "bad_pacing": 4,
+          "natural": 3,
+          "emotion_match": 2,
+          "smooth_transition": 2,
+          "sounds_like_brent": 2,
+          "voice_drift": 2,
+          "good_pacing": 1,
+          "robotic": 1
+        }
+      },
+      "scores": {
+        "audio8": 2,
+        "indextts2": 4,
+        "kani_tts2": 2,
+        "moss_ttsd": 1,
+        "orpheus_3b": 1,
+        "sesame_csm": 2,
+        "step_audio_editx": 2
+      }
+    },
+    "short_reply": {
+      "summary": {
+        "rated": 7,
+        "available": 7,
+        "mean": 2.429,
+        "median": 2,
+        "score_counts": {
+          "1": 2,
+          "2": 3,
+          "4": 1,
+          "5": 1
+        },
+        "flags": {
+          "natural": 4,
+          "sounds_like_brent": 3,
+          "bad_pacing": 3,
+          "emotion_match": 2,
+          "voice_drift": 2,
+          "good_pacing": 1,
+          "emotion_mismatch": 1,
+          "smooth_transition": 1,
+          "robotic": 1
+        }
+      },
+      "scores": {
+        "audio8": 2,
+        "indextts2": 4,
+        "kani_tts2": 2,
+        "moss_ttsd": 5,
+        "orpheus_3b": 1,
+        "sesame_csm": 2,
+        "step_audio_editx": 1
+      }
+    }
+  },
+  "by_lane_model": {
+    "clause_continuity/audio8": {
+      "rated": 2,
+      "available": 2,
+      "mean": 3.0,
+      "median": 3.0,
+      "score_counts": {
+        "3": 2
+      },
+      "flags": {
+        "sounds_like_brent": 2,
+        "bad_pacing": 1,
+        "boundary_seam": 1,
+        "emotion_mismatch": 1
+      }
+    },
+    "clause_continuity/indextts2": {
+      "rated": 2,
+      "available": 2,
+      "mean": 3.5,
+      "median": 3.5,
+      "score_counts": {
+        "3": 1,
+        "4": 1
+      },
+      "flags": {
+        "natural": 2,
+        "sounds_like_brent": 2,
+        "emotion_match": 1,
+        "expressive": 1,
+        "smooth_transition": 1,
+        "bad_pacing": 1
+      }
+    },
+    "clause_continuity/kani_tts2": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.0,
+      "median": 2.0,
+      "score_counts": {
+        "2": 2
+      },
+      "flags": {
+        "voice_drift": 2,
+        "bad_pacing": 1
+      }
+    },
+    "clause_continuity/moss_ttsd": {
+      "rated": 2,
+      "available": 2,
+      "mean": 1.5,
+      "median": 1.5,
+      "score_counts": {
+        "1": 1,
+        "2": 1
+      },
+      "flags": {
+        "voice_drift": 2,
+        "boundary_seam": 1
+      }
+    },
+    "clause_continuity/orpheus_3b": {
+      "rated": 2,
+      "available": 2,
+      "mean": 1.5,
+      "median": 1.5,
+      "score_counts": {
+        "1": 1,
+        "2": 1
+      },
+      "flags": {
+        "voice_drift": 2,
+        "mispronunciation": 1
+      }
+    },
+    "clause_continuity/sesame_csm": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.5,
+      "median": 2.5,
+      "score_counts": {
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "sounds_like_brent": 2,
+        "bad_pacing": 1,
+        "boundary_seam": 1,
+        "emotion_match": 1,
+        "omitted_words": 1
+      }
+    },
+    "clause_continuity/step_audio_editx": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.5,
+      "median": 2.5,
+      "score_counts": {
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "emotion_match": 1,
+        "natural": 1,
+        "sounds_like_brent": 1,
+        "bad_pacing": 1
+      }
+    },
+    "default/audio8": {
+      "rated": 7,
+      "available": 7,
+      "mean": 2.0,
+      "median": 2,
+      "score_counts": {
+        "1": 2,
+        "2": 3,
+        "3": 2
+      },
+      "flags": {
+        "sounds_like_brent": 4,
+        "robotic": 3,
+        "bad_pacing": 3,
+        "emotion_mismatch": 1,
+        "mispronunciation": 1,
+        "omitted_words": 1
+      }
+    },
+    "default/indextts2": {
+      "rated": 7,
+      "available": 7,
+      "mean": 3.857,
+      "median": 4,
+      "score_counts": {
+        "3": 2,
+        "4": 4,
+        "5": 1
+      },
+      "flags": {
+        "natural": 7,
+        "sounds_like_brent": 6,
+        "emotion_match": 5,
+        "smooth_transition": 4,
+        "good_pacing": 2,
+        "mispronunciation": 1,
+        "clause_continuity": 1
+      }
+    },
+    "default/kani_tts2": {
+      "rated": 7,
+      "available": 7,
+      "mean": 1.571,
+      "median": 2,
+      "score_counts": {
+        "1": 3,
+        "2": 4
+      },
+      "flags": {
+        "voice_drift": 5,
+        "natural": 3,
+        "bad_pacing": 2,
+        "robotic": 2,
+        "emotion_mismatch": 2,
+        "extra_or_repeated_words": 1,
+        "mispronunciation": 1
+      }
+    },
+    "default/moss_ttsd": {
+      "rated": 7,
+      "available": 7,
+      "mean": 2.857,
+      "median": 3,
+      "score_counts": {
+        "1": 1,
+        "2": 2,
+        "3": 2,
+        "4": 1,
+        "5": 1
+      },
+      "flags": {
+        "emotion_match": 5,
+        "natural": 5,
+        "good_pacing": 4,
+        "voice_drift": 4,
+        "smooth_transition": 3,
+        "sounds_like_brent": 3,
+        "audio_artifact": 1
+      }
+    },
+    "default/orpheus_3b": {
+      "rated": 7,
+      "available": 7,
+      "mean": 1.429,
+      "median": 1,
+      "score_counts": {
+        "1": 5,
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "voice_drift": 6,
+        "mispronunciation": 3,
+        "omitted_words": 2,
+        "robotic": 2,
+        "emotion_mismatch": 1,
+        "emotion_match": 1,
+        "natural": 1,
+        "smooth_transition": 1,
+        "bad_pacing": 1
+      }
+    },
+    "default/sesame_csm": {
+      "rated": 7,
+      "available": 7,
+      "mean": 2.571,
+      "median": 2,
+      "score_counts": {
+        "1": 3,
+        "2": 1,
+        "4": 2,
+        "5": 1
+      },
+      "flags": {
+        "sounds_like_brent": 5,
+        "natural": 5,
+        "good_pacing": 2,
+        "omitted_words": 2,
+        "audio_artifact": 1,
+        "extra_or_repeated_words": 1,
+        "emotion_match": 1,
+        "smooth_transition": 1,
+        "mispronunciation": 1,
+        "bad_pacing": 1
+      }
+    },
+    "default/step_audio_editx": {
+      "rated": 7,
+      "available": 7,
+      "mean": 2.571,
+      "median": 3,
+      "score_counts": {
+        "1": 1,
+        "2": 1,
+        "3": 5
+      },
+      "flags": {
+        "natural": 4,
+        "sounds_like_brent": 4,
+        "bad_pacing": 2,
+        "robotic": 1,
+        "good_pacing": 1
+      }
+    },
+    "native_control/audio8": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.5,
+      "median": 2.5,
+      "score_counts": {
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "sounds_like_brent": 2,
+        "natural": 1,
+        "robotic": 1
+      }
+    },
+    "native_control/indextts2": {
+      "rated": 2,
+      "available": 2,
+      "mean": 4.0,
+      "median": 4.0,
+      "score_counts": {
+        "4": 2
+      },
+      "flags": {
+        "emotion_match": 2,
+        "good_pacing": 2,
+        "natural": 2,
+        "sounds_like_brent": 2,
+        "smooth_transition": 1
+      }
+    },
+    "native_control/kani_tts2": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.0,
+      "median": 2.0,
+      "score_counts": {
+        "2": 2
+      },
+      "flags": {
+        "voice_drift": 1,
+        "bad_pacing": 1,
+        "robotic": 1
+      }
+    },
+    "native_control/moss_ttsd": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.5,
+      "median": 2.5,
+      "score_counts": {
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "voice_drift": 1,
+        "robotic": 1,
+        "sounds_like_brent": 1
+      }
+    },
+    "native_control/orpheus_3b": {
+      "rated": 2,
+      "available": 2,
+      "mean": 1.5,
+      "median": 1.5,
+      "score_counts": {
+        "1": 1,
+        "2": 1
+      },
+      "flags": {
+        "voice_drift": 2,
+        "emotion_mismatch": 1,
+        "mispronunciation": 1,
+        "omitted_words": 1,
+        "robotic": 1,
+        "control_spoken": 1
+      }
+    },
+    "native_control/sesame_csm": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.5,
+      "median": 2.5,
+      "score_counts": {
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "voice_drift": 1,
+        "extra_or_repeated_words": 1,
+        "natural": 1,
+        "sounds_like_brent": 1
+      }
+    },
+    "native_control/step_audio_editx": {
+      "rated": 2,
+      "available": 2,
+      "mean": 2.5,
+      "median": 2.5,
+      "score_counts": {
+        "2": 1,
+        "3": 1
+      },
+      "flags": {
+        "robotic": 1,
+        "overacted": 1
+      }
+    },
+    "semantic_emotion/audio8": {
+      "rated": 1,
+      "available": 1,
+      "mean": 2.0,
+      "median": 2,
+      "score_counts": {
+        "2": 1
+      },
+      "flags": {
+        "bad_pacing": 1
+      }
+    },
+    "semantic_emotion/indextts2": {
+      "rated": 1,
+      "available": 1,
+      "mean": 4.0,
+      "median": 4,
+      "score_counts": {
+        "4": 1
+      },
+      "flags": {
+        "emotion_match": 1,
+        "natural": 1,
+        "smooth_transition": 1,
+        "sounds_like_brent": 1
+      }
+    },
+    "semantic_emotion/kani_tts2": {
+      "rated": 1,
+      "available": 1,
+      "mean": 2.0,
+      "median": 2,
+      "score_counts": {
+        "2": 1
+      },
+      "flags": {
+        "emotion_match": 1,
+        "good_pacing": 1,
+        "natural": 1,
+        "smooth_transition": 1
+      }
+    },
+    "semantic_emotion/moss_ttsd": {
+      "rated": 1,
+      "available": 1,
+      "mean": 1.0,
+      "median": 1,
+      "score_counts": {
+        "1": 1
+      },
+      "flags": {
+        "robotic": 1,
+        "voice_drift": 1
+      }
+    },
+    "semantic_emotion/orpheus_3b": {
+      "rated": 1,
+      "available": 1,
+      "mean": 1.0,
+      "median": 1,
+      "score_counts": {
+        "1": 1
+      },
+      "flags": {
+        "bad_pacing": 1,
+        "voice_drift": 1
+      }
+    },
+    "semantic_emotion/sesame_csm": {
+      "rated": 1,
+      "available": 1,
+      "mean": 2.0,
+      "median": 2,
+      "score_counts": {
+        "2": 1
+      },
+      "flags": {
+        "bad_pacing": 1,
+        "sounds_like_brent": 1
+      }
+    },
+    "semantic_emotion/step_audio_editx": {
+      "rated": 1,
+      "available": 1,
+      "mean": 2.0,
+      "median": 2,
+      "score_counts": {
+        "2": 1
+      },
+      "flags": {
+        "bad_pacing": 1,
+        "natural": 1
+      }
+    }
+  },
+  "rows": [
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "moss_ttsd",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "good_pacing",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "step_audio_editx",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "sesame_csm",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "audio_artifact",
+        "extra_or_repeated_words",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "orpheus_3b",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "indextts2",
+      "overall": 5,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "awkward_clause",
+      "lane": "default",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "audio8",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "A",
+      "model_key": "step_audio_editx",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "B",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "C",
+      "model_key": "sesame_csm",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "boundary_seam",
+        "emotion_match",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "D",
+      "model_key": "audio8",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "boundary_seam",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "E",
+      "model_key": "orpheus_3b",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "the voice isnt the closest but the emotions were good   ",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "F",
+      "model_key": "moss_ttsd",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "boundary_seam",
+        "voice_drift"
+      ],
+      "notes": "muttiple voices",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_stateless",
+      "lane": "clause_continuity",
+      "mode": "split_stateless",
+      "sample": "G",
+      "model_key": "indextts2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "expressive",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "A",
+      "model_key": "moss_ttsd",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "B",
+      "model_key": "step_audio_editx",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "C",
+      "model_key": "indextts2",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "D",
+      "model_key": "audio8",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "E",
+      "model_key": "sesame_csm",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "omitted_words",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "F",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "the brent voice isnt the greatest clone",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "continuity_whole",
+      "lane": "clause_continuity",
+      "mode": "whole",
+      "sample": "G",
+      "model_key": "orpheus_3b",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "mispronunciation",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "indextts2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "good_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "sesame_csm",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "step_audio_editx",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "moss_ttsd",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "audio8",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_enthusiasm",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "orpheus_3b",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "mispronunciation",
+        "omitted_words",
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "having a seizure",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "sesame_csm",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "extra_or_repeated_words",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "orpheus_3b",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "control_spoken",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "indextts2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "good_pacing",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "step_audio_editx",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "overacted"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "moss_ttsd",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "robotic",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "audio8",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "robotic",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "controlled_transition",
+      "lane": "native_control",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "audio8",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "orpheus_3b",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "sesame_csm",
+      "overall": 5,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "good_pacing",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "indextts2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "kani_tts2",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "step_audio_editx",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "emotional",
+      "lane": "default",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "moss_ttsd",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "smooth_transition",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "sesame_csm",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "moss_ttsd",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "audio8",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "indextts2",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "step_audio_editx",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "kani_tts2",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "names_acronyms",
+      "lane": "default",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "orpheus_3b",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "mispronunciation"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "sesame_csm",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "mispronunciation",
+        "natural",
+        "omitted_words",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "kani_tts2",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "extra_or_repeated_words",
+        "mispronunciation",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "audio8",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "mispronunciation",
+        "omitted_words"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "step_audio_editx",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "moss_ttsd",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "good_pacing",
+        "natural",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "orpheus_3b",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "mispronunciation",
+        "omitted_words",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "numbers_dates",
+      "lane": "default",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "indextts2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "mispronunciation",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "step_audio_editx",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "sesame_csm",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "omitted_words"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "moss_ttsd",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "good_pacing",
+        "natural",
+        "smooth_transition",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "orpheus_3b",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "mispronunciation",
+        "omitted_words",
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "indextts2",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "clause_continuity",
+        "emotion_match",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "paragraph",
+      "lane": "default",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "audio8",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "robotic"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "moss_ttsd",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "audio_artifact",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "natural",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "audio8",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "robotic",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "sesame_csm",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "step_audio_editx",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "indextts2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "good_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "question",
+      "lane": "default",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "orpheus_3b",
+      "overall": 3,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "natural",
+        "smooth_transition",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "good_pacing",
+        "natural",
+        "smooth_transition"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "indextts2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "moss_ttsd",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "step_audio_editx",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "orpheus_3b",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "audio8",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "semantic_empathy",
+      "lane": "semantic_emotion",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "sesame_csm",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "A",
+      "model_key": "moss_ttsd",
+      "overall": 5,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "good_pacing",
+        "natural",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "B",
+      "model_key": "kani_tts2",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "emotion_mismatch",
+        "natural",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "C",
+      "model_key": "indextts2",
+      "overall": 4,
+      "is_winner": false,
+      "flags": [
+        "emotion_match",
+        "natural",
+        "smooth_transition",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "D",
+      "model_key": "audio8",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "sounds_like_brent"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "E",
+      "model_key": "step_audio_editx",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "F",
+      "model_key": "orpheus_3b",
+      "overall": 1,
+      "is_winner": false,
+      "flags": [
+        "bad_pacing",
+        "robotic",
+        "voice_drift"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    },
+    {
+      "statement_id": "short_reply",
+      "lane": "default",
+      "mode": "single",
+      "sample": "G",
+      "model_key": "sesame_csm",
+      "overall": 2,
+      "is_winner": false,
+      "flags": [
+        "natural"
+      ],
+      "notes": "",
+      "statement_notes": ""
+    }
+  ]
+}

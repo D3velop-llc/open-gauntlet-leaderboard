@@ -3951,6 +3951,7 @@ function renderTtsLab(mount, lab) {
       el("td", { text: r.rounds || "—" }),
       el("td", { text: fmt(r.baseline_mean) }),
       el("td", { text: fmt(r.feature_mean) }),
+      el("td", { text: fmt(r.conversation_mean) }),
       el("td", { text: fmt(r.rtf_p50) }),
       el("td", { text: r.vram_mib == null ? "—" : `${(r.vram_mib / 1024).toFixed(1)} GiB` }),
       el("td", { text: r.continuity || "—" }))));
@@ -3958,7 +3959,8 @@ function renderTtsLab(mount, lab) {
     el("table", { class: "lb tts-lab-table" },
       el("thead", {}, el("tr", {},
         el("th", { text: "Model" }), el("th", { text: "Round" }), el("th", { text: "Baseline /5" }),
-        el("th", { text: "Features /5" }), el("th", { text: "RTF p50" }),
+        el("th", { text: "Features /5" }), el("th", { text: "Human conversation /5" }),
+        el("th", { text: "RTF p50" }),
         el("th", { text: "Peak VRAM" }), el("th", { text: "Continuity ratings" }))), body));
   const standout = lab.standout ? el("div", { class: "tts-lab-standout" },
     el("span", { class: "tts-lab-score", text: `${lab.standout.score}/5` }),
