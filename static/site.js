@@ -129,7 +129,12 @@ function cfgLabel(row) {
 }
 
 async function getJSON(path) {
-  const r = await fetch(path);
+  // GitHub Pages/CDN can briefly serve a newly deployed page shell with the
+  // previous unversioned data/*.json object. A per-load query key makes the
+  // document and its data advance together without disabling in-page reuse.
+  const url = new URL(path, window.location.href);
+  url.searchParams.set("v", String(Date.now()));
+  const r = await fetch(url, { cache: "no-store" });
   if (!r.ok) throw new Error(`${path} → ${r.status}`);
   return r.json();
 }
