@@ -1,0 +1,50 @@
+{
+  "provider": "moss-tts-realtime",
+  "config": {
+    "source_revision": "58b20a0d5fcc6766658d50967a90a9d890009a46",
+    "model_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-tts-realtime",
+    "codec_model_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-audio-tokenizer",
+    "attention": "sdpa",
+    "compile": "on",
+    "decode_chunk_frames": 6,
+    "decode_overlap_frames": 0,
+    "codec_chunk_duration": 0.96,
+    "buffer_threshold_seconds": 0.0,
+    "temperature": 0.8,
+    "top_p": 0.6,
+    "top_k": 30,
+    "repetition_penalty": 1.1,
+    "repetition_window": 50,
+    "seed": 42,
+    "prompt_loader": "soundfile"
+  },
+  "warmup": {
+    "pcm_bytes": 30720,
+    "latency_ms": 296.0543769877404
+  },
+  "device_frames_simulated": 232960,
+  "terminal_text": [
+    "I thought I had the whole evening under control. ",
+    "Then the dog stole dinner, and honestly, he looked proud of it."
+  ],
+  "protocol": [
+    {
+      "request_id": "moss-probe",
+      "session_id": "imprynt-moss-probe-edd9a873562d",
+      "settled": true,
+      "submitted": [
+        {
+          "clause_id": "moss-probe-c0",
+          "utf8_len": 49,
+          "sha256": "ab7257e5dc13fb5adca4e4763b6cd796ed636380751f41fab31956fc8941262c"
+        },
+        {
+          "clause_id": "moss-probe-c1",
+          "utf8_len": 63,
+          "sha256": "08d05b967272e39cf490f120c0bbfa4a327479afbc7930b6fcf3c8c53382c598"
+        }
+      ],
+      "first_text_to_pcm_ms": 313.394172
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-08-10T04:17:27.815875+00:00",
+  "base_url": "http://127.0.0.1:8083",
+  "prompt_audio": "/home/imprynt/models/higgs-ref/brent.wav",
+  "warmups": 2,
+  "runs": 5,
+  "modes": [
+    "incremental"
+  ],
+  "cases": [
+    {
+      "id": "short_response",
+      "fragments": [
+        "Oh, wow\u2014that actually makes sense now."
+      ]
+    },
+    {
+      "id": "human_conversation",
+      "fragments": [
+        "I was annoyed when you canceled, and I almost sent a message I would've regretted. ",
+        "Then I heard what happened. ",
+        "Forget the plans\u2014are you okay? ",
+        "That's the only part I care about now."
+      ]
+    },
+    {
+      "id": "connected_story",
+      "fragments": [
+        "So I walked into the kitchen absolutely certain I had everything under control. ",
+        "Two minutes later the smoke alarm was yelling, the dog had stolen the towel, ",
+        "and I was negotiating with a pancake that had somehow reached the ceiling. ",
+        "Honestly, the pancake won."
+      ]
+    }
+  ],
+  "health": {
+    "status": "ok",
+    "target_sr": 24000,
+    "model_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-tts-realtime",
+    "tokenizer_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-tts-realtime",
+    "codec_model_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-audio-tokenizer",
+    "device": "cuda:0",
+    "attn_impl": "sdpa"
+  },
+  "completed_at": "2026-08-10T04:18:45.011203+00:00",
+  "summary": {
+    "short_response::incremental": {
+      "n": 5,
+      "ttfa_p50_seconds": 0.0695816480438225,
+      "ttfa_p95_seconds": 0.0813149549649097,
+      "rtf_p50": 0.3277785824138846,
+      "gpu_memory_peak_mib": 13940.0,
+      "gpu_power_peak_watts": 263.91
+    },
+    "human_conversation::incremental": {
+      "n": 5,
+      "ttfa_p50_seconds": 0.21545011800481007,
+      "ttfa_p95_seconds": 0.21603936899919063,
+      "rtf_p50": 0.2922555121113528,
+      "gpu_memory_peak_mib": 14234.0,
+      "gpu_power_peak_watts": 273.44
+    },
+    "connected_story::incremental": {
+      "n": 5,
+      "ttfa_p50_seconds": 0.12691414402797818,
+      "ttfa_p95_seconds": 0.1280223469948396,
+      "rtf_p50": 0.2894902325546267,
+      "gpu_memory_peak_mib": 14394.0,
+      "gpu_power_peak_watts": 272.1
+    }
+  }
+}

@@ -10055,6 +10055,30 @@
       "excluded": [],
       "receipt_url": "https://opengauntlet.com/research/tts/benchmarks/2026-08-10-imprynt-omen-rtx5090-round8.md"
     },
+    "production_candidate": {
+      "model": "MOSS-TTS-Realtime",
+      "status": "deployed candidate; physical-audio sitting required",
+      "profile": "SDPA + compile · 6 decode frames · 0.96 s codec chunk · seed 42",
+      "ttfa_p50_ms": {
+        "short": 69.58,
+        "human": 215.45,
+        "story": 126.91
+      },
+      "ttfa_p95_ms": {
+        "short": 81.31,
+        "human": 216.04,
+        "story": 128.02
+      },
+      "rtf_p50": {
+        "short": 0.328,
+        "human": 0.292,
+        "story": 0.289
+      },
+      "peak_vram_mib": 14394,
+      "cancel_settle_p50_ms": 6.903,
+      "cancel_settle_max_ms": 7.566,
+      "receipt_url": "https://opengauntlet.com/research/tts/benchmarks/2026-08-10-imprynt-moss-production.md"
+    },
     "results": [
       {
         "model": "Higgs Audio v3 4B",

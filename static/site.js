@@ -3975,6 +3975,23 @@ function renderTtsLab(mount, lab) {
     el("strong", { text: `${lab.next_round.status === "complete" ? "Latest round complete" : "Now rating"}: ${lab.next_round.completed.join(", ")}. ` }),
     `${lab.next_round.items} blind clips; ${lab.next_round.excluded.join("; ")}. `,
     el("a", { href: lab.next_round.receipt_url, text: "Round receipt →" })) : null;
+  const prod = lab.production_candidate;
+  const production = prod ? el("section", { class: "tts-production" },
+    el("div", { class: "tts-production-head" },
+      el("span", { class: "mono", text: "PRODUCTION CANDIDATE" }),
+      el("strong", { text: prod.model }),
+      el("span", { class: "note", text: prod.status })),
+    el("p", { class: "tts-production-profile", text: prod.profile }),
+    el("div", { class: "tts-production-metrics" },
+      el("div", {}, el("span", { text: "TTFA p50" }),
+        el("strong", { text: `${fmt(prod.ttfa_p50_ms.short, 2)}–${fmt(prod.ttfa_p50_ms.human, 2)} ms` })),
+      el("div", {}, el("span", { text: "RTF p50" }),
+        el("strong", { text: `${fmt(prod.rtf_p50.story)}–${fmt(prod.rtf_p50.short)}` })),
+      el("div", {}, el("span", { text: "Peak VRAM" }),
+        el("strong", { text: `${(prod.peak_vram_mib / 1024).toFixed(1)} GiB` })),
+      el("div", {}, el("span", { text: "Cancel settle p50" }),
+        el("strong", { text: `${fmt(prod.cancel_settle_p50_ms, 3)} ms` }))),
+    el("a", { href: prod.receipt_url, text: "Exact deployment settings and measurements →" })) : null;
   mount.replaceChildren(el("div", { class: "tts-lab" },
     el("div", { class: "section-head" }, el("span", { class: "idx", text: "//" }),
       el("h2", { text: lab.title || "OpenGauntlet Lab" }),
@@ -3982,7 +3999,7 @@ function renderTtsLab(mount, lab) {
     el("p", { class: "tts-lab-boundary" },
       el("strong", { text: "Measured locally; experimental, not a population leaderboard. " }),
       `${lab.blind_ratings} blind ratings from ${lab.listener_count} owner-listener. ${lab.note || ""}`),
-    standout, next, table,
+    standout, next, production, table,
     el("p", { class: "tts-lab-links" },
       el("a", { href: lab.method_url, text: "Baseline method and receipts →" }), " · ",
       el("a", { href: lab.feature_method_url, text: "Feature and continuity method →" }))));

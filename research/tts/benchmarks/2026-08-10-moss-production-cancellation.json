@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-08-10T04:22:38.238047+00:00",
+  "base_url": "http://127.0.0.1:8083",
+  "runs": 5,
+  "settled_count": 5,
+  "settle_p50_ms": 6.903012981638312,
+  "settle_max_ms": 7.566087006125599,
+  "stream_end_p50_ms": 1.6858020098879933,
+  "rows": [
+    {
+      "recorded_at": "2026-08-10T04:22:36.961075+00:00",
+      "repeat": 1,
+      "session_id": "moss-cancel-c2fc90511a7f4a82bb297e3d4cfbca7c",
+      "first_pcm_ms": 230.28343101032078,
+      "cancel_after_first_pcm_ms": 80.0,
+      "settled": true,
+      "server_settle_ms": 7.116673048585653,
+      "client_cancel_roundtrip_ms": 9.482959983870387,
+      "audio_stream_end_after_cancel_ms": 1.6810219967737794,
+      "pcm_bytes_before_end": 38400,
+      "pcm_seconds_before_end": 0.8
+    },
+    {
+      "recorded_at": "2026-08-10T04:22:37.279225+00:00",
+      "repeat": 2,
+      "session_id": "moss-cancel-c0e50c515012481994070172e8eeaa19",
+      "first_pcm_ms": 225.3243220038712,
+      "cancel_after_first_pcm_ms": 80.0,
+      "settled": true,
+      "server_settle_ms": 7.566087006125599,
+      "client_cancel_roundtrip_ms": 9.321066027041525,
+      "audio_stream_end_after_cancel_ms": 1.8074659747071564,
+      "pcm_bytes_before_end": 38400,
+      "pcm_seconds_before_end": 0.8
+    },
+    {
+      "recorded_at": "2026-08-10T04:22:37.598351+00:00",
+      "repeat": 3,
+      "session_id": "moss-cancel-b27bc9e446bd4af8bfd18020e42016ad",
+      "first_pcm_ms": 226.9433689652942,
+      "cancel_after_first_pcm_ms": 80.0,
+      "settled": true,
+      "server_settle_ms": 6.3691469840705395,
+      "client_cancel_roundtrip_ms": 8.6216299678199,
+      "audio_stream_end_after_cancel_ms": 1.6484829830005765,
+      "pcm_bytes_before_end": 38400,
+      "pcm_seconds_before_end": 0.8
+    },
+    {
+      "recorded_at": "2026-08-10T04:22:37.917844+00:00",
+      "repeat": 4,
+      "session_id": "moss-cancel-2163a3e9ed3d470982bf65e07e6517c9",
+      "first_pcm_ms": 226.70826799003407,
+      "cancel_after_first_pcm_ms": 80.0,
+      "settled": true,
+      "server_settle_ms": 6.903012981638312,
+      "client_cancel_roundtrip_ms": 8.747831976506859,
+      "audio_stream_end_after_cancel_ms": 1.8255580216646194,
+      "pcm_bytes_before_end": 38400,
+      "pcm_seconds_before_end": 0.8
+    },
+    {
+      "recorded_at": "2026-08-10T04:22:38.237915+00:00",
+      "repeat": 5,
+      "session_id": "moss-cancel-44cab59d11e442d281e6c4195f09450d",
+      "first_pcm_ms": 227.56360296625644,
+      "cancel_after_first_pcm_ms": 80.0,
+      "settled": true,
+      "server_settle_ms": 6.564530951436609,
+      "client_cancel_roundtrip_ms": 8.669305010698736,
+      "audio_stream_end_after_cancel_ms": 1.6858020098879933,
+      "pcm_bytes_before_end": 38400,
+      "pcm_seconds_before_end": 0.8
+    }
+  ]
+}
