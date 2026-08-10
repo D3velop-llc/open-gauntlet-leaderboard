@@ -1328,6 +1328,14 @@ table.lb.tts td.tts-rating { min-width: 6.4rem; }
 .tts-rating-cov strong { color: var(--ink); }
 .tts-rating-cov.note { border-left-color: var(--border); color: var(--muted); font-size: 12px; }
 
+/* Give the measured lab a clear visual boundary from the journey rail above it. */
+section.tts-lab-block { padding-top: 64px; position: relative; }
+section.tts-lab-block::before {
+  content: ""; position: absolute; top: 24px; left: 50%; transform: translateX(-50%);
+  width: min(240px, 36vw); height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-2), transparent);
+}
+
 /* Measured Lab receipts are visually and structurally separate from the sourced survey. */
 .tts-lab { margin: 0 0 30px; padding: 20px; border: 1px solid rgba(122, 192, 137, .42);
   border-radius: var(--radius); background: rgba(122, 192, 137, .045); }
@@ -1632,6 +1640,7 @@ a.pipe-step:hover .pipe-name { color: var(--ink); }
   display: inline-flex; align-items: center;
   font-family: var(--font-mono); font-size: 10px; color: var(--muted);
 }
+.pipe-ev-measured { color: var(--ink-dim); }
 /* the glyph arrows are gone — the rail carries the direction now */
 .pipe-arrow { display: none; }
 
