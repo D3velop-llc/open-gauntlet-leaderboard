@@ -2715,6 +2715,98 @@ const MEMORY_COMPARE_FIELDS = [
   ["verification", "Evidence"], ["best_for", "Best for"],
 ];
 
+/* MUST mirror LLM_CATEGORIES in config.py. */
+const LLMS_CATS = [
+  { key: "general-chat",      label: "General chat" },
+  { key: "roleplay-creative", label: "Roleplay/creative" },
+  { key: "reasoning",         label: "Reasoning" },
+  { key: "coding",            label: "Coding" },
+  { key: "multilingual",      label: "Multilingual" },
+  { key: "vision-multimodal", label: "Vision/multimodal" },
+  { key: "edge-small",        label: "Edge/small" },
+];
+const LLMS_CAT_LABEL = Object.fromEntries(LLMS_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror LLM_FACETS in config.py (CORE_FACETS plus tool-calling, long
+   context, vision input, native reasoning, MoE architecture, GGUF
+   availability, and uncensored-tuning — the axes a reader filters on when
+   picking an open-weight model for conversational use). No `api-only` group
+   entry: this survey is scoped to open-weight models only, so no row is ever
+   hosted-only. */
+const LLMS_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["self-hostable", "Self-hostable"], ["cpu-capable", "No GPU needed"],
+    ["edge-capable", "Edge/embedded"],
+  ] },
+  { title: "Can do", facets: [
+    ["tool-calling-native", "Tool calling"], ["long-context", "Long context (32k+)"],
+    ["vision-input", "Vision input"], ["reasoning-native", "Built-in reasoning"],
+    ["moe-architecture", "Mixture of experts"], ["gguf-available", "GGUF available"],
+    ["uncensored-tuned", "Uncensored-tuned"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+];
+const LLMS_FACET_LABEL = Object.fromEntries(LLMS_FACET_GROUPS.flatMap((g) => g.facets));
+
+const LLMS_COLS = [
+  { key: "name",              label: "Model",             txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",          label: "What's different",  txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",          label: "Kind",              txt: true, def: true, group: "Core" },
+  { key: "licence",           label: "Licence",           txt: true, def: true, group: "Core" },
+  { key: "params",            label: "Params",            txt: true, def: true, group: "Core" },
+  { key: "context_window",    label: "Context",           txt: true, def: true, group: "Core" },
+  { key: "hardware",          label: "Needs",                        def: true, group: "Core" },
+  { key: "rating",            label: "Rating",                       group: "Evidence" },
+  { key: "price_sort",        label: "Cost",              txt: true, cell: "price_note", group: "Commercial" },
+  { key: "architecture",      label: "Architecture",      txt: true, group: "Technical" },
+  { key: "params_active_b",   label: "Active params",     txt: true, group: "Technical" },
+  { key: "base_model",        label: "Base model",        txt: true, group: "Technical" },
+  { key: "quantization_note", label: "Quantization",      txt: true, wide: true, group: "Technical" },
+  { key: "fine_tuning",       label: "Fine-tuning",       txt: true, wide: true, group: "Technical" },
+  { key: "released",          label: "Released",          txt: true, group: "Technical" },
+  { key: "status",            label: "Status",            txt: true, group: "Evidence" },
+  { key: "verification",      label: "Evidence",          txt: true, group: "Evidence" },
+  { key: "adoption",          label: "Adoption",          txt: true, wide: true, group: "Evidence" },
+  { key: "watch",             label: "The catch",         txt: true, wide: true, group: "Evidence" },
+];
+const LLMS_COL_DEFAULT = LLMS_COLS.filter((c) => c.def).map((c) => c.key);
+
+const LLMS_COL_PRESETS = [
+  { key: "default", label: "Default", cols: LLMS_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "params", "context_window", "hardware", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "architecture", "params_active_b", "base_model", "quantization_note", "fine_tuning"] },
+  { key: "all",     label: "Everything", cols: LLMS_COLS.map((c) => c.key) },
+];
+
+const LLMS_PANELS = [
+  { title: "Technical", fields: [
+    ["architecture", "Architecture"], ["params_active_b", "Active params (MoE)"],
+    ["base_model", "Base model"], ["quantization_note", "Quantization"],
+    ["fine_tuning", "Fine-tuning"],
+  ] },
+  { title: "Evidence", fields: [
+    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const LLMS_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["params", "Params"], ["context_window", "Context"], ["architecture", "Architecture"],
+  ["hardware", "Needs"], ["quantization_note", "Quantization"], ["fine_tuning", "Fine-tuning"],
+  ["price_note", "Cost"], ["adoption", "Adoption"], ["released", "Released"],
+  ["status", "Status"], ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
 const QUANTIZATION_CATS = [
   { key: "generic-algorithm", label: "Generic algorithm" },
   { key: "format-native",     label: "Format-native" },
@@ -3111,16 +3203,24 @@ const MATRIX_SPECS = {
     panels: ENHANCEMENT_PANELS, compareFields: ENHANCEMENT_COMPARE_FIELDS,
     kindHint: "Three kinds: noise suppression removes background sound, echo cancellation removes acoustic echo, and commercial suites often bundle both.",
   },
+  llms: {
+    key: "llms", dataUrl: "data/llms.json", prefsKey: "og.llms.prefs.v1",
+    cats: LLMS_CATS, catLabel: LLMS_CAT_LABEL,
+    facetGroups: LLMS_FACET_GROUPS, facetLabel: LLMS_FACET_LABEL,
+    cols: LLMS_COLS, colDefault: LLMS_COL_DEFAULT, colPresets: LLMS_COL_PRESETS,
+    panels: LLMS_PANELS, compareFields: LLMS_COMPARE_FIELDS,
+    kindHint: "Seven kinds, by what you'd actually use it for: general chat, roleplay/creative, reasoning, coding, multilingual, vision/multimodal, and edge/small.",
+  },
 };
 
 /* ------------------------------------------------------------------------
-   Ten matrices, one renderer.
+   Eleven matrices, one renderer.
 
-   Voices, Listening, Turns, Runtimes, Orchestrators, Memory, Quantization and Utilities differ in exactly six things —
-   categories, facets, columns, expander panels, compare fields and the prefs
-   key. Licence chips, the hardware ladder, magnitude sorting, popovers,
-   compare and the whole 600-line table are identical, and a second, third,
-   fourth, fifth, sixth, seventh, eighth, ninth, or tenth copy would be a copy to keep in sync.
+   Voices, Listening, Turns, Runtimes, Orchestrators, Memory, Quantization, Words (Surveyed)
+   and Utilities differ in exactly six things — categories, facets, columns, expander panels,
+   compare fields and the prefs key. Licence chips, the hardware ladder, magnitude sorting,
+   popovers, compare and the whole 600-line table are identical, and a second, third,
+   fourth, fifth, sixth, seventh, eighth, ninth, tenth, or eleventh copy would be a copy to keep in sync.
 
    SPEC is module-level rather than threaded through fifteen signatures because
    a page renders exactly ONE matrix: the router picks it from `data-page`, and
@@ -3130,14 +3230,17 @@ const MATRIX_SPECS = {
    on that tab's first activation, never concurrently — so the "no path on
    which two matrices coexist" invariant still holds: only one tab is ever
    visible/interactive at a time. What changed is a page's *lifetime* can now
-   include more than one *sequential* `initMatrix` call.
+   include more than one *sequential* `initMatrix` call. Words is the SECOND
+   page to do this (see `initWordsPage` below) — but unlike Utilities' three
+   homogeneous `initMatrix` tabs, Words pairs one bespoke initializer
+   (`initLeaderboard`) with one `initMatrix('llms')` call.
    ------------------------------------------------------------------------ */
 let SPEC = null;
 
 /* Columns whose text leads with a magnitude-suffixed number. Sorting these as
    strings ranks "82 M" above "5 B", because it compares "8" against "5" and never
    reaches the unit. */
-const TTS_MAGNITUDE_COLS = new Set(["params", "vram"]);
+const TTS_MAGNITUDE_COLS = new Set(["params", "vram", "context_window"]);
 const TTS_SCALE = { k: 1e-3, m: 1, b: 1e3, t: 1e6 };
 
 /* How far into a value a magnitude may appear and still be THIS system's size.
@@ -4101,6 +4204,94 @@ async function initMatrix(key) {
   return true;
 }
 
+/* ---------------- Words: Measured (Elo) + Surveyed (LLM catalog) ----------
+   Second page (after Utilities) to host more than one MATRIX_SPECS-adjacent
+   view per load — but unlike Utilities' three homogeneous initMatrix tabs,
+   Words pairs ONE bespoke initializer (initLeaderboard, DB-derived, entirely
+   unmodified) with ONE initMatrix call (llms, config-derived). Two things
+   Utilities never had to solve, because all three of ITS tabs share one
+   data-kind value:
+     - data-kind must flip between "measured" and "surveyed" so the existing
+       body[data-kind=...] CSS accent rules (site.css ~1122-1135, 1860, 1867)
+       apply to whichever tab is visible.
+     - the shared [data-generated-at] footer element means two DIFFERENT
+       things here (a DB export timestamp vs. a yaml compiled date +
+       edition), so wordsFooterCache caches/restores per tab exactly like
+       initUtilitiesPage's utilFooterCache, but across two DIFFERENT kinds of
+       provenance line rather than three identical ones.
+   Measured is gated the same way Utilities gates its lazy tabs — loaded
+   flag on first activation — even though it is also the DEFAULT/eager tab,
+   so a tab-away-and-back never re-fetches leaderboard.json. */
+let wordsActiveTab = null;
+const wordsFooterCache = {};
+
+function initWordsPage() {
+  const WORDS_TABS = ["measured", "surveyed"];
+  const tabBtns = [...document.querySelectorAll("[data-words-tab]")];
+  const activate = async (key) => {
+    wordsActiveTab = key;
+    document.body.dataset.kind = key === "measured" ? "measured" : "surveyed";
+    WORDS_TABS.forEach((k) => {
+      const panel = document.getElementById(`${k}-panel`);
+      if (panel) panel.hidden = k !== key;
+    });
+    tabBtns.forEach((b) => {
+      const active = b.dataset.wordsTab === key;
+      b.classList.toggle("is-active", active);
+      b.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    if (key === "measured") {
+      const panel = document.getElementById("measured-panel");
+      if (panel && !panel.dataset.loaded) {
+        const requestedTab = key;
+        await initLeaderboard();
+        // Mirrors the Surveyed branch's own guard below: without this, a user
+        // who clicks Surveyed while initLeaderboard()'s two sequential fetches
+        // (leaderboard.json, then showcase.json) are still in flight can have
+        // Surveyed's single fetch resolve FIRST, write its own text into the
+        // shared [data-generated-at] footer, and cache it correctly to
+        // wordsFooterCache.surveyed — then have THIS line read that same
+        // now-surveyed footer text into wordsFooterCache.measured once
+        // initLeaderboard() finally resolves. That poisons the Measured
+        // tab's cached footer for the rest of the session: every later
+        // revisit restores the wrong (Surveyed) provenance line, not a
+        // one-frame flicker.
+        if (wordsActiveTab !== requestedTab) return;   // user switched away before this resolved
+        // Unlike the Surveyed branch, this always marks the tab loaded here —
+        // initLeaderboard() (deliberately unmodified) has no success/failure
+        // return signal the way initMatrix's boolean does, so a failed fetch
+        // inside it cannot be told apart from a successful one and left
+        // retryable. Not the same bug as the guard above; a known, accepted
+        // gap given initLeaderboard() must stay untouched.
+        panel.dataset.loaded = "1";
+        const foot = $("[data-generated-at]");
+        if (foot) wordsFooterCache.measured = foot.textContent;
+      } else if (wordsFooterCache.measured) {
+        const foot = $("[data-generated-at]");
+        if (foot) foot.textContent = wordsFooterCache.measured;
+      }
+      return;
+    }
+    // key === "surveyed"
+    const matrixEl = document.getElementById("llms-matrix");
+    if (matrixEl && !matrixEl.dataset.loaded) {
+      const requestedTab = key;
+      const ok = await initMatrix("llms");
+      if (wordsActiveTab !== requestedTab) return;   // user switched away before this resolved
+      if (ok) {
+        matrixEl.dataset.loaded = "1";
+        const foot = $("[data-generated-at]");
+        if (foot) wordsFooterCache.surveyed = foot.textContent;
+      }
+    } else if (wordsFooterCache.surveyed) {
+      const foot = $("[data-generated-at]");
+      if (foot) foot.textContent = wordsFooterCache.surveyed;
+    }
+  };
+  tabBtns.forEach((b) => b.addEventListener("click", () => activate(b.dataset.wordsTab)));
+  activate(WORDS_TABS[0]);
+}
+
 /* ---------------- Utilities: three matrices, one page ---------------------
    The first page to host more than one MATRIX_SPECS entry. initMatrix(key)'s
    own body is untouched apart from returning a success boolean (see comment
@@ -4527,7 +4718,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sh.classList.add("section-head--centre");
     }
   });
-  if (page === "leaderboard") initLeaderboard();
+  if (page === "leaderboard") initWordsPage();
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();

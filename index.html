@@ -77,7 +77,7 @@
            ><span class="ev hollow" aria-hidden="true"></span>Listening</a>
         <a href="turns.html" title="Turns — turn-taking: whose turn it is"
            ><span class="ev hollow" aria-hidden="true"></span>Turns</a>
-        <a href="index.html" title="Words — the LLM leaderboard: what it says" class="active"
+        <a href="index.html" title="Words — the LLM leaderboard, plus a surveyed catalog: what it says" class="active"
            ><span class="ev solid" aria-hidden="true"></span>Words</a>
         <a href="tts.html" title="Voices — text-to-speech: how it sounds"
            ><span class="ev hollow" aria-hidden="true"></span>Voices</a>
@@ -106,20 +106,17 @@
   </header>
 
   
-  
   <div class="wrap">
     <section class="hero hero-lede has-bot bot-left">
       <img class="hero-bot-side" src="static/img/llm.webp" alt=""
            width="264" height="264" loading="eager" decoding="async">
       <div class="eyebrow"><span class="tick">//</span> measured here, in text — free, open models you run yourself</div>
-      
       <h1>Then, which one would you rather <span class="warm">talk to</span>?</h1>
       <p class="lede">
         Free models you can run on your own computer, ranked on one question: which of them
         is worth talking to? Same scenarios, same judge, same instructions for every model —
         and the whole ladder is below, most human at the top.
       </p>
-      
       <p class="subnav">
         <a href="methodology.html">How it works</a><span class="sep">·</span>
         <a href="compare.html">Head to head</a><span class="sep">·</span>
@@ -165,56 +162,134 @@
       <span class="pipe-ev"><span class="ev hollow"
         aria-hidden="true"></span>surveyed &middot; 25</span></a>
 </nav>
+
+    <nav class="util-tabs" role="tablist" aria-label="Choose a view">
+      <button type="button" class="util-tab" id="words-tab-measured" role="tab"
+        aria-controls="measured-panel" aria-selected="true" data-words-tab="measured">Measured</button>
+      <button type="button" class="util-tab" id="words-tab-surveyed" role="tab"
+        aria-controls="surveyed-panel" aria-selected="false" data-words-tab="surveyed">Surveyed</button>
+    </nav>
   </div>
+
+  <section id="measured-panel" role="tabpanel" aria-labelledby="words-tab-measured">
+    <div class="wrap">
+      <section class="block block-rail">
+        <div class="section-head section-head--centre">
+          <h2>How human each one sounds</h2>
+          <span class="note">
+            Every model we have run, on one scale. Higher is more human — the number is a
+            normalised Elo from head-to-head judging, not a percentage.
+          </span>
+        </div>
+        <div id="verdict-strip" class="verdict-strip"><div class="state">Loading…</div></div>
+        <p class="judging-strip" data-judging-strip>
+          Graded by <span data-judge-model>gpt-5.4</span>, using the same instructions for every model.
+        </p>
+      </section>
+    </div>
+
+    <div class="wrap wrap-wide">
+      <section class="block" id="leaderboard-table">
+        <div class="section-head">
+          <span class="idx">//</span>
+          <h2>The full table</h2>
+          <span class="note">Every column we record, for every model. Click a heading to sort.</span>
+        </div>
+        <p class="speed-anchor">
+          Speed is in words per second, listed for every machine we measured a model on —
+          a <strong>DGX Spark</strong>, an <strong>RTX 5090</strong> and an <strong>RTX 5080</strong>.
+          Most people read about <strong>4 words a second</strong>, so anything above that is
+          already arriving faster than you can read it. Machines a model is too big to fit on
+          are left out.
+        </p>
+        <div id="board-toggle"></div>
+        <div id="rank-by"></div>
+        <div id="tie-banner"></div>
+        <details class="disclose">
+          <summary><span class="caret">▸</span> Why some rows are the same model twice</summary>
+          <div class="d-body">Each row is one way of running a model. The same model compressed differently, or run with different software, is a separate row because it behaves differently. Each row links to its full record.</div>
+        </details>
+        <div class="legend">
+          <span>less human</span>
+          <span class="ramp" aria-hidden="true"></span>
+          <span>more human</span>
+          <span>— color ranks each model <em>within its own column</em>; don't compare colors across different columns.</span>
+        </div>
+        <div id="leaderboard"><div class="state">Loading…</div></div>
+      </section>
+    </div>
+  </section>
 
   
-  <div class="wrap">
-    <section class="block block-rail">
-      <div class="section-head section-head--centre">
-        <h2>How human each one sounds</h2>
-        <span class="note">
-          Every model we have run, on one scale. Higher is more human — the number is a
-          normalised Elo from head-to-head judging, not a percentage.
-        </span>
-      </div>
-      <div id="verdict-strip" class="verdict-strip"><div class="state">Loading…</div></div>
-      <p class="judging-strip" data-judging-strip>
-        Graded by <span data-judge-model>gpt-5.4</span>, using the same instructions for every model.
-      </p>
-    </section>
-  </div>
+  <section id="surveyed-panel" role="tabpanel" aria-labelledby="words-tab-surveyed" hidden>
+    <div class="wrap wrap-wide">
+      <section class="block">
+        <p class="scope-line">
+          <span class="ev hollow" aria-hidden="true"></span>
+          <strong>Surveyed, not benchmarked.</strong> Nothing on this tab was measured by
+          OpenGauntlet's judge pipeline.
+          <button type="button" class="linkish" data-dialog="scope-llms">What that means &rarr;</button>
+        </p>
 
-  <div class="wrap wrap-wide">
-    <section class="block" id="leaderboard-table">
-      <div class="section-head">
-        <span class="idx">//</span>
-        <h2>The full table</h2>
-        <span class="note">Every column we record, for every model. Click a heading to sort.</span>
-      </div>
-      
-      <p class="speed-anchor">
-        Speed is in words per second, listed for every machine we measured a model on —
-        a <strong>DGX Spark</strong>, an <strong>RTX 5090</strong> and an <strong>RTX 5080</strong>.
-        Most people read about <strong>4 words a second</strong>, so anything above that is
-        already arriving faster than you can read it. Machines a model is too big to fit on
-        are left out.
-      </p>
-      <div id="board-toggle"></div>
-      <div id="rank-by"></div>
-      <div id="tie-banner"></div>
-      <details class="disclose">
-        <summary><span class="caret">▸</span> Why some rows are the same model twice</summary>
-        <div class="d-body">Each row is one way of running a model. The same model compressed differently, or run with different software, is a separate row because it behaves differently. Each row links to its full record.</div>
-      </details>
-      <div class="legend">
-        <span>less human</span>
-        <span class="ramp" aria-hidden="true"></span>
-        <span>more human</span>
-        <span>— color ranks each model <em>within its own column</em>; don't compare colors across different columns.</span>
-      </div>
-      <div id="leaderboard"><div class="state">Loading…</div></div>
-    </section>
-  </div>
+        <dialog id="scope-llms" class="og-dialog">
+          <form method="dialog"><button class="dialog-x" aria-label="Close">&times;</button></form>
+          <h3>How to read this section</h3>
+          <p class="prose">
+            <strong>None of this is scored by the judge pipeline.</strong> The Measured tab
+            above is this project's own judged ranking; this tab is a
+            <strong>sourced survey</strong> of the wider open-weight LLM landscape, not a
+            trial. Where a claim could not be verified against a primary source, it says so
+            rather than smoothing it over.
+          </p>
+          <p class="prose">
+            <strong>Scoped to open-weight models only.</strong> No proprietary or cloud-only
+            LLMs — every row here is at least theoretically self-hostable.
+          </p>
+        </dialog>
+
+        <div class="section-head">
+          <span class="idx">//</span>
+          <h2>Every open-weight model, compared</h2>
+          <span class="note">
+            Filter by kind, pick the columns you care about, search any field, click a heading
+            to sort. Every row carries the one thing a buyer would otherwise find out too late.
+          </span>
+          <div id="llms-dateline" class="tts-dateline"></div>
+        </div>
+
+        <div id="llms-controls"></div>
+        <div id="llms-compare"></div>
+        <div id="llms-matrix"><div class="state">Loading…</div></div>
+        <div id="llms-rating-coverage" class="tts-rating-coverage"></div>
+
+        <div class="legend tts-legend">
+          <span><span class="lic-key lic-open" aria-hidden="true"></span> commercial-safe weights</span>
+          <span><span class="lic-key lic-warn" aria-hidden="true"></span> permissive, with a catch</span>
+          <span><span class="lic-key lic-bad" aria-hidden="true"></span> <strong>not</strong> usable commercially</span>
+          <span><span class="lic-key lic-closed" aria-hidden="true"></span> proprietary service</span>
+          <span><span class="lic-key lic-dead" aria-hidden="true"></span> discontinued</span>
+        </div>
+      </section>
+
+      <section class="block">
+        <div class="section-head">
+          <span class="idx">//</span>
+          <h2>Claims this corrects</h2>
+          <span class="note">Each of these is repeated widely, and each is wrong.</span>
+        </div>
+        <div id="llms-corrections"></div>
+      </section>
+
+      <section class="block">
+        <div class="section-head">
+          <span class="idx">//</span>
+          <h2>What we couldn't establish</h2>
+          <span class="note">A comparison that hides its gaps is less useful than one that names them.</span>
+        </div>
+        <div id="llms-gaps"></div>
+      </section>
+    </div>
+  </section>
 
 
   <aside class="community-cta" aria-labelledby="community-title">
@@ -234,7 +309,7 @@
 
   <footer class="foot">
     <div class="wrap">
-      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. Words are measured here; Voices, Listening, Turns, Runtimes, Memory, Hardware Reference, Orchestrators, Quantization, and Utilities are sourced surveys.</span>
+      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. Words is measured here, with a surveyed catalog alongside it; Voices, Listening, Turns, Runtimes, Memory, Hardware Reference, Orchestrators, Quantization, and Utilities are sourced surveys.</span>
       <nav class="foot-nav">
         <a href="asr.html">Listening</a><span class="sep">·</span>
         <a href="turns.html">Turns</a><span class="sep">·</span>
@@ -257,6 +332,6 @@
   </footer>
 
   
-  <script src="static/site.js?v=8ea4d8149a" defer></script>
+  <script src="static/site.js?v=b8aa4bafee" defer></script>
 </body>
 </html>

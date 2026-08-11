@@ -29,6 +29,7 @@
 - [Orchestrators research JSON](https://opengauntlet.com/data/orchestrators.json)
 - [Memory research JSON](https://opengauntlet.com/data/memory.json)
 - [Quantization research JSON](https://opengauntlet.com/data/quantization.json)
+- [Open-weight LLM survey JSON](https://opengauntlet.com/data/llms.json)
 - [Speaker verification research JSON](https://opengauntlet.com/data/speakerid.json)
 - [Wake word research JSON](https://opengauntlet.com/data/wakeword.json)
 - [Speech enhancement research JSON](https://opengauntlet.com/data/enhancement.json)
