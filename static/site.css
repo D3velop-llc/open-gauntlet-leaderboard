@@ -86,6 +86,9 @@ a:hover { color: var(--ember-bright); }
 .eyebrow .tick { color: var(--ember); }
 
 /* ============================ SITE HEADER ================================= */
+/* In-page anchors must clear the sticky topbar (60px + 1px border), or the
+   heading they target lands underneath it and reads as the wrong section. */
+html { scroll-padding-top: 76px; }
 .topbar {
   position: sticky; top: 0; z-index: 20;
   background: color-mix(in srgb, var(--bg) 84%, transparent);
@@ -1677,6 +1680,9 @@ a.pipe-step:hover .pipe-name { color: var(--ink); }
   color: var(--muted);
 }
 .subnav .sep { margin: 0 8px; opacity: .55; }
+/* a wrapped subnav must break BETWEEN links, never inside a label — "The
+   wider / field" split across two lines reads as a layout bug in the hero */
+.subnav a { white-space: nowrap; }
 
 
 /* The mark is NOT in the nav. A head cropped to 26px reads as a grey blob
@@ -1978,3 +1984,32 @@ table.lb.tts tbody tr.tts-row.open td.tts-name { background: #141A26; }
 /* Columns group on the tabs row, right-justified; the count line spans the card */
 .preset-tabs .show-cols { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
 .matrix-topbar .tts-count-slot .tts-count { max-width: none; }
+
+/* ============================== EVIDENCE SWITCHER ==========================
+   The prominent "this section has two kinds of evidence" control — a split
+   pair on Words <-> the LLM survey (segments are page links), stacked on
+   Listening/Voices (segments are in-page anchors to the Lab block and the
+   matrix). Replaces the 12.5px .util-tab pill that used to switch Words'
+   tabs, which nobody saw (.util-tab itself lives on — utilities.html still
+   uses it). The child spans set explicit colours so the
+   surveyed sections' link tint (body[data-kind="surveyed"] a) does not
+   bleed into the segments. */
+.ev-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0 0; }
+.ev-seg {
+  display: block; padding: 14px 18px;
+  border: 1px solid var(--border); border-radius: 12px;
+  background: var(--surface); text-decoration: none;
+}
+a.ev-seg:hover { background: var(--surface-2); border-color: var(--border-2); }
+.ev-seg .ev-line {
+  display: flex; align-items: center;
+  font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.ev-seg .ev-desc { display: block; margin-top: 4px; font-size: 13px; color: var(--muted); }
+.ev-seg .ev-desc:empty { display: none; }
+.ev-seg.is-current { border-color: var(--ember); background: var(--ember-dim); }
+body[data-kind="surveyed"] .ev-seg.is-current {
+  border-color: var(--cool); background: rgba(74, 168, 216, 0.08);
+}
+@media (max-width: 640px) { .ev-switch { grid-template-columns: 1fr; } }

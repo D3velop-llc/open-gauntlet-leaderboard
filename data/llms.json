@@ -1,7 +1,7 @@
 {
   "edition": "2026.1",
   "compiled": "2026-08-11",
-  "scope_note": "A buyer's-guide survey of open-weight large language models a reader might run themselves, organized by what you'd actually use one for — general chat, roleplay/creative writing, reasoning, coding, multilingual, vision-capable, and small/edge-class models — rather than by architecture or lineage. This is not the roster OpenGauntlet benchmarks (see the Measured tab for that): it is a wider, editorial survey of the ecosystem, scoped to open-weight models only. No proprietary or cloud-only models (GPT, Claude, Gemini, etc.) appear here.",
+  "scope_note": "A buyer's-guide survey of open-weight large language models a reader might run themselves, organized by what you'd actually use one for — general chat, roleplay/creative writing, reasoning, coding, multilingual, vision-capable, and small/edge-class models — rather than by architecture or lineage. This is not the roster OpenGauntlet benchmarks (see the leaderboard for that): it is a wider, editorial survey of the ecosystem, scoped to open-weight models only. No proprietary or cloud-only models (GPT, Claude, Gemini, etc.) appear here.",
   "method_note": "Every row is checked against a primary source — the model's own Hugging Face card, GitHub repo, or official release announcement — before publication, then adversarially audited in a second pass that actively tries to refute each field rather than confirm it, followed by a cross-category consolidation pass that deduplicates, rechecks every facet against the row's own (possibly-corrected) text, and drops anything that could not be verified rather than presenting a guess as fact.",
   "systems": [
     {

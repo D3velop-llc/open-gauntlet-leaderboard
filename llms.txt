@@ -5,6 +5,7 @@
 ## Primary pages
 
 - [Conversational AI leaderboard](https://opengauntlet.com/): Measured local open-weight language models.
+- [Open-weight LLM survey](https://opengauntlet.com/llms.html): Sourced comparison of the wider open-weight model field.
 - [Methodology](https://opengauntlet.com/methodology.html): Scenarios, judging, ratings, calibration, and reproducibility.
 - [Speech-to-text research](https://opengauntlet.com/asr.html): Sourced ASR system comparison.
 - [Turn-taking research](https://opengauntlet.com/turns.html): Sourced VAD and endpointing system comparison.

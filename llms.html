@@ -5,23 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0B0E14">
-  <meta name="description" content="A sourced comparison of voice-activity detection, turn-taking, and endpointing systems — VAD models, semantic turn detectors, orchestrators, and commercial endpointing APIs.">
+  <meta name="description" content="A sourced comparison of open-weight language models — licensing, parameters, context windows, hardware floors, and external ratings — alongside OpenGauntlet&#39;s measured leaderboard.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-  <title>Turns — turn-taking and VAD compared · OpenGauntlet</title>
-  <link rel="canonical" href="https://opengauntlet.com/turns.html">
+  <title>The wider field — open-weight LLMs surveyed · OpenGauntlet</title>
+  <link rel="canonical" href="https://opengauntlet.com/llms.html">
   <link rel="alternate" type="application/rss+xml" title="OpenGauntlet updates" href="https://opengauntlet.com/feed.xml">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="OpenGauntlet">
-  <meta property="og:title" content="Turns — turn-taking and VAD systems compared · OpenGauntlet">
-  <meta property="og:description" content="A sourced comparison of voice-activity detection, turn-taking, and endpointing systems — VAD models, semantic turn detectors, orchestrators, and commercial endpointing APIs.">
-  <meta property="og:url" content="https://opengauntlet.com/turns.html">
+  <meta property="og:title" content="The wider field — open-weight LLMs surveyed · OpenGauntlet">
+  <meta property="og:description" content="A sourced comparison of open-weight language models — licensing, parameters, context windows, hardware floors, and external ratings — alongside OpenGauntlet&#39;s measured leaderboard.">
+  <meta property="og:url" content="https://opengauntlet.com/llms.html">
   <meta property="og:image" content="https://opengauntlet.com/static/img/social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="OpenGauntlet — local AI, measured">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Turns — turn-taking and VAD systems compared · OpenGauntlet">
-  <meta name="twitter:description" content="A sourced comparison of voice-activity detection, turn-taking, and endpointing systems — VAD models, semantic turn detectors, orchestrators, and commercial endpointing APIs.">
+  <meta name="twitter:title" content="The wider field — open-weight LLMs surveyed · OpenGauntlet">
+  <meta name="twitter:description" content="A sourced comparison of open-weight language models — licensing, parameters, context windows, hardware floors, and external ratings — alongside OpenGauntlet&#39;s measured leaderboard.">
   <meta name="twitter:image" content="https://opengauntlet.com/static/img/social-card.png">
   <script type="application/ld+json">
   {
@@ -44,7 +44,7 @@
   
 </head>
 
-<body data-page="turns" data-kind="surveyed">
+<body data-page="llms" data-kind="surveyed">
   <header class="topbar">
     <div class="wrap">
       <a class="brand" href="index.html"><canvas class="hero-viz topbar-viz" data-viz="words" aria-hidden="true"></canvas><span class="slash">//</span>open<em>gauntlet</em></a>
@@ -52,7 +52,7 @@
         
         <a href="asr.html" title="Listening — speech-to-text: what it hears"
            ><span class="ev hollow" aria-hidden="true"></span>Listening</a>
-        <a href="turns.html" title="Turns — turn-taking: whose turn it is" class="active"
+        <a href="turns.html" title="Turns — turn-taking: whose turn it is"
            ><span class="ev hollow" aria-hidden="true"></span>Turns</a>
         <a href="index.html" title="Words — the LLM leaderboard: what it says"
            ><span class="ev solid" aria-hidden="true"></span>Words</a>
@@ -64,7 +64,7 @@
            ><span class="ev hollow" aria-hidden="true"></span>Memory</a>
         <details class="nav-more"><summary>Reference</summary>
           <div class="nav-more-panel">
-            <a href="llms.html">The wider field<span class="nm-sub">open-weight LLMs</span></a>
+            <a href="llms.html" class="active">The wider field<span class="nm-sub">open-weight LLMs</span></a>
             <a href="hardware.html">What fits where<span class="nm-sub">hardware</span></a>
             <a href="quantization.html">How models get compressed<span class="nm-sub">quantization</span></a>
             <a href="orchestrators.html">Wiring it together<span class="nm-sub">orchestrators</span></a>
@@ -86,58 +86,30 @@
   
   <div class="wrap">
     <section class="hero hero-lede has-bot bot-right">
-      <img class="hero-bot-side" src="static/img/turns.webp" alt=""
+      <img class="hero-bot-side" src="static/img/llm.webp" alt=""
            width="264" height="264" loading="eager" decoding="async">
-      <div class="eyebrow"><span class="tick">//</span> surveyed, not benchmarked — 35 systems</div>
-      <h1>Knowing <span class="warm">whose turn</span> it is</h1>
+      <div class="eyebrow"><span class="tick">//</span> surveyed, not benchmarked — 51 open-weight models</div>
+      <h1>The <span class="warm">wider field</span></h1>
       <p class="lede">
-        A voice product can hear perfectly and still feel broken, because it talks over you or
-        waits too long after you stop. That is not the recognizer and it is not the model — it is
-        a separate layer deciding when a speaker has actually finished. Here is every VAD model,
-        semantic turn-detector, orchestrator, and commercial endpointing feature that matters, on
-        the axes that decide whether a conversation feels natural.
+        The leaderboard measures every model we have actually run. This page surveys the rest
+        of the open-weight field — what each model is, what its licence really allows, how much
+        machine it needs — sourced from the vendors and the community, never scored by our
+        judge. Every row is at least theoretically self-hostable.
       </p>
     </section>
   
-
-<nav class="pipeline" aria-label="The stages of a voice product, and what runs them">
-  
-    <a class="pipe-step" href="asr.html">
-      <span class="pipe-job">what it hears</span>
-      <span class="pipe-name">Listening</span>
-      <span class="pipe-ev pipe-ev-measured"><span class="ev solid"
-        aria-hidden="true"></span>measured &middot; 14</span>
-      <span class="pipe-ev"><span class="ev hollow"
-        aria-hidden="true"></span>surveyed &middot; 106</span></a><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
-    <span class="pipe-step is-here" aria-current="page">
-      <span class="pipe-job">whose turn it is</span>
-      <span class="pipe-name">Turns</span>
-      <span class="pipe-ev"><span class="ev hollow"
-        aria-hidden="true"></span>surveyed &middot; 35</span></span><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
-    <a class="pipe-step" href="index.html">
-      <span class="pipe-job">what it says</span>
-      <span class="pipe-name">Words</span>
-      <span class="pipe-ev"><span class="ev solid"
-        aria-hidden="true"></span>measured &middot; 32</span>
-      <span class="pipe-ev"><span class="ev hollow"
-        aria-hidden="true"></span>surveyed &middot; 51</span></a><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
-    <a class="pipe-step" href="tts.html">
-      <span class="pipe-job">how it sounds</span>
-      <span class="pipe-name">Voices</span>
-      <span class="pipe-ev pipe-ev-measured"><span class="ev solid"
-        aria-hidden="true"></span>measured &middot; 16</span>
-      <span class="pipe-ev"><span class="ev hollow"
-        aria-hidden="true"></span>surveyed &middot; 168</span></a><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
-    <a class="pipe-step" href="runtimes.html">
-      <span class="pipe-job">how it runs</span>
-      <span class="pipe-name">Runtimes</span>
-      <span class="pipe-ev"><span class="ev hollow"
-        aria-hidden="true"></span>surveyed &middot; 34</span></a><span class="pipe-arrow" aria-hidden="true">&rarr;</span>
-    <a class="pipe-step" href="memory.html">
-      <span class="pipe-job">what it remembers</span>
-      <span class="pipe-name">Memory</span>
-      <span class="pipe-ev"><span class="ev hollow"
-        aria-hidden="true"></span>surveyed &middot; 25</span></a>
+    
+    
+    
+<nav class="ev-switch" aria-label="Measured and surveyed evidence in this section">
+  <a class="ev-seg" href="index.html">
+    <span class="ev-line"><span class="ev solid"
+      aria-hidden="true"></span>Measured &middot; 32</span>
+    <span class="ev-desc">every model we have run, ranked head-to-head by our judge</span></a>
+  <span class="ev-seg is-current" aria-current="page">
+    <span class="ev-line"><span class="ev hollow"
+      aria-hidden="true"></span>Surveyed &middot; 51</span>
+    <span class="ev-desc">the wider open-weight field — sourced, not scored</span><span class="sr-only"> — current page</span></span>
 </nav>
   </div>
 
@@ -146,44 +118,40 @@
       <p class="scope-line">
         <span class="ev hollow" aria-hidden="true"></span>
         <strong>Surveyed, not benchmarked.</strong> Nothing on this page was measured by
-        OpenGauntlet.
-        <button type="button" class="linkish" data-dialog="scope-turns">What that means &rarr;</button>
+        OpenGauntlet's judge pipeline.
+        <button type="button" class="linkish" data-dialog="scope-llms">What that means &rarr;</button>
       </p>
 
-      <dialog id="scope-turns" class="og-dialog">
+      <dialog id="scope-llms" class="og-dialog">
         <form method="dialog"><button class="dialog-x" aria-label="Close">&times;</button></form>
         <h3>How to read this section</h3>
         <p class="prose">
-          <strong>None of this is benchmarked here.</strong> OpenGauntlet measures
-          <em>Conversational Language Humanlikeness</em> in text. This section is a
-          <strong>sourced survey</strong> of the turn-taking market, not a trial. Where a claim
-          could not be verified against a primary source, it says so rather than smoothing it over.
+          <strong>None of this is scored by the judge pipeline.</strong> The
+          <a href="index.html">leaderboard</a> is this project's own judged ranking; this page
+          is a <strong>sourced survey</strong> of the wider open-weight LLM landscape, not a
+          trial. Where a claim could not be verified against a primary source, it says so
+          rather than smoothing it over.
         </p>
         <p class="prose">
-          <strong>Four kinds of thing share this page</strong> because a builder chooses between
-          them as alternatives even though they are architecturally different: a raw VAD model
-          that decides speech-vs-silence, a semantic turn-detector that decides whose turn it is,
-          an orchestrator framework that bundles one of the above, or a commercial API offering
-          endpointing as a feature. Orchestrator rows describe ONLY their turn-taking behaviour —
-          not their transport, tool-calling, or general architecture.
+          <strong>Scoped to open-weight models only.</strong> No proprietary or cloud-only
+          LLMs — every row here is at least theoretically self-hostable.
         </p>
       </dialog>
 
       <div class="section-head">
         <span class="idx">//</span>
-        <h2>Every system, compared</h2>
+        <h2>Every open-weight model, compared</h2>
         <span class="note">
-          Filter by kind or by what a system can actually do, pick the columns you care about,
-          search any field, click a heading to sort. Every row carries the one thing a buyer
-          would otherwise find out too late.
+          Filter by kind, pick the columns you care about, search any field, click a heading
+          to sort. Every row carries the one thing a buyer would otherwise find out too late.
         </span>
-        <div id="turns-dateline" class="tts-dateline"></div>
+        <div id="llms-dateline" class="tts-dateline"></div>
       </div>
 
-      <div id="turns-controls"></div>
-      <div id="turns-compare"></div>
-      <div id="turns-matrix"><div class="state">Loading…</div></div>
-      <div id="turns-rating-coverage" class="tts-rating-coverage"></div>
+      <div id="llms-controls"></div>
+      <div id="llms-compare"></div>
+      <div id="llms-matrix"><div class="state">Loading…</div></div>
+      <div id="llms-rating-coverage" class="tts-rating-coverage"></div>
 
       <div class="legend tts-legend">
         <span><span class="lic-key lic-open" aria-hidden="true"></span> commercial-safe weights</span>
@@ -200,7 +168,7 @@
         <h2>Claims this corrects</h2>
         <span class="note">Each of these is repeated widely, and each is wrong.</span>
       </div>
-      <div id="turns-corrections"></div>
+      <div id="llms-corrections"></div>
     </section>
 
     <section class="block">
@@ -209,7 +177,7 @@
         <h2>What we couldn't establish</h2>
         <span class="note">A comparison that hides its gaps is less useful than one that names them.</span>
       </div>
-      <div id="turns-gaps"></div>
+      <div id="llms-gaps"></div>
     </section>
   </div>
 

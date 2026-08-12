@@ -3216,7 +3216,7 @@ const MATRIX_SPECS = {
 /* ------------------------------------------------------------------------
    Eleven matrices, one renderer.
 
-   Voices, Listening, Turns, Runtimes, Orchestrators, Memory, Quantization, Words (Surveyed)
+   Voices, Listening, Turns, Runtimes, Orchestrators, Memory, Quantization, LLMs
    and Utilities differ in exactly six things — categories, facets, columns, expander panels,
    compare fields and the prefs key. Licence chips, the hardware ladder, magnitude sorting,
    popovers, compare and the whole 600-line table are identical, and a second, third,
@@ -3230,10 +3230,10 @@ const MATRIX_SPECS = {
    on that tab's first activation, never concurrently — so the "no path on
    which two matrices coexist" invariant still holds: only one tab is ever
    visible/interactive at a time. What changed is a page's *lifetime* can now
-   include more than one *sequential* `initMatrix` call. Words is the SECOND
-   page to do this (see `initWordsPage` below) — but unlike Utilities' three
-   homogeneous `initMatrix` tabs, Words pairs one bespoke initializer
-   (`initLeaderboard`) with one `initMatrix('llms')` call.
+   include more than one *sequential* `initMatrix` call. Utilities is the only
+   page that does this — the LLM survey (llms.html) is a normal single-matrix
+   page, after briefly living as a second tab on Words whose footer-cache race
+   machinery was deleted along with the tab.
    ------------------------------------------------------------------------ */
 let SPEC = null;
 
@@ -4051,7 +4051,10 @@ function renderTtsDateline(mount, doc, label = "systems") {
 }
 
 function renderTtsLab(mount, lab) {
-  if (!mount || !lab || !Array.isArray(lab.results)) return;
+  if (!mount) return;
+  /* Clear on the no-data path, as every sibling renderer does: the mount ships a
+     "Loading…" placeholder, so bailing without clearing would leave it forever. */
+  if (!lab || !Array.isArray(lab.results)) { mount.replaceChildren(); return; }
   const fmt = (v, digits = 3) => v == null ? "—" : Number(v).toFixed(digits).replace(/\.?0+$/, "");
   const body = el("tbody", {}, ...lab.results.map((r) =>
     el("tr", {},
@@ -4109,7 +4112,10 @@ function renderTtsLab(mount, lab) {
 }
 
 function renderAsrLab(mount, lab) {
-  if (!mount || !lab || !Array.isArray(lab.results)) return;
+  if (!mount) return;
+  /* Clear on the no-data path, as every sibling renderer does: the mount ships a
+     "Loading…" placeholder, so bailing without clearing would leave it forever. */
+  if (!lab || !Array.isArray(lab.results)) { mount.replaceChildren(); return; }
   const fmt = (v, digits = 2) => v == null ? "—" : Number(v).toFixed(digits).replace(/\.?0+$/, "");
   const rows = [...lab.results].sort((a, b) => Number(a.wer_pct) - Number(b.wer_pct));
   const body = el("tbody", {}, ...rows.map((r) =>
@@ -4149,7 +4155,7 @@ function renderAsrLab(mount, lab) {
 /* Returns true on a successful render, false when the fetch failed (so a
    caller — today, only initUtilitiesPage's activate() — can tell "loaded"
    apart from "gave up and showed an error", and avoid marking a failed tab
-   permanently loaded). The five single-matrix pages call this by name and
+   permanently loaded). The single-matrix pages call this by name and
    ignore the return value, which is safe: the fire-and-forget call at the
    bottom of the router never inspected the (previously undefined) result. */
 async function initMatrix(key) {
@@ -4169,6 +4175,10 @@ async function initMatrix(key) {
     doc = await getJSON(SPEC.dataUrl);
   } catch (e) {
     fail(matrix, "That matrix could not be loaded.");
+    // The lab mount ships a Loading… placeholder in the HTML (tts/asr only), and
+    // it must not outlive a failed fetch — the renderers below never run.
+    const lab = document.getElementById(`${key}-lab`);
+    if (lab) lab.replaceChildren();
     return false;
   }
   const rows = doc.systems || [];
@@ -4202,94 +4212,6 @@ async function initMatrix(key) {
   const foot = $("[data-generated-at]");
   if (foot && doc.compiled) foot.textContent = `${doc.compiled} · ${key} edition ${doc.edition}`;
   return true;
-}
-
-/* ---------------- Words: Measured (Elo) + Surveyed (LLM catalog) ----------
-   Second page (after Utilities) to host more than one MATRIX_SPECS-adjacent
-   view per load — but unlike Utilities' three homogeneous initMatrix tabs,
-   Words pairs ONE bespoke initializer (initLeaderboard, DB-derived, entirely
-   unmodified) with ONE initMatrix call (llms, config-derived). Two things
-   Utilities never had to solve, because all three of ITS tabs share one
-   data-kind value:
-     - data-kind must flip between "measured" and "surveyed" so the existing
-       body[data-kind=...] CSS accent rules (site.css ~1122-1135, 1860, 1867)
-       apply to whichever tab is visible.
-     - the shared [data-generated-at] footer element means two DIFFERENT
-       things here (a DB export timestamp vs. a yaml compiled date +
-       edition), so wordsFooterCache caches/restores per tab exactly like
-       initUtilitiesPage's utilFooterCache, but across two DIFFERENT kinds of
-       provenance line rather than three identical ones.
-   Measured is gated the same way Utilities gates its lazy tabs — loaded
-   flag on first activation — even though it is also the DEFAULT/eager tab,
-   so a tab-away-and-back never re-fetches leaderboard.json. */
-let wordsActiveTab = null;
-const wordsFooterCache = {};
-
-function initWordsPage() {
-  const WORDS_TABS = ["measured", "surveyed"];
-  const tabBtns = [...document.querySelectorAll("[data-words-tab]")];
-  const activate = async (key) => {
-    wordsActiveTab = key;
-    document.body.dataset.kind = key === "measured" ? "measured" : "surveyed";
-    WORDS_TABS.forEach((k) => {
-      const panel = document.getElementById(`${k}-panel`);
-      if (panel) panel.hidden = k !== key;
-    });
-    tabBtns.forEach((b) => {
-      const active = b.dataset.wordsTab === key;
-      b.classList.toggle("is-active", active);
-      b.setAttribute("aria-selected", active ? "true" : "false");
-    });
-    if (key === "measured") {
-      const panel = document.getElementById("measured-panel");
-      if (panel && !panel.dataset.loaded) {
-        const requestedTab = key;
-        await initLeaderboard();
-        // Mirrors the Surveyed branch's own guard below: without this, a user
-        // who clicks Surveyed while initLeaderboard()'s two sequential fetches
-        // (leaderboard.json, then showcase.json) are still in flight can have
-        // Surveyed's single fetch resolve FIRST, write its own text into the
-        // shared [data-generated-at] footer, and cache it correctly to
-        // wordsFooterCache.surveyed — then have THIS line read that same
-        // now-surveyed footer text into wordsFooterCache.measured once
-        // initLeaderboard() finally resolves. That poisons the Measured
-        // tab's cached footer for the rest of the session: every later
-        // revisit restores the wrong (Surveyed) provenance line, not a
-        // one-frame flicker.
-        if (wordsActiveTab !== requestedTab) return;   // user switched away before this resolved
-        // Unlike the Surveyed branch, this always marks the tab loaded here —
-        // initLeaderboard() (deliberately unmodified) has no success/failure
-        // return signal the way initMatrix's boolean does, so a failed fetch
-        // inside it cannot be told apart from a successful one and left
-        // retryable. Not the same bug as the guard above; a known, accepted
-        // gap given initLeaderboard() must stay untouched.
-        panel.dataset.loaded = "1";
-        const foot = $("[data-generated-at]");
-        if (foot) wordsFooterCache.measured = foot.textContent;
-      } else if (wordsFooterCache.measured) {
-        const foot = $("[data-generated-at]");
-        if (foot) foot.textContent = wordsFooterCache.measured;
-      }
-      return;
-    }
-    // key === "surveyed"
-    const matrixEl = document.getElementById("llms-matrix");
-    if (matrixEl && !matrixEl.dataset.loaded) {
-      const requestedTab = key;
-      const ok = await initMatrix("llms");
-      if (wordsActiveTab !== requestedTab) return;   // user switched away before this resolved
-      if (ok) {
-        matrixEl.dataset.loaded = "1";
-        const foot = $("[data-generated-at]");
-        if (foot) wordsFooterCache.surveyed = foot.textContent;
-      }
-    } else if (wordsFooterCache.surveyed) {
-      const foot = $("[data-generated-at]");
-      if (foot) foot.textContent = wordsFooterCache.surveyed;
-    }
-  };
-  tabBtns.forEach((b) => b.addEventListener("click", () => activate(b.dataset.wordsTab)));
-  activate(WORDS_TABS[0]);
 }
 
 /* ---------------- Utilities: three matrices, one page ---------------------
@@ -4718,11 +4640,11 @@ document.addEventListener("DOMContentLoaded", () => {
       sh.classList.add("section-head--centre");
     }
   });
-  if (page === "leaderboard") initWordsPage();
+  if (page === "leaderboard") initLeaderboard();
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
-  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory" || page === "quantization") initMatrix(page);
+  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory" || page === "quantization" || page === "llms") initMatrix(page);
   else if (page === "utilities") initUtilitiesPage();
   else if (page === "hardware") initHardwareTable();
 });
