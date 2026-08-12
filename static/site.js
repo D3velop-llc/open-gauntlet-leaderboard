@@ -1359,6 +1359,43 @@ function renderShowcase(showcase) {
   draw();
 }
 
+/* ---- cold-load hash restore ---------------------------------------------
+   A page opened with a #hash already in the URL overshoots: the browser
+   resolves the anchor against the static shell, then the async-fetched
+   content (board rows, matrix tables, lab cards) grows the page and the
+   target drifts thousands of pixels from where the viewport stopped. Every
+   async initializer calls this after its final render. One-shot, and pinned
+   to the hash the page was OPENED with: in-page anchor clicks after load are
+   already exact, and a late fetch (a lazily-activated Utilities tab, the
+   compare page re-rendering on a pick) must never yank the viewport out from
+   under a reader who has since navigated.
+
+   Scroll anchoring is suspended while the restore is pending: Chromium queues
+   an anchoring adjustment for the render that grew the page and applies it as
+   a relative delta on top of whatever scroll position it finds, so a bare
+   corrective scroll came out as correct + delta = wrong again (measured live
+   on tts.html#tts-survey: 7429 + 3259 = 10688). With the root opted out there
+   is no delta, and the property is handed back the moment the restore
+   resolves either way. Deferring the scroll past the delta's frame instead
+   would strand background tabs, where rAF never fires. Safari has no scroll
+   anchoring and ignores the property. A dead anchor (a stale inbound link)
+   leaves the opt-out in place — pre-2017 scroll behaviour, harmless. */
+let pendingHash = /^#[\w-]+$/.test(location.hash) ? location.hash : null;
+if (pendingHash) document.documentElement.style.overflowAnchor = "none";
+function restoreHashTarget() {
+  if (!pendingHash) return;
+  if (location.hash !== pendingHash) {   // reader navigated; stand down for good
+    pendingHash = null;
+    document.documentElement.style.overflowAnchor = "";
+    return;
+  }
+  const target = document.getElementById(pendingHash.slice(1));
+  if (!target) return;   // not rendered yet — a later initializer may still land it
+  pendingHash = null;
+  target.scrollIntoView({ block: "start" });
+  document.documentElement.style.overflowAnchor = "";
+}
+
 async function initLeaderboard() {
   const mount = $("#leaderboard");
   try {
@@ -1382,6 +1419,7 @@ async function initLeaderboard() {
     renderHardwareSelect();
     renderPrecisionSelect();
     renderBoardToggle(data.models);
+    restoreHashTarget();
   } catch (e) { fail(mount, "Could not load leaderboard.json — " + e.message); }
 }
 
@@ -1583,6 +1621,7 @@ async function initModel() {
       el("h2", { text: "Sample transcripts" }), el("span", { class: "note", text: "with the judge's per-criterion commentary" })));
     if (!samples.length) mount.appendChild(el("div", { class: "state", text: "No transcripts captured." }));
     samples.forEach((t, i) => mount.appendChild(transcriptFold(t, i)));
+    restoreHashTarget();
   } catch (e) { fail(mount, "Could not load model data for “" + slug + "” — " + e.message); }
 }
 
@@ -1695,12 +1734,9 @@ async function initMethodology() {
         el("h2", { text: `Scenario pack (${(m.scenarios || []).length})` })),
       el("div", { class: "table-scroll" }, table));
     mount.replaceChildren(...children);
-    // the cross-check card is rendered async, so honor a deep link (hero → #judge-cross-check)
-    // only after it exists in the DOM.
-    if (location.hash && /^#[\w-]+$/.test(location.hash)) {
-      const target = document.getElementById(location.hash.slice(1));
-      if (target) target.scrollIntoView({ block: "start" });
-    }
+    // the cross-check card is rendered async, so a deep link (hero → #judge-cross-check)
+    // is honored only after it exists in the DOM — the site-wide restore does exactly that.
+    restoreHashTarget();
   } catch (e) { fail(mount, "Could not load methodology.json — " + e.message); }
 }
 
@@ -1992,6 +2028,7 @@ async function initCompare() {
     }
 
     out.replaceChildren(...nodes.filter(Boolean));
+    restoreHashTarget();
   }
   selA.addEventListener("change", render);
   selB.addEventListener("change", render);
@@ -4211,6 +4248,7 @@ async function initMatrix(key) {
   // figure in the table is only true as of that date.
   const foot = $("[data-generated-at]");
   if (foot && doc.compiled) foot.textContent = `${doc.compiled} · ${key} edition ${doc.edition}`;
+  restoreHashTarget();
   return true;
 }
 
@@ -4419,6 +4457,7 @@ async function initHardwareTable() {
   renderTtsDateline($("#hardware-dateline"), doc, "entries");
   renderTtsCorrections($("#hardware-corrections"), doc.corrections);
   renderTtsGaps($("#hardware-gaps"), doc.gaps);
+  restoreHashTarget();
 }
 
 
