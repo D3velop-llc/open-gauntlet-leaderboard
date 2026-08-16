@@ -1,7 +1,7 @@
 {
   "slug": "skyfall-31b-q4",
   "display_name": "skyfall-31b (Q4_K_M)",
-  "source_url": null,
+  "source_url": "https://huggingface.co/TheDrummer/Skyfall-31B-v4.2",
   "criteria": [
     {
       "criterion": "assistant_smell",

@@ -1,7 +1,7 @@
 {
   "slug": "mythos-distilled-27b",
   "display_name": "mythos-distilled-27b",
-  "source_url": null,
+  "source_url": "https://huggingface.co/chatqaq/Qwen3.6-27B-Claude-Mythos-Distilled-MTP-GGUF",
   "criteria": [
     {
       "criterion": "assistant_smell",

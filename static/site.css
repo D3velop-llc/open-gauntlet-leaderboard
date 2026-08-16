@@ -570,6 +570,30 @@ td.heat.empty { color: var(--muted); font-weight: 400; text-shadow: none; }
   font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.03em; margin: 12px 0 0;
 }
 .detail-head .slug { color: var(--muted); font-size: 14px; }
+.model-seo-summary {
+  margin-top: 18px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+.model-seo-summary > p:first-child { max-width: 76ch; margin-top: 0; color: var(--ink-dim); }
+.model-seo-summary .scope-line { justify-content: flex-start; text-align: left; margin: 18px 0 0; }
+.model-seo-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin: 18px 0 0;
+}
+.model-seo-stats > div { padding: 12px 14px; border: 1px solid var(--line); border-radius: 10px; }
+.model-seo-stats dt { color: var(--muted); font-family: var(--font-mono); font-size: 11px; }
+.model-seo-stats dd { margin: 4px 0 0; color: var(--ink); font-size: 16px; font-weight: 700; }
+.prose-page { padding-bottom: 48px; }
+.prose-page .block { max-width: 82ch; }
+.prose-page h2 { margin-top: 34px; }
+.prose-page li { margin: 7px 0; color: var(--ink-dim); }
+.model-index-list { columns: 2 25rem; column-gap: 42px; padding-left: 24px; }
+.model-index-list li { break-inside: avoid; margin-bottom: 9px; }
 .spec-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 .spec {
   font-family: var(--font-mono); font-size: 12px;
@@ -1825,7 +1849,7 @@ a.pipe-step:hover .pipe-name { color: var(--ink); }
    R12 Simple/Technical pill toggle     R15 plain-word nav tooltips (HTML only) */
 
 /* R1: nav dropdown groups */
-@media (min-width: 900px) { .topbar .nav { overflow: visible; } }
+@media (min-width: 1100px) { .topbar .nav { overflow: visible; } }
 /* With eight nav items the bar needs slack before the phone layout kicks in */
 @media (max-width: 1000px) {
   .topbar .wrap { gap: 14px; }
@@ -1842,7 +1866,8 @@ details.nav-more > summary {
 details.nav-more > summary::-webkit-details-marker { display: none; }
 details.nav-more > summary::after { content: "\25BE"; font-size: 9px; opacity: .6; }
 details.nav-more > summary:hover, details.nav-more[open] > summary { color: var(--ink); background: var(--surface-2); }
-details.nav-more:has(a.active) > summary { color: var(--ember); }
+details.nav-more:has(a.active) > summary,
+details.nav-more > summary.active { color: var(--ember); }
 .nav-more-panel {
   position: absolute; right: 0; top: calc(100% + 8px); z-index: 40;
   min-width: 250px; background: var(--surface); border: 1px solid var(--border-2);
@@ -1857,6 +1882,29 @@ details.nav-more:has(a.active) > summary { color: var(--ember); }
 .nav-more-panel a:hover { background: var(--surface-2); color: var(--ink); }
 .nav-more-panel a.active { color: var(--ember); background: var(--ember-dim); }
 .nav-more-panel .nm-sub { font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+
+/* The three categories that contain both kinds of evidence expose the same
+   two choices in the global navigation. This keeps the information
+   architecture honest without adding six permanent top-level links. */
+.nav-topic > summary { gap: 7px; }
+.nav-topic-marks { display: inline-flex; align-items: center; gap: 3px; }
+.nav-topic-marks .ev { margin: 0; width: 7px; height: 7px; }
+.nav-topic .nav-more-panel { left: 0; right: auto; min-width: 224px; }
+.nav-evidence-panel a { align-items: center; }
+.nav-evidence-label { display: inline-flex; align-items: center; gap: 8px; }
+.nav-evidence-label .ev { margin: 0; }
+body[data-kind="surveyed"] .nav-topic:has(a.active) > summary { color: var(--cool); }
+body[data-kind="surveyed"] .nav-evidence-panel a.active { color: var(--cool); background: rgba(74, 168, 216, 0.08); }
+@media (max-width: 1099px) {
+  /* A horizontally scrollable header clips absolute-positioned children.
+     Promote the open menu to a viewport-width sheet directly below the sticky
+     bar so every evidence choice remains reachable on tablets and phones. */
+  .nav-more-panel,
+  .nav-topic .nav-more-panel {
+    position: fixed; inset: 60px 16px auto; min-width: 0;
+    max-height: calc(100dvh - 76px); overflow-y: auto;
+  }
+}
 
 /* R5: preset tabs above every matrix */
 .preset-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 12px;
@@ -1986,10 +2034,9 @@ table.lb.tts tbody tr.tts-row.open td.tts-name { background: #141A26; }
 .matrix-topbar .tts-count-slot .tts-count { max-width: none; }
 
 /* ============================== EVIDENCE SWITCHER ==========================
-   The prominent "this section has two kinds of evidence" control — a split
-   pair on Words <-> the LLM survey (segments are page links), stacked on
-   Listening/Voices (segments are in-page anchors to the Lab block and the
-   matrix). Replaces the 12.5px .util-tab pill that used to switch Words'
+   The prominent "this section has two kinds of evidence" control — the same
+   pair of real page links on Listening, Words, and Voices. Replaces the 12.5px
+   .util-tab pill that used to switch Words'
    tabs, which nobody saw (.util-tab itself lives on — utilities.html still
    uses it). The child spans set explicit colours so the
    surveyed sections' link tint (body[data-kind="surveyed"] a) does not

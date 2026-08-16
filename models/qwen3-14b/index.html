@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0B0E14">
+  <meta name="description" content="qwen3-14b benchmark: humanlikeness scores, pairwise rankings, transcripts, latency, and measured local speed.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <title>qwen3-14b benchmark results | OpenGauntlet</title>
+  <link rel="canonical" href="https://opengauntlet.com/models/qwen3-14b/">
+  <link rel="alternate" type="application/rss+xml" title="OpenGauntlet updates" href="https://opengauntlet.com/feed.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OpenGauntlet">
+  <meta property="og:title" content="qwen3-14b benchmark results">
+  <meta property="og:description" content="qwen3-14b benchmark: humanlikeness scores, pairwise rankings, transcripts, latency, and measured local speed.">
+  <meta property="og:url" content="https://opengauntlet.com/models/qwen3-14b/">
+  <meta property="og:image" content="https://opengauntlet.com/static/img/social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="OpenGauntlet — local AI, measured">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="qwen3-14b benchmark results">
+  <meta name="twitter:description" content="qwen3-14b benchmark: humanlikeness scores, pairwise rankings, transcripts, latency, and measured local speed.">
+  <meta name="twitter:image" content="https://opengauntlet.com/static/img/social-card.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "qwen3-14b benchmark results",
+    "url": "https://opengauntlet.com/models/qwen3-14b/",
+    "description": "qwen3-14b benchmark: humanlikeness scores, pairwise rankings, transcripts, latency, and measured local speed.",
+    "dateModified": "2026-08-16",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "OpenGauntlet",
+      "url": "https://opengauntlet.com/"
+    },
+    "about": {
+      "@type": "SoftwareApplication",
+      "name": "qwen3-14b",
+      "applicationCategory": "Artificial Intelligence",
+      "url": "https://huggingface.co/Qwen/Qwen3-14B"
+    },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "OpenGauntlet",
+          "item": "https://opengauntlet.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Model results",
+          "item": "https://opengauntlet.com/models/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "qwen3-14b",
+          "item": "https://opengauntlet.com/models/qwen3-14b/"
+        }
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "D3velop",
+      "url": "https://d3velop.com/"
+    }
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="/static/img/bot-favicon.png">
+  <link rel="apple-touch-icon" href="/static/img/bot-head.png">
+  <link rel="stylesheet" href="/static/site.css?v=598fb22349">
+
+  <script src="/vendor/chart.umd.min.js" defer></script>
+
+  <script>window.OG = { modelBase: "/models/", assetRoot: "/", modelSlug: "qwen3-14b" };</script>
+</head>
+
+<body data-page="model" data-model-id="qwen3-14b" data-kind="measured">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/"><canvas class="hero-viz topbar-viz" data-viz="words" aria-hidden="true"></canvas><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav" aria-label="Primary navigation">
+        <details class="nav-more nav-topic"><summary title="Listening — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Listening</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/asr.html"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">14 local results</span></a>
+            <a href="/asr-survey.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">106 sourced systems</span></a>
+          </div>
+        </details>
+        <a href="/turns.html" title="Turns — turn-taking: whose turn it is"><span class="ev hollow" aria-hidden="true"></span>Turns</a>
+        <details class="nav-more nav-topic"><summary class="active" title="Words — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Words</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/" class="active" aria-current="page"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">37 benchmarked models</span></a>
+            <a href="/llms.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">51 sourced models</span></a>
+          </div>
+        </details>
+        <details class="nav-more nav-topic"><summary title="Voices — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Voices</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/tts.html"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">16 local results</span></a>
+            <a href="/tts-survey.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">168 sourced systems</span></a>
+          </div>
+        </details>
+        <a href="/runtimes.html" title="Runtimes — inference engines: how it runs"><span class="ev hollow" aria-hidden="true"></span>Runtimes</a>
+        <a href="/memory.html" title="Memory — retrieval systems: what it remembers"><span class="ev hollow" aria-hidden="true"></span>Memory</a>
+        <details class="nav-more"><summary>Reference</summary>
+          <div class="nav-more-panel">
+            <a href="/hardware.html">What fits where<span class="nm-sub">hardware</span></a>
+            <a href="/quantization.html">How models get compressed<span class="nm-sub">quantization</span></a>
+            <a href="/orchestrators.html">Wiring it together<span class="nm-sub">orchestrators</span></a>
+            <a href="/utilities.html">The parts around the edges<span class="nm-sub">utilities</span></a>
+          </div>
+        </details>
+        <details class="nav-more"><summary>About</summary>
+          <div class="nav-more-panel">
+            <a href="/about.html">About OpenGauntlet<span class="nm-sub">ownership &amp; standards</span></a>
+            <a href="/methodology.html">How it works<span class="nm-sub">methodology</span></a>
+            <a href="/compare.html">Head to head<span class="nm-sub">two models, same chat</span></a>
+            <a href="/tts-guide.html">Reading the voice numbers<span class="nm-sub">guide</span></a>
+            <a href="/tts-legal.html">What you may ship<span class="nm-sub">voice licences</span></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+
+  <div class="wrap">
+    <section class="detail-head"><a class="back" href="/">← back to the leaderboard</a><h1 data-model-name>qwen3-14b conversational AI benchmark</h1><div class="detail-source" data-model-source><a href="https://huggingface.co/Qwen/Qwen3-14B" target="_blank" rel="noopener">Model source ↗</a></div><div class="slug mono" data-model-slug>qwen3-14b</div></section>
+    <section class="block model-seo-summary" aria-label="Benchmark summary"><p>qwen3-14b benchmark: humanlikeness scores, pairwise rankings, transcripts, latency, and measured local speed.</p><dl class="model-seo-stats"><div><dt>Leaderboard rank</dt><dd>#26 of 37</dd></div><div><dt>Humanlikeness</dt><dd>58.6 / 100</dd></div><div><dt>Pairwise rating</dt><dd>1417</dd></div><div><dt>Measured speed</dt><dd>12.7 words/sec</dd></div></dl><p class="scope-line"><strong>Evidence:</strong> identical scenario pack and judge protocol; measured and judged results are shown separately below. <a href="/methodology.html">Read the methodology</a>.</p></section>
+    <section class="block">
+      <div id="model"><div class="state">Loading model…</div></div>
+    </section>
+  </div>
+
+
+  <aside class="community-cta" aria-labelledby="community-title">
+    <div class="wrap community-cta-inner">
+      <div>
+        <div class="eyebrow"><span class="tick">//</span> help choose the next run</div>
+        <h2 id="community-title">What should face the gauntlet next?</h2>
+        <p>Request a model, inspect the published results, or flag a claim that needs another look.</p>
+      </div>
+      <div class="community-actions">
+        <a class="cta cta-primary" href="https://github.com/D3velop-llc/open-gauntlet-leaderboard/issues/new?title=Model%20request%3A%20" target="_blank" rel="noopener">Request a model <span aria-hidden="true">↗</span></a>
+        <a class="cta" href="/data/leaderboard.json">Download results</a>
+        <a class="cta cta-quiet" href="https://github.com/D3velop-llc/open-gauntlet-leaderboard/issues/new?title=Correction%3A%20" target="_blank" rel="noopener">Report a correction <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. The Words leaderboard and scoped Listening and Voices labs are measured here; their Surveyed pages, plus Turns, Runtimes, Memory, Hardware Reference, Orchestrators, Quantization, and Utilities, are sourced research catalogs.</span>
+      <nav class="foot-nav">
+        <a href="/asr.html">Listening</a><span class="sep">·</span>
+        <a href="/turns.html">Turns</a><span class="sep">·</span>
+        <a href="/">Words</a><span class="sep">·</span>
+        <a href="/llms.html">The wider field</a><span class="sep">·</span>
+        <a href="/tts.html">Voices</a><span class="sep">·</span>
+        <a href="/runtimes.html">Runtimes</a><span class="sep">·</span>
+        <a href="/memory.html">Memory</a><span class="sep">·</span>
+        <a href="/hardware.html">What fits where</a><span class="sep">·</span>
+        <a href="/orchestrators.html">Wiring it together</a><span class="sep">·</span>
+        <a href="/quantization.html">How models get compressed</a><span class="sep">·</span>
+        <a href="/utilities.html">The parts around the edges</a><span class="sep">·</span>
+        <a href="/methodology.html">How it works</a><span class="sep">·</span>
+        <a href="/compare.html">Head to head</a><span class="sep">·</span>
+        <a href="/about.html">About</a><span class="sep">·</span>
+        <a href="/data-license.html">Data license</a><span class="sep">·</span>
+        <a href="/feed.xml">Updates</a><span class="sep">·</span>
+        <a href="https://github.com/D3velop-llc/open-gauntlet-leaderboard" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+
+      <span class="foot-prov">Updated <span data-generated-at>2026-08-16 15:42 UTC</span> · <a href="/methodology.html#reproducibility">version details</a></span>
+    </div>
+  </footer>
+
+
+  <script src="/static/site.js?v=0db449f764" defer></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+{
+  "lab": {
+    "schema_version": 1,
+    "title": "OpenGauntlet Lab — RTX 5090",
+    "status": "experiment_required",
+    "measured_at": "2026-08-09",
+    "host": "imprynt-omen",
+    "gpu": "NVIDIA GeForce RTX 5090",
+    "reference_voice": "Brent",
+    "listener_count": 1,
+    "blind_ratings": 276,
+    "method_url": "https://opengauntlet.com/research/tts/benchmarks/2026-08-09-imprynt-omen-rtx5090.md",
+    "feature_method_url": "https://opengauntlet.com/research/tts/benchmarks/2026-08-10-imprynt-omen-rtx5090-round8.md",
+    "note": "One owner-listener. The table includes all 16 successfully benchmarked systems across four completed rounds; 276 is the cumulative number of blind sample ratings. Human conversation, baseline, and feature means are separate and must not be averaged. Lower RTF is faster.",
+    "standout": {
+      "model": "MOSS-TTS-Realtime",
+      "score": 5,
+      "condition": "Human conversation",
+      "detail": "MOSS-TTS-Realtime won round 8 at 4.10 overall, with 10/10 natural clips, 9/10 Brent-like clips, and three 5/5 results. Its stateful best-native arc scored 5/5; this supports the tested within-turn path, not autonomous cross-turn memory."
+    },
+    "next_round": {
+      "status": "complete",
+      "bundle": "listening-round8-20260810",
+      "items": 50,
+      "completed": [
+        "IndexTTS2",
+        "Sesame CSM-1B",
+        "MOSS-TTSD v1.0",
+        "MOSS-TTS-Realtime",
+        "Higgs Audio v3 4B"
+      ],
+      "excluded": [],
+      "receipt_url": "https://opengauntlet.com/research/tts/benchmarks/2026-08-10-imprynt-omen-rtx5090-round8.md"
+    },
+    "production_candidate": {
+      "model": "MOSS-TTS-Realtime",
+      "status": "deployed candidate; physical-audio sitting required",
+      "profile": "SDPA + compile · 6 decode frames · 0.96 s codec chunk · seed 42",
+      "ttfa_p50_ms": {
+        "short": 69.58,
+        "human": 215.45,
+        "story": 126.91
+      },
+      "ttfa_p95_ms": {
+        "short": 81.31,
+        "human": 216.04,
+        "story": 128.02
+      },
+      "rtf_p50": {
+        "short": 0.328,
+        "human": 0.292,
+        "story": 0.289
+      },
+      "peak_vram_mib": 14394,
+      "cancel_settle_p50_ms": 6.903,
+      "cancel_settle_max_ms": 7.566,
+      "receipt_url": "https://opengauntlet.com/research/tts/benchmarks/2026-08-10-imprynt-moss-production.md"
+    },
+    "results": [
+      {
+        "model": "Higgs Audio v3 4B",
+        "rounds": "1, 2 & 4",
+        "baseline_mean": 3.143,
+        "feature_mean": 2.571,
+        "conversation_mean": 3.3,
+        "rtf_p50": 0.164,
+        "vram_mib": 29443,
+        "continuity": "whole 2 · clause 4; prior clause 5 · best-native 4"
+      },
+      {
+        "model": "MOSS-TTS-Realtime",
+        "rounds": "1 & 4",
+        "baseline_mean": 3.429,
+        "feature_mean": 2.5,
+        "conversation_mean": 4.1,
+        "rtf_p50": 0.459,
+        "vram_mib": 13133,
+        "continuity": "whole 3 · clause 4 · stateful 3 · best-native stateful 5"
+      },
+      {
+        "model": "Qwen3-TTS 1.7B Base",
+        "rounds": "1",
+        "baseline_mean": 3,
+        "feature_mean": 2.857,
+        "rtf_p50": 0.56,
+        "vram_mib": 6809,
+        "continuity": "whole 2 · clause 4"
+      },
+      {
+        "model": "VoxCPM2",
+        "rounds": "1",
+        "baseline_mean": 2.857,
+        "feature_mean": 3.25,
+        "rtf_p50": 0.188,
+        "vram_mib": 8683,
+        "continuity": "whole 4 · clause 3 · stateful 3"
+      },
+      {
+        "model": "Chatterbox Turbo",
+        "rounds": "1",
+        "baseline_mean": 2.286,
+        "feature_mean": 3.286,
+        "rtf_p50": 0.112,
+        "vram_mib": 5671,
+        "continuity": "whole 4 · clause 3"
+      },
+      {
+        "model": "Fish Audio S2 Pro",
+        "rounds": "2",
+        "baseline_mean": 2.571,
+        "feature_mean": 2.571,
+        "rtf_p50": 2.882,
+        "vram_mib": 25231,
+        "continuity": "whole 3 · clause 3"
+      },
+      {
+        "model": "Chatterbox 500M",
+        "rounds": "2",
+        "baseline_mean": 2.429,
+        "feature_mean": 2.143,
+        "rtf_p50": 0.234,
+        "vram_mib": 6813,
+        "continuity": "whole 3 · clause 4"
+      },
+      {
+        "model": "ZONOS2",
+        "rounds": "2",
+        "baseline_mean": 2.429,
+        "feature_mean": 1.714,
+        "rtf_p50": 0.374,
+        "vram_mib": 24543,
+        "continuity": "whole 3 · clause 1"
+      },
+      {
+        "model": "Fun-CosyVoice3 0.5B",
+        "rounds": "2",
+        "baseline_mean": 1,
+        "feature_mean": 1.143,
+        "rtf_p50": 0.449,
+        "vram_mib": 6671,
+        "continuity": "whole 2 · clause 1"
+      },
+      {
+        "model": "IndexTTS2",
+        "rounds": "3 & 4",
+        "baseline_mean": 3.857,
+        "feature_mean": 3.8,
+        "conversation_mean": 2.5,
+        "rtf_p50": 0.516,
+        "vram_mib": 14112,
+        "continuity": "whole 3 · clause 4 · best-native clause 1"
+      },
+      {
+        "model": "Sesame CSM-1B",
+        "rounds": "3 & 4",
+        "baseline_mean": 2.571,
+        "feature_mean": 2.4,
+        "conversation_mean": 3,
+        "rtf_p50": 0.734,
+        "vram_mib": 5440,
+        "continuity": "whole 2 · clause 3 · best-native whole 4"
+      },
+      {
+        "model": "Step-Audio-EditX",
+        "rounds": "3",
+        "baseline_mean": 2.571,
+        "feature_mean": 2.4,
+        "rtf_p50": 2.73,
+        "vram_mib": 21860,
+        "continuity": "whole 2 · clause 3"
+      },
+      {
+        "model": "MOSS-TTSD v1.0",
+        "rounds": "3 & 4",
+        "baseline_mean": 2.857,
+        "feature_mean": 1.8,
+        "conversation_mean": 2.5,
+        "rtf_p50": 0.265,
+        "vram_mib": 26366,
+        "continuity": "whole 2 · clause 1 · best-native whole 5"
+      },
+      {
+        "model": "Audio8 TTS Preview 0.6B",
+        "rounds": "3",
+        "baseline_mean": 2,
+        "feature_mean": 2.6,
+        "rtf_p50": 0.565,
+        "vram_mib": 6318,
+        "continuity": "whole 3 · clause 3"
+      },
+      {
+        "model": "KaniTTS-2 English",
+        "rounds": "3",
+        "baseline_mean": 1.571,
+        "feature_mean": 2,
+        "rtf_p50": 0.366,
+        "vram_mib": 5962,
+        "continuity": "whole 2 · clause 2"
+      },
+      {
+        "model": "Orpheus TTS 3B Pretrained",
+        "rounds": "3",
+        "baseline_mean": 1.429,
+        "feature_mean": 1.4,
+        "rtf_p50": 0.622,
+        "vram_mib": 9164,
+        "continuity": "whole 1 · clause 2"
+      }
+    ]
+  }
+}

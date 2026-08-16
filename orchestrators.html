@@ -5,91 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#0B0E14">
-  <meta name="description" content="A sourced comparison of voice-agent orchestration frameworks and hosted platforms — transport options, tool-calling and multi-agent architecture, observability, and deployment model.">
+  <meta name="description" content="Compare voice-agent frameworks and orchestration platforms by transport, tool calling, realtime architecture, observability, and deployment.">
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-  <title>Wiring it together — orchestrators compared · OpenGauntlet</title>
+  <title>Voice Agent Frameworks &amp; Orchestrators Compared | OpenGauntlet</title>
   <link rel="canonical" href="https://opengauntlet.com/orchestrators.html">
   <link rel="alternate" type="application/rss+xml" title="OpenGauntlet updates" href="https://opengauntlet.com/feed.xml">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="OpenGauntlet">
-  <meta property="og:title" content="Wiring it together — orchestrators &amp; pipeline frameworks compared · OpenGauntlet">
-  <meta property="og:description" content="A sourced comparison of voice-agent orchestration frameworks and hosted platforms — transport options, tool-calling and multi-agent architecture, observability, and deployment model.">
+  <meta property="og:title" content="Voice Agent Frameworks &amp; Orchestrators Compared">
+  <meta property="og:description" content="Compare voice-agent frameworks and orchestration platforms by transport, tool calling, realtime architecture, observability, and deployment.">
   <meta property="og:url" content="https://opengauntlet.com/orchestrators.html">
   <meta property="og:image" content="https://opengauntlet.com/static/img/social-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="OpenGauntlet — local AI, measured">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Wiring it together — orchestrators &amp; pipeline frameworks compared · OpenGauntlet">
-  <meta name="twitter:description" content="A sourced comparison of voice-agent orchestration frameworks and hosted platforms — transport options, tool-calling and multi-agent architecture, observability, and deployment model.">
+  <meta name="twitter:title" content="Voice Agent Frameworks &amp; Orchestrators Compared">
+  <meta name="twitter:description" content="Compare voice-agent frameworks and orchestration platforms by transport, tool calling, realtime architecture, observability, and deployment.">
   <meta name="twitter:image" content="https://opengauntlet.com/static/img/social-card.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "OpenGauntlet",
-    "url": "https://opengauntlet.com/",
-    "description": "Independent rankings and research for locally hosted conversational AI, speech recognition, and text-to-speech systems.",
-    "creator": {
+    "@type": "CollectionPage",
+    "name": "Voice Agent Frameworks & Orchestrators Compared",
+    "url": "https://opengauntlet.com/orchestrators.html",
+    "description": "Compare voice-agent frameworks and orchestration platforms by transport, tool calling, realtime architecture, observability, and deployment.",
+    "dateModified": "2026-08-16",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "OpenGauntlet",
+      "url": "https://opengauntlet.com/"
+    },
+    "publisher": {
       "@type": "Organization",
       "name": "D3velop",
       "url": "https://d3velop.com/"
     }
   }
   </script>
-  
+
   <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
   <link rel="apple-touch-icon" href="static/img/bot-head.png">
   <link rel="stylesheet" href="static/site.css?v=598fb22349">
-  
+
 </head>
 
 <body data-page="orchestrators" data-kind="surveyed">
   <header class="topbar">
     <div class="wrap">
-      <a class="brand" href="index.html"><canvas class="hero-viz topbar-viz" data-viz="words" aria-hidden="true"></canvas><span class="slash">//</span>open<em>gauntlet</em></a>
-      <nav class="nav">
-        
-        <a href="asr.html" title="Listening — speech-to-text: what it hears"
-           ><span class="ev hollow" aria-hidden="true"></span>Listening</a>
-        <a href="turns.html" title="Turns — turn-taking: whose turn it is"
-           ><span class="ev hollow" aria-hidden="true"></span>Turns</a>
-        <a href="index.html" title="Words — the LLM leaderboard: what it says"
-           ><span class="ev solid" aria-hidden="true"></span>Words</a>
-        <a href="tts.html" title="Voices — text-to-speech: how it sounds"
-           ><span class="ev hollow" aria-hidden="true"></span>Voices</a>
-        <a href="runtimes.html" title="Runtimes — inference engines: how it runs"
-           ><span class="ev hollow" aria-hidden="true"></span>Runtimes</a>
-        <a href="memory.html" title="Memory — retrieval systems: what it remembers"
-           ><span class="ev hollow" aria-hidden="true"></span>Memory</a>
-        <details class="nav-more"><summary>Reference</summary>
+      <a class="brand" href="/"><canvas class="hero-viz topbar-viz" data-viz="words" aria-hidden="true"></canvas><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav" aria-label="Primary navigation">
+        <details class="nav-more nav-topic"><summary title="Listening — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Listening</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/asr.html"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">14 local results</span></a>
+            <a href="/asr-survey.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">106 sourced systems</span></a>
+          </div>
+        </details>
+        <a href="/turns.html" title="Turns — turn-taking: whose turn it is"><span class="ev hollow" aria-hidden="true"></span>Turns</a>
+        <details class="nav-more nav-topic"><summary title="Words — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Words</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">37 benchmarked models</span></a>
+            <a href="/llms.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">51 sourced models</span></a>
+          </div>
+        </details>
+        <details class="nav-more nav-topic"><summary title="Voices — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Voices</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/tts.html"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">16 local results</span></a>
+            <a href="/tts-survey.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">168 sourced systems</span></a>
+          </div>
+        </details>
+        <a href="/runtimes.html" title="Runtimes — inference engines: how it runs"><span class="ev hollow" aria-hidden="true"></span>Runtimes</a>
+        <a href="/memory.html" title="Memory — retrieval systems: what it remembers"><span class="ev hollow" aria-hidden="true"></span>Memory</a>
+        <details class="nav-more"><summary class="active">Reference</summary>
           <div class="nav-more-panel">
-            <a href="llms.html">The wider field<span class="nm-sub">open-weight LLMs</span></a>
-            <a href="hardware.html">What fits where<span class="nm-sub">hardware</span></a>
-            <a href="quantization.html">How models get compressed<span class="nm-sub">quantization</span></a>
-            <a href="orchestrators.html" class="active">Wiring it together<span class="nm-sub">orchestrators</span></a>
-            <a href="utilities.html">The parts around the edges<span class="nm-sub">utilities</span></a>
+            <a href="/hardware.html">What fits where<span class="nm-sub">hardware</span></a>
+            <a href="/quantization.html">How models get compressed<span class="nm-sub">quantization</span></a>
+            <a href="/orchestrators.html" class="active" aria-current="page">Wiring it together<span class="nm-sub">orchestrators</span></a>
+            <a href="/utilities.html">The parts around the edges<span class="nm-sub">utilities</span></a>
           </div>
         </details>
         <details class="nav-more"><summary>About</summary>
           <div class="nav-more-panel">
-            <a href="methodology.html">How it works<span class="nm-sub">methodology</span></a>
-            <a href="compare.html">Head to head<span class="nm-sub">two models, same chat</span></a>
-            <a href="tts-guide.html">Reading the voice numbers<span class="nm-sub">guide</span></a>
-            <a href="tts-legal.html">What you may ship<span class="nm-sub">voice licences</span></a>
+            <a href="/about.html">About OpenGauntlet<span class="nm-sub">ownership &amp; standards</span></a>
+            <a href="/methodology.html">How it works<span class="nm-sub">methodology</span></a>
+            <a href="/compare.html">Head to head<span class="nm-sub">two models, same chat</span></a>
+            <a href="/tts-guide.html">Reading the voice numbers<span class="nm-sub">guide</span></a>
+            <a href="/tts-legal.html">What you may ship<span class="nm-sub">voice licences</span></a>
           </div>
         </details>
       </nav>
     </div>
   </header>
 
-  
+
   <div class="wrap">
     <section class="hero hero-lede has-bot bot-right">
       <img class="hero-bot-side" src="static/img/wiring.webp" alt=""
            width="264" height="264" loading="eager" decoding="async">
       <div class="eyebrow"><span class="tick">//</span> surveyed, not benchmarked</div>
-      <h1>Wiring it <span class="warm">together</span></h1>
+      <h1>Voice agent frameworks and <span class="warm">orchestrators compared</span></h1>
       <p class="lede">
         Turns already tells you which turn-detector is best. This page is what assembles the rest
         of the pipeline: transport (WebRTC, WebSocket, SIP/PSTN), tool-calling and multi-agent
@@ -186,11 +200,11 @@
 
   <footer class="foot">
     <div class="wrap">
-      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. Words is measured here; the open-weight LLM survey, Voices, Listening, Turns, Runtimes, Memory, Hardware Reference, Orchestrators, Quantization, and Utilities are sourced surveys.</span>
+      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. The Words leaderboard and scoped Listening and Voices labs are measured here; their Surveyed pages, plus Turns, Runtimes, Memory, Hardware Reference, Orchestrators, Quantization, and Utilities, are sourced research catalogs.</span>
       <nav class="foot-nav">
         <a href="asr.html">Listening</a><span class="sep">·</span>
         <a href="turns.html">Turns</a><span class="sep">·</span>
-        <a href="index.html">Words</a><span class="sep">·</span>
+        <a href="/">Words</a><span class="sep">·</span>
         <a href="llms.html">The wider field</a><span class="sep">·</span>
         <a href="tts.html">Voices</a><span class="sep">·</span>
         <a href="runtimes.html">Runtimes</a><span class="sep">·</span>
@@ -201,15 +215,17 @@
         <a href="utilities.html">The parts around the edges</a><span class="sep">·</span>
         <a href="methodology.html">How it works</a><span class="sep">·</span>
         <a href="compare.html">Head to head</a><span class="sep">·</span>
+        <a href="about.html">About</a><span class="sep">·</span>
+        <a href="data-license.html">Data license</a><span class="sep">·</span>
         <a href="feed.xml">Updates</a><span class="sep">·</span>
         <a href="https://github.com/D3velop-llc/open-gauntlet-leaderboard" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
-      
+
       <span class="foot-prov">Updated <span data-generated-at>2026-08-16 15:42 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
     </div>
   </footer>
 
-  
+
   <script src="static/site.js?v=0db449f764" defer></script>
 </body>
 </html>

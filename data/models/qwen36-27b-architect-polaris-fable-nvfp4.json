@@ -1,7 +1,7 @@
 {
   "slug": "qwen36-27b-architect-polaris-fable-nvfp4",
   "display_name": "Qwen 3.6 27B Architect Polaris Fable NVFP4",
-  "source_url": null,
+  "source_url": "https://huggingface.co/nightmedia/Qwen3.6-27B-Architect-Polaris2-Fable-B-F451-F32-nvfp4",
   "criteria": [
     {
       "criterion": "assistant_smell",

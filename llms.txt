@@ -7,7 +7,8 @@
 - [Conversational AI leaderboard](https://opengauntlet.com/): Measured local open-weight language models.
 - [Open-weight LLM survey](https://opengauntlet.com/llms.html): Sourced comparison of the wider open-weight model field.
 - [Methodology](https://opengauntlet.com/methodology.html): Scenarios, judging, ratings, calibration, and reproducibility.
-- [Speech-to-text research](https://opengauntlet.com/asr.html): Sourced ASR system comparison.
+- [Speech-to-text measurements](https://opengauntlet.com/asr.html): Scoped local ASR experiment with disclosed method and receipts.
+- [Speech-to-text survey](https://opengauntlet.com/asr-survey.html): Sourced comparison of 106 ASR systems.
 - [Turn-taking research](https://opengauntlet.com/turns.html): Sourced VAD and endpointing system comparison.
 - [Inference engine research](https://opengauntlet.com/runtimes.html): Sourced LLM serving/runtime comparison, including a first-party vLLM vs SGLang benchmark.
 - [Hardware reference](https://opengauntlet.com/hardware.html): GPU and hardware VRAM/bandwidth reference, model-agnostic.
@@ -15,7 +16,8 @@
 - [Memory research](https://opengauntlet.com/memory.html): Sourced vector database and agent-memory system comparison.
 - [Quantization research](https://opengauntlet.com/quantization.html): Sourced quantization toolchain comparison.
 - [Utilities research](https://opengauntlet.com/utilities.html): Sourced speaker-verification, wake-word, and speech-enhancement comparison.
-- [Text-to-speech research](https://opengauntlet.com/tts.html): Sourced TTS system comparison.
+- [Text-to-speech measurements](https://opengauntlet.com/tts.html): Scoped local TTS blind-listening experiment with disclosed method and receipts.
+- [Text-to-speech survey](https://opengauntlet.com/tts-survey.html): Sourced comparison of 168 TTS systems.
 - [TTS comparison guide](https://opengauntlet.com/tts-guide.html): How to interpret TTS evidence.
 - [TTS legal guide](https://opengauntlet.com/tts-legal.html): Licensing, consent, and legal-risk research.
 
@@ -24,6 +26,7 @@
 - [Leaderboard JSON](https://opengauntlet.com/data/leaderboard.json)
 - [Methodology JSON](https://opengauntlet.com/data/methodology.json)
 - [ASR research JSON](https://opengauntlet.com/data/asr.json)
+- [ASR lab JSON](https://opengauntlet.com/data/asr-lab.json)
 - [Turns research JSON](https://opengauntlet.com/data/turns.json)
 - [Runtimes research JSON](https://opengauntlet.com/data/runtimes.json)
 - [Hardware reference JSON](https://opengauntlet.com/data/hardware-catalog.json)
@@ -35,3 +38,4 @@
 - [Wake word research JSON](https://opengauntlet.com/data/wakeword.json)
 - [Speech enhancement research JSON](https://opengauntlet.com/data/enhancement.json)
 - [TTS research JSON](https://opengauntlet.com/data/tts.json)
+- [TTS lab JSON](https://opengauntlet.com/data/tts-lab.json)

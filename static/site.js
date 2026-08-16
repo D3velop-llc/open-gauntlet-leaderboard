@@ -512,7 +512,7 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
       : columnRange(models, c.key);
   }
 
-  const modelPage = (window.OG && window.OG.modelPage) || "model.html";
+  const modelPage = (slug) => `${(window.OG && window.OG.modelBase) || "/models/"}${encodeURIComponent(slug)}/`;
   const thead = el("thead");
   // provenance group row: which columns the judge scored vs measured locally. Suppressed in
   // simple view — with five columns the "How it scored"/"Speed" grouping spans nothing useful.
@@ -543,7 +543,7 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
     if (c.key === "rank") return el("td", { class: "rank" }, "");           // filled after sort
     if (c.key === "model") {
       const td = el("td", { class: "model" },
-        el("a", { href: `${modelPage}?slug=${encodeURIComponent(row.slug)}`, text: row.display_name }),
+        el("a", { href: modelPage(row.slug), text: row.display_name }),
         el("span", { class: "slug", text: row.slug }),
         el("span", { class: "cfg", text: cfgLabel(row) }));
       // A model is provisional when its judging is incomplete — it still appears (hiding it
@@ -825,8 +825,8 @@ function renderPickCard(models) {
   const withSpeed = tier.filter((m) => m.tps_2k != null);
   const fastest = withSpeed.length === tier.length
     ? withSpeed.reduce((a, b) => (b.tps_2k > a.tps_2k ? b : a)) : null;
-  const modelPage = (window.OG && window.OG.modelPage) || "model.html";
-  const link = (m) => el("a", { href: `${modelPage}?slug=${encodeURIComponent(m.slug)}`, text: m.display_name });
+  const modelPage = (slug) => `${(window.OG && window.OG.modelBase) || "/models/"}${encodeURIComponent(slug)}/`;
+  const link = (m) => el("a", { href: modelPage(m.slug), text: m.display_name });
 
   // One card per way of choosing, each evidenced by a line the model actually wrote
   // (`row.quote`, exported by site_gen._pick_quote) rather than by numbers alone.
@@ -1086,7 +1086,7 @@ function sourceLink(url, cls) {
 function renderVerdictStrip(models) {
   const mount = document.getElementById("verdict-strip");
   if (!mount) return;
-  const modelPage = (window.OG && window.OG.modelPage) || "model.html";
+  const modelPage = (slug) => `${(window.OG && window.OG.modelBase) || "/models/"}${encodeURIComponent(slug)}/`;
   // A provisional model has no standing in a ranking. Drawn faintly it would
   // still read as a rank, so it is not drawn at all.
   const raw = (models || []).filter((m) => m.normalized_elo != null && m.ranked !== false);
@@ -1156,7 +1156,7 @@ function renderVerdictStrip(models) {
       const fill = el("span", { class: "fp-cb-fill" });
       fill.style.width = (100 * x.rd.p / top) + "%";
       const nm = el("a", { class: "fp-cb-n mono",
-                           href: `${modelPage}?slug=${encodeURIComponent(x.q.m.slug)}` },
+                           href: modelPage(x.q.m.slug) },
         el("span", { text: head }));
       if (tail) nm.appendChild(el("span", { class: "fp-tl", text: " " + tail }));
       bars.append(nm, el("span", { class: "fp-cb-t" }, fill),
@@ -1218,7 +1218,7 @@ function renderVerdictStrip(models) {
 
     const plot = el("div", { class: "fp-plot" }, cap, tick);
 
-    const name = el("a", { class: "fp-name", href: `${modelPage}?slug=${encodeURIComponent(p.m.slug)}` },
+    const name = el("a", { class: "fp-name", href: modelPage(p.m.slug) },
       el("span", { class: "fp-nm", text: head }));
     if (tail) name.appendChild(el("span", { class: "fp-tl", text: " " + tail }));
 
@@ -1343,7 +1343,7 @@ function renderShowcase(showcase) {
   const forks = (showcase && showcase.forks) || [];
   if (!forks.length) { mount.remove(); return; }      // degrade: the board still renders
   const judge = (showcase.judge_model || "the judge").replace(/^[a-z0-9_-]+\//i, "");
-  const modelPage = (window.OG && window.OG.modelPage) || "model.html";
+  const modelPage = (slug) => `${(window.OG && window.OG.modelBase) || "/models/"}${encodeURIComponent(slug)}/`;
   let idx = 0;
 
   const draw = () => {
@@ -1372,7 +1372,7 @@ function renderShowcase(showcase) {
     const choose = (picked) => {
       const strong = sides[0].score_0_20 >= sides[1].score_0_20 ? 0 : 1;
       const card = (s, i) => el("div", { class: "rv-side" + (i === picked ? " picked" : "") },
-        el("h4", {}, el("a", { href: `${modelPage}?slug=${encodeURIComponent(s.slug)}`, text: s.display_name })),
+        el("h4", {}, el("a", { href: modelPage(s.slug), text: s.display_name })),
         // Several display names already carry the quant in parentheses — don't say it twice.
         el("p", { class: "rv-meta", text: [
           s.params_total_b ? `${s.params_total_b}B` : null,
@@ -1617,7 +1617,9 @@ function perfChart(canvas, curve, field, color, unit) {
 
 async function initModel() {
   const mount = $("#model");
-  const slug = new URLSearchParams(location.search).get("slug");
+  const slug = (window.OG && window.OG.modelSlug)
+    || document.body.dataset.modelId
+    || new URLSearchParams(location.search).get("slug");
   if (!slug) { fail(mount, "No model selected. Return to the leaderboard and pick a model."); return; }
   try {
     // The model-detail export (data/models/<slug>.json) carries this model's own
@@ -1626,17 +1628,24 @@ async function initModel() {
     // initCompare already uses (leaderboard.json + a per-model doc in one page load) — not a
     // new/parallel data path, the same JSON endpoint site.js already fetches elsewhere.
     const [d, lb] = await Promise.all([
-      getJSON(`data/models/${encodeURIComponent(slug)}.json`),
-      getJSON("data/leaderboard.json").catch(() => null),
+      getJSON(`${(window.OG && window.OG.assetRoot) || ""}data/models/${encodeURIComponent(slug)}.json`),
+      getJSON(`${(window.OG && window.OG.assetRoot) || ""}data/leaderboard.json`).catch(() => null),
     ]);
     window.OG_HARDWARE = (lb && lb.hardware) || window.OG_HARDWARE || [];
-    $("[data-model-name]").textContent = d.display_name || slug;
+    const modelName = d.display_name || slug;
+    $("[data-model-name]").textContent = (window.OG && window.OG.modelSlug)
+      ? `${modelName} conversational AI benchmark`
+      : modelName;
     // Under the headline, above the slug line: the reader has just been told
     // WHICH model this is, and the next question is where it came from.
     const srcMount = $("[data-model-source]");
-    if (srcMount) srcMount.replaceChildren(sourceLink(d.source_url) || "");
+    const leaderboardRow = lb && (lb.models || []).find((row) => row.slug === slug);
+    const sourceUrl = d.source_url || (leaderboardRow && leaderboardRow.source_url);
+    if (srcMount) srcMount.replaceChildren(sourceLink(sourceUrl) || "");
     $("[data-model-slug]").textContent = slug;
-    document.title = `${d.display_name || slug} — OpenGauntlet`;
+    document.title = (window.OG && window.OG.modelSlug)
+      ? `${modelName} benchmark results | OpenGauntlet`
+      : `${modelName} — OpenGauntlet`;
     mount.replaceChildren();   // clear the "Loading…" placeholder
 
     const grid = el("div", { class: "grid-2 row-in" }, critCard(d.criteria || []), categoryCard(d.category_breakdown || []));
@@ -4307,8 +4316,8 @@ async function initMatrix(key) {
   state.onPick = rerender;
   rerender();
   renderTtsRatingCoverage($(`#${key}-rating-coverage`), rows);
-  if (key === "tts") renderTtsLab($("#tts-lab"), doc.lab);
-  if (key === "asr") renderAsrLab($("#asr-lab"), doc.lab);
+  if (key === "tts" && $("#tts-lab")) renderTtsLab($("#tts-lab"), doc.lab);
+  if (key === "asr" && $("#asr-lab")) renderAsrLab($("#asr-lab"), doc.lab);
   renderTtsDateline($(`#${key}-dateline`), doc);
   renderTtsCorrections($(`#${key}-corrections`), doc.corrections);
   renderTtsGaps($(`#${key}-gaps`), doc.gaps);
@@ -4319,6 +4328,21 @@ async function initMatrix(key) {
   if (foot && doc.compiled) foot.textContent = `${doc.compiled} · ${key} edition ${doc.edition}`;
   restoreHashTarget();
   return true;
+}
+
+async function initEvidenceLab(key) {
+  const mount = $(`#${key}-lab`);
+  if (!mount) return;
+  try {
+    const doc = await getJSON(`data/${key}-lab.json`);
+    if (!doc.lab) throw new Error("Missing lab evidence");
+    if (key === "tts") renderTtsLab(mount, doc.lab);
+    if (key === "asr") renderAsrLab(mount, doc.lab);
+    const foot = $("[data-generated-at]");
+    if (foot && doc.lab.measured_at) foot.textContent = `${doc.lab.measured_at} · ${key.toUpperCase()} Lab`;
+  } catch (e) {
+    fail(mount, "Those measured results could not be loaded.");
+  }
 }
 
 /* ---------------- Utilities: three matrices, one page ---------------------
@@ -4718,8 +4742,14 @@ function initGlossary(page) {
 function initNavMore() {
   const drops = document.querySelectorAll("details.nav-more");
   if (!drops.length) return;
+  drops.forEach((drop) => drop.addEventListener("toggle", () => {
+    if (drop.open) drops.forEach((other) => { if (other !== drop) other.open = false; });
+  }));
   document.addEventListener("click", (e) => {
     drops.forEach((d) => { if (d.open && !d.contains(e.target)) d.open = false; });
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") drops.forEach((d) => { d.open = false; });
   });
 }
 
@@ -4749,10 +4779,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   if (page === "leaderboard") initLeaderboard();
+  else if (page === "tts-lab") initEvidenceLab("tts");
+  else if (page === "asr-lab") initEvidenceLab("asr");
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
-  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory" || page === "quantization" || page === "llms") initMatrix(page);
+  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory" || page === "quantization" || page === "llms" || page === "speakerid" || page === "wakeword" || page === "enhancement") initMatrix(page);
   else if (page === "utilities") initUtilitiesPage();
   else if (page === "hardware") initHardwareTable();
 });

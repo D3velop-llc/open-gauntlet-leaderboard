@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0B0E14">
+  <meta name="description" content="Compare speech enhancement, noise suppression, denoising, dereverberation, and acoustic echo cancellation tools for realtime voice systems.">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <title>Speech Enhancement, Noise Suppression &amp; AEC Compared | OpenGauntlet</title>
+  <link rel="canonical" href="https://opengauntlet.com/speech-enhancement.html">
+  <link rel="alternate" type="application/rss+xml" title="OpenGauntlet updates" href="https://opengauntlet.com/feed.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OpenGauntlet">
+  <meta property="og:title" content="Speech Enhancement, Noise Suppression &amp; AEC Compared">
+  <meta property="og:description" content="Compare speech enhancement, noise suppression, denoising, dereverberation, and acoustic echo cancellation tools for realtime voice systems.">
+  <meta property="og:url" content="https://opengauntlet.com/speech-enhancement.html">
+  <meta property="og:image" content="https://opengauntlet.com/static/img/social-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="OpenGauntlet — local AI, measured">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Speech Enhancement, Noise Suppression &amp; AEC Compared">
+  <meta name="twitter:description" content="Compare speech enhancement, noise suppression, denoising, dereverberation, and acoustic echo cancellation tools for realtime voice systems.">
+  <meta name="twitter:image" content="https://opengauntlet.com/static/img/social-card.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Speech Enhancement, Noise Suppression & AEC Compared",
+    "url": "https://opengauntlet.com/speech-enhancement.html",
+    "description": "Compare speech enhancement, noise suppression, denoising, dereverberation, and acoustic echo cancellation tools for realtime voice systems.",
+    "dateModified": "2026-08-16",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "OpenGauntlet",
+      "url": "https://opengauntlet.com/"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "D3velop",
+      "url": "https://d3velop.com/"
+    }
+  }
+  </script>
+
+  <link rel="icon" type="image/png" href="static/img/bot-favicon.png">
+  <link rel="apple-touch-icon" href="static/img/bot-head.png">
+  <link rel="stylesheet" href="static/site.css?v=598fb22349">
+
+</head>
+
+<body data-page="enhancement" data-kind="surveyed">
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="/"><canvas class="hero-viz topbar-viz" data-viz="words" aria-hidden="true"></canvas><span class="slash">//</span>open<em>gauntlet</em></a>
+      <nav class="nav" aria-label="Primary navigation">
+        <details class="nav-more nav-topic"><summary title="Listening — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Listening</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/asr.html"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">14 local results</span></a>
+            <a href="/asr-survey.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">106 sourced systems</span></a>
+          </div>
+        </details>
+        <a href="/turns.html" title="Turns — turn-taking: whose turn it is"><span class="ev hollow" aria-hidden="true"></span>Turns</a>
+        <details class="nav-more nav-topic"><summary title="Words — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Words</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">37 benchmarked models</span></a>
+            <a href="/llms.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">51 sourced models</span></a>
+          </div>
+        </details>
+        <details class="nav-more nav-topic"><summary title="Voices — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Voices</summary>
+          <div class="nav-more-panel nav-evidence-panel">
+            <a href="/tts.html"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">16 local results</span></a>
+            <a href="/tts-survey.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">168 sourced systems</span></a>
+          </div>
+        </details>
+        <a href="/runtimes.html" title="Runtimes — inference engines: how it runs"><span class="ev hollow" aria-hidden="true"></span>Runtimes</a>
+        <a href="/memory.html" title="Memory — retrieval systems: what it remembers"><span class="ev hollow" aria-hidden="true"></span>Memory</a>
+        <details class="nav-more"><summary class="active">Reference</summary>
+          <div class="nav-more-panel">
+            <a href="/hardware.html">What fits where<span class="nm-sub">hardware</span></a>
+            <a href="/quantization.html">How models get compressed<span class="nm-sub">quantization</span></a>
+            <a href="/orchestrators.html">Wiring it together<span class="nm-sub">orchestrators</span></a>
+            <a href="/utilities.html" class="active" aria-current="page">The parts around the edges<span class="nm-sub">utilities</span></a>
+          </div>
+        </details>
+        <details class="nav-more"><summary>About</summary>
+          <div class="nav-more-panel">
+            <a href="/about.html">About OpenGauntlet<span class="nm-sub">ownership &amp; standards</span></a>
+            <a href="/methodology.html">How it works<span class="nm-sub">methodology</span></a>
+            <a href="/compare.html">Head to head<span class="nm-sub">two models, same chat</span></a>
+            <a href="/tts-guide.html">Reading the voice numbers<span class="nm-sub">guide</span></a>
+            <a href="/tts-legal.html">What you may ship<span class="nm-sub">voice licences</span></a>
+          </div>
+        </details>
+      </nav>
+    </div>
+  </header>
+
+
+  <div class="wrap">
+    <section class="hero hero-lede has-bot bot-left">
+      <img class="hero-bot-side" src="static/img/reference.webp" alt=""
+           width="264" height="264" loading="eager" decoding="async">
+      <div class="eyebrow"><span class="tick">//</span> surveyed, not benchmarked</div>
+      <h1>Speech enhancement, noise suppression, and <span class="warm">echo cancellation compared</span></h1>
+      <p class="lede">A sourced comparison of realtime speech enhancement, denoising, dereverberation, and acoustic echo cancellation tools—the audio cleanup that happens before ASR or a voice agent sees the microphone.</p>
+      <p class="subnav seo-topic-links"><a href="speaker-verification.html">Speaker verification</a><span class="sep">·</span><a href="wake-word-detection.html">Wake-word detection</a><span class="sep">·</span><a href="speech-enhancement.html">Speech enhancement</a><span class="sep">·</span><a href="utilities.html">All utilities</a></p>
+    </section>
+
+
+  </div>
+
+  <div class="wrap wrap-wide">
+    <section id="enhancement-panel" class="block">
+      <p class="scope-line">
+        <span class="ev hollow" aria-hidden="true"></span>
+        <strong>Surveyed, not benchmarked.</strong> Nothing on this page was measured by
+        OpenGauntlet's judge pipeline.
+        <button type="button" class="linkish" data-dialog="scope-enhancement">What that means &rarr;</button>
+      </p>
+
+      <dialog id="scope-enhancement" class="og-dialog">
+        <form method="dialog"><button class="dialog-x" aria-label="Close">&times;</button></form>
+        <h3>How to read this section</h3>
+        <p class="prose">
+          <strong>None of this is scored by the judge pipeline.</strong> This section is a
+          <strong>sourced survey</strong> of speech-enhancement and echo-cancellation tools, not a
+          trial. Where a claim could not be verified against a primary source, it says so rather
+          than smoothing it over.
+        </p>
+      </dialog>
+
+      <div class="section-head">
+        <span class="idx">//</span>
+        <h2>Why the mic sounds bad</h2>
+        <span class="note">
+          Filter by kind, pick the columns you care about, search any field, click a heading to
+          sort. Every row carries the one thing a buyer would otherwise find out too late.
+        </span>
+        <div id="enhancement-dateline" class="tts-dateline"></div>
+      </div>
+
+      <div id="enhancement-controls"></div>
+      <div id="enhancement-compare"></div>
+      <div id="enhancement-matrix"><div class="state">Loading…</div></div>
+      <div id="enhancement-rating-coverage" class="tts-rating-coverage"></div>
+
+      <div class="legend tts-legend">
+        <span><span class="lic-key lic-open" aria-hidden="true"></span> commercial-safe weights</span>
+        <span><span class="lic-key lic-warn" aria-hidden="true"></span> permissive, with a catch</span>
+        <span><span class="lic-key lic-bad" aria-hidden="true"></span> <strong>not</strong> usable commercially</span>
+        <span><span class="lic-key lic-closed" aria-hidden="true"></span> proprietary service</span>
+        <span><span class="lic-key lic-dead" aria-hidden="true"></span> discontinued</span>
+      </div>
+
+      <div id="enhancement-corrections"></div>
+      <div id="enhancement-gaps"></div>
+    </section>
+  </div>
+  </div>
+
+
+  <aside class="community-cta" aria-labelledby="community-title">
+    <div class="wrap community-cta-inner">
+      <div>
+        <div class="eyebrow"><span class="tick">//</span> help choose the next run</div>
+        <h2 id="community-title">What should face the gauntlet next?</h2>
+        <p>Request a model, inspect the published results, or flag a claim that needs another look.</p>
+      </div>
+      <div class="community-actions">
+        <a class="cta cta-primary" href="https://github.com/D3velop-llc/open-gauntlet-leaderboard/issues/new?title=Model%20request%3A%20" target="_blank" rel="noopener">Request a model <span aria-hidden="true">↗</span></a>
+        <a class="cta" href="data/leaderboard.json">Download results</a>
+        <a class="cta cta-quiet" href="https://github.com/D3velop-llc/open-gauntlet-leaderboard/issues/new?title=Correction%3A%20" target="_blank" rel="noopener">Report a correction <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="foot">
+    <div class="wrap">
+      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. The Words leaderboard and scoped Listening and Voices labs are measured here; their Surveyed pages, plus Turns, Runtimes, Memory, Hardware Reference, Orchestrators, Quantization, and Utilities, are sourced research catalogs.</span>
+      <nav class="foot-nav">
+        <a href="asr.html">Listening</a><span class="sep">·</span>
+        <a href="turns.html">Turns</a><span class="sep">·</span>
+        <a href="/">Words</a><span class="sep">·</span>
+        <a href="llms.html">The wider field</a><span class="sep">·</span>
+        <a href="tts.html">Voices</a><span class="sep">·</span>
+        <a href="runtimes.html">Runtimes</a><span class="sep">·</span>
+        <a href="memory.html">Memory</a><span class="sep">·</span>
+        <a href="hardware.html">What fits where</a><span class="sep">·</span>
+        <a href="orchestrators.html">Wiring it together</a><span class="sep">·</span>
+        <a href="quantization.html">How models get compressed</a><span class="sep">·</span>
+        <a href="utilities.html">The parts around the edges</a><span class="sep">·</span>
+        <a href="methodology.html">How it works</a><span class="sep">·</span>
+        <a href="compare.html">Head to head</a><span class="sep">·</span>
+        <a href="about.html">About</a><span class="sep">·</span>
+        <a href="data-license.html">Data license</a><span class="sep">·</span>
+        <a href="feed.xml">Updates</a><span class="sep">·</span>
+        <a href="https://github.com/D3velop-llc/open-gauntlet-leaderboard" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+
+      <span class="foot-prov">Updated <span data-generated-at>2026-08-16 15:42 UTC</span> · <a href="methodology.html#reproducibility">version details</a></span>
+    </div>
+  </footer>
+
+
+  <script src="static/site.js?v=0db449f764" defer></script>
+</body>
+</html>
