@@ -2,8 +2,8 @@
   "provider": "moss-tts-realtime",
   "config": {
     "source_revision": "58b20a0d5fcc6766658d50967a90a9d890009a46",
-    "model_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-tts-realtime",
-    "codec_model_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-audio-tokenizer",
+    "model_path": "~/tts-bakeoff/checkpoints/moss-tts-realtime",
+    "codec_model_path": "~/tts-bakeoff/checkpoints/moss-audio-tokenizer",
     "attention": "sdpa",
     "compile": "on",
     "decode_chunk_frames": 6,

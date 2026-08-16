@@ -2,7 +2,7 @@
   "schema_version": 1,
   "started_at": "2026-08-10T04:17:27.815875+00:00",
   "base_url": "http://127.0.0.1:8083",
-  "prompt_audio": "/home/imprynt/models/higgs-ref/brent.wav",
+  "prompt_audio": "~/models/higgs-ref/brent.wav",
   "warmups": 2,
   "runs": 5,
   "modes": [
@@ -37,9 +37,9 @@
   "health": {
     "status": "ok",
     "target_sr": 24000,
-    "model_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-tts-realtime",
-    "tokenizer_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-tts-realtime",
-    "codec_model_path": "/home/imprynt/tts-bakeoff/checkpoints/moss-audio-tokenizer",
+    "model_path": "~/tts-bakeoff/checkpoints/moss-tts-realtime",
+    "tokenizer_path": "~/tts-bakeoff/checkpoints/moss-tts-realtime",
+    "codec_model_path": "~/tts-bakeoff/checkpoints/moss-audio-tokenizer",
     "device": "cuda:0",
     "attn_impl": "sdpa"
   },

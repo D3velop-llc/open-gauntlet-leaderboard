@@ -48,8 +48,8 @@ fixed it.
 Source checkouts: Fun-ASR `53a56d80667320b44a7dd779f5bf8c024b6c30a8`;
 MOSS-Transcribe-Diarize `0e3d1403fd8f1f1c674e883ece96b9f630794ebe`.
 Exact package freezes and the complete production TTS unit were captured on the Omen under
-`/home/imprynt/asr-bakeoff/setup-receipts` and
-`/home/imprynt/asr-bakeoff/results/current/deployment-receipt.json`.
+`~/asr-bakeoff/setup-receipts` and
+`~/asr-bakeoff/results/current/deployment-receipt.json`.
 
 ## Morning promotion run
 

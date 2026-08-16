@@ -3,7 +3,7 @@
 Status: **measured component run; listening review required before ranking**
 Run date: 2026-08-09
 Harness: `tools/tts_bakeoff/`
-Remote evidence root: `/home/imprynt/tts-bakeoff/results`
+Remote evidence root: `~/tts-bakeoff/results`
 
 This run compares five local TTS systems on the same RTX 5090, statements, and
 Brent voice reference. It measures model-load and complete-waveform generation,
@@ -136,7 +136,7 @@ RTF alone cannot identify the cause.
 - Full manifests, package freezes, GPU telemetry, per-sample measurements,
   checkpoint file hashes, and WAVs remain under the remote evidence root.
 - A deterministic blinded first-repeat bundle is ready at
-  `/home/imprynt/tts-bakeoff/results/listening-20260809`; complete
+  `~/tts-bakeoff/results/listening-20260809`; complete
   `ratings.csv` before opening `DO_NOT_OPEN_UNTIL_RATED-key.json`.
 
 Primary setup sources: [Qwen3-TTS](https://github.com/QwenLM/Qwen3-TTS),

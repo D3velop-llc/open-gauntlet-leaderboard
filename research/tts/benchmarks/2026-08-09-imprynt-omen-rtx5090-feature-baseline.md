@@ -4,7 +4,7 @@ Status: **blind listening complete; single-rater experiment, not promotion proof
 Run date: 2026-08-09
 Host: `imprynt-omen`, NVIDIA RTX 5090
 Harness: `tools/tts_bakeoff/`
-Remote evidence root: `/home/imprynt/tts-bakeoff/results/v2`
+Remote evidence root: `~/tts-bakeoff/results/v2`
 
 This second set corrects the main limitation of the initial component run: it
 tests semantic emotion, documented model controls, whole-turn generation,
@@ -73,7 +73,7 @@ readiness attempt `20260809T173435Z-higgs_v3` is intentionally retained as
 ## Listening gate
 
 The active anonymous bundle is
-`/home/imprynt/tts-bakeoff/results/listening-features-20260809`. It contains 8
+`~/tts-bakeoff/results/listening-features-20260809`. It contains 8
 comparisons and 37 WAVs. Ratings begin at 0/37 and autosave atomically to that
 bundle's `listening-ratings.json`. The completed first-round ratings remain in
 `listening-20260809` and were not modified.

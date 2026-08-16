@@ -2,77 +2,77 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://opengauntlet.com/</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/compare.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/methodology.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/llms.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/asr.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/turns.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/tts.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/tts-guide.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/tts-legal.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/runtimes.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/hardware.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/orchestrators.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/memory.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/quantization.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://opengauntlet.com/utilities.html</loc>
-    <lastmod>2026-08-02</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <priority>0.6</priority>
   </url>
 </urlset>

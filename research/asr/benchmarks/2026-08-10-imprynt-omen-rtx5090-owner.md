@@ -184,7 +184,7 @@ wall time, RTF, VRAM, and the lane boundary for all 14 systems.
 The reusable harness is under `tools/asr_bakeoff`. On the Omen, the immutable run directory is:
 
 ```text
-/home/imprynt/asr-bakeoff/results/owner-20260810-jabra-usb
+~/asr-bakeoff/results/owner-20260810-jabra-usb
 ```
 
 Key artifacts are `matched-manifest.jsonl`, seven original per-model JSONL files,

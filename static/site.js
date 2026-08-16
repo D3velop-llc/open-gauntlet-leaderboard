@@ -28,6 +28,14 @@ const $ = (sel, root = document) => root.querySelector(sel);
    it, so more speed buys nothing you'd notice in conversation. */
 const READING_WPS = 4;
 
+/* The wait-side counterpart to READING_WPS, and the same kind of claim: a threshold that makes
+   a raw millisecond figure mean something to a lay reader, not a quality bar. Natural
+   turn-taking gaps in human speech sit near 200 ms, and a pause past roughly a second stops
+   reading as a reply and starts reading as a hang. So this marks "still feels like
+   conversation" — it is deliberately generous, and NOT a claim that anything under it is
+   indistinguishable from a person. */
+const CONVERSATIONAL_TTFT_MS = 1000;
+
 /* ---- formatting --------------------------------------------------------- */
 const fmt = {
   n1: (v) => (v == null ? "—" : Number(v).toFixed(1)),
@@ -252,7 +260,13 @@ const COLS = [
   { key: "avg_reply_words", label: "Reply length", type: "num", group: "How it scored",
     title: "Average words per assistant reply. This is STYLE, not quality, and is NOT part of "
          + "the ranking — for a companion or roleplay app you may prefer longer replies." },
-  { key: "ttft_2k_ms", label: "Wait for 1st word", type: "num", group: "Speed",
+  // In the DEFAULT view, not just the technical one. This board exists to pick a model for a
+  // voice companion, and time-to-first-word is the number that decides whether a model can
+  // hold a conversation at all — a reasoning model measured here waits 35s before it starts
+  // speaking while posting a perfectly respectable words/sec once it does. Showing throughput
+  // by default and hiding the wait let that model read as "fast". Fill rate is 31/32, the same
+  // as tps_2k, so it clears the bar for a default column on coverage as well as relevance.
+  { key: "ttft_2k_ms", label: "Wait for 1st word", type: "num", group: "Speed", simple: true,
     title: "How long before it starts replying to a long (~2,000-word) prompt. Lower is better. "
          + "'—' = not speed-tested yet." },
   { key: "tps_2k", label: "Speed", type: "num", group: "Speed", simple: true,
@@ -355,6 +369,26 @@ function speedAllDisplay(row) {
   return out.sort((a, b) => b.tps - a.tps);
 }
 
+/* Every measured machine's time-to-first-word, QUICKEST first. The mirror of
+   speedAllDisplay, and it exists for a sharper version of the same reason: the identical
+   weights measured 122 ms with reasoning off and 35,334 ms with it on, so a bare "35s" with
+   no machine or recipe attached is not a number a reader can use. Same omission rule —
+   doesnt_fit and not_measured are left out here and reported in the technical view. */
+function waitAllDisplay(row) {
+  const pbh = row.perf_by_hardware || {};
+  const out = [];
+  for (const [id, entry] of Object.entries(pbh)) {
+    if (entry && entry.state === "measured" && entry.ttft_2k_ms != null) {
+      out.push({ id, label: hwShortName(id), ttft: entry.ttft_2k_ms });
+    }
+  }
+  // Pre-per-hardware exports carry only the dgx-spark headline fields; keep them rendering.
+  if (!out.length && row.ttft_2k_ms != null) {
+    out.push({ id: "dgx-spark", label: hwShortName("dgx-spark"), ttft: row.ttft_2k_ms });
+  }
+  return out.sort((a, b) => a.ttft - b.ttft);   // lower is better, unlike speed
+}
+
 /* Measured words/sec on one machine, or null when it wasn't measured or doesn't fit. */
 function speedOn(row, hardwareId) {
   const e = (row.perf_by_hardware || {})[hardwareId];
@@ -449,11 +483,22 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
              + "arrives faster than you can read it. Machines a model doesn't fit on are "
              + "left out — switch to the technical view to see those.",
       };
+      // Same treatment for the wait, and for a stronger reason: one machine's TTFT is not
+      // just hard to read alone, it is actively misleading across recipes.
+      if (c.key === "ttft_2k_ms") return {
+        key: "wait_all", label: "Wait for 1st word", type: "multi", group: "", simple: true,
+        title: "How long the model stays silent before it starts replying, on each machine we "
+             + "measured it on. Under about a second feels like conversation; several seconds "
+             + "does not, however fast it writes afterwards. Machines a model doesn't fit on "
+             + "are left out — switch to the technical view to see those.",
+      };
       return c;
     });
     // Order explicitly rather than inheriting COLS order, which puts "Runs on" ahead of the
     // rating. The answer belongs next to the name; hardware and speed are the follow-up.
-    const order = ["rank", "model", "elo_bar", "vram", "speed_all"];
+    // Wait precedes Speed: it is the one that decides whether the model is usable by voice,
+    // and reading them in that order stops a big words/sec figure from framing the wait.
+    const order = ["rank", "model", "elo_bar", "vram", "wait_all", "speed_all"];
     cols = order.map((k) => cols.find((c) => c.key === k)).filter(Boolean);
   }
   // Rows the top-tier confidence intervals cannot separate. In simple view these are shaded
@@ -568,6 +613,22 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
       return td;
     }
 
+    // Every measured machine's wait in one cell, quickest first. Reuses the .speeds styling;
+    // the "quick" mark inverts (LOWER is better here) and keys off CONVERSATIONAL_TTFT_MS.
+    if (c.key === "wait_all") {
+      const all = waitAllDisplay(row);
+      if (!all.length) return el("td", { class: "speeds" }, "—");
+      const td = el("td", { class: "speeds" });
+      all.forEach((w, i) => {
+        if (i) td.appendChild(el("span", { class: "sp-sep", text: "·" }));
+        td.appendChild(el("span",
+          { class: "sp" + (w.ttft <= CONVERSATIONAL_TTFT_MS ? " sp-quick" : "") },
+          el("span", { class: "sp-hw", text: w.label }),
+          el("span", { class: "sp-v", text: fmt.secs(w.ttft) })));
+      });
+      return td;
+    }
+
     // Simple view's headline: a bar, not a four-digit rating. Length is scaled across the
     // board's own Elo range; the number rides along as screen-reader text so the value is
     // never colour/length-only.
@@ -674,6 +735,14 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
       // The cell leads with the fastest machine, so the sort must agree with what's on screen.
       if (sortKey === "speed_all") {
         const best = (m) => { const s = speedAllDisplay(m); return s.length ? s[0].tps : null; };
+        x = best(a); y = best(b);
+      }
+      // waitAllDisplay is sorted ASCENDING (quickest first), so [0] is already the best wait.
+      // Negated so that one descending click puts the quickest responders on top, matching
+      // what every other "better" column does — an un-negated wait would rank the 35-second
+      // model first and read as though it had won something.
+      if (sortKey === "wait_all") {
+        const best = (m) => { const w = waitAllDisplay(m); return w.length ? -w[0].ttft : null; };
         x = best(a); y = best(b);
       }
       if (sortKey === "model") { x = a.display_name; y = b.display_name; }

@@ -77,5 +77,5 @@
     "qwen_low_memory_40s_jsonl": "a47c97d21cd9862a0cd1664f879b045fda662884ee849ee0b463631b9ff3ca9f",
     "qwen_low_memory_80s_jsonl": "21f776f4df12945c4078138ba9d72a907c7199ce3d5bd736c97e9585a1b366cb"
   },
-  "remote_run_directory": "/home/imprynt/asr-bakeoff/results/owner-20260810-jabra-usb/streaming-finalists"
+  "remote_run_directory": "~/asr-bakeoff/results/owner-20260810-jabra-usb/streaming-finalists"
 }
