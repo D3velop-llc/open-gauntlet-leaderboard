@@ -1029,6 +1029,15 @@
       }
     ]
   },
+  "corpus_quality": {
+    "transcripts": 90,
+    "truncated": 15,
+    "empty_reply": 13,
+    "long_cut": 2,
+    "scenarios_covered": 30,
+    "scenarios_in_pack": 30,
+    "scenario_complete": true
+  },
   "sample_transcripts": [
     {
       "scenario_id": "bs_conceal_harmful",
