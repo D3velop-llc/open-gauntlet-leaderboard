@@ -639,7 +639,8 @@ function gitDate(file) {
   try {
     const dirty = execFileSync("git", ["status", "--porcelain", "--", file], { cwd: ROOT, encoding: "utf8" }).trim();
     if (dirty) return TODAY;
-    return execFileSync("git", ["log", "-1", "--format=%cs", "--", file], { cwd: ROOT, encoding: "utf8" }).trim() || TODAY;
+    const committedAt = execFileSync("git", ["log", "-1", "--format=%cI", "--", file], { cwd: ROOT, encoding: "utf8" }).trim();
+    return committedAt ? new Date(committedAt).toISOString().slice(0, 10) : TODAY;
   } catch {
     return TODAY;
   }
