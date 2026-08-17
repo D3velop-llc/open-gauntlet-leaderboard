@@ -3,7 +3,10 @@
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
-const root = process.cwd();
+const workspace = process.cwd();
+const root = statSync(join(workspace, "site"), { throwIfNoEntry: false })?.isDirectory()
+  ? join(workspace, "site")
+  : workspace;
 const errors = [];
 
 function walk(dir) {

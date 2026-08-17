@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 
-const ROOT = process.cwd();
+const WORKSPACE = process.cwd();
+const ROOT = existsSync(join(WORKSPACE, "site", "index.html"))
+  ? join(WORKSPACE, "site")
+  : WORKSPACE;
 const ORIGIN = "https://opengauntlet.com";
 const TODAY = new Date().toISOString().slice(0, 10);
 const changed = new Set();
@@ -128,17 +132,28 @@ const utilityPages = {
 };
 
 function read(file) {
-  return readFileSync(join(ROOT, file), "utf8");
+  return readFileSync(join(ROOT, file), "utf8").replace(/\r\n/g, "\n");
 }
 
 function write(file, content) {
   const target = join(ROOT, file);
-  const normalized = content.replace(/\r\n/g, "\n").replace(/[ \t]+$/gm, "");
+  const normalized = content.replace(/\r\n/g, "\n").replace(/[ \t]+$/gm, "").replace(/\n+$/, "\n");
   if (existsSync(target) && readFileSync(target, "utf8").replace(/\r\n/g, "\n") === normalized) return;
   mkdirSync(dirname(target), { recursive: true });
   writeFileSync(target, normalized, "utf8");
   changed.add(file.replace(/\\/g, "/"));
 }
+
+if (ROOT !== WORKSPACE) {
+  for (const name of ["site.css", "site.js"]) {
+    write(`static/${name}`, readFileSync(join(WORKSPACE, "src", "open_gauntlet", "templates", "static", name), "utf8"));
+  }
+}
+
+const assetVersions = Object.fromEntries(["site.css", "site.js"].map((name) => [
+  name,
+  createHash("sha256").update(readFileSync(join(ROOT, "static", name), "utf8").replace(/\r\n/g, "\n")).digest("hex").slice(0, 10),
+]));
 
 const evidencePairs = {
   asr: {
@@ -315,6 +330,26 @@ home = home.replace('"description": "Locally hosted open-weight language models 
 home = home.replace(/"dateModified": "[^"]+"/, `"dateModified": "${TODAY}"`);
 write("index.html", home);
 
+let llmsTxt = read("llms.txt");
+llmsTxt = llmsTxt
+  .replace(/(?:\n- \[ASR lab JSON\]\(https:\/\/opengauntlet\.com\/data\/asr-lab\.json\))+/g, "")
+  .replace(/(?:\n- \[TTS lab JSON\]\(https:\/\/opengauntlet\.com\/data\/tts-lab\.json\))+/g, "")
+  .replace("- [Speech-to-text research](https://opengauntlet.com/asr.html): Sourced ASR system comparison.", "- [Speech-to-text measurements](https://opengauntlet.com/asr.html): Scoped local ASR experiment with disclosed method and receipts.\n- [Speech-to-text survey](https://opengauntlet.com/asr-survey.html): Sourced comparison of 106 ASR systems.")
+  .replace("- [Text-to-speech research](https://opengauntlet.com/tts.html): Sourced TTS system comparison.", "- [Text-to-speech measurements](https://opengauntlet.com/tts.html): Scoped local TTS blind-listening experiment with disclosed method and receipts.\n- [Text-to-speech survey](https://opengauntlet.com/tts-survey.html): Sourced comparison of 168 TTS systems.");
+if (!llmsTxt.includes("[ASR lab JSON]")) {
+  llmsTxt = llmsTxt.replace("- [ASR research JSON](https://opengauntlet.com/data/asr.json)", "- [ASR research JSON](https://opengauntlet.com/data/asr.json)\n- [ASR lab JSON](https://opengauntlet.com/data/asr-lab.json)");
+}
+if (!llmsTxt.includes("[TTS lab JSON]")) {
+  llmsTxt = llmsTxt.replace("- [TTS research JSON](https://opengauntlet.com/data/tts.json)", "- [TTS research JSON](https://opengauntlet.com/data/tts.json)\n- [TTS lab JSON](https://opengauntlet.com/data/tts-lab.json)");
+}
+write("llms.txt", llmsTxt);
+
+let feed = read("feed.xml");
+feed = feed
+  .replaceAll("https://opengauntlet.com/asr.html", "https://opengauntlet.com/asr-survey.html")
+  .replaceAll("https://opengauntlet.com/tts.html", "https://opengauntlet.com/tts-survey.html");
+write("feed.xml", feed);
+
 // Keep the three-topic Utilities page as a hub, but give each search intent a
 // dedicated, canonical document that loads the same governed source matrix.
 let utilityHub = read("utilities.html");
@@ -401,6 +436,33 @@ write("data-license.html", makeInfoPage("data-license.html", {
   page: "data-license", type: "WebPage", title: "OpenGauntlet Data License | OpenGauntlet",
   description: "License and attribution terms for reusing OpenGauntlet benchmark results and research data, with third-party materials explicitly excluded.",
 }, licenseBody));
+
+// The committed site/ tree can be refreshed on a development checkout whose
+// local bench.db is intentionally empty. Keep verified model-card URLs sourced
+// from the private model configs so the public artifacts do not regress to the
+// older database snapshots' null values between benchmark-machine renders.
+if (ROOT !== WORKSPACE) {
+  const configDir = join(WORKSPACE, "configs", "models");
+  const sourceBySlug = new Map();
+  for (const name of readdirSync(configDir).filter((item) => item.endsWith(".yaml"))) {
+    const yaml = readFileSync(join(configDir, name), "utf8");
+    const slug = yaml.match(/^slug:\s*(.+)$/m)?.[1]?.trim().replace(/^['"]|['"]$/g, "");
+    const sourceUrl = yaml.match(/^source_url:\s*(.+)$/m)?.[1]?.trim().replace(/^['"]|['"]$/g, "");
+    if (slug && /^https:\/\//.test(sourceUrl || "")) sourceBySlug.set(slug, sourceUrl);
+  }
+  const publicLeaderboard = JSON.parse(read("data/leaderboard.json"));
+  for (const row of publicLeaderboard.models || []) {
+    if (sourceBySlug.has(row.slug)) row.source_url = sourceBySlug.get(row.slug);
+  }
+  write("data/leaderboard.json", `${JSON.stringify(publicLeaderboard, null, 2)}\n`);
+  for (const name of readdirSync(join(ROOT, "data", "models")).filter((item) => item.endsWith(".json"))) {
+    const file = `data/models/${name}`;
+    const detail = JSON.parse(read(file));
+    if (!sourceBySlug.has(detail.slug)) continue;
+    detail.source_url = sourceBySlug.get(detail.slug);
+    write(file, `${JSON.stringify(detail, null, 2)}\n`);
+  }
+}
 
 // Legacy query URLs cannot issue HTTP redirects on GitHub Pages. A same-origin
 // location.replace is the cleanest migration path while all new internal links
@@ -556,7 +618,21 @@ function walkHtml(dir = ROOT) {
   });
 }
 
-for (const file of walkHtml()) write(file, normalizeTopNav(read(file), file));
+for (const file of walkHtml()) {
+  let html = normalizeTopNav(read(file), file);
+  html = html.replace(/static\/site\.css\?v=[a-f0-9]+/g, `static/site.css?v=${assetVersions["site.css"]}`);
+  html = html.replace(/static\/site\.js\?v=[a-f0-9]+/g, `static/site.js?v=${assetVersions["site.js"]}`);
+  write(file, html);
+}
+
+// In the private source repository the public tree lives under site/. Publish
+// the same post-build and validator beside that tree so the public README's
+// documented commands remain truthful without exposing any private sources.
+if (ROOT !== WORKSPACE) {
+  for (const name of ["seo-build.mjs", "validate-seo.mjs"]) {
+    write(`scripts/${name}`, readFileSync(join(WORKSPACE, "scripts", name), "utf8"));
+  }
+}
 
 function gitDate(file) {
   if (changed.has(file) || !existsSync(join(ROOT, file))) return TODAY;

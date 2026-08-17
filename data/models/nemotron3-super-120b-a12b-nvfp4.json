@@ -95,8 +95,8 @@
       "slug": "nemotron3-super-120b-a12b-nvfp4",
       "display_name": "NVIDIA Nemotron 3 Super 120B-A12B NVFP4",
       "family": "nemotron",
-      "params_total_b": 120.0,
-      "params_active_b": 12.0,
+      "params_total_b": 120,
+      "params_active_b": 12,
       "architecture": "moe",
       "quant": "NVFP4 modelopt mixed",
       "file": "~/models/nemotron3-super-120b-a12b-nvfp4",
@@ -108,7 +108,7 @@
       "launch_cmd": "docker run --gpus all --ipc=host --network=host -e VLLM_NVFP4_GEMM_BACKEND=marlin -e VLLM_FLASHINFER_ALLREDUCE_BACKEND=trtllm -e VLLM_USE_FLASHINFER_MOE_FP4=0 -v ~/models/nemotron3-super-120b-a12b-nvfp4:/model:ro -v ~/models/nemotron3-super-120b-a12b-nvfp4/super_v3_reasoning_parser.py:/app/super_v3_reasoning_parser.py:ro -v ~/.cache/vllm:/root/.cache/vllm vllm/vllm-openai:v0.20.0 --model /model --served-model-name nemotron3-super-120b-a12b-nvfp4 --port 8080 --async-scheduling --dtype auto --max-model-len 16384 --max-num-seqs 4 --max-num-batched-tokens 4096 --gpu-memory-utilization 0.80 --kv-cache-dtype fp8 --enable-chunked-prefill --mamba-ssm-cache-dtype float16 --moe-backend marlin --quantization fp4 --trust-remote-code --reasoning-parser-plugin /app/super_v3_reasoning_parser.py --reasoning-parser super_v3 --generation-config vllm",
       "context_window": 16384,
       "max_tokens": 1024,
-      "request_timeout_s": 300.0,
+      "request_timeout_s": 300,
       "chat_template": "default",
       "extra_body": {
         "chat_template_kwargs": {
@@ -193,22 +193,22 @@
         "mean_words": 163.7143,
         "median_words": 168,
         "pct_in_sweet_spot": 14.2857,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3848,
         "repeated_trigram_rate": 0.0988,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2606,
         "mean_words": 146.8571,
         "median_words": 156,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3969,
         "repeated_trigram_rate": 0.0848,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2607,
@@ -216,106 +216,106 @@
         "median_words": 421,
         "pct_in_sweet_spot": 14.2857,
         "pct_markdown": 57.1429,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.2962,
         "repeated_trigram_rate": 0.1017,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2608,
         "mean_words": 436.8571,
         "median_words": 413,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 42.8571,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3103,
         "repeated_trigram_rate": 0.1234,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2609,
         "mean_words": 499.8571,
         "median_words": 491,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 57.1429,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3038,
         "repeated_trigram_rate": 0.1049,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2610,
         "mean_words": 176.2857,
         "median_words": 182,
         "pct_in_sweet_spot": 14.2857,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.372,
         "repeated_trigram_rate": 0.0933,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2611,
         "mean_words": 191.4286,
         "median_words": 190,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 28.5714,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3619,
         "repeated_trigram_rate": 0.1345,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2612,
         "mean_words": 220.1429,
         "median_words": 229,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 42.8571,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3465,
         "repeated_trigram_rate": 0.1092,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2613,
         "mean_words": 250.8571,
         "median_words": 273,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3303,
         "repeated_trigram_rate": 0.1488,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2614,
         "mean_words": 239.5714,
         "median_words": 252,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 28.5714,
         "pct_ends_question": 14.2857,
         "type_token_ratio": 0.3787,
         "repeated_trigram_rate": 0.0842,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2615,
         "mean_words": 204.5714,
         "median_words": 214,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 42.8571,
         "pct_ends_question": 14.2857,
         "type_token_ratio": 0.3834,
         "repeated_trigram_rate": 0.0783,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2616,
-        "mean_words": 350.0,
+        "mean_words": 350,
         "median_words": 337,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 57.1429,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3282,
         "repeated_trigram_rate": 0.1242,
         "filler_hits_per_reply": 0.1429
@@ -325,44 +325,44 @@
         "mean_words": 334.5714,
         "median_words": 302,
         "pct_in_sweet_spot": 14.2857,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3091,
         "repeated_trigram_rate": 0.1248,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2618,
         "mean_words": 331.8571,
         "median_words": 320,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 42.8571,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3112,
         "repeated_trigram_rate": 0.1008,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2619,
         "mean_words": 375.8571,
         "median_words": 386,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.2972,
         "repeated_trigram_rate": 0.1114,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2620,
-        "mean_words": 236.0,
+        "mean_words": 236,
         "median_words": 266,
         "pct_in_sweet_spot": 14.2857,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3178,
         "repeated_trigram_rate": 0.1521,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2621,
@@ -370,32 +370,32 @@
         "median_words": 167,
         "pct_in_sweet_spot": 14.2857,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4058,
         "repeated_trigram_rate": 0.0635,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2622,
         "mean_words": 294.5714,
         "median_words": 344,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 28.5714,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3041,
         "repeated_trigram_rate": 0.1583,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2623,
         "mean_words": 346.5714,
         "median_words": 420,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 42.8571,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3182,
         "repeated_trigram_rate": 0.1106,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2624,
@@ -403,208 +403,208 @@
         "median_words": 219,
         "pct_in_sweet_spot": 14.2857,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.34,
         "repeated_trigram_rate": 0.1315,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2625,
         "mean_words": 244.5714,
         "median_words": 233,
         "pct_in_sweet_spot": 14.2857,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3423,
         "repeated_trigram_rate": 0.1012,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2626,
-        "mean_words": 165.0,
+        "mean_words": 165,
         "median_words": 165.5,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.5101,
         "repeated_trigram_rate": 0.0374,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2627,
         "mean_words": 197.5,
-        "median_words": 206.0,
-        "pct_in_sweet_spot": 0.0,
+        "median_words": 206,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 16.6667,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4473,
         "repeated_trigram_rate": 0.0617,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2628,
         "mean_words": 177.1667,
         "median_words": 187.5,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.508,
         "repeated_trigram_rate": 0.017,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2629,
         "mean_words": 131.1667,
         "median_words": 133.5,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
         "pct_ends_question": 16.6667,
         "type_token_ratio": 0.4879,
         "repeated_trigram_rate": 0.0255,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2630,
         "mean_words": 218.2857,
         "median_words": 225,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3927,
         "repeated_trigram_rate": 0.0839,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2631,
         "mean_words": 221.4286,
         "median_words": 233,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4026,
         "repeated_trigram_rate": 0.0633,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2632,
-        "mean_words": 101.0,
+        "mean_words": 101,
         "median_words": 109.5,
         "pct_in_sweet_spot": 33.3333,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.5066,
         "repeated_trigram_rate": 0.0298,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2633,
-        "mean_words": 261.0,
+        "mean_words": 261,
         "median_words": 290,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3782,
         "repeated_trigram_rate": 0.0871,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2634,
-        "mean_words": 150.0,
+        "mean_words": 150,
         "median_words": 139.5,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4611,
         "repeated_trigram_rate": 0.0423,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2635,
         "mean_words": 139.1667,
         "median_words": 143.5,
         "pct_in_sweet_spot": 16.6667,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.485,
         "repeated_trigram_rate": 0.0324,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2636,
         "mean_words": 234.3333,
         "median_words": 190.5,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 16.6667,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.5441,
         "repeated_trigram_rate": 0.015,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2637,
         "mean_words": 249.1667,
         "median_words": 193.5,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 16.6667,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.5284,
         "repeated_trigram_rate": 0.0141,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2638,
         "mean_words": 302.6667,
-        "median_words": 263.0,
-        "pct_in_sweet_spot": 0.0,
+        "median_words": 263,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 16.6667,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.5402,
         "repeated_trigram_rate": 0.0187,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2639,
-        "mean_words": 123.0,
-        "median_words": 129.0,
+        "mean_words": 123,
+        "median_words": 129,
         "pct_in_sweet_spot": 16.6667,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4539,
         "repeated_trigram_rate": 0.0503,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2640,
-        "mean_words": 148.0,
+        "mean_words": 148,
         "median_words": 149.5,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4572,
         "repeated_trigram_rate": 0.0305,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2641,
         "mean_words": 169.4286,
         "median_words": 135,
         "pct_in_sweet_spot": 42.8571,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4013,
         "repeated_trigram_rate": 0.065,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2642,
         "mean_words": 158.5714,
         "median_words": 173,
         "pct_in_sweet_spot": 28.5714,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3748,
         "repeated_trigram_rate": 0.0731,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2643,
@@ -615,7 +615,7 @@
         "pct_ends_question": 14.2857,
         "type_token_ratio": 0.372,
         "repeated_trigram_rate": 0.0794,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2644,
@@ -623,87 +623,87 @@
         "median_words": 134,
         "pct_in_sweet_spot": 14.2857,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3811,
         "repeated_trigram_rate": 0.1006,
         "filler_hits_per_reply": 0.1429
       },
       {
         "transcript_id": 2645,
-        "mean_words": 150.0,
+        "mean_words": 150,
         "median_words": 164,
         "pct_in_sweet_spot": 28.5714,
-        "pct_markdown": 0.0,
+        "pct_markdown": 0,
         "pct_ends_question": 28.5714,
         "type_token_ratio": 0.3819,
         "repeated_trigram_rate": 0.1078,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2646,
         "mean_words": 96.5,
-        "median_words": 97.0,
+        "median_words": 97,
         "pct_in_sweet_spot": 33.3333,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4508,
         "repeated_trigram_rate": 0.0451,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2647,
         "mean_words": 135.8571,
         "median_words": 150,
         "pct_in_sweet_spot": 28.5714,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4038,
         "repeated_trigram_rate": 0.079,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2648,
         "mean_words": 153.5,
         "median_words": 167.5,
         "pct_in_sweet_spot": 16.6667,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3887,
         "repeated_trigram_rate": 0.1132,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2649,
         "mean_words": 111.5,
-        "median_words": 125.0,
+        "median_words": 125,
         "pct_in_sweet_spot": 33.3333,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4335,
         "repeated_trigram_rate": 0.045,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2650,
-        "mean_words": 100.0,
+        "mean_words": 100,
         "median_words": 102,
         "pct_in_sweet_spot": 14.2857,
-        "pct_markdown": 0.0,
+        "pct_markdown": 0,
         "pct_ends_question": 14.2857,
         "type_token_ratio": 0.4586,
         "repeated_trigram_rate": 0.0401,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2651,
         "mean_words": 238.2857,
         "median_words": 217,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3573,
         "repeated_trigram_rate": 0.0894,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2652,
@@ -711,131 +711,131 @@
         "median_words": 185,
         "pct_in_sweet_spot": 14.2857,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4005,
         "repeated_trigram_rate": 0.076,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2653,
         "mean_words": 131.8571,
         "median_words": 148,
         "pct_in_sweet_spot": 14.2857,
-        "pct_markdown": 0.0,
+        "pct_markdown": 0,
         "pct_ends_question": 28.5714,
         "type_token_ratio": 0.4453,
         "repeated_trigram_rate": 0.038,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2654,
         "mean_words": 247.7143,
         "median_words": 273,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3622,
         "repeated_trigram_rate": 0.0866,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2655,
         "mean_words": 107.2857,
         "median_words": 108,
         "pct_in_sweet_spot": 28.5714,
-        "pct_markdown": 0.0,
+        "pct_markdown": 0,
         "pct_ends_question": 14.2857,
         "type_token_ratio": 0.4328,
         "repeated_trigram_rate": 0.0481,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2656,
         "mean_words": 229.875,
         "median_words": 238.5,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 12.5,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4361,
         "repeated_trigram_rate": 0.0457,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2657,
         "mean_words": 172.25,
-        "median_words": 197.0,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "median_words": 197,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4869,
         "repeated_trigram_rate": 0.0407,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2658,
-        "mean_words": 205.0,
+        "mean_words": 205,
         "median_words": 205.5,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 12.5,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.45,
         "repeated_trigram_rate": 0.0427,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2659,
         "mean_words": 86.2857,
         "median_words": 81,
         "pct_in_sweet_spot": 42.8571,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.5679,
         "repeated_trigram_rate": 0.0282,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2660,
         "mean_words": 266.25,
-        "median_words": 197.0,
-        "pct_in_sweet_spot": 0.0,
+        "median_words": 197,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 37.5,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4657,
         "repeated_trigram_rate": 0.0352,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2661,
         "mean_words": 84.1429,
         "median_words": 74,
         "pct_in_sweet_spot": 57.1429,
-        "pct_markdown": 0.0,
+        "pct_markdown": 0,
         "pct_ends_question": 14.2857,
         "type_token_ratio": 0.545,
         "repeated_trigram_rate": 0.0375,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2662,
         "mean_words": 105.5714,
         "median_words": 98,
         "pct_in_sweet_spot": 28.5714,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.525,
         "repeated_trigram_rate": 0.0299,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2663,
-        "mean_words": 282.0,
+        "mean_words": 282,
         "median_words": 199.5,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 25.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 25,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4814,
         "repeated_trigram_rate": 0.0319,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2664,
@@ -843,32 +843,32 @@
         "median_words": 162,
         "pct_in_sweet_spot": 14.2857,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4315,
         "repeated_trigram_rate": 0.0308,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2665,
         "mean_words": 345.125,
-        "median_words": 295.0,
-        "pct_in_sweet_spot": 0.0,
+        "median_words": 295,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 37.5,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3926,
         "repeated_trigram_rate": 0.0736,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2666,
         "mean_words": 247.2857,
         "median_words": 215,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3853,
         "repeated_trigram_rate": 0.0758,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2667,
@@ -876,54 +876,54 @@
         "median_words": 166,
         "pct_in_sweet_spot": 14.2857,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4275,
         "repeated_trigram_rate": 0.0299,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2668,
         "mean_words": 138.8333,
         "median_words": 136.5,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
         "pct_ends_question": 16.6667,
         "type_token_ratio": 0.4286,
         "repeated_trigram_rate": 0.0662,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2669,
         "mean_words": 130.6667,
         "median_words": 128.5,
         "pct_in_sweet_spot": 16.6667,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3788,
         "repeated_trigram_rate": 0.0729,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2670,
         "mean_words": 81.6667,
-        "median_words": 85.0,
+        "median_words": 85,
         "pct_in_sweet_spot": 33.3333,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.5265,
         "repeated_trigram_rate": 0.0205,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2671,
-        "mean_words": 23.0,
+        "mean_words": 23,
         "median_words": 16.5,
-        "pct_in_sweet_spot": 50.0,
-        "pct_markdown": 0.0,
+        "pct_in_sweet_spot": 50,
+        "pct_markdown": 0,
         "pct_ends_question": 16.6667,
         "type_token_ratio": 0.6377,
         "repeated_trigram_rate": 0.0441,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2672,
@@ -934,59 +934,59 @@
         "pct_ends_question": 33.3333,
         "type_token_ratio": 0.4401,
         "repeated_trigram_rate": 0.0587,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2673,
         "mean_words": 167.8333,
-        "median_words": 159.0,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "median_words": 159,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3525,
         "repeated_trigram_rate": 0.0925,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2674,
         "mean_words": 112.6667,
-        "median_words": 132.0,
+        "median_words": 132,
         "pct_in_sweet_spot": 16.6667,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4556,
         "repeated_trigram_rate": 0.0475,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2675,
         "mean_words": 32.5,
         "median_words": 34.5,
         "pct_in_sweet_spot": 66.6667,
-        "pct_markdown": 0.0,
+        "pct_markdown": 0,
         "pct_ends_question": 16.6667,
         "type_token_ratio": 0.5487,
         "repeated_trigram_rate": 0.0725,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2676,
-        "mean_words": 41.0,
-        "median_words": 40.0,
+        "mean_words": 41,
+        "median_words": 40,
         "pct_in_sweet_spot": 66.6667,
-        "pct_markdown": 0.0,
+        "pct_markdown": 0,
         "pct_ends_question": 33.3333,
         "type_token_ratio": 0.4756,
         "repeated_trigram_rate": 0.1189,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2677,
         "mean_words": 181.8333,
-        "median_words": 161.0,
+        "median_words": 161,
         "pct_in_sweet_spot": 16.6667,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.418,
         "repeated_trigram_rate": 0.023,
         "filler_hits_per_reply": 0.1667
@@ -994,18 +994,18 @@
       {
         "transcript_id": 2678,
         "mean_words": 171.3333,
-        "median_words": 162.0,
+        "median_words": 162,
         "pct_in_sweet_spot": 16.6667,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4183,
         "repeated_trigram_rate": 0.0458,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2679,
         "mean_words": 224.5,
-        "median_words": 222.0,
+        "median_words": 222,
         "pct_in_sweet_spot": 16.6667,
         "pct_markdown": 16.6667,
         "pct_ends_question": 16.6667,
@@ -1017,166 +1017,166 @@
         "transcript_id": 2680,
         "mean_words": 342.5714,
         "median_words": 341,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3007,
         "repeated_trigram_rate": 0.1377,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2681,
         "mean_words": 309.8571,
         "median_words": 374,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3024,
         "repeated_trigram_rate": 0.1551,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2682,
         "mean_words": 407.8571,
         "median_words": 505,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.2757,
         "repeated_trigram_rate": 0.183,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2683,
         "mean_words": 434.2857,
         "median_words": 480,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 28.5714,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.2852,
         "repeated_trigram_rate": 0.1481,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2684,
         "mean_words": 456.7143,
         "median_words": 497,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.2809,
         "repeated_trigram_rate": 0.144,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2685,
         "mean_words": 338.8571,
         "median_words": 386,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3196,
         "repeated_trigram_rate": 0.1072,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2686,
         "mean_words": 435.8571,
         "median_words": 503,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 14.2857,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.2848,
         "repeated_trigram_rate": 0.1541,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2687,
         "mean_words": 347.7143,
         "median_words": 342,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3221,
         "repeated_trigram_rate": 0.1386,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2688,
         "mean_words": 250.5714,
         "median_words": 271,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4156,
         "repeated_trigram_rate": 0.0354,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2689,
-        "mean_words": 255.0,
+        "mean_words": 255,
         "median_words": 239,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4084,
         "repeated_trigram_rate": 0.0505,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2690,
         "mean_words": 216.7143,
         "median_words": 240,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.4087,
         "repeated_trigram_rate": 0.0568,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2691,
         "mean_words": 465.5714,
         "median_words": 508,
-        "pct_in_sweet_spot": 0.0,
+        "pct_in_sweet_spot": 0,
         "pct_markdown": 71.4286,
-        "pct_ends_question": 0.0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.2866,
         "repeated_trigram_rate": 0.1713,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2692,
         "mean_words": 363.4286,
         "median_words": 330,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3145,
         "repeated_trigram_rate": 0.1298,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2693,
         "mean_words": 399.5714,
         "median_words": 369,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3,
         "repeated_trigram_rate": 0.1524,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       },
       {
         "transcript_id": 2694,
         "mean_words": 391.8571,
         "median_words": 348,
-        "pct_in_sweet_spot": 0.0,
-        "pct_markdown": 0.0,
-        "pct_ends_question": 0.0,
+        "pct_in_sweet_spot": 0,
+        "pct_markdown": 0,
+        "pct_ends_question": 0,
         "type_token_ratio": 0.3081,
         "repeated_trigram_rate": 0.1219,
-        "filler_hits_per_reply": 0.0
+        "filler_hits_per_reply": 0
       }
     ]
   },
