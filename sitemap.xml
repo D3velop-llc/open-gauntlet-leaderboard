@@ -141,6 +141,10 @@
     <lastmod>2026-08-17</lastmod>
   </url>
   <url>
+    <loc>https://opengauntlet.com/models/gemma4-31b-scotoma2-q4/</loc>
+    <lastmod>2026-08-17</lastmod>
+  </url>
+  <url>
     <loc>https://opengauntlet.com/models/gemma4-26b-a4b-unsloth-nvfp4/</loc>
     <lastmod>2026-08-17</lastmod>
   </url>
@@ -238,10 +242,6 @@
   </url>
   <url>
     <loc>https://opengauntlet.com/models/designant/</loc>
-    <lastmod>2026-08-17</lastmod>
-  </url>
-  <url>
-    <loc>https://opengauntlet.com/models/magistry-24b-v1-1/</loc>
     <lastmod>2026-08-17</lastmod>
   </url>
 </urlset>
