@@ -237,13 +237,24 @@ const COLS = [
          + "model's compression — treat as a ballpark. '—' = couldn't estimate." },
   // Sorts by actual bits-per-weight (gbPerB), so clicking it groups full precision together AND
   // orders the compressed tier Q8 -> Q6 -> Q5 -> Q4 rather than alphabetically by quant code.
-  { key: "precision", label: "Precision", type: "text", group: "",
+  { key: "precision", label: "Precision", type: "text", group: "", simple: true,
     title: "Whether these are the model's original weights (full precision) or a compressed "
          + "copy — quantizing shrinks a model so it runs faster in less memory, at some cost "
          + "to quality. Heads up on reading the ranking: on this board every full-precision "
          + "model also happens to be a newer architecture served by vLLM/SGLang, and every "
          + "compressed one is a llama.cpp community fine-tune. Those two things move together "
          + "here, so the score gap between the groups can't be pinned on precision alone." },
+  // Thinking is a SERVING-RECIPE axis, not a model property, and the board carries twin rows
+  // that differ in nothing else — so without this column two identical-looking entries sit at
+  // different ratings with no visible cause. It matters in both directions: on this board
+  // reasoning-off scored +50 Elo on one pair and -134 on another, and it is also what the
+  // "Wait for 1st word" column is measuring when a model idles 35 s before speaking.
+  // "n/a" is a real answer, not missing data: eight rows have no reasoning mode to switch.
+  { key: "thinking", label: "Thinking", type: "text", group: "", simple: true,
+    title: "Whether the model was allowed to reason privately before replying. 'on' buys "
+         + "quality on some models and costs it on others, and it always costs speed — a "
+         + "thinking model can sit silent for 30+ seconds before its first word. 'n/a' means "
+         + "these weights have no reasoning mode at all. '—' = not recorded." },
   { key: "normalized_elo", label: "Human score", type: "num", heat: true, group: "How it scored", simple: true,
     title: "How human the model sounds, as a chess-style rating — higher is better, no maximum. "
          + "The range in parentheses is our margin of error: if two models' ranges overlap, "
@@ -498,7 +509,11 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
     // rating. The answer belongs next to the name; hardware and speed are the follow-up.
     // Wait precedes Speed: it is the one that decides whether the model is usable by voice,
     // and reading them in that order stops a big words/sec figure from framing the wait.
-    const order = ["rank", "model", "elo_bar", "vram", "wait_all", "speed_all"];
+    // Precision and Thinking sit directly after the rating, ahead of hardware and speed: they
+    // are the two things that explain why two rows carrying the SAME model name score
+    // differently, so they belong where that comparison is being made rather than at the end.
+    const order = ["rank", "model", "elo_bar", "precision", "thinking", "vram",
+                   "wait_all", "speed_all"];
     cols = order.map((k) => cols.find((c) => c.key === k)).filter(Boolean);
   }
   // Rows the top-tier confidence intervals cannot separate. In simple view these are shaded
@@ -569,9 +584,26 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
       if (cls == null) return el("td", { class: "dim" }, "—");
       // The dot is decoration for scanning; the word beside it carries the meaning, so the dot
       // is aria-hidden rather than being the only thing distinguishing the two groups.
+      // Name the precision rather than printing the bare word "full": this column exists to
+      // say WHICH weights were run, and "BF16" answers that where "full" only says it wasn't
+      // compressed. Falls back to "full" when the quant string names no precision, which is
+      // still true and is better than echoing "unknown" at a reader.
+      const named = (row.quant || "").match(/^(bf16|f16|fp16)$/i);
       return el("td", { class: "dim prec prec-" + cls },
         el("span", { class: "prec-dot", "aria-hidden": "true", text: cls === "full" ? "●" : "○" }),
-        cls === "full" ? "full" : precisionName(row));
+        cls === "full" ? (named ? row.quant.toUpperCase() : "full") : precisionName(row));
+    }
+    if (c.key === "thinking") {
+      // Four states, and the difference between the last two is the whole point of the column:
+      // "n/a" asserts these weights have no reasoning mode, "—" admits we never established it.
+      // Collapsing them would turn an unchecked model into a capability claim.
+      const t = row.thinking;
+      if (t == null) return el("td", { class: "dim" }, "—");
+      const label = t === "unsupported" ? "n/a" : t;
+      return el("td", { class: "dim think think-" + t },
+        el("span", { class: "think-dot", "aria-hidden": "true",
+                     text: t === "on" ? "●" : t === "off" ? "○" : "·" }),
+        label);
     }
 
     if (c.key === "criterion") {
@@ -751,6 +783,13 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
       // Sort by real bits-per-weight, not the quant string: alphabetical would scatter
       // NVFP4/Q4_K_M/Q5_K_M and put "full precision" in the middle of the compressed tier.
       if (sortKey === "precision") { x = gbPerB(a); y = gbPerB(b); }
+      // Rank on > off > n/a rather than alphabetically, which would lead with "off". This is
+      // an ordering for scanning, NOT a quality claim — thinking-off outscores thinking-on on
+      // some of these pairs, which is exactly why the column is here.
+      if (sortKey === "thinking") {
+        const rank = { on: 3, off: 2, unsupported: 1 };
+        x = rank[a.thinking] ?? null; y = rank[b.thinking] ?? null;
+      }
       // Speed columns must sort by exactly the numbers the active hardware selection shows —
       // never by the stale dgx-spark headline field once another machine is selected.
       if (sortKey === "ttft_2k_ms" || sortKey === "tps_2k") { x = speedSortValue(a, sortKey); y = speedSortValue(b, sortKey); }

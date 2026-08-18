@@ -552,6 +552,16 @@ td.prec-full { color: var(--ink-dim); }
 td.prec-full .prec-dot { color: var(--cool); }
 td.prec-quantized .prec-dot { color: var(--muted); }
 
+/* Thinking column. Same dot-plus-word shape as Precision: the dot is decoration for scanning
+   and is aria-hidden, the word carries the meaning. "n/a" is deliberately dimmer than on/off
+   — it is a property of the weights rather than a choice anyone made about the run. */
+td.think { white-space: nowrap; }
+td.think .think-dot { margin-right: 5px; font-size: 9px; vertical-align: 1px; }
+td.think-on .think-dot { color: var(--cool); }
+td.think-off .think-dot { color: var(--muted); }
+td.think-unsupported { color: var(--muted); }
+td.think-unsupported .think-dot { color: var(--muted); }
+
 /* thermal ability cells — background set inline by JS via warmth(t) */
 td.heat {
   position: relative;
