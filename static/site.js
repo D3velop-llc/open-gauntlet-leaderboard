@@ -213,6 +213,7 @@ function categoryLabel(key) {
     everyday_banter: "Everyday banter", persona_pressure: "Staying in character",
     memory_callback: "Remembering", boundaries_safety: "Boundaries & safety",
     theory_of_mind: "Reading between the lines",
+    long_horizon: "Staying coherent over a long chat",
   };
   return map[key] || String(key || "").replace(/_/g, " ").replace(/^./, (m) => m.toUpperCase());
 }

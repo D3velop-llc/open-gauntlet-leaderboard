@@ -86,6 +86,16 @@
       "title": "I actually like it this way"
     },
     {
+      "id": "lh_long_evening_drift",
+      "category": "long_horizon",
+      "title": "The evening that keeps going"
+    },
+    {
+      "id": "lh_rambling_repair",
+      "category": "long_horizon",
+      "title": "Talking it out the long way"
+    },
+    {
       "id": "mc_emotional_state_callback",
       "category": "memory_callback",
       "title": "But how are you, actually"

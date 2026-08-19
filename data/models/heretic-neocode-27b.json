@@ -1035,8 +1035,8 @@
     "empty_reply": 4,
     "long_cut": 7,
     "scenarios_covered": 30,
-    "scenarios_in_pack": 30,
-    "scenario_complete": true
+    "scenarios_in_pack": 32,
+    "scenario_complete": false
   },
   "sample_transcripts": [
     {
