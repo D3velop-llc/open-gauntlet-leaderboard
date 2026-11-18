@@ -896,15 +896,23 @@ footer.foot {
   padding: 28px 0 56px;
   color: var(--muted); font-family: var(--font-mono); font-size: 12px;
 }
-footer.foot .wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px 24px; align-items: center; }
-.foot-brand { color: var(--muted); }
+/* Stacked, not three competing columns. `1fr auto 1fr` worked with a handful of links;
+   at ~20 the `auto` middle took nearly the whole width and squeezed the blurb and the
+   provenance line into ~90px columns, one word per line. One column at every width:
+   the blurb reads as ordinary lines (capped for measure), the links wrap as a row
+   underneath, and the provenance line gets the full width it needs. */
+footer.foot .wrap { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; align-items: start; }
+.foot-brand { color: var(--muted); max-width: 88ch; line-height: 1.6; }
 .foot-brand a { color: var(--ink-dim); border-bottom: 1px dotted var(--border-2); }
 .foot-brand a:hover { color: var(--ember); border-bottom-color: var(--ember); }
-.foot-nav { justify-self: center; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.foot-nav { justify-self: start; display: flex; align-items: center; justify-content: flex-start; gap: 6px 22px; flex-wrap: wrap; line-height: 1.7; }
 .foot-nav a { color: var(--ink-dim); }
 .foot-nav a:hover { color: var(--ember); }
-.foot-nav .sep { color: var(--border-2); }
-.foot-prov { justify-self: end; text-align: right; color: var(--muted); }
+/* The "·" spans are generated markup (seo-build.mjs rewrites the nav), so they stay in
+   the HTML; hidden here because a wrapping row strands them at line ends. The gap does
+   the separating instead. */
+.foot-nav .sep { display: none; }
+.foot-prov { justify-self: start; text-align: left; color: var(--muted); line-height: 1.6; }
 .foot-prov [data-generated-at] { color: var(--ink-dim); }
 
 /* empty / loading / error states */
@@ -924,8 +932,6 @@ footer.foot .wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16p
   .pickers { grid-template-columns: 1fr; }
   .pickers .vs { justify-self: center; }
   .catrow { grid-template-columns: 120px 1fr auto; }
-  footer.foot .wrap { grid-template-columns: 1fr; }
-  .foot-nav, .foot-prov { justify-self: start; text-align: left; }
   .community-cta-inner { grid-template-columns: 1fr; gap: 24px; }
   .community-actions { justify-content: flex-start; }
 }

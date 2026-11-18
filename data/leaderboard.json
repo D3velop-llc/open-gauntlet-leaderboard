@@ -4,7 +4,7 @@
     "pairwise_prompt_hash": "5e4fdc45",
     "rubric_prompt_hash": "d8776a8d"
   },
-  "generated_at": "2026-11-18T00:40:04.413299+00:00",
+  "generated_at": "2026-11-18T00:55:45.850713+00:00",
   "models": [
     {
       "slug": "anubis-mini-8b",

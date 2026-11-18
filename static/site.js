@@ -4447,11 +4447,34 @@ async function initMatrix(key) {
   renderTtsGaps($(`#${key}-gaps`), doc.gaps);
 
   // Provenance: the edition and compile date belong on the page, because every
-  // figure in the table is only true as of that date.
-  const foot = $("[data-generated-at]");
-  if (foot && doc.compiled) foot.textContent = `${doc.compiled} · ${key} edition ${doc.edition}`;
+  // figure in the table is only true as of that date. It goes BESIDE the site's
+  // build date, never over it — overwriting [data-generated-at] made the footer
+  // read "Updated 2026-08-11" the day after a November publish.
+  if (doc.compiled) setFootProvenance("survey", `this survey compiled ${doc.compiled}, edition ${doc.edition}`);
   restoreHashTarget();
   return true;
+}
+
+/* Survey/lab provenance in the shared footer. The build date in [data-generated-at]
+   stays as rendered; each kind ("survey", "lab") gets its own slot after it, so the
+   two async initializers on a mixed page cannot overwrite each other, and the label
+   becomes "Site updated" so the two dates cannot be confused. */
+function setFootProvenance(kind, text) {
+  const gen = $("[data-generated-at]");
+  if (!gen || !gen.parentNode) return;
+  let slot = $(`[data-foot-prov="${kind}"]`);
+  if (!slot) {
+    slot = el("span", { "data-foot-prov": kind });
+    let anchor = gen;
+    while (anchor.nextSibling && anchor.nextSibling.nodeType === 1
+           && anchor.nextSibling.hasAttribute("data-foot-prov")) anchor = anchor.nextSibling;
+    anchor.parentNode.insertBefore(slot, anchor.nextSibling);
+    const lead = gen.previousSibling;
+    if (lead && lead.nodeType === 3 && /(^|\s)Updated\s*$/.test(lead.textContent)) {
+      lead.textContent = lead.textContent.replace(/Updated(\s*)$/, "Site updated$1");
+    }
+  }
+  slot.textContent = ` · ${text}`;
 }
 
 async function initEvidenceLab(key) {
@@ -4462,8 +4485,7 @@ async function initEvidenceLab(key) {
     if (!doc.lab) throw new Error("Missing lab evidence");
     if (key === "tts") renderTtsLab(mount, doc.lab);
     if (key === "asr") renderAsrLab(mount, doc.lab);
-    const foot = $("[data-generated-at]");
-    if (foot && doc.lab.measured_at) foot.textContent = `${doc.lab.measured_at} · ${key.toUpperCase()} Lab`;
+    if (doc.lab.measured_at) setFootProvenance("lab", `${key.toUpperCase()} Lab measured ${doc.lab.measured_at}`);
   } catch (e) {
     fail(mount, "Those measured results could not be loaded.");
   }
@@ -4488,8 +4510,8 @@ async function initEvidenceLab(key) {
    with the visible tab (sort, search, facets) would read whichever spec a
    later tab's first load had most recently pointed the shared global at. */
 let utilActiveKey = null;
-// initMatrix writes the shared footer's [data-generated-at] text once, on a
-// tab's first successful load. A revisit skips initMatrix entirely (the
+// initMatrix writes the shared footer's survey slot ([data-foot-prov="survey"],
+// beside the build date) once, on a tab's first successful load. A revisit skips initMatrix entirely (the
 // matrix is already loaded), so without a cache the footer would keep
 // showing whichever OTHER tab most recently first-loaded — this caches each
 // tab's own footer text so activate() can restore it on every revisit too.
@@ -4527,11 +4549,11 @@ function initFrontendPage() {
       // a full page reload.
       if (ok) {
         matrixEl.dataset.loaded = "1";
-        const foot = $("[data-generated-at]");
+        const foot = $('[data-foot-prov="survey"]');
         if (foot) utilFooterCache[key] = foot.textContent;
       }
     } else if (utilFooterCache[key]) {
-      const foot = $("[data-generated-at]");
+      const foot = $('[data-foot-prov="survey"]');
       if (foot) foot.textContent = utilFooterCache[key];
     }
   };
