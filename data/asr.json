@@ -38,6 +38,7 @@
       "streaming": "True streaming over WebSocket, first-class alongside REST; interim and final results",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level",
       "punctuation": null,
@@ -63,7 +64,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Deepgram Flux",
@@ -98,6 +100,7 @@
       "streaming": "True streaming, and the streaming model is the product: it emits StartOfTurn, EndOfTurn, EagerEndOfTurn and TurnResumed events rather than a plain interim/final transcript stream",
       "latency_note": "~260 ms end-of-turn detection and 1.5 s p95 end-of-turn, both Deepgram-published; claimed 200-600 ms saved versus a conventional ASR+VAD pipeline. Hardware and region are not stated by Deepgram.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -123,7 +126,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "AssemblyAI Universal-3.5 Pro",
@@ -159,6 +163,7 @@
       "streaming": "True streaming over WebSocket at wss://streaming.assemblyai.com/v3/ws. The docs describe several partial Turn updates before each end_of_turn but do not state whether partials are word-level or segment-level.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level, in milliseconds, on streaming turn events",
       "punctuation": null,
@@ -184,7 +189,8 @@
       "rating_url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Speechmatics",
@@ -219,6 +225,7 @@
       "streaming": "Realtime API alongside the batch API for Enhanced and Standard. Melia is BATCH-ONLY in production preview, and is available in EU and US regions only — not AU1.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -244,7 +251,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Rev AI",
@@ -278,6 +286,7 @@
       "streaming": "Streaming API exists but covers only 9+ languages against 58+ async",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Max audio length 17 hours; longer files must be split.",
       "timestamps": null,
       "punctuation": null,
@@ -303,7 +312,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Gladia",
@@ -339,6 +349,7 @@
       "streaming": "Realtime API exists. Solaria-3's realtime availability is unclear: Gladia's launch material documents async usage and the pricing page does not distinguish, so verify before designing a realtime product around Solaria-3 specifically.",
       "latency_note": "Solaria-1: 103 ms on interrupt and ~698 ms on final, vendor-stated. Hardware and region unstated; not independently confirmed.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -364,7 +375,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ElevenLabs Scribe v2",
@@ -398,6 +410,7 @@
       "streaming": "None — Scribe v2 is batch only. Streaming is a separate product and a separate SKU (Scribe v2 Realtime).",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Up to 3 GB and up to 10 hours per file; multichannel must total under 10 hours across channels",
       "timestamps": "Precise word-level timestamps",
       "punctuation": null,
@@ -423,7 +436,8 @@
       "rating_url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ElevenLabs Scribe v2 Realtime",
@@ -457,6 +471,7 @@
       "streaming": "True realtime transcription — this is the streaming SKU of the Scribe family",
       "latency_note": "Under 150 ms, per ElevenLabs' own announcement and docs, plus a 'negative latency' next-word and punctuation prediction feature. Hardware, region and whether network is included are not stated.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Precise word-level timestamps",
       "punctuation": null,
@@ -482,7 +497,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI gpt-transcribe",
@@ -517,6 +533,7 @@
       "streaming": "True streaming on gpt-transcribe, gpt-live-transcribe and gpt-4o-transcribe-diarize. whisper-1 does not stream at all.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "25 MB per file; mp3, mp4, mpeg, mpga, m4a, wav, webm. No maximum duration is documented.",
       "timestamps": "NOT supported on gpt-transcribe — OpenAI's own migration guide tells you to retain whisper-1 or another model if you need word or segment timestamps",
       "punctuation": null,
@@ -542,7 +559,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI whisper-1",
@@ -577,6 +595,7 @@
       "streaming": "None. whisper-1 is batch file upload only.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "25 MB per file; mp3, mp4, mpeg, mpga, m4a, wav, webm",
       "timestamps": "Word-level and segment-level — the reason to still be on it",
       "punctuation": null,
@@ -602,7 +621,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Groq (hosted Whisper)",
@@ -637,6 +657,7 @@
       "streaming": "None documented — Groq's speech-to-text is file upload only. This rules it out for voice agents despite the latency reputation of the platform.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "25 MB per file on the free tier, 100 MB on the dev tier; formats flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm",
       "timestamps": "Segment or word granularity via verbose_json",
       "punctuation": null,
@@ -662,7 +683,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Fireworks AI",
@@ -696,6 +718,7 @@
       "streaming": "True streaming over WebSocket via fireworks-asr-v2 and fireworks-asr-large, sold as a separate model family from the Whisper batch models; ~200 ms latency claimed",
       "latency_note": null,
       "realtime_factor": "'Transcribe 1 hour of audio in less than 4 seconds' — approximately 900x realtime, on a dedicated endpoint with 1 FAU. Serverless throughput is not quoted.",
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -721,7 +744,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Together AI",
@@ -755,6 +779,7 @@
       "streaming": "Yes — streaming variants are listed as separate models (Whisper Large v3 Streaming, nemotron-3-asr-streaming-0.6b, nemotron-3.5-asr-streaming-0.6b, deepgram/flux)",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Maximum duration 4 hours, rejected with an audio_too_long error beyond that; binary uploads capped at 500 MB, URL-fetched audio at 1 GB. Formats wav, mp3, m4a, webm, flac, ogg, opus, aac.",
       "timestamps": null,
       "punctuation": null,
@@ -780,7 +805,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Soniox",
@@ -815,6 +841,7 @@
       "streaming": "True realtime via stt-rt-v5, with semantic endpointing rather than plain silence-based VAD",
       "latency_note": "Sub-200 ms claimed on the marketing site. Measured on the Pipecat benchmark, stt-rt-v4 reached 249 ms median time-to-final-segment, 281 ms P95, 310 ms P99 — the vendor's own claim is optimistic against its own preferred benchmark.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -840,7 +867,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Voicegain",
@@ -874,6 +902,7 @@
       "streaming": "Realtime STT priced as a separate SKU, plus MRCP and a Bot API for IVR. Streaming language coverage is far narrower than batch.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -899,7 +928,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Verbit",
@@ -932,6 +962,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -957,7 +988,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Otter.ai",
@@ -990,6 +1022,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -1015,7 +1048,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Mistral Voxtral Transcribe 2",
@@ -1050,6 +1084,7 @@
       "streaming": "True realtime with a CONFIGURABLE delay budget — you dial it down to sub-200 ms and accept a 1-2 point WER cost, or run at 2.4 s and match batch accuracy",
       "latency_note": "Configurable down to sub-200 ms; the published accuracy curve is anchored at 480 ms and 2.4 s. Hardware not stated.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Recordings up to 3 hours in a single request",
       "timestamps": "Word-level",
       "punctuation": null,
@@ -1075,7 +1110,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Amazon Transcribe",
@@ -1112,6 +1148,7 @@
       "streaming": "TRUE streaming - HTTP/2 and WebSocket bidirectional against transcribestreaming.*.amazonaws.com, with partial (interim) results. Not chunked pseudo-streaming.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Batch: max 28,800 seconds (8 hours) and 2 GB per file, minimum 500 ms. Channel identification defaults to 2 channels (adjustable). Job records retained 90 days.",
       "timestamps": "Word-level start and end times plus per-word confidence scores in the items array.",
       "punctuation": "Automatic punctuation and casing; number formatting is language-gated - the supported-languages table lists 'transcribing numbers' support per locale and many locales are 'no'.",
@@ -1137,7 +1174,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Amazon Transcribe Medical",
@@ -1171,6 +1209,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Batch: max 14,400 seconds (4 hours) and 2 GB per file, minimum 500 ms - half the 8-hour ceiling of standard Transcribe.",
       "timestamps": null,
       "punctuation": null,
@@ -1196,7 +1235,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Amazon Transcribe Call Analytics",
@@ -1231,6 +1271,7 @@
       "streaming": "True streaming for real-time analytics via HTTP/2 and WebSocket; post-call analytics can be run on the same stream afterwards at no extra charge.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Post-call batch: max 14,400 seconds (4 hours) and 500 MB per file - the 500 MB ceiling is four times tighter than standard Transcribe's 2 GB and is the limit people hit first.",
       "timestamps": null,
       "punctuation": null,
@@ -1256,7 +1297,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "AWS HealthScribe",
@@ -1290,6 +1332,7 @@
       "streaming": "Yes - StartMedicalScribeStream is a real-time HTTP/2 bidirectional stream, audio in on one channel and transcription out on the other.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Max 5,400 seconds (90 minutes) and 2 GB per MedicalScribe job - the tightest duration ceiling anywhere in the Transcribe family.",
       "timestamps": null,
       "punctuation": null,
@@ -1315,7 +1358,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure AI Speech - speech to text",
@@ -1350,6 +1394,7 @@
       "streaming": "True streaming via the Speech SDK over WebSocket, with interim results and optional intermediate diarization.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Batch: 1 GB max per audio file, 10,000 blobs per container, 1,000 files per transcription request. Per-session and per-file duration ceilings with diarization enabled were not verified in this pass.",
       "timestamps": null,
       "punctuation": null,
@@ -1375,7 +1420,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure Fast Transcription",
@@ -1410,6 +1456,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Under 500 MB and under 5 hours per file; 600 requests per minute (adjustable).",
       "timestamps": "Word-level and segment-level both supported.",
       "punctuation": "Display form only - the fast transcription API produces transcriptions in the display, not lexical, form, meaning punctuated and capitalised with no ITN-raw alternative. Batch transcription still gives you both.",
@@ -1435,7 +1482,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure Custom Speech",
@@ -1468,6 +1516,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Inherits the base batch limits (1 GB per file).",
       "timestamps": null,
       "punctuation": null,
@@ -1493,7 +1542,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure MAI-Transcribe (LLM Speech API)",
@@ -1528,6 +1578,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Audio file under 300 MB, in WAV, MP3 or FLAC. Note this is tighter than the general LLM Speech API page, which allows 500 MB and more formats - the MAI models carry their own stricter limit.",
       "timestamps": null,
       "punctuation": "Readability-optimised by default; transcribeStyle: 'verbatim' preserves the original spoken content including filler words and disfluencies (mai-transcribe-1.5 only).",
@@ -1553,7 +1604,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Google Cloud Speech-to-Text V2",
@@ -1586,6 +1638,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Recognize: audio under 1 minute. BatchRecognize: 1 minute to 8 hours on chirp_2. StreamingRecognize: no stated duration cap.",
       "timestamps": null,
       "punctuation": null,
@@ -1611,7 +1664,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Google Chirp 3",
@@ -1647,6 +1701,7 @@
       "streaming": "StreamingRecognize is supported for transcription, with utterance-level timestamps only - and diarization is unavailable in that mode.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Recognize for audio under one minute; BatchRecognize for 1 minute to 1 hour (versus 8 hours on Chirp 2).",
       "timestamps": "NO word-level timestamps and no word-level confidence scores. The docs say the returned confidence value 'isn't truly a confidence score'. Utterance-level timing only.",
       "punctuation": "Automatic punctuation, generated by the model, optionally disabled.",
@@ -1672,7 +1727,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Google Cloud Speech-to-Text V1 (incl. Medical models)",
@@ -1705,6 +1761,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -1730,7 +1787,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "IBM Watson Speech to Text",
@@ -1764,6 +1822,7 @@
       "streaming": "True streaming over WebSocket, with interim results and interim speaker labels.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -1789,7 +1848,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Alibaba Cloud Model Studio ASR",
@@ -1824,6 +1884,7 @@
       "streaming": "True streaming over WebSocket for the -realtime and -streaming models, with unlimited session duration; the AOQ protocol and the DashScope SDK (Java, Python) are supported on the newer families, everything else needs raw WebSocket or HTTP.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "File transcription: 2 GB and 12 hours max (qwen-audio-3.0-asr-flash-filetrans, qwen3-asr-flash-filetrans, fun-asr), 2 GB and 5 minutes (qwen-audio-3.0-asr-flash, fun-asr-flash), 10 MB and 5 minutes (qwen3-asr-flash). Real-time: unlimited duration, mono only on every real-time model.",
       "timestamps": null,
       "punctuation": null,
@@ -1849,7 +1910,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Tencent Cloud ASR",
@@ -1882,6 +1944,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -1907,7 +1970,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Baidu AI Cloud Speech Recognition",
@@ -1940,6 +2004,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -1965,7 +2030,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Yandex SpeechKit",
@@ -1997,6 +2063,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -2022,7 +2089,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI Whisper (multilingual: tiny → large-v3)",
@@ -2061,6 +2129,7 @@
       "streaming": "None. transcribe() 'reads the entire file and processes the audio with a sliding 30-second window'. There is no native streaming path; streaming Whisper is always someone else's wrapper.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "30-second receptive field. Longer audio is handled by sequential windowing in the transcribe() wrapper. No file-length cap when self-hosted.",
       "timestamps": "Segment-level by default. Word-level available via --word_timestamps (default False), which extracts them from cross-attention with dynamic time warping.",
       "punctuation": "Restored and cased natively — it is a sequence-to-sequence model trained on punctuated text, not a raw-token recogniser.",
@@ -2086,7 +2155,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI Whisper English-only (tiny.en → medium.en)",
@@ -2122,6 +2192,7 @@
       "streaming": "None.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Segment-level by default; word-level via --word_timestamps.",
       "punctuation": "Restored and cased.",
@@ -2147,7 +2218,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Whisper large-v3-turbo",
@@ -2182,6 +2254,7 @@
       "streaming": "None.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Segment-level by default; word-level via the same DTW cross-attention route as base Whisper.",
       "punctuation": "Restored and cased.",
@@ -2207,7 +2280,8 @@
       "rating_url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Whisper large-v2",
@@ -2242,6 +2316,7 @@
       "streaming": "None.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Segment-level; word-level via --word_timestamps.",
       "punctuation": "Restored and cased.",
@@ -2267,7 +2342,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Distil-Whisper distil-large-v3.5",
@@ -2303,6 +2379,7 @@
       "streaming": "None native.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Segment-level; word-level supported through transformers.",
       "punctuation": "Restored and cased.",
@@ -2328,7 +2405,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Distil-Whisper distil-large-v3",
@@ -2364,6 +2442,7 @@
       "streaming": "None native.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Segment-level; word-level through transformers.",
       "punctuation": "Restored and cased.",
@@ -2389,7 +2468,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Distil-Whisper compact English (distil-small.en / distil-medium.en)",
@@ -2428,6 +2508,7 @@
       "streaming": "None native.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Segment-level; word-level through transformers.",
       "punctuation": "Restored and cased.",
@@ -2453,7 +2534,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "CrisperWhisper",
@@ -2489,6 +2571,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level via DTW, and the reason to use it — the vendor's whole pitch is boundary accuracy.",
       "punctuation": "Restored, and disfluencies preserved rather than cleaned — fillers, stutters and false starts are transcribed, not deleted.",
@@ -2514,7 +2597,8 @@
       "rating_url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "CrisperWhisper 2.0",
@@ -2549,6 +2633,7 @@
       "streaming": null,
       "latency_note": "Vendor claims 1.3–1.4× speed-up with speculative decoding on the CTranslate2 backend. No hardware named.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level, ~29.6 ms mean absolute boundary error on TIMIT read speech (vendor-measured).",
       "punctuation": "Restored, with disfluencies preserved.",
@@ -2574,7 +2659,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Lite-Whisper (LiteASR)",
@@ -2608,6 +2694,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -2633,7 +2720,8 @@
       "rating_url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Whisper-Medusa (aiOla)",
@@ -2667,6 +2755,7 @@
       "streaming": null,
       "latency_note": "~1.5× faster generation than vanilla Whisper (vendor figure, hardware not named).",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -2692,7 +2781,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "KB-Whisper (KBLab, Swedish)",
@@ -2726,6 +2816,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -2751,7 +2842,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NB-Whisper (NbAiLab, Norwegian)",
@@ -2785,6 +2877,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -2810,7 +2903,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Kotoba-Whisper (v2.0 / v2.2 / bilingual v1.0)",
@@ -2846,6 +2940,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": "v2.0 does not restore Japanese punctuation reliably; v2.2 adds it via the external `punctuators` package (0.0.5) under an add_punctuation flag.",
@@ -2871,7 +2966,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Belle-Whisper (Chinese)",
@@ -2905,6 +3001,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -2930,7 +3027,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI Audio Transcriptions API (gpt-transcribe / whisper-1 / gpt-4o-transcribe-diarize)",
@@ -2966,6 +3064,7 @@
       "streaming": "The docs' term is file streaming — streaming the transcript back while a completed upload is processed — supported on gpt-transcribe, gpt-4o-transcribe, gpt-4o-mini-transcribe and gpt-4o-transcribe-diarize; \"whisper-1 doesn't\". Live audio is a separate path through Realtime transcription sessions, which carry their own constraints (no speaker labelling). The docs do not characterise the file-streaming path as low-latency incremental recognition, so do not read it as realtime.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "\"Files can be up to 25 MB.\" Accepted formats: mp3, mp4, mpeg, mpga, m4a, wav, webm.",
       "timestamps": "Only `whisper-1` returns timestamps, word or segment, via the timestamp_granularities[] parameter, which the docs say \"is only supported for whisper-1\". The newer, cheaper, faster gpt-transcribe does not.",
       "punctuation": "Restored and cased.",
@@ -2991,7 +3090,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA Parakeet TDT 0.6B",
@@ -3029,6 +3129,7 @@
       "streaming": "Not documented on these checkpoints. They are offline/batch models; NVIDIA ships separate checkpoints for streaming (see the Parakeet-unified / Nemotron-3.5 row). Treat any 'streaming Parakeet' claim as referring to a different artefact.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "v2: up to 24 minutes in a single pass. v3: up to 24 minutes with full attention on an A100 80 GB, or up to 3 hours with local attention.",
       "timestamps": "Word-level, segment-level and character-level.",
       "punctuation": "Automatic punctuation and capitalisation.",
@@ -3054,7 +3155,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA Parakeet-unified-en / Nemotron-3.5-ASR-Streaming",
@@ -3091,6 +3193,7 @@
       "streaming": "True streaming, not chunked pseudo-streaming — cache-aware encoders designed for incremental decode. parakeet-unified runs offline and streaming from shared weights.",
       "latency_note": "parakeet-unified: 160 ms minimum, defined as chunk size plus right context. nemotron-3.5: selectable at 80, 160, 320, 560 or 1120 ms via the right-context parameter.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": "Built-in punctuation and capitalisation on both.",
@@ -3116,7 +3219,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA Multitalker Parakeet Streaming 0.6B",
@@ -3152,6 +3256,7 @@
       "streaming": "True streaming via attention context size, expressed in 80 ms frames.",
       "latency_note": "Configurable: attention context [70,0] gives 80 ms, [70,13] gives 1.12 s. NVIDIA does not name the hardware these were measured on.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -3177,7 +3282,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA Canary v2 family",
@@ -3215,6 +3321,7 @@
       "streaming": "Not documented. These are offline models.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "canary-1b-flash was designed for clips under 40 s, with long-form handled by a separate chunking script. canary-qwen-2.5b trained on a 40 s maximum with a 1,024-token sequence cap. canary-1b-v2 supports long-form via dynamic chunking with 1-second overlap.",
       "timestamps": "Word-level and segment-level on canary-1b-v2, with segment-level also available for translated output. canary-1b-flash provides word and segment timestamps for English, German, French and Spanish.",
       "punctuation": "Automatic punctuation and capitalisation.",
@@ -3240,7 +3347,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA Canary-1B (original, 2024)",
@@ -3275,6 +3383,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -3300,7 +3409,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Moonshine",
@@ -3338,6 +3448,7 @@
       "streaming": "TRUE streaming in the v2 line — incremental audio with cached encoder/decoder state, not a sliding 30-second re-run. Described in arXiv 2602.12241, 'Moonshine v2: Ergodic Streaming Encoder ASR for Latency-Critical Speech Applications' (Kudlur, King, Wang and Warden, submitted 12 February 2026; title, authors and date verified against the arXiv listing). This is the distinction that matters for voice agents and Moonshine is on the right side of it.",
       "latency_note": "README latency table, three hardware columns — 'MacBook Pro' (unspecified model), 'Linux x86' and 'R. Pi 5': Tiny Streaming 34 / 69 / 237 ms · Small Streaming 73 / 165 / 527 ms · Medium Streaming 107 / 269 / 802 ms. Same table: Whisper tiny 277 / 1,141 / 5,863 ms, Whisper large-v3 11,286 / 16,919 / N/A. The MacBook is unnamed and therefore not reproducible; the Raspberry Pi 5 column is the one to plan against. None of these figures includes the diarization stage.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "No fixed window — compute is proportional to input length. The v1 paper reports a 5x compute reduction versus Whisper tiny-en on a 10-second segment with no WER increase.",
       "timestamps": "Word timestamps via the moonshine-voice transcribe CLI, alongside optional speaker IDs",
       "punctuation": null,
@@ -3363,7 +3474,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Kyutai STT",
@@ -3401,6 +3513,7 @@
       "streaming": "True streaming by construction, and the delay is an architectural constant rather than a chunking artefact: 0.5 s for the 1B en/fr model, 2.5 s for the 2.6B English model. There is no chunking and no windowing.",
       "latency_note": "0.5 s text-stream offset on stt-1b-en_fr, 2.5 s on stt-2.6b-en. These are model properties, not tunable knobs. Kyutai's 'flush trick', described for the Unmute stack, applies to the 1B only: because the server decodes at roughly 4x realtime, on detected end-of-speech it can clear the model's buffered 500 ms in about 125 ms (500/4). It does not shorten the 2.6B's 2.5 s delay.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level, recovered by subtracting the model's text-stream offset from the frame offset.",
       "punctuation": "Yes — well-formatted transcripts with punctuation.",
@@ -3426,7 +3539,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-ASR",
@@ -3461,6 +3575,7 @@
       "streaming": "Unified — one checkpoint serves both streaming and offline. But the repo is explicit that streaming inference is only available with the vLLM backend, and that in that mode it 'does not support batch inference or returning timestamps'.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Not from the ASR model itself. Timestamps require the separate Qwen3-ForcedAligner-0.6B, which covers 11 languages and up to 5 minutes of speech per call. That is a second model, a second load and a second inference pass.",
       "punctuation": null,
@@ -3486,7 +3601,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "IBM Granite Speech",
@@ -3522,6 +3638,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level, but only on granite-speech-4.1-2b-plus. The base 4.1, 4.0 and 3.3 cards do not document timestamps.",
       "punctuation": null,
@@ -3547,7 +3664,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Mistral Voxtral",
@@ -3583,6 +3701,7 @@
       "streaming": "True native streaming on Voxtral-Mini-4B-Realtime-2602, not chunked pseudo-streaming — the encoder is causal by construction.",
       "latency_note": "Configurable from 80 ms to 2.4 s, in 80 ms multiples up to 1,200 ms plus a standalone 2,400 ms setting. Mistral recommends 480 ms. At the 2.4 s setting Mistral says it matches the closed Mini Transcribe V2; at 480 ms it is within 1–2 WER points of it.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Voxtral-Mini-3B-2507: up to 30 minutes for transcription, 40 minutes for audio understanding, 32k token context.",
       "timestamps": null,
       "punctuation": null,
@@ -3608,7 +3727,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Alibaba SenseVoice",
@@ -3644,6 +3764,7 @@
       "streaming": "Not documented for SenseVoiceSmall. The streaming option in this ecosystem is Paraformer-zh-streaming, a different model.",
       "latency_note": "70 ms to process 10 seconds of audio; Alibaba claims roughly 15x faster than Whisper-Large and more than 5x faster than Whisper-Small at comparable parameter count. Hardware is not named — read as a vendor claim.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Not documented on the model card. FunASR's long-audio path returns VAD speech regions through sentence_info when token timestamps and a punctuation model are unavailable.",
       "punctuation": "Yes, with inverse text normalisation, via the use_itn=True flag.",
@@ -3669,7 +3790,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Alibaba Paraformer / FunASR",
@@ -3707,6 +3829,7 @@
       "streaming": "Yes, via a separate checkpoint: funasr/paraformer-zh-streaming. The offline and streaming models are different artefacts.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Yes — the pipeline returns timestamps in the sentence_info structure.",
       "punctuation": "Yes, but only if you also load funasr/ct-punc. The ASR model alone does not punctuate.",
@@ -3732,7 +3855,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Meta Omnilingual ASR",
@@ -3766,6 +3890,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Not documented.",
       "punctuation": "Not documented.",
@@ -3791,7 +3916,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Meta MMS",
@@ -3826,6 +3952,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Not documented.",
       "punctuation": "Not documented, and in practice CTC output from this lineage is unpunctuated and uncased.",
@@ -3851,7 +3978,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Meta SeamlessM4T v2",
@@ -3886,6 +4014,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Not documented.",
       "punctuation": "Not documented.",
@@ -3911,7 +4040,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "wav2vec 2.0 / HuBERT / WavLM",
@@ -3947,6 +4077,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "CTC frame alignments are available in principle, but no word-level timestamp API is provided.",
       "punctuation": "None. These emit uppercase, unpunctuated text. Restoring case and punctuation is a separate model you must add.",
@@ -3972,7 +4103,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "whisper.cpp",
@@ -4010,6 +4142,7 @@
       "streaming": "Chunked pseudo-streaming, not true streaming. The README describes the `stream` tool as sampling 'the audio every half a second and runs the transcription continuously', with documented defaults of --step 500 --length 5000 — a 5-second sliding buffer re-transcribed twice a second, which the model then pads to its fixed 30-second encoder window. Whisper's architecture is a fixed-window encoder-decoder — there is no frame-synchronous path.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "30-second internal window; longer files are chunked by the tool. Silero-VAD filtering is supported to skip silence before inference.",
       "timestamps": "Segment-level by default. Word-level is obtained by forcing one token per segment (`-ml 1`), which is a formatting trick rather than a forced aligner.",
       "punctuation": null,
@@ -4035,7 +4168,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "WhisperKit / Argmax OSS (Argmax)",
@@ -4073,6 +4207,7 @@
       "streaming": "Streaming supported; the bundled local server exposes Server-Sent Events for real-time transcription. The WebSocket local server for real-time streaming transcription, and real-time transcription WITH speakers, are Argmax Pro SDK features, not MIT-repo ones.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level and segment-level — the API exposes a timestamp_granularities parameter accepting both.",
       "punctuation": null,
@@ -4098,7 +4233,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "sherpa-onnx",
@@ -4135,6 +4271,7 @@
       "streaming": "TRUE streaming, and this is the distinction that matters: it serves genuinely streaming architectures (online Zipformer transducers and the CTC families), so the streaming is a property of the model class, not a windowing trick over a batch model. It also serves the offline families in non-streaming mode, and both modes are supported side by side.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": "Separate punctuation-restoration models are available in the model zoo — not part of the ASR output.",
@@ -4160,7 +4297,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Vosk",
@@ -4199,6 +4337,7 @@
       "streaming": "Streaming, and architecturally frame-synchronous rather than chunked — Kaldi online decoders consume frames as they arrive. What the project itself claims is narrower: it 'Provides streaming API for the best user experience (unlike popular speech-recognition python packages)'. No latency figure is published, so treat 'zero-latency' framing found elsewhere as marketing rather than a measurement.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level start and end in seconds, plus a per-word confidence 0–1, returned when you call SetWords(true).",
       "punctuation": "NOT in the ASR. Separate recasepunc models restore case and punctuation — and per the models page they are 1.6 GB (English), 1.6 GB (Russian) and 1.1 GB (German), i.e. roughly 40x the size of the 40 MB acoustic model they punctuate.",
@@ -4224,7 +4363,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Silero STT",
@@ -4261,6 +4401,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": "The models insert capital letters and basic punctuation inline — unusual for a model this size, and something Vosk needs a separate 1.1–1.6 GB model to do.",
@@ -4286,7 +4427,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Apple Speech framework / SpeechAnalyzer",
@@ -4324,6 +4466,7 @@
       "streaming": "TRUE streaming — the API distinguishes volatile (in-progress) results from finalized ones, with .volatileResults as an explicit reporting option and an .offlineTranscription preset for fully local operation.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "On-device SpeechAnalyzer: no published length cap. The legacy SFSpeechRecognizer server path is widely reported to stop tasks after about one minute per request and to be rate-limited (~1,000 requests per hour per device); these are community-reported limits, not re-verified against Apple documentation here. requiresOnDeviceRecognition removes the length cap, but only when supportsOnDeviceRecognition returns true.",
       "timestamps": "Word-level timing via result.text.audioTimeRange",
       "punctuation": null,
@@ -4349,7 +4492,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Android SpeechRecognizer / ML Kit GenAI Speech Recognition",
@@ -4384,6 +4528,7 @@
       "streaming": "Partial results via RecognitionListener.onPartialResults. ML Kit GenAI requires that 'Data must be provided to the file descriptor at a real-time rate (e.g., yielding 16,000 samples, or approximately 32 KB, every second)' — so it is realtime-paced whether or not your source is.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "ML Kit GenAI file input: 'Format: Raw, headerless 16-bit PCM. Channels: Mono (single channel). Sample Rate: 16 kHz.'",
       "timestamps": null,
       "punctuation": null,
@@ -4409,7 +4554,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Picovoice Cheetah",
@@ -4448,6 +4594,7 @@
       "streaming": "TRUE streaming — process() 'Processes a frame of audio and returns newly-transcribed text and a flag indicating if an endpoint has been detected', over 16-bit linearly-encoded single-channel audio at the SDK's sample rate, with endpoint_duration_sec defined as 'Duration of endpoint in seconds. A speech endpoint is detected when there is a chunk of audio (with a duration specified herein) after an utterance without any speech in it.' Not chunked pseudo-streaming.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level — the CheetahWord class exposes word, start_sec, end_sec and confidence via processAnnotated() / flushAnnotated()",
       "punctuation": "Optional — enable_automatic_punctuation, 'Set to True to enable automatic punctuation insertion'",
@@ -4473,7 +4620,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Picovoice Leopard",
@@ -4511,6 +4659,7 @@
       "streaming": "None — Leopard is batch. Cheetah is the streaming sibling.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level start_sec, end_sec, confidence and speaker_tag",
       "punctuation": "Optional — enable_automatic_punctuation, defaulting to False",
@@ -4536,7 +4685,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "transformers.js (whisper-web)",
@@ -4572,6 +4722,7 @@
       "streaming": "Chunked — the underlying Whisper model has a fixed 30-second window, and browser demos slide it. Not true streaming.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -4597,7 +4748,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Cerence embedded ASR (ex-Nuance automotive)",
@@ -4633,6 +4785,7 @@
       "streaming": "Streaming ASR support is stated for SDK V9; no latency figure accompanies it.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -4658,7 +4811,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Coqui STT (ex-Mozilla DeepSpeech)",
@@ -4694,6 +4848,7 @@
       "streaming": "Yes — streaming inference with confidence scoring was a core feature, and was genuinely ahead of Whisper on that axis when it shipped.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -4719,7 +4874,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Deepgram Streaming (Nova-3 / Flux)",
@@ -4758,6 +4914,7 @@
       "streaming": "TRUE streaming over WebSocket. Nova-3 emits interim results with an `is_final` flag and refines predictions as audio arrives; `endpointing` (e.g. 300 ms of silence) controls finalisation. Flux replaces that continuous-transcript model with a turn-based state machine.",
       "latency_note": "Flux: ~260 ms end-of-turn detection at p50 with default settings (vendor figure, hardware not applicable — hosted). `eager_eot_threshold` (0.3–0.9, off by default) fires EagerEndOfTurn 150–250 ms ahead of EndOfTurn at thresholds of 0.3–0.5, at the cost of 50–70% more LLM calls from speculative starts.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level, supported across all Flux models and the Nova family.",
       "punctuation": "Smart formatting, numeral conversion and profanity filtering. On Flux, numerals exclude Hindi and Japanese, and redaction is number-only.",
@@ -4783,7 +4940,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Speechmatics Realtime",
@@ -4820,6 +4978,7 @@
       "streaming": "TRUE streaming over WebSocket. `max_delay` ranges 0.7–4.0 s with `max_delay_mode` flexible or fixed. Partial transcripts exist but are OFF unless `transcription_config.enable_partials` is set true.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Maximum session duration 48 hours; idle timeout 1 hour with warnings at 15, 10 and 5 minutes.",
       "timestamps": null,
       "punctuation": null,
@@ -4845,7 +5004,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Gladia Live (Solaria-1)",
@@ -4881,6 +5041,7 @@
       "streaming": "TRUE streaming over WebSocket — POST to /v2/live to mint a session URL, then the client connects directly. Results carry an `is_final` property. Audio as binary frames or base64 in JSON.",
       "latency_note": "Vendor, from the Solaria page: 103 ms latency on interrupt (time to first byte) and 698 ms latency on final transcript. Gladia publishes no measurement conditions — no chunk length, sample rate, region or network profile — so these are not comparable to a percentile-qualified figure from another vendor. Hosted, so no client hardware applies.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "A single real-time session cannot exceed 3 hours — you must open a new session before the cap.",
       "timestamps": null,
       "punctuation": null,
@@ -4906,7 +5067,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Soniox Realtime (stt-rt-v5)",
@@ -4942,6 +5104,7 @@
       "streaming": "TRUE streaming over WebSocket. Tokens carry `is_final`: non-final tokens are provisional and may change, final tokens are guaranteed never to change. Semantic endpointing finalises on detected end-of-speech, and a client-sent `{'type': 'finalize'}` message force-finalises all pending tokens.",
       "latency_note": "Pipecat benchmark, stt-rt-v5: 260 ms median TTFS, 305 ms P95, 313 ms P99 — slightly slower than v4 at 249 / 281 / 310 ms. Hosted service, so no client hardware applies.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Audio up to 5 hours in a single request.",
       "timestamps": null,
       "punctuation": null,
@@ -4967,7 +5130,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "AssemblyAI Streaming (Universal-3.5 Pro Realtime / Universal-Streaming)",
@@ -5003,6 +5167,7 @@
       "streaming": "TRUE streaming over WebSocket at `wss://streaming.assemblyai.com/v3/ws`. Emits Begin / Turn / Termination messages; Turn objects carry `turn_order`, `end_of_turn`, `turn_is_formatted`, `end_of_turn_confidence`, `transcript` and a `words` array with millisecond timings. Finals are immutable from first emission.",
       "latency_note": "Vendor: ~300 ms word emission, quoted as 307 ms P50 against Deepgram Nova-3 at 516 ms, sourced to a Hamming.ai study over 4M+ production calls (not independently checked here). AssemblyAI's OWN benchmarks page contradicts this, listing Deepgram Nova-3 at 247 ms median TTCT against Universal-3.5 Pro Realtime's 335 ms — and Pipecat independently measures Deepgram faster too, at 247 ms against 282 ms.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "A streaming session auto-closes after 3 hours. Unterminated sessions are billed for their full duration.",
       "timestamps": "Word-level; word timings in milliseconds inside the Turn object's `words` array.",
       "punctuation": null,
@@ -5028,7 +5193,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure AI Speech — real-time transcription",
@@ -5063,6 +5229,7 @@
       "streaming": "TRUE streaming. Continuous recognition through the SDK emits `recognizing` (interim) and `recognized` (final) events until you call stop. Single-shot recognition is capped at 15 seconds of audio before the utterance ends. Post-stream refinement runs a second pass in parallel with 'no impact to first-token latency' — interim results stay fast, only finals use the wider context.",
       "latency_note": "1,016 ms median time-to-final-segment on the Pipecat benchmark, 1,345 ms P95 and 1,791 ms P99 — an order of magnitude behind the voice-agent specialists on the same test.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Single-shot recognition ends after 15 s of audio; continuous recognition has no documented per-session cap.",
       "timestamps": null,
       "punctuation": null,
@@ -5088,7 +5255,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-Omni-30B-A3B",
@@ -5124,6 +5292,7 @@
       "streaming": "Streaming exists in the Thinker–Talker sense — real-time audio and video interaction with streaming speech OUT and natural turn-taking. For ASR specifically, every published benchmark is file-level; nothing on the card establishes streaming-transcription accuracy.",
       "latency_note": "211 ms pure model end-to-end audio dialogue latency; 234 ms theoretical first-packet latency from cold start (vendor, hardware unstated).",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -5149,7 +5318,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI Realtime API (gpt-realtime / gpt-live-transcribe)",
@@ -5183,6 +5353,7 @@
       "streaming": "TRUE streaming — the API 'returns transcript deltas as speech arrives', with a tunable delay setting (minimal / low / medium / high / xhigh). Turn boundaries come either from explicit per-turn commit (which the docs recommend) or from server-side voice activity detection.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "None on gpt-live-transcribe — explicitly documented as absent, along with speaker labels and confidence scores.",
       "punctuation": null,
@@ -5208,7 +5379,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "faster-whisper",
@@ -5245,6 +5417,7 @@
       "streaming": "No true streaming. Silero VAD is integrated for silence filtering, not for low-latency decoding. Realtime use requires the separate whisper-streaming community project, and the model underneath is still non-streaming Whisper.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level via `word_timestamps=True`.",
       "punctuation": null,
@@ -5270,7 +5443,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "WhisperX",
@@ -5306,6 +5480,7 @@
       "streaming": "None. Batch-only by construction — it runs inference `without_timestamps` to enable single-pass batching, then aligns afterwards. That design choice is exactly what forecloses streaming.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level by wav2vec2 forced alignment — the distinguishing feature. Segment-per-sentence via nltk sent_tokenize since v3.",
       "punctuation": null,
@@ -5331,7 +5506,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "insanely-fast-whisper",
@@ -5366,6 +5542,7 @@
       "streaming": "None. Chunked batching with a default batch size of 24 — parallel windows over a file, not streaming.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Chunk-level and word-level timestamp modes exposed as CLI flags.",
       "punctuation": null,
@@ -5391,7 +5568,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "whisper-ctranslate2",
@@ -5427,6 +5605,7 @@
       "streaming": "No true streaming. There is a live microphone transcription mode, but the model underneath is Whisper, which is not a streaming architecture — this is chunked capture through a batch decoder, not low-latency decoding. Do not read 'real-time' on the README as a latency claim.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -5452,7 +5631,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA NeMo (NVIDIA-NeMo/Speech)",
@@ -5487,6 +5667,7 @@
       "streaming": "TRUE streaming via cache-aware FastConformer — encoder states are reused across chunks rather than recomputed from raw audio, with configurable chunk latency at 80, 160, 320, 560 and 1,120 ms. NVIDIA claims up to 17x lower latency than naive chunk-based streaming and 240–2,400 concurrent streams on a single H100.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -5512,7 +5693,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "SpeechBrain",
@@ -5548,6 +5730,7 @@
       "streaming": "TRUE streaming supported via Dynamic Chunk Training and chunked attention on the Conformer-Transducer: self-attention is restricted to the current chunk plus a bounded left context, so no future audio is required. Pretrained streaming checkpoints exist for LibriSpeech and GigaSpeech.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -5573,7 +5756,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ESPnet",
@@ -5609,6 +5793,7 @@
       "streaming": "TRUE streaming — Streaming Transformer/Conformer ASR with blockwise synchronous beam search and contextual block processing.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -5634,7 +5819,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Transformers ASR pipeline",
@@ -5670,6 +5856,7 @@
       "streaming": "None. `chunk_length_s` with `stride_length_s` (defaulting to one sixth of the chunk length on each side) is chunked batch processing of a file, not streaming. Nothing here is a realtime path.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": "Whisper's encoder is fixed at 30 seconds; anything longer goes through either the sequential long-form path or the chunked path.",
       "timestamps": "`return_timestamps='word'` for word level (CTC and Whisper), `'char'` for CTC character level, `True` for Whisper segment level.",
       "punctuation": null,
@@ -5695,7 +5882,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "pyannote speaker-diarization-3.1",
@@ -5731,6 +5919,7 @@
       "streaming": "None. Offline batch pipeline over a whole file.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Speaker turn boundaries in seconds. No words, no text, no punctuation.",
       "punctuation": null,
@@ -5756,7 +5945,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "pyannote speaker-diarization-community-1",
@@ -5792,6 +5982,7 @@
       "streaming": "None. Offline batch. Streaming diarization from this project exists only as pyannoteAI's hosted Live-1.",
       "latency_note": null,
       "realtime_factor": "31 s per hour of audio on AMI IHM (~1 h files) and 37 s per hour on DIHARD 3 (~5 min files), self-hosted on an NVIDIA H100 80 GB HBM3 — the vendor's own figures from the pyannote.audio README.",
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Speaker turn boundaries in seconds. No words.",
       "punctuation": null,
@@ -5817,7 +6008,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "pyannoteAI (Precision-2 / Live-1)",
@@ -5851,6 +6043,7 @@
       "streaming": "TRUE streaming via Live-1 — a dedicated streaming model, not chunked batch.",
       "latency_note": "Live-1: sub-300 ms speaker labels (Live-1 launch blog, pyannote.ai/blog/introducing-live-1-streaming-diarization). No hardware, region or percentile stated — vendor claim.",
       "realtime_factor": "Precision-2 self-hosted: 14 s per hour of audio on both AMI IHM and DIHARD 3, on an NVIDIA H100 80 GB HBM3 — 2.2x and 2.6x faster than community-1 on the same box (vendor figures, pyannote.audio README).",
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -5876,7 +6069,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA NeMo speaker diarization (Sortformer / MSDD)",
@@ -5911,6 +6105,7 @@
       "streaming": "TRUE streaming in v2 and v2.1 via an Arrival-Order Speaker Cache (AOSC) storing frame-level acoustic embeddings of previously observed speakers. v1 is offline only.",
       "latency_note": "Configurable input buffer measured in 80 ms frames. The v2 card publishes four configurations with their RTF: ultra-low 0.32 s (chunk 3 + right context 1, RTF 0.180), low 1.04 s (chunk 6 + RC 7, RTF 0.093), high 10.0 s (chunk 124 + RC 1, RTF 0.005), very-high 30.4 s (chunk 340 + RC 40, RTF 0.002). The v2.1 card publishes only two (1.04 s and 30.4 s). Latency here is input-buffer latency — chunk + right context — and explicitly excludes compute time. Published DERs are at 1.04 s and 30.4 s only.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -5936,7 +6131,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "SpeechBrain (diarization recipes)",
@@ -5971,6 +6167,7 @@
       "streaming": "None in the diarization recipes.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -5996,7 +6193,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Deepgram Speaker Diarization (Batch V2 / streaming v1)",
@@ -6031,6 +6229,7 @@
       "streaming": "Yes, but only on the OLD diarizer. The docs state 'diarize_model=v2 — not supported on streaming. Returns a validation error.' Streaming falls back to v1, and 'When using diarization for live streaming audio, only the speaker value will be returned' — no confidence scores.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Per-word, with a speaker id attached to each word.",
       "punctuation": null,
@@ -6056,7 +6255,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "AssemblyAI Speaker Diarization (speaker_labels)",
@@ -6091,6 +6291,7 @@
       "streaming": "TRUE inline streaming — speaker_labels: true on the same WebSocket as transcription, supported on Universal-3 Pro Streaming (u3-rt-pro), Universal-Streaming English, Universal-Streaming Multilingual and Whisper Streaming (whisper-rt), with 1-10 configurable speakers.",
       "latency_note": "Two separate figures, not one decomposition. Hamming.ai measured 307 ms P50 transcription latency for Universal-3 Pro Streaming across 4M+ production calls. Separately, AssemblyAI's own streaming-diarization blog cites ~221 ms turn delivery under aggressive turn-detection settings. Neither is a diarization-specific latency.",
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -6116,7 +6317,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Picovoice Falcon",
@@ -6153,6 +6355,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -6178,7 +6381,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Kaldi",
@@ -6214,6 +6418,7 @@
       "streaming": "Yes — online decoders (online2-*) exist and are what most 'Kaldi in production' deployments actually used.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -6239,7 +6444,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "PocketSphinx (CMU Sphinx)",
@@ -6276,6 +6482,7 @@
       "streaming": "Yes — the default `live` command detects speech segments in each input, runs recognition on them and writes results to standard output as line-delimited JSON.",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": "Word-level start (`b`) and duration (`d`) in seconds in the JSON output, with an estimated probability (`p`) per word; optional phone-level segmentation via -phone_align yes, in the same format.",
       "punctuation": null,
@@ -6301,7 +6508,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Julius",
@@ -6337,6 +6545,7 @@
       "streaming": "Yes — a two-pass tree-trellis decoder built for realtime, with DNN-HMM front-end decoding added in the 4.x line (a separate front-end module computes per-frame HMM state probabilities and sends them to Julius over a socket).",
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -6362,7 +6571,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "HTK (Hidden Markov Model Toolkit)",
@@ -6397,6 +6607,7 @@
       "streaming": null,
       "latency_note": null,
       "realtime_factor": null,
+      "rtfx_sort": null,
       "audio_limits": null,
       "timestamps": null,
       "punctuation": null,
@@ -6422,7 +6633,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     }
   ],
   "corrections": [

@@ -1525,6 +1525,13 @@ dl.tts-spec dt {
 dl.tts-spec dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-dim); }
 .tts-nodata { margin-top: 10px !important; color: var(--muted); font-size: 12px; font-style: italic; }
 
+/* "Other ratings" list in the additional_ratings detail block: same reset +
+   typography contract as dl.tts-spec, just list-shaped instead of dl-shaped. */
+.tts-ratings-extra { margin: 0; padding: 0; list-style: none; }
+.tts-ratings-extra li { margin: 0 0 6px; font-size: 12.5px; line-height: 1.5; color: var(--ink-dim); }
+.tts-ratings-extra li:last-child { margin-bottom: 0; }
+.tts-rating-meta { font-size: 11px; color: var(--muted); }
+
 @media (max-width: 720px) {
   .tts-colpick { margin-left: 0; }
   .tts-colpanel { right: auto; left: 0; }
@@ -1652,58 +1659,93 @@ table.hardware-table tbody tr.hw-row.open td { background: rgba(74, 168, 216, 0.
 .ev.hollow { background: transparent; border: 1px solid var(--cool); }
 .nav a { display: inline-flex; align-items: center; }
 
-/* ---- pipeline strip ------------------------------------------------------
-   Three text blocks with arrow glyphs between them read as three things that
-   happen to be adjacent. A rail with nodes on it reads as one thing with three
-   stops — the eye follows the line instead of parsing each cell. */
-.pipeline {
-  display: flex; align-items: flex-start; justify-content: center;
-  gap: 0; margin: 26px auto 0; max-width: 46rem; position: relative;
+/* ---- site map -------------------------------------------------------------
+   2026-08-19 rebuild: the old pipeline strip drew three different kinds of
+   thing as one rail — sequential stages, state that persists across a whole
+   conversation, and the substrate everything runs on — and a reader
+   reasonably read the rail's order as the true order. Four bands now, each
+   its own <nav aria-label> in the markup: Orchestrators wraps the loop,
+   the loop itself keeps the old rail-with-nodes treatment (a rail with
+   nodes reads as one thing with stops; arrow glyphs are aria-hidden and the
+   eye follows the row), Memory branches off Words in its own band instead
+   of trailing the rail, and Runtimes/Quantization/Hardware sit beneath as
+   substrate. A border stands in for the wrap/branch bands' single cell,
+   since "wraps" and "branches off" are not "comes next". */
+.sitemap {
+  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  margin: 26px auto 0; max-width: 58rem;
 }
-.pipe-step {
+.map-band {
+  display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: center;
+  gap: 0; width: 100%;
+}
+.map-cell {
   display: flex; flex-direction: column; align-items: center; gap: 3px;
-  padding: 0 14px 0; flex: 1 1 0; min-width: 0; text-align: center;
-  position: relative; padding-top: 26px;
+  padding: 4px 14px; text-align: center; text-decoration: none; border-radius: 6px;
 }
-/* the node, sitting ON the rail */
-.pipe-step::before {
-  content: ""; position: absolute; top: 5px; left: 50%; transform: translateX(-50%);
-  width: 11px; height: 11px; border-radius: 50%;
-  background: var(--bg); border: 2px solid var(--border-2);
-  z-index: 2; transition: border-color .15s, background .15s;
-}
-/* the rail itself: half-segments either side of each node, so the ends of the
-   strip stop cleanly instead of trailing into nothing */
-.pipe-step::after {
-  content: ""; position: absolute; top: 10px; height: 1px;
-  background: var(--border); z-index: 1;
-  left: 0; right: 0;
-}
-.pipe-step:first-child::after { left: 50%; }
-.pipe-step:last-child::after  { right: 50%; }
-a.pipe-step:hover::before { border-color: var(--cool); }
-.pipe-step.is-here::before { border-color: var(--ember); background: var(--ember); }
-
-.pipe-job {
+.map-name { font-size: 15px; font-weight: 600; color: var(--ink-dim); line-height: 1.2; }
+.map-job {
   font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--muted);
+  text-transform: uppercase; color: var(--muted); text-wrap: balance;
 }
-.pipe-name { font-size: 15px; font-weight: 600; color: var(--ink-dim); line-height: 1.2; }
-a.pipe-step:hover .pipe-name { color: var(--ink); }
-.pipe-step.is-here .pipe-name { color: var(--ink); }
-.pipe-ev {
+.map-cell .n {
+  font-family: var(--font-mono); font-size: 10px; color: var(--muted);
+}
+/* Listening/Voices' secondary measured line, and Words' secondary surveyed
+   line — same `.ev.solid`/`.ev.hollow` dot primitive the evidence switcher
+   and topbar nav use elsewhere, restating the measured-vs-surveyed split
+   rather than inventing a second one. */
+.map-ev {
   display: inline-flex; align-items: center;
   font-family: var(--font-mono); font-size: 10px; color: var(--muted);
 }
-.pipe-ev-measured { color: var(--ink-dim); }
-/* the glyph arrows are gone — the rail carries the direction now */
-.pipe-arrow { display: none; }
+.map-ev-measured { color: var(--ink-dim); }
+a.map-cell:hover { background: var(--surface-2); }
+a.map-cell:hover .map-name { color: var(--ink); }
+/* the current stop must be unmistakable — ember, the same current-page
+   colour the topbar nav and evidence switcher already use, never colour
+   alone. `aria-current="page"` (set in the markup alongside `.here`) is the
+   programmatic signal; this is only the visual one. */
+.map-cell.here { background: var(--ember-dim); }
+.map-cell.here .map-name,
+.map-cell.here .n { color: var(--ember); }
+
+/* the loop: five cells share the row evenly, rail glyphs between them
+   aria-hidden — direction is carried by the arrow shape, never by colour
+   alone. */
+.map-loop .map-cell { flex: 1 1 0; min-width: 0; }
+.map-arrow, .map-dot {
+  align-self: center; color: var(--border-2); font-size: 13px; padding: 0 2px;
+}
+
+/* wrap (Orchestrators) and branch (Memory) are one cell each; the dashed
+   border reads as "this surrounds/attaches to the loop", not "comes next". */
+.map-wrap .map-cell,
+.map-branch .map-cell {
+  border: 1px dashed var(--border-2); border-radius: 8px; padding: 8px 18px;
+}
+.map-wrap .map-cell:hover,
+.map-branch .map-cell:hover { border-color: var(--cool); }
+.map-wrap .map-cell.here,
+.map-branch .map-cell.here { border-color: var(--ember); }
+
+.map-substrate .map-cell { padding: 4px 10px; }
+.map-substrate .map-job { font-size: 8.5px; }
 
 @media (max-width: 640px) {
-  .pipeline { max-width: none; }
-  .pipe-step { padding-left: 4px; padding-right: 4px; }
-  .pipe-name { font-size: 13px; }
-  .pipe-job { font-size: 9px; letter-spacing: .06em; }
+  /* Never a horizontally-scrolling diagram: the map exists for orientation
+     at a glance, and a diagram you have to pan is worse than a list. Every
+     band — including the loop — stacks as a vertical list here. */
+  .sitemap { max-width: none; gap: 12px; }
+  .map-band { flex-direction: column; align-items: stretch; gap: 8px; }
+  .map-arrow, .map-dot { display: none; }
+  .map-cell {
+    flex-direction: row; justify-content: space-between; align-items: baseline;
+    padding: 6px 12px; text-align: left;
+  }
+  .map-wrap .map-cell, .map-branch .map-cell { padding: 8px 14px; }
+  .map-name { font-size: 14px; }
+  .map-job { font-size: 9px; letter-spacing: .06em; }
 }
 
 /* ---- section sub-row ----------------------------------------------------- */
@@ -1977,23 +2019,21 @@ table.lb.tts tbody tr.tts-row.open td.tts-name { background: #141A26; }
 
 
 /* The pre-table band reads as one centered column now: the scope line joins the
-   centered pipeline above it instead of hanging off the left edge, and the
+   centered site map above it instead of hanging off the left edge, and the
    glossary link rides inside the section head's own sentence (site.js). */
 .scope-line { justify-content: center; text-align: center; margin: 26px 0 26px; }
 .glossary-line { text-align: center; }
 
-/* The stage strip earns its width: larger names, balanced two-line jobs (no
-   orphaned single word), more room between stops. */
+/* The map earns its width on larger screens: bigger names, more room
+   between cells. */
 @media (min-width: 720px) {
-  .pipeline { max-width: none; margin-top: 42px; }
-  .pipe-step { padding-top: 34px; gap: 5px; }
-  .pipe-step::before { width: 14px; height: 14px; top: 6px; }
-  .pipe-step::after { top: 12.5px; }
-  .pipe-name { font-size: 20px; }
-  .pipe-job { font-size: 11.5px; letter-spacing: .12em; }
-  .pipe-ev { font-size: 11.5px; }
+  .sitemap { max-width: none; margin-top: 34px; }
+  .map-name { font-size: 20px; }
+  .map-job { font-size: 11.5px; letter-spacing: .12em; }
+  .map-cell .n { font-size: 11.5px; }
+  .map-ev { font-size: 11.5px; }
 }
-.pipe-job { text-wrap: balance; }
+.map-job { text-wrap: balance; }
 
 /* The page-subject section head stacks and centres, matching the centered
    hero + pipeline column above it, instead of jostling serif h2, sans note
@@ -2047,8 +2087,8 @@ table.lb.tts tbody tr.tts-row.open td.tts-name { background: #141A26; }
    The prominent "this section has two kinds of evidence" control — the same
    pair of real page links on Listening, Words, and Voices. Replaces the 12.5px
    .util-tab pill that used to switch Words'
-   tabs, which nobody saw (.util-tab itself lives on — utilities.html still
-   uses it). The child spans set explicit colours so the
+   tabs, which nobody saw (.util-tab itself lives on — frontend.html, formerly
+   utilities.html, still uses it). The child spans set explicit colours so the
    surveyed sections' link tint (body[data-kind="surveyed"] a) does not
    bleed into the segments. */
 .ev-switch { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0 0; }

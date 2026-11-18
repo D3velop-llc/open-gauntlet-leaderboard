@@ -15,7 +15,8 @@
 - [Orchestrator research](https://opengauntlet.com/orchestrators.html): Sourced voice-agent framework and platform comparison.
 - [Memory research](https://opengauntlet.com/memory.html): Sourced vector database and agent-memory system comparison.
 - [Quantization research](https://opengauntlet.com/quantization.html): Sourced quantization toolchain comparison.
-- [Utilities research](https://opengauntlet.com/utilities.html): Sourced speaker-verification, wake-word, and speech-enhancement comparison.
+- [Attention research](https://opengauntlet.com/attention.html): Sourced comparison of external audio classifiers — addressee detection, audio-event tagging, paralinguistics, and wake-phrase detection.
+- [Before it hears you](https://opengauntlet.com/frontend.html): Sourced speaker-verification and speech-enhancement comparison.
 - [Text-to-speech measurements](https://opengauntlet.com/tts.html): Scoped local TTS blind-listening experiment with disclosed method and receipts.
 - [Text-to-speech survey](https://opengauntlet.com/tts-survey.html): Sourced comparison of 168 TTS systems.
 - [TTS comparison guide](https://opengauntlet.com/tts-guide.html): How to interpret TTS evidence.
@@ -35,7 +36,6 @@
 - [Quantization research JSON](https://opengauntlet.com/data/quantization.json)
 - [Open-weight LLM survey JSON](https://opengauntlet.com/data/llms.json)
 - [Speaker verification research JSON](https://opengauntlet.com/data/speakerid.json)
-- [Wake word research JSON](https://opengauntlet.com/data/wakeword.json)
 - [Speech enhancement research JSON](https://opengauntlet.com/data/enhancement.json)
 - [TTS research JSON](https://opengauntlet.com/data/tts.json)
 - [TTS lab JSON](https://opengauntlet.com/data/tts-lab.json)

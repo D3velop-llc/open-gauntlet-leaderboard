@@ -44,7 +44,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Llama 3.1 8B Instruct",
@@ -84,7 +85,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-235B-A22B-Instruct-2507",
@@ -126,7 +128,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-32B",
@@ -168,7 +171,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Mistral Small 3.2 24B Instruct 2506",
@@ -209,7 +213,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Gemma 3 27B Instruct",
@@ -250,7 +255,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "DeepSeek-V3.2",
@@ -292,7 +298,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "GLM-4.6",
@@ -333,7 +340,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Command R+ (08-2024)",
@@ -374,7 +382,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Phi-4",
@@ -413,7 +422,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Stheno v3.2 (L3-8B)",
@@ -452,7 +462,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Llama-3-Lumimaid 8B v0.1",
@@ -492,7 +503,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Cydonia 24B v4.3",
@@ -532,7 +544,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MN-12B Mag Mell R1",
@@ -571,7 +584,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Wayfarer 2 12B",
@@ -612,7 +626,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Mistral-Nemo-12B ArliAI RPMax v1.1",
@@ -651,7 +666,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Magnum v4 72B",
@@ -690,7 +706,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Pantheon-RP 1.6.1 12B Nemo",
@@ -729,7 +746,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Sweet Dreams 12B",
@@ -770,7 +788,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "DeepSeek-V4-Flash",
@@ -812,7 +831,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-235B-A22B-Thinking-2507",
@@ -854,7 +874,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "gpt-oss-120b",
@@ -896,7 +917,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "gpt-oss-20b",
@@ -938,7 +960,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Magistral-Small-2509",
@@ -978,7 +1001,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Kimi K2 Thinking",
@@ -1020,7 +1044,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Llama-3.3-Nemotron-Super-49B-v1.5",
@@ -1061,7 +1086,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Phi-4-reasoning-plus",
@@ -1100,7 +1126,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-Coder-480B-A35B-Instruct",
@@ -1141,7 +1168,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-Coder-30B-A3B-Instruct",
@@ -1182,7 +1210,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen2.5-Coder-32B-Instruct",
@@ -1221,7 +1250,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "DeepSeek-Coder-V2-Lite-Instruct",
@@ -1260,7 +1290,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "StarCoder2-15B",
@@ -1297,7 +1328,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Codestral-22B-v0.1",
@@ -1335,7 +1367,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Devstral-Small-2507",
@@ -1375,7 +1408,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Aya Expanse 32B",
@@ -1415,7 +1449,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "EuroLLM-9B-Instruct",
@@ -1454,7 +1489,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Sailor2-20B-Chat",
@@ -1493,7 +1529,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Sarvam-105B",
@@ -1533,7 +1570,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Gemma-SEA-LION-v4-27B-IT",
@@ -1573,7 +1611,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-VL-8B-Instruct",
@@ -1614,7 +1653,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Llama 3.2 11B Vision Instruct",
@@ -1654,7 +1694,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "InternVL3.5-8B",
@@ -1693,7 +1734,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MiniCPM-V 4.5",
@@ -1732,7 +1774,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Molmo2-8B",
@@ -1771,7 +1814,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Pixtral 12B",
@@ -1810,7 +1854,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-0.6B",
@@ -1852,7 +1897,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Llama 3.2 1B",
@@ -1894,7 +1940,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Gemma 3 270M",
@@ -1934,7 +1981,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Gemma 4 E2B",
@@ -1979,7 +2027,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "SmolLM3-3B",
@@ -2022,7 +2071,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MobileLLM-R1.5-950M",
@@ -2062,7 +2112,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     }
   ],
   "corrections": [

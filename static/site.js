@@ -714,11 +714,17 @@ function renderLeaderboard(models, rankKey = null, simple = false) {
     // it reads as broken. Label the boundary once, in simple view where the bar is the
     // headline — the technical view still carries the per-row "provisional" styling.
     let sepDone = false;
+    // "scored" is only true once the judge has touched a row. A freshly enrolled model has
+    // transcripts and speed but ZERO rubric rows, so when no provisional row has been scored
+    // the label must say so rather than claim a score exists.
+    const anyScored = rows.some((r) => r.ranked === false && (r.rubric_scored || 0) > 0);
     rows.forEach((row) => {
       if (simple && !sepDone && row.ranked === false && tbody.children.length) {
         sepDone = true;
         const sep = el("td", { class: "sep-cell",
-          text: "Still being judged — scored, but not ranked until every conversation is in" });
+          text: anyScored
+            ? "Still being judged — scored, but not ranked until every conversation is in"
+            : "Not yet judged — conversations generated and speed measured, but nothing scored, so no rank" });
         sep.colSpan = cols.length;
         tbody.appendChild(el("tr", { class: "sep" }, sep));
       }
@@ -1533,7 +1539,15 @@ async function initLeaderboard() {
 }
 
 /* ============================ MODEL DETAIL =============================== */
-function critCard(criteria) {
+function critCard(criteria, corpus) {
+  // An unjudged run has no criteria at all. Saying "over 30 conversations" there claims a
+  // judged corpus that does not exist, so say what was actually done instead.
+  if (!criteria.length) {
+    const n = (corpus || {}).scenarios_covered;
+    return el("div", { class: "card" }, el("h3", { text: "How it scored on each quality" }),
+      el("p", { class: "sub", text: (n ? `${n} scenarios generated` : "Conversations generated")
+        + " — not judged yet, so there are no quality scores for this model." }));
+  }
   const card = el("div", { class: "card" }, el("h3", { text: "How it scored on each quality" }),
     el("p", { class: "sub", text: "Judge's mean score out of 20, over 30 conversations. Higher is better on all nine. The whisker shows how much the score moved between repeat runs of the same conversation." }));
   for (const c of criteria) {
@@ -1688,7 +1702,7 @@ async function initModel() {
       : `${modelName} — OpenGauntlet`;
     mount.replaceChildren();   // clear the "Loading…" placeholder
 
-    const grid = el("div", { class: "grid-2 row-in" }, critCard(d.criteria || []), categoryCard(d.category_breakdown || []));
+    const grid = el("div", { class: "grid-2 row-in" }, critCard(d.criteria || [], d.corpus_quality), categoryCard(d.category_breakdown || []));
     mount.appendChild(grid);
 
     // Three-machine speed table: one row per declared machine, honest about fit. Placed above
@@ -2287,6 +2301,8 @@ const TTS_COLS = [
   { key: "multi_speaker",  label: "Multi-speaker",   txt: true, wide: true, group: "Capability" },
   { key: "timestamps",     label: "Timestamps",      txt: true, wide: true, group: "Capability" },
   { key: "latency_note",   label: "Latency",         txt: true, wide: true, group: "Evidence" },
+  { key: "ttfa_ms_sort",   label: "TTFA",            txt: true, group: "Evidence" },
+  { key: "rtfx_sort",      label: "RTFx",            txt: true, group: "Evidence" },
   { key: "status",         label: "Status",          txt: true, group: "Evidence" },
   { key: "verification",   label: "Evidence",        txt: true, group: "Evidence" },
   { key: "watch",          label: "The catch",       txt: true, wide: true, group: "Evidence" },
@@ -2537,6 +2553,7 @@ const ASR_COLS = [
   { key: "languages_sort", label: "Langs",                       cell: "languages_note", group: "Capability" },
   { key: "streaming",      label: "Streaming",        txt: true, wide: true, group: "Capability" },
   { key: "latency_note",   label: "Latency",          txt: true, wide: true, group: "Evidence" },
+  { key: "rtfx_sort",      label: "RTFx",             txt: true, cell: "realtime_factor", group: "Evidence" },
   { key: "timestamps",     label: "Timestamps",       txt: true, wide: true, group: "Capability" },
   { key: "punctuation",    label: "Punctuation",      txt: true, wide: true, group: "Capability" },
   { key: "custom_vocab",   label: "Custom vocab",     txt: true, wide: true, group: "Capability" },
@@ -3125,81 +3142,6 @@ const SPEAKERID_COMPARE_FIELDS = [
   ["verification", "Evidence"], ["best_for", "Best for"],
 ];
 
-const WAKEWORD_CATS = [
-  { key: "open-source",   label: "Open source" },
-  { key: "commercial-sdk", label: "Commercial SDK" },
-];
-const WAKEWORD_CAT_LABEL = Object.fromEntries(WAKEWORD_CATS.map((c) => [c.key, c.label]));
-
-/* MUST mirror WAKEWORD_FACETS in config.py (CORE_FACETS plus a small domain
-   extension — custom-phrase-trainable and multi-wake-word). Same
-   bidirectional coverage contract as SPEAKERID_FACET_GROUPS above. */
-const WAKEWORD_FACET_GROUPS = [
-  { title: "Runs on", facets: [
-    ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
-    ["cpu-capable", "No GPU needed"], ["edge-capable", "Edge/embedded"], ["browser", "Browser/WASM"],
-  ] },
-  { title: "Can do", facets: [
-    ["custom-phrase-trainable", "Custom phrase trainable"], ["multi-wake-word", "Multiple wake words"],
-    ["streaming", "Streaming / incremental"], ["long-form", "Long-form"],
-  ] },
-  { title: "Can I ship it", facets: [
-    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
-    ["non-commercial", "Non-commercial only"],
-  ] },
-  { title: "Still alive", facets: [
-    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
-    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
-  ] },
-  { title: "Languages", facets: [["multilingual", "Multiple languages"], ["english-only", "English only"]] },
-];
-const WAKEWORD_FACET_LABEL = Object.fromEntries(WAKEWORD_FACET_GROUPS.flatMap((g) => g.facets));
-
-const WAKEWORD_COLS = [
-  { key: "name",              label: "Engine",             txt: true, def: true, fixed: true, group: "Core" },
-  { key: "standout",          label: "What's different",   txt: true, def: true, wide: true, group: "Core" },
-  { key: "category",          label: "Kind",                txt: true, def: true, group: "Core" },
-  { key: "licence",           label: "Licence",             txt: true, def: true, group: "Core" },
-  { key: "method",            label: "Method",              txt: true, def: true, wide: true, group: "Core" },
-  { key: "accuracy_note",     label: "Accuracy",            txt: true, def: true, wide: true, group: "Core" },
-  { key: "price_sort",        label: "Cost",                txt: true, cell: "price_note", group: "Commercial" },
-  { key: "custom_wake_word",  label: "Custom phrase",       txt: true, wide: true, group: "Technical" },
-  { key: "footprint",         label: "Footprint",           txt: true, group: "Technical" },
-  { key: "availability",      label: "Availability",        txt: true, group: "Technical" },
-  { key: "status",            label: "Status",               txt: true, group: "Evidence" },
-  { key: "verification",      label: "Evidence",             txt: true, group: "Evidence" },
-  { key: "adoption",          label: "Adoption",             txt: true, wide: true, group: "Evidence" },
-  { key: "watch",             label: "The catch",            txt: true, wide: true, group: "Evidence" },
-];
-const WAKEWORD_COL_DEFAULT = WAKEWORD_COLS.filter((c) => c.def).map((c) => c.key);
-
-const WAKEWORD_COL_PRESETS = [
-  { key: "default", label: "Default", cols: WAKEWORD_COL_DEFAULT },
-  { key: "decide",  label: "Choosing one",
-    cols: ["name", "standout", "licence", "method", "accuracy_note", "watch"] },
-  { key: "tech",    label: "Technical",
-    cols: ["name", "method", "custom_wake_word", "footprint", "availability"] },
-  { key: "all",     label: "Everything", cols: WAKEWORD_COLS.map((c) => c.key) },
-];
-
-const WAKEWORD_PANELS = [
-  { title: "Technical", fields: [
-    ["custom_wake_word", "Custom phrase"], ["footprint", "Footprint"], ["availability", "Availability"],
-  ] },
-  { title: "Evidence", fields: [
-    ["adoption", "Adoption"], ["released", "Released"], ["verification_note", "What was verified"],
-  ] },
-];
-
-const WAKEWORD_COMPARE_FIELDS = [
-  ["standout", "What's different"],
-  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
-  ["method", "Method"], ["accuracy_note", "Accuracy"], ["custom_wake_word", "Custom phrase"],
-  ["footprint", "Footprint"], ["availability", "Availability"], ["price_note", "Cost"],
-  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
-  ["verification", "Evidence"], ["best_for", "Best for"],
-];
-
 const ENHANCEMENT_CATS = [
   { key: "noise-suppression", label: "Noise suppression" },
   { key: "echo-cancellation", label: "Echo cancellation" },
@@ -3242,6 +3184,7 @@ const ENHANCEMENT_COLS = [
   { key: "quality_note",   label: "Quality",             txt: true, def: true, wide: true, group: "Core" },
   { key: "price_sort",     label: "Cost",                txt: true, cell: "price_note", group: "Commercial" },
   { key: "latency_note",   label: "Latency",             txt: true, wide: true, group: "Technical" },
+  { key: "rtfx_sort",      label: "RTFx",                txt: true, group: "Technical" },
   { key: "availability",   label: "Availability",        txt: true, group: "Technical" },
   { key: "status",         label: "Status",               txt: true, group: "Evidence" },
   { key: "verification",   label: "Evidence",             txt: true, group: "Evidence" },
@@ -3273,6 +3216,123 @@ const ENHANCEMENT_COMPARE_FIELDS = [
   ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
   ["method", "Method"], ["quality_note", "Quality"], ["latency_note", "Latency"],
   ["availability", "Availability"], ["price_note", "Cost"],
+  ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
+  ["verification", "Evidence"], ["best_for", "Best for"],
+];
+
+/* Attention — external audio classifiers. MUST mirror ATTENTION_CATEGORIES in
+   config.py. The axis is FUNCTION, not availability: "backbone" says what a thing
+   does, while the absence of weights is the no-released-weights facet below. */
+const ATTENTION_CATS = [
+  { key: "addressee",      label: "Addressee" },
+  { key: "wake-phrase",    label: "Wake phrase" },
+  { key: "floor-intent",   label: "Floor intent" },
+  { key: "event-tagger",   label: "Event tagger" },
+  { key: "paralinguistic", label: "Paralinguistic" },
+  { key: "backbone",       label: "Backbone" },
+];
+const ATTENTION_CAT_LABEL = Object.fromEntries(ATTENTION_CATS.map((c) => [c.key, c.label]));
+
+/* MUST mirror ATTENTION_FACETS in config.py (CORE_FACETS plus seven domain
+   facets). Same bidirectional coverage contract as every other section.
+   `custom-phrase-trainable` and `multi-wake-word` came across from the
+   retired standalone Wake word section's own facet groups. */
+const ATTENTION_FACET_GROUPS = [
+  { title: "Runs on", facets: [
+    ["self-hostable", "Self-hostable"], ["api-only", "Hosted only"],
+    ["cpu-capable", "No GPU needed"], ["edge-capable", "Edge/embedded"], ["browser", "Browser/WASM"],
+  ] },
+  { title: "Can do", facets: [
+    ["addressee-aware", "Knows who it's for"], ["speaker-conditioned", "Takes a speaker embedding"],
+    ["frame-level", "Per-frame output"], ["streaming", "Streaming / incremental"],
+    ["long-form", "Long-form"],
+    ["custom-phrase-trainable", "Trainable custom phrase"], ["multi-wake-word", "Multiple wake words"],
+  ] },
+  { title: "Can I get it", facets: [
+    ["pretrained-checkpoint", "Checkpoint for this task"], ["no-released-weights", "No checkpoint for this task"],
+  ] },
+  { title: "Can I ship it", facets: [
+    ["commercially-safe", "Commercially safe"], ["licence-catch", "Licence has a catch"],
+    ["non-commercial", "Non-commercial only"],
+  ] },
+  { title: "Still alive", facets: [
+    ["actively-maintained", "Actively maintained"], ["frozen", "Frozen but usable"],
+    ["superseded", "Superseded"], ["discontinued", "Discontinued"],
+  ] },
+  { title: "Languages", facets: [["multilingual", "Multiple languages"], ["english-only", "English only"]] },
+];
+const ATTENTION_FACET_LABEL = Object.fromEntries(ATTENTION_FACET_GROUPS.flatMap((g) => g.facets));
+
+const ATTENTION_COLS = [
+  { key: "name",          label: "Classifier",      txt: true, def: true, fixed: true, group: "Core" },
+  { key: "standout",      label: "What's different", txt: true, def: true, wide: true, group: "Core" },
+  { key: "category",      label: "Kind",             txt: true, def: true, group: "Core" },
+  { key: "licence",       label: "Licence",          txt: true, def: true, group: "Core" },
+  { key: "task",          label: "What it outputs",  txt: true, def: true, wide: true, group: "Core" },
+  { key: "availability",  label: "Can I get it",     txt: true, def: true, wide: true, group: "Core" },
+  { key: "price_sort",    label: "Cost",             txt: true, cell: "price_note", group: "Commercial" },
+  { key: "params",        label: "Params",           txt: true, group: "Technical" },
+  { key: "model_size_sort", label: "Size",           txt: true, cell: "model_size", group: "Technical" },
+  { key: "architecture",  label: "Architecture",     txt: true, wide: true, group: "Technical" },
+  { key: "input_features", label: "Features",        txt: true, group: "Technical" },
+  { key: "latency_note",  label: "Latency",          txt: true, wide: true, group: "Technical" },
+  { key: "accuracy_note", label: "Accuracy",         txt: true, wide: true, group: "Technical" },
+  { key: "training_data", label: "Trained on",       txt: true, wide: true, group: "Technical" },
+  { key: "custom_wake_word", label: "Custom wake word", txt: true, wide: true, group: "Technical" },
+  // `streaming` and `self_host` are schema fields (a future row can populate them)
+  // but are 0/46 populated in configs/attention.yaml today — a column blank for
+  // every row reads as broken data, not as a sparse source, so they are
+  // deliberately not rendered here. Re-add once at least some rows carry a value.
+  // `adoption` went from 0/37 to 6/46 (13%) when the wake-phrase rows merged in —
+  // no longer always-empty, but still well under the ~60% fill floor a column
+  // needs (see the Voices matrix rule this page inherits: a column blank for most
+  // rows reads as missing data, not a sparse source). Stays out of ATTENTION_COLS
+  // for that reason, not because it is unpopulated; it already reaches the
+  // compare view via ATTENTION_COMPARE_FIELDS below. Re-add as a column only if
+  // fill rate climbs near the floor, not just because it is nonzero.
+  { key: "languages_note", label: "Languages",       txt: true, group: "Technical" },
+  { key: "runs_on",       label: "Runs on",          txt: true, wide: true, group: "Technical" },
+  { key: "status",        label: "Status",           txt: true, group: "Evidence" },
+  { key: "verification",  label: "Evidence",         txt: true, group: "Evidence" },
+  { key: "released",      label: "Released",         txt: true, group: "Evidence" },
+  { key: "watch",         label: "The catch",        txt: true, wide: true, group: "Evidence" },
+];
+const ATTENTION_COL_DEFAULT = ATTENTION_COLS.filter((c) => c.def).map((c) => c.key);
+
+const ATTENTION_COL_PRESETS = [
+  { key: "default", label: "Default", cols: ATTENTION_COL_DEFAULT },
+  { key: "decide",  label: "Choosing one",
+    cols: ["name", "standout", "licence", "task", "availability", "watch"] },
+  { key: "tech",    label: "Technical",
+    cols: ["name", "params", "model_size_sort", "architecture", "input_features", "latency_note", "accuracy_note"] },
+  { key: "all",     label: "Everything", cols: ATTENTION_COLS.map((c) => c.key) },
+];
+
+const ATTENTION_PANELS = [
+  // `streaming` and `self_host` are omitted from both panels below for the same
+  // reason ATTENTION_COLS omits them: 0/46 rows in configs/attention.yaml populate
+  // them today, and an always-absent field would inflate every row's "N further fields
+  // are not published" count for a field no source was ever expected to fill. The
+  // schema fields stay on AttentionSystem for a future row that can populate them.
+  // `adoption` is 6/46 populated since the wake-phrase merge (see ATTENTION_COLS'
+  // own note) — still left off both panels below and reachable via compare only.
+  { title: "Technical", fields: [
+    ["params", "Params"], ["model_size", "Size"], ["architecture", "Architecture"],
+    ["input_features", "Features"], ["latency_note", "Latency"], ["accuracy_note", "Accuracy"],
+    ["training_data", "Trained on"],
+    ["languages_note", "Languages"], ["runs_on", "Runs on"],
+  ] },
+  { title: "Evidence", fields: [
+    ["released", "Released"], ["verification_note", "What was verified"],
+  ] },
+];
+
+const ATTENTION_COMPARE_FIELDS = [
+  ["standout", "What's different"],
+  ["licence", "Licence"], ["licence_class", "Licence class"], ["watch", "The catch"],
+  ["task", "What it outputs"], ["availability", "Can I get it"],
+  ["params", "Params"], ["model_size", "Size"], ["architecture", "Architecture"],
+  ["latency_note", "Latency"], ["accuracy_note", "Accuracy"], ["price_note", "Cost"],
   ["adoption", "Adoption"], ["released", "Released"], ["status", "Status"],
   ["verification", "Evidence"], ["best_for", "Best for"],
 ];
@@ -3342,14 +3402,6 @@ const MATRIX_SPECS = {
     panels: SPEAKERID_PANELS, compareFields: SPEAKERID_COMPARE_FIELDS,
     kindHint: "Three kinds: a metric is a pure formula (e.g. SECS itself), an embedding model is a trained model you run yourself, and a verification API is a packaged or hosted service.",
   },
-  wakeword: {
-    key: "wakeword", dataUrl: "data/wakeword.json", prefsKey: "og.wakeword.prefs.v1",
-    cats: WAKEWORD_CATS, catLabel: WAKEWORD_CAT_LABEL,
-    facetGroups: WAKEWORD_FACET_GROUPS, facetLabel: WAKEWORD_FACET_LABEL,
-    cols: WAKEWORD_COLS, colDefault: WAKEWORD_COL_DEFAULT, colPresets: WAKEWORD_COL_PRESETS,
-    panels: WAKEWORD_PANELS, compareFields: WAKEWORD_COMPARE_FIELDS,
-    kindHint: "Two kinds: open-source engines you self-host and customize, and commercial SDKs with their own licensing terms.",
-  },
   enhancement: {
     key: "enhancement", dataUrl: "data/enhancement.json", prefsKey: "og.enhancement.prefs.v1",
     cats: ENHANCEMENT_CATS, catLabel: ENHANCEMENT_CAT_LABEL,
@@ -3357,6 +3409,14 @@ const MATRIX_SPECS = {
     cols: ENHANCEMENT_COLS, colDefault: ENHANCEMENT_COL_DEFAULT, colPresets: ENHANCEMENT_COL_PRESETS,
     panels: ENHANCEMENT_PANELS, compareFields: ENHANCEMENT_COMPARE_FIELDS,
     kindHint: "Three kinds: noise suppression removes background sound, echo cancellation removes acoustic echo, and commercial suites often bundle both.",
+  },
+  attention: {
+    key: "attention", dataUrl: "data/attention.json", prefsKey: "og.attention.prefs.v1",
+    cats: ATTENTION_CATS, catLabel: ATTENTION_CAT_LABEL,
+    facetGroups: ATTENTION_FACET_GROUPS, facetLabel: ATTENTION_FACET_LABEL,
+    cols: ATTENTION_COLS, colDefault: ATTENTION_COL_DEFAULT, colPresets: ATTENTION_COL_PRESETS,
+    panels: ATTENTION_PANELS, compareFields: ATTENTION_COMPARE_FIELDS,
+    kindHint: "Six kinds. Addressee asks if the speech is for you; wake phrase asks the same question the older way, with one fixed trigger phrase; floor intent asks if it should interrupt; event taggers say what a sound is; paralinguistic reads how it was said; and backbones are architectures you train yourself.",
   },
   llms: {
     key: "llms", dataUrl: "data/llms.json", prefsKey: "og.llms.prefs.v1",
@@ -3371,22 +3431,25 @@ const MATRIX_SPECS = {
 /* ------------------------------------------------------------------------
    Eleven matrices, one renderer.
 
-   Voices, Listening, Turns, Runtimes, Orchestrators, Memory, Quantization, LLMs
-   and Utilities differ in exactly six things — categories, facets, columns, expander panels,
-   compare fields and the prefs key. Licence chips, the hardware ladder, magnitude sorting,
-   popovers, compare and the whole 600-line table are identical, and a second, third,
-   fourth, fifth, sixth, seventh, eighth, ninth, tenth, or eleventh copy would be a copy to keep in sync.
+   Voices, Listening, Turns, Runtimes, Orchestrators, Memory, Quantization, Attention,
+   LLMs, Speakerid and Enhancement differ in exactly six things — categories, facets,
+   columns, expander panels, compare fields and the prefs key. Licence chips, the
+   hardware ladder, magnitude sorting, popovers, compare and the whole 600-line table
+   are identical, and a second, third, fourth, fifth, sixth, seventh, eighth, ninth,
+   tenth, or eleventh copy would be a copy to keep in sync. (Wake word was a twelfth
+   until the site map rebuild's task 4 retired it into Attention's `wake-phrase`
+   category — one fewer matrix, not one fewer row on Attention's own.)
 
    SPEC is module-level rather than threaded through fifteen signatures because
    a page renders exactly ONE matrix: the router picks it from `data-page`, and
-   there is no path on which two coexist. A test asserts that. Utilities is the
-   first page where `initMatrix` is called more than once per page load — its
-   tab switcher (`initUtilitiesPage` below) calls it once per tab, sequentially,
-   on that tab's first activation, never concurrently — so the "no path on
-   which two matrices coexist" invariant still holds: only one tab is ever
-   visible/interactive at a time. What changed is a page's *lifetime* can now
-   include more than one *sequential* `initMatrix` call. Utilities is the only
-   page that does this — the LLM survey (llms.html) is a normal single-matrix
+   there is no path on which two coexist. A test asserts that. Frontend.html
+   (formerly Utilities) is the first page where `initMatrix` is called more than
+   once per page load — its tab switcher (`initFrontendPage` below) calls it once
+   per tab, sequentially, on that tab's first activation, never concurrently — so
+   the "no path on which two matrices coexist" invariant still holds: only one tab
+   is ever visible/interactive at a time. What changed is a page's *lifetime* can
+   now include more than one *sequential* `initMatrix` call. Frontend.html is the
+   only page that does this — the LLM survey (llms.html) is a normal single-matrix
    page, after briefly living as a second tab on Words whose footer-cache race
    machinery was deleted along with the tab.
    ------------------------------------------------------------------------ */
@@ -3395,7 +3458,7 @@ let SPEC = null;
 /* Columns whose text leads with a magnitude-suffixed number. Sorting these as
    strings ranks "82 M" above "5 B", because it compares "8" against "5" and never
    reaches the unit. */
-const TTS_MAGNITUDE_COLS = new Set(["params", "vram", "context_window"]);
+const TTS_MAGNITUDE_COLS = new Set(["params", "vram", "context_window", "model_size"]);
 const TTS_SCALE = { k: 1e-3, m: 1, b: 1e3, t: 1e6 };
 
 /* How far into a value a magnitude may appear and still be THIS system's size.
@@ -3424,7 +3487,8 @@ function ttsMagnitude(str) {
    without adding it here is a silent text sort, which looks plausible and is
    wrong in a way nobody checks. */
 const TTS_NUMERIC_COLS = new Set([
-  "price_sort", "languages_sort", "rating", "wer_sort", "latency_sort",
+  "price_sort", "languages_sort", "rating", "wer_sort", "latency_sort", "model_size_sort",
+  "ttfa_ms_sort", "rtfx_sort",
 ]);
 
 /* Sort value for a column. Numeric columns read their dedicated *_sort field so
@@ -3513,6 +3577,26 @@ function ttsDetailRow(row, colCount) {
     // The caveat is the reason this page exists; give it its own visual weight.
     body.appendChild(el("p", { class: "tts-watch" },
       el("span", { class: "tts-dt warn", text: "Watch out" }), " ", row.watch));
+  }
+
+  // Independently-sourced ratings beyond the row's primary one. Never a table
+  // column — mixing boards into one sortable column is the exact bug
+  // _check_rating/wer_sort's attribution requirement already exists to prevent.
+  if (row.additional_ratings && row.additional_ratings.length) {
+    const list = el("ul", { class: "tts-ratings-extra" });
+    row.additional_ratings.forEach((r) => {
+      const li = el("li", {},
+        el("span", { class: "tts-elo mono", text: String(r.rating) }), " ",
+        el("span", { class: "tts-elo-src", text: r.rating_source }));
+      const meta = [r.rating_metric, r.rating_as_of && `read ${r.rating_as_of}`,
+        r.rating_votes && `${r.rating_votes} votes`].filter(Boolean).join(" · ");
+      if (meta) li.appendChild(el("span", { class: "tts-rating-meta", text: ` — ${meta}` }));
+      const link = sourceLink(r.rating_url, "src-link");
+      if (link) { li.appendChild(document.createTextNode(" ")); li.appendChild(link); }
+      list.appendChild(li);
+    });
+    body.appendChild(el("div", { class: "tts-panel" },
+      el("h4", { text: "Other ratings" }), list));
   }
 
   const grid = el("div", { class: "tts-panels" });
@@ -4308,7 +4392,7 @@ function renderAsrLab(mount, lab) {
 }
 
 /* Returns true on a successful render, false when the fetch failed (so a
-   caller — today, only initUtilitiesPage's activate() — can tell "loaded"
+   caller — today, only initFrontendPage's activate() — can tell "loaded"
    apart from "gave up and showed an error", and avoid marking a failed tab
    permanently loaded). The single-matrix pages call this by name and
    ignore the return value, which is safe: the fire-and-forget call at the
@@ -4325,7 +4409,7 @@ async function initMatrix(key) {
     // panel's schema right as it resolves. Leaving it alone means SPEC keeps
     // tracking whichever tab activate() most recently made visible — this
     // panel's own mounts are hidden and key-scoped regardless, so a stale
-    // render here is harmless, and utilActiveKey (see initUtilitiesPage)
+    // render here is harmless, and utilActiveKey (see initFrontendPage)
     // still blocks marking this tab "loaded" if the user has moved on.
     doc = await getJSON(SPEC.dataUrl);
   } catch (e) {
@@ -4385,12 +4469,15 @@ async function initEvidenceLab(key) {
   }
 }
 
-/* ---------------- Utilities: three matrices, one page ---------------------
-   The first page to host more than one MATRIX_SPECS entry. initMatrix(key)'s
-   own body is untouched apart from returning a success boolean (see comment
-   on initMatrix) — this function only decides WHICH key to call it with and
-   WHEN, by showing/hiding each tab's <section id="{key}-panel"> and lazily
-   calling initMatrix(key) the first time a tab is activated.
+/* ---------------- Frontend (formerly Utilities): two matrices, one page ---
+   The first page to host more than one MATRIX_SPECS entry (wake word was a
+   third tab here until the site map rebuild's task 4 retired it into
+   Attention's `wake-phrase` category and renamed this page from Utilities).
+   initMatrix(key)'s own body is untouched apart from returning a success
+   boolean (see comment on initMatrix) — this function only decides WHICH key
+   to call it with and WHEN, by showing/hiding each tab's
+   <section id="{key}-panel"> and lazily calling initMatrix(key) the first
+   time a tab is activated.
    utilActiveKey guards against a slow first fetch resolving after the user
    has already switched to a different tab and overwriting its freshly-
    rendered DOM with the wrong matrix's data.
@@ -4408,8 +4495,8 @@ let utilActiveKey = null;
 // tab's own footer text so activate() can restore it on every revisit too.
 const utilFooterCache = {};
 
-function initUtilitiesPage() {
-  const UTIL_TABS = ["speakerid", "wakeword", "enhancement"];
+function initFrontendPage() {
+  const UTIL_TABS = ["speakerid", "enhancement"];
   const tabBtns = [...document.querySelectorAll("[data-util-tab]")];
   const activate = async (key) => {
     // SPEC is the single module-level global every interactive render function
@@ -4824,7 +4911,7 @@ document.addEventListener("DOMContentLoaded", () => {
   else if (page === "model") initModel();
   else if (page === "methodology") initMethodology();
   else if (page === "compare") initCompare();
-  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory" || page === "quantization" || page === "llms" || page === "speakerid" || page === "wakeword" || page === "enhancement") initMatrix(page);
-  else if (page === "utilities") initUtilitiesPage();
+  else if (page === "tts" || page === "asr" || page === "turns" || page === "runtimes" || page === "orchestrators" || page === "memory" || page === "quantization" || page === "llms" || page === "speakerid" || page === "enhancement" || page === "attention") initMatrix(page);
+  else if (page === "frontend") initFrontendPage();
   else if (page === "hardware") initHardwareTable();
 });

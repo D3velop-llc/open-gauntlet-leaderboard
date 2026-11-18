@@ -30,7 +30,7 @@
     "name": "g4-meromero-31b benchmark results",
     "url": "https://opengauntlet.com/models/g4-meromero-31b/",
     "description": "g4-meromero-31b benchmark: humanlikeness scores, pairwise rankings, transcripts, latency, and measured local speed.",
-    "dateModified": "2026-08-19",
+    "dateModified": "2026-11-18",
     "isPartOf": {
       "@type": "WebSite",
       "name": "OpenGauntlet",
@@ -75,7 +75,7 @@
 
   <link rel="icon" type="image/png" href="/static/img/bot-favicon.png">
   <link rel="apple-touch-icon" href="/static/img/bot-head.png">
-  <link rel="stylesheet" href="/static/site.css?v=d812b01717">
+  <link rel="stylesheet" href="/static/site.css?v=fb4668b220">
 
   <script src="/vendor/chart.umd.min.js" defer></script>
 
@@ -87,6 +87,7 @@
     <div class="wrap">
       <a class="brand" href="/"><canvas class="hero-viz topbar-viz" data-viz="words" aria-hidden="true"></canvas><span class="slash">//</span>open<em>gauntlet</em></a>
       <nav class="nav" aria-label="Primary navigation">
+        <a href="/attention.html" title="Attention — context engineering: what reaches the agent"><span class="ev hollow" aria-hidden="true"></span>Attention</a>
         <details class="nav-more nav-topic"><summary title="Listening — choose measured or surveyed evidence"><span class="nav-topic-marks" aria-hidden="true"><span class="ev solid"></span><span class="ev hollow"></span></span>Listening</summary>
           <div class="nav-more-panel nav-evidence-panel">
             <a href="/asr.html"><span class="nav-evidence-label"><span class="ev solid" aria-hidden="true"></span>Measured</span><span class="nm-sub">14 local results</span></a>
@@ -106,14 +107,18 @@
             <a href="/tts-survey.html"><span class="nav-evidence-label"><span class="ev hollow" aria-hidden="true"></span>Surveyed</span><span class="nm-sub">168 sourced systems</span></a>
           </div>
         </details>
-        <a href="/runtimes.html" title="Runtimes — inference engines: how it runs"><span class="ev hollow" aria-hidden="true"></span>Runtimes</a>
-        <a href="/memory.html" title="Memory — retrieval systems: what it remembers"><span class="ev hollow" aria-hidden="true"></span>Memory</a>
+        <details class="nav-more"><summary>The stack</summary>
+          <div class="nav-more-panel">
+            <a href="/orchestrators.html">Wiring it together<span class="nm-sub">orchestrators</span></a>
+            <a href="/memory.html">What it remembers<span class="nm-sub">memory</span></a>
+            <a href="/runtimes.html">How it runs<span class="nm-sub">runtimes</span></a>
+            <a href="/quantization.html">How models get compressed<span class="nm-sub">quantization</span></a>
+            <a href="/hardware.html">What fits where<span class="nm-sub">hardware</span></a>
+          </div>
+        </details>
         <details class="nav-more"><summary>Reference</summary>
           <div class="nav-more-panel">
-            <a href="/hardware.html">What fits where<span class="nm-sub">hardware</span></a>
-            <a href="/quantization.html">How models get compressed<span class="nm-sub">quantization</span></a>
-            <a href="/orchestrators.html">Wiring it together<span class="nm-sub">orchestrators</span></a>
-            <a href="/utilities.html">The parts around the edges<span class="nm-sub">utilities</span></a>
+            <a href="/frontend.html">Before it hears you<span class="nm-sub">speaker ID + enhancement</span></a>
           </div>
         </details>
         <details class="nav-more"><summary>About</summary>
@@ -156,7 +161,7 @@
 
   <footer class="foot">
     <div class="wrap">
-      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. The Words leaderboard and scoped Listening and Voices labs are measured here; their Surveyed pages, plus Turns, Runtimes, Memory, Hardware Reference, Orchestrators, Quantization, and Utilities, are sourced research catalogs.</span>
+      <span class="foot-brand">Research gathered while building <a href="https://imprynt.ai/" target="_blank" rel="noopener">Imprynt</a>, shared publicly by <a href="https://d3velop.com/" target="_blank" rel="noopener">D3velop</a>. Words is measured here; the open-weight LLM survey, Voices, Listening, Turns, Runtimes, Memory, Hardware Reference, Orchestrators, Quantization, Attention, and Before It Hears You are sourced surveys.</span>
       <nav class="foot-nav">
         <a href="/asr.html">Listening</a><span class="sep">·</span>
         <a href="/turns.html">Turns</a><span class="sep">·</span>
@@ -168,7 +173,8 @@
         <a href="/hardware.html">What fits where</a><span class="sep">·</span>
         <a href="/orchestrators.html">Wiring it together</a><span class="sep">·</span>
         <a href="/quantization.html">How models get compressed</a><span class="sep">·</span>
-        <a href="/utilities.html">The parts around the edges</a><span class="sep">·</span>
+        <a href="/attention.html">What reaches the agent</a><span class="sep">·</span>
+        <a href="/frontend.html">Before it hears you</a><span class="sep">·</span>
         <a href="/methodology.html">How it works</a><span class="sep">·</span>
         <a href="/compare.html">Head to head</a><span class="sep">·</span>
         <a href="/about.html">About</a><span class="sep">·</span>
@@ -177,11 +183,11 @@
         <a href="https://github.com/D3velop-llc/open-gauntlet-leaderboard" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
       </nav>
 
-      <span class="foot-prov">Updated <span data-generated-at>2026-08-19 00:43 UTC</span> · <a href="/methodology.html#reproducibility">version details</a></span>
+      <span class="foot-prov">Updated <span data-generated-at>2026-11-18 00:40 UTC</span> · <a href="/methodology.html#reproducibility">version details</a></span>
     </div>
   </footer>
 
 
-  <script src="/static/site.js?v=72932082e8" defer></script>
+  <script src="/static/site.js?v=680858d3b7" defer></script>
 </body>
 </html>

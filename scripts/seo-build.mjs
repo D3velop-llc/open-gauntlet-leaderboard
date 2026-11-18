@@ -69,10 +69,27 @@ const pages = {
     h1: "LLM quantization tools and <span class=\"warm\">methods compared</span>",
     type: "CollectionPage",
   },
+  "attention.html": {
+    title: "External Audio Classifiers Compared | OpenGauntlet",
+    description: "Compare external audio classifiers — addressee detection, audio-event tagging, and paralinguistics — that decide whether audio reaches a voice agent.",
+    h1: "What reaches <span class=\"warm\">the agent</span>",
+    type: "CollectionPage",
+  },
+  // A redirect stub, not a content page — kept only because utilities.html is a
+  // live, externally-linkable URL that must not 404. Its own meta-refresh (in
+  // the template) sends both readers and crawlers to frontend.html; its
+  // canonical stays self-referential (every page here declares exactly one,
+  // and the validator rejects two pages sharing a canonical).
   "utilities.html": {
-    title: "Voice AI Utilities: Speaker ID, Wake Words & Audio | OpenGauntlet",
-    description: "Compare speaker verification, wake-word detection, speech enhancement, noise suppression, and echo-cancellation tools for voice AI.",
-    h1: "Voice AI <span class=\"warm\">utilities compared</span>",
+    title: "Utilities Has Moved | OpenGauntlet",
+    description: "Speaker verification and speech enhancement moved to Before it hears you. Wake-word detection moved to Attention.",
+    h1: "Utilities is now <span class=\"warm\">Before it hears you</span>",
+    type: "WebPage",
+  },
+  "frontend.html": {
+    title: "Speaker Verification & Speech Enhancement Compared | OpenGauntlet",
+    description: "Compare speaker verification, voice-clone evaluation, speech enhancement, noise suppression, and echo-cancellation tools for voice AI.",
+    h1: "Before it <span class=\"warm\">hears you</span>",
     type: "CollectionPage",
   },
   "llms.html": {
@@ -114,13 +131,6 @@ const utilityPages = {
     description: "Compare speaker verification software, voice embeddings, similarity metrics, and APIs for evaluating whether a cloned voice matches its target.",
     h1: "Speaker verification software and <span class=\"warm\">voice clone evaluation</span>",
     lede: "A sourced comparison of speaker-verification metrics, embedding models, and verification APIs: what each one measures, how it runs, and the licensing or reliability catch to know before shipping.",
-  },
-  wakeword: {
-    file: "wake-word-detection.html",
-    title: "Wake Word Detection & Keyword Spotting Compared | OpenGauntlet",
-    description: "Compare wake-word detection and keyword-spotting engines by accuracy evidence, custom training, hardware, runtime, licensing, and deployment.",
-    h1: "Wake word detection and <span class=\"warm\">keyword spotting compared</span>",
-    lede: "A sourced comparison of wake-word and keyword-spotting engines for always-listening voice products, including custom phrase training, hardware floors, runtimes, and licensing.",
   },
   enhancement: {
     file: "speech-enhancement.html",
@@ -350,18 +360,20 @@ feed = feed
   .replaceAll("https://opengauntlet.com/tts.html", "https://opengauntlet.com/tts-survey.html");
 write("feed.xml", feed);
 
-// Keep the three-topic Utilities page as a hub, but give each search intent a
+// Keep the Before it hears you page as a hub, but give each search intent a
 // dedicated, canonical document that loads the same governed source matrix.
-let utilityHub = read("utilities.html");
+// Re-pointed at frontend.html (site map rebuild, task 4): utilities.html is
+// now a bare redirect stub with no tab panels left to derive from.
+let utilityHub = read("frontend.html");
 if (!utilityHub.includes("seo-topic-links")) {
-  utilityHub = utilityHub.replace('</p>\n    </section>\n\n    <nav class="util-tabs"', '</p>\n      <p class="subnav seo-topic-links"><a href="speaker-verification.html">Speaker verification</a><span class="sep">·</span><a href="wake-word-detection.html">Wake-word detection</a><span class="sep">·</span><a href="speech-enhancement.html">Speech enhancement</a></p>\n    </section>\n\n    <nav class="util-tabs"');
-  write("utilities.html", utilityHub);
+  utilityHub = utilityHub.replace('</p>\n    </section>\n\n    <nav class="util-tabs"', '</p>\n      <p class="subnav seo-topic-links"><a href="speaker-verification.html">Speaker verification</a><span class="sep">·</span><a href="speech-enhancement.html">Speech enhancement</a></p>\n    </section>\n\n    <nav class="util-tabs"');
+  write("frontend.html", utilityHub);
 }
 
 function makeUtilityPage(key, config) {
-  let html = read("utilities.html");
-  const utilityLinks = `<p class="subnav seo-topic-links"><a href="speaker-verification.html">Speaker verification</a><span class="sep">·</span><a href="wake-word-detection.html">Wake-word detection</a><span class="sep">·</span><a href="speech-enhancement.html">Speech enhancement</a><span class="sep">·</span><a href="utilities.html">All utilities</a></p>`;
-  html = html.replace('data-page="utilities"', `data-page="${key}"`);
+  let html = read("frontend.html");
+  const utilityLinks = `<p class="subnav seo-topic-links"><a href="speaker-verification.html">Speaker verification</a><span class="sep">·</span><a href="speech-enhancement.html">Speech enhancement</a><span class="sep">·</span><a href="frontend.html">Before it hears you</a></p>`;
+  html = html.replace('data-page="frontend"', `data-page="${key}"`);
   html = setMetadata(html, { ...config, type: "CollectionPage" }, config.file);
   html = setFirstJsonLd(html, pageSchema({ ...config, type: "CollectionPage" }, config.file));
   html = html.replace(/<h1>[\s\S]*?<\/h1>/, `<h1>${config.h1}</h1>`);
@@ -382,6 +394,30 @@ function makeUtilityPage(key, config) {
 }
 
 for (const [key, config] of Object.entries(utilityPages)) write(config.file, makeUtilityPage(key, config));
+
+// Wake word merged into Attention as the `wake-phrase` category (site map
+// rebuild, task 4) — its own tab/panel is gone, so there is no matrix panel
+// left to derive a distinct page from. wake-word-detection.html is a live URL
+// and must not 404, so it is preserved as a redirect to attention.html, built
+// from the same meta-refresh + visible-link shell utilities.html now uses for
+// its own redirect to frontend.html.
+const wakeWordRedirect = {
+  file: "wake-word-detection.html",
+  title: "Wake Word Detection & Keyword Spotting | OpenGauntlet",
+  description: "Wake-word and keyword-spotting engines are now compared on Attention, filed next to addressee detection — the newer answer to the same question.",
+  h1: "Wake word moved to <span class=\"warm\">Attention</span>",
+  type: "CollectionPage",
+};
+{
+  let html = read("utilities.html");
+  html = html.replace(/<meta http-equiv="refresh" content="0; url=[^"]*">/, '<meta http-equiv="refresh" content="0; url=attention.html">');
+  html = setMetadata(html, wakeWordRedirect, wakeWordRedirect.file);
+  html = setFirstJsonLd(html, pageSchema(wakeWordRedirect, wakeWordRedirect.file));
+  html = html.replace(/<h1>[\s\S]*?<\/h1>/, `<h1>${wakeWordRedirect.h1}</h1>`);
+  html = html.replace(/<p class="lede">[\s\S]*?<\/p>/,
+    `<p class="lede">This page has moved. Wake-word and keyword-spotting engines are now the <code>wake-phrase</code> category on <a href="attention.html">attention.html</a>, filed next to addressee detection — the newer answer to the same &quot;should the agent start listening?&quot; question. You should be redirected automatically; if not, follow the link above.</p>`);
+  write(wakeWordRedirect.file, html);
+}
 
 function makeInfoPage(file, config, body) {
   const source = read("methodology.html");
@@ -573,27 +609,48 @@ function normalizeTopNav(html, file) {
   } else if (clean === "index.html" || clean === "llms.html" || clean === "model.html" || clean.startsWith("models/")) {
     currentTopic = "words"; currentEvidence = clean === "llms.html" ? "surveyed" : "measured";
   }
-  const direct = (name, href, label, title) => `<a href="${href}" title="${title}"${clean === name ? ' class="active" aria-current="page"' : ""}><span class="ev hollow" aria-hidden="true"></span>${label}</a>`;
-  const referenceFiles = new Set(["hardware.html", "quantization.html", "orchestrators.html", "utilities.html", "speaker-verification.html", "wake-word-detection.html", "speech-enhancement.html"]);
+  const direct = (name, href, label, title, family) => `<a href="${href}" title="${title}"${(clean === name || (family && family.has(clean))) ? ' class="active" aria-current="page"' : ""}><span class="ev hollow" aria-hidden="true"></span>${label}</a>`;
+  // Site-map rebuild (task 2): the top bar is now ONLY the loop — Attention,
+  // Listening, Turns, Words, Voices, in that order — mirroring
+  // _pipeline.html.j2's loop band. Substrate moved out of "Reference" into
+  // its own "The stack" dropdown, ordered top of stack (Orchestrators, which
+  // wraps the loop) to bottom (Hardware, what it all runs on). Fix round 1
+  // (coordinator review) also dropped llms.html OUT of "Reference": it was
+  // reachable both here and from the Words evidence dropdown's "Surveyed"
+  // entry above, the exact two-groups confusion this rebuild exists to end.
+  // llms.html stays reachable via the Words evidence dropdown, the footer,
+  // and the Words hero-subnav — just not this dropdown. "Reference" now
+  // holds only Before it hears you (formerly Utilities — renamed and its
+  // wake-word tab retired into Attention, site map rebuild task 4), the one
+  // entry that is neither a loop stage, substrate, nor the surveyed half of
+  // an existing loop stage. Kept as a one-item dropdown rather than promoted
+  // to a flat link: the top bar is deliberately ONLY the loop (see above).
+  const stackFiles = new Set(["orchestrators.html", "memory.html", "runtimes.html", "quantization.html", "hardware.html"]);
+  const referenceFiles = new Set(["frontend.html", "utilities.html", "speaker-verification.html", "speech-enhancement.html"]);
   const aboutFiles = new Set(["about.html", "methodology.html", "compare.html", "tts-guide.html", "tts-legal.html", "data-license.html"]);
   const item = (href, label, sub) => {
     const name = href.slice(1);
-    const active = clean === name || (name === "utilities.html" && ["speaker-verification.html", "wake-word-detection.html", "speech-enhancement.html"].includes(clean));
+    const active = clean === name || (name === "frontend.html" && ["speaker-verification.html", "speech-enhancement.html", "utilities.html"].includes(clean));
     return `<a href="${href}"${active ? ' class="active" aria-current="page"' : ""}>${label}<span class="nm-sub">${sub}</span></a>`;
   };
   const nav = `<nav class="nav" aria-label="Primary navigation">
+        ${direct("attention.html", "/attention.html", "Attention", "Attention — context engineering: what reaches the agent", new Set(["wake-word-detection.html"]))}
         ${evidenceDropdown("Listening", "listening", currentTopic, currentEvidence, "/asr.html", "14 local results", "/asr-survey.html", "106 sourced systems")}
         ${direct("turns.html", "/turns.html", "Turns", "Turns — turn-taking: whose turn it is")}
         ${evidenceDropdown("Words", "words", currentTopic, currentEvidence, "/", "37 benchmarked models", "/llms.html", "51 sourced models")}
         ${evidenceDropdown("Voices", "voices", currentTopic, currentEvidence, "/tts.html", "16 local results", "/tts-survey.html", "168 sourced systems")}
-        ${direct("runtimes.html", "/runtimes.html", "Runtimes", "Runtimes — inference engines: how it runs")}
-        ${direct("memory.html", "/memory.html", "Memory", "Memory — retrieval systems: what it remembers")}
+        <details class="nav-more"><summary${stackFiles.has(clean) ? ' class="active"' : ""}>The stack</summary>
+          <div class="nav-more-panel">
+            ${item("/orchestrators.html", "Wiring it together", "orchestrators")}
+            ${item("/memory.html", "What it remembers", "memory")}
+            ${item("/runtimes.html", "How it runs", "runtimes")}
+            ${item("/quantization.html", "How models get compressed", "quantization")}
+            ${item("/hardware.html", "What fits where", "hardware")}
+          </div>
+        </details>
         <details class="nav-more"><summary${referenceFiles.has(clean) ? ' class="active"' : ""}>Reference</summary>
           <div class="nav-more-panel">
-            ${item("/hardware.html", "What fits where", "hardware")}
-            ${item("/quantization.html", "How models get compressed", "quantization")}
-            ${item("/orchestrators.html", "Wiring it together", "orchestrators")}
-            ${item("/utilities.html", "The parts around the edges", "utilities")}
+            ${item("/frontend.html", "Before it hears you", "speaker ID + enhancement")}
           </div>
         </details>
         <details class="nav-more"><summary${aboutFiles.has(clean) ? ' class="active"' : ""}>About</summary>
@@ -649,7 +706,7 @@ function gitDate(file) {
 const sitemapFiles = [
   ...Object.keys(pages), "about.html", "data-license.html",
   ...Object.values(evidencePairs).map((pair) => pair.surveyedFile),
-  ...Object.values(utilityPages).map((item) => item.file), "models/index.html",
+  ...Object.values(utilityPages).map((item) => item.file), wakeWordRedirect.file, "models/index.html",
   ...modelLinks.map((model) => `models/${model.slug}/index.html`),
 ].filter((file) => file !== "model.html");
 const urls = sitemapFiles.map((file) => {

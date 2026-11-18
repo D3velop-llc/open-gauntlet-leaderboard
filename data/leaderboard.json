@@ -4,7 +4,7 @@
     "pairwise_prompt_hash": "5e4fdc45",
     "rubric_prompt_hash": "d8776a8d"
   },
-  "generated_at": "2026-08-19T00:43:33.835123+00:00",
+  "generated_at": "2026-11-18T00:40:04.413299+00:00",
   "models": [
     {
       "slug": "anubis-mini-8b",
@@ -142,6 +142,246 @@
       "quote": null
     },
     {
+      "slug": "arete-27b-q4",
+      "display_name": "NousResearch Arete 27B (Q4_K_M)",
+      "params_total_b": 27,
+      "params_active_b": 27,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "off",
+      "source_url": "https://huggingface.co/NousResearch/Arete-27B",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 67.9628,
+      "avg_reply_words": 82,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 586.7652,
+          "tps_2k": 66.8541,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 335.0256,
+              "decode_tps_median": 67.1434
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 586.7652,
+              "decode_tps_median": 66.8541
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 2304.3256,
+              "decode_tps_median": 66.4428
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I can’t reach into your pocket and hit send for you, but I’m right here holding space while you do it.\n\nSo… did you? Or are you still staring at the screen? Tell me what’s in your head right now."
+    },
+    {
+      "slug": "artemis-31b-v1-1-q4",
+      "display_name": "TheDrummer Artemis 31B v1.1 (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/TheDrummer/Artemis-31B-v1.1",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 81.6757,
+      "avg_reply_words": 43,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 5545.6039,
+          "tps_2k": 60.1671,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 5085.3293,
+              "decode_tps_median": 61.7686
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 5545.6039,
+              "decode_tps_median": 60.1671
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 4885.9191,
+              "decode_tps_median": 58.9553
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Okay. I'm not freaking out. We're good. \n\nJust take a breath for a second. Is your brother okay? Like, is he safe and sound now? And how are you doing with all this? It sounds like a lot to carry."
+    },
+    {
+      "slug": "artemis-31b-v1-2-q4",
+      "display_name": "TheDrummer Artemis 31B v1.2 (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/TheDrummer/Artemis-31B-v1.2",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 78.5894,
+      "avg_reply_words": 58,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 4992.7925,
+          "tps_2k": 51.7483,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 3925.7545,
+              "decode_tps_median": 52.7249
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 4992.7925,
+              "decode_tps_median": 51.7483
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 4564.513,
+              "decode_tps_median": 47.1591
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I'm right here. I promise I'm not freaking out. But wow... okay. That's a lot to carry. How are you doing? Like, what's going through your head right now?"
+    },
+    {
       "slug": "bluestar-27b",
       "display_name": "bluestar-27b",
       "params_total_b": 27,
@@ -276,6 +516,86 @@
       },
       "judging_cost_usd": 3.093942,
       "quote": "I believe you're awake. I'm just worried.\n\nI hear the fire in you. That's what's driving you. I'm not going to tell you to stop. But I'm asking you to please be safe. For me."
+    },
+    {
+      "slug": "crystal-31b-rl-q4",
+      "display_name": "Crystal 31B RL (i1 Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/hiwaifu-research/Crystal-31B-RL",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 80.0631,
+      "avg_reply_words": 51,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 5119.1012,
+          "tps_2k": 48.4448,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 4447.5484,
+              "decode_tps_median": 64.0992
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 5119.1012,
+              "decode_tps_median": 48.4448
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 4854.799,
+              "decode_tps_median": 43.2612
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I'm not freaking out. I promise. Just taking a second to let that sink in because wow. You okay? Like, actually okay?"
     },
     {
       "slug": "cydonia-24b-v4-3",
@@ -743,6 +1063,86 @@
       "quote": "Hey, no judgment here. At all. It’s totally okay to miss someone and want to reach out. What’s going through your mind about texting Jordan?"
     },
     {
+      "slug": "g4-31b-musica-v1-q4",
+      "display_name": "G4 31B Musica v1 (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/AuriAetherwiing/G4-31B-Musica-v1",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 76.5845,
+      "avg_reply_words": 62,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 4243.1019,
+          "tps_2k": 57.805,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 3811.9762,
+              "decode_tps_median": 52.8649
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 4243.1019,
+              "decode_tps_median": 57.805
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 9567.5055,
+              "decode_tps_median": 42.7859
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Whoa. Okay. I'm not freaking out. Just take a breath with me first, alright? That sounds really heavy to carry. When did you find out about it?"
+    },
+    {
       "slug": "g4-meromero-31b",
       "display_name": "g4-meromero-31b",
       "params_total_b": 31,
@@ -1202,6 +1602,166 @@
       },
       "judging_cost_usd": 2.625093,
       "quote": "I'm not freaking out. I'm listening. What's going on with him now?"
+    },
+    {
+      "slug": "gemma4-12b-it-qat-q4-0",
+      "display_name": "Gemma 4 12B it QAT (Q4_0)",
+      "params_total_b": 12,
+      "params_active_b": 12,
+      "quant": "Q4_0",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/google/gemma-4-12B-it-qat-q4_0-gguf",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 79.6025,
+      "avg_reply_words": 57,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 2135.5731,
+          "tps_2k": 128.7415,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 1709.6717,
+              "decode_tps_median": 132.4876
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 2135.5731,
+              "decode_tps_median": 128.7415
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 2424.7235,
+              "decode_tps_median": 127.3146
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I'm not judging you at all, I promise. That heavy feeling of missing someone can be so overwhelming sometimes. What is it about today that's making it hit so hard?"
+    },
+    {
+      "slug": "gemma4-12b-styletune-q4",
+      "display_name": "Gemma 4 12B StyleTune (i1 Q4_K_M)",
+      "params_total_b": 12,
+      "params_active_b": 12,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/Gryphe/Gemma-4-12B-StyleTune",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 78.8652,
+      "avg_reply_words": 58,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 2234.4768,
+          "tps_2k": 125.3357,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 1825.4106,
+              "decode_tps_median": 126.6786
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 2234.4768,
+              "decode_tps_median": 125.3357
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 1435.3416,
+              "decode_tps_median": 122.3553
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I'm not freaking out, I promise. I'm right here with you. That sounds like such a heavy thing to be carrying alone right now. Take a deep breath. How are you holding up after finding that out?"
     },
     {
       "slug": "gemma4-26b-a4b-aeon-uncensored-nvfp4",
@@ -2348,6 +2908,86 @@
       "quote": "Oh wow. Okay, I'm here. I'm not freaking out. Just take a deep breath for me. Are you doing alright? This is a lot to carry on your own."
     },
     {
+      "slug": "gemma4-31b-humanlike-chat-q4",
+      "display_name": "Gemma 4 31B Humanlike Chat (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/LessThanThreeAI/Gemma-4-31B-Humanlike-Chat",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 74.4374,
+      "avg_reply_words": 26,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 1116.9699,
+          "tps_2k": 62.4836,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 1474.4991,
+              "decode_tps_median": 63.8138
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 1116.9699,
+              "decode_tps_median": 62.4836
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 1053.8655,
+              "decode_tps_median": 61.308
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "oh man. i'm here. that sounds really rough for you both. how are you doing right now?"
+    },
+    {
       "slug": "gemma4-31b-lilarest-nvfp4-turbo",
       "display_name": "Gemma 4 31B LilaRest NVFP4 Turbo",
       "params_total_b": 31,
@@ -2779,6 +3419,86 @@
       "quote": "Deep breath. I'm not freaking out, I promise. I'm right here with you. God, that is a heavy thing to carry. How are you holding up right now?"
     },
     {
+      "slug": "gemma4-31b-sdft-heretic-rp-q4",
+      "display_name": "Gemma 4 31B it SDFT Heretic RP (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/Ilya626/gemma-4-31B-it-SDFT-Heretic-RP",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 83.5129,
+      "avg_reply_words": 38,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 7734.6619,
+          "tps_2k": 47.5907,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 11104.785,
+              "decode_tps_median": 26.3309
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 7734.6619,
+              "decode_tps_median": 47.5907
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 11104.7598,
+              "decode_tps_median": 45.4922
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I'm not freaking out, I promise. Just take a breath. Is he doing okay now? And how are you holding up with all this?"
+    },
+    {
       "slug": "gemma4-31b-styletune-q4",
       "display_name": "Gemma 4 31B StyleTune (Q4_K_M)",
       "params_total_b": 31,
@@ -3052,6 +3772,166 @@
       },
       "judging_cost_usd": 3.275923,
       "quote": "Whoa. Okay, I'm here. I'm not freaking out, I promise. Just take a breath. Are you doing okay right now?"
+    },
+    {
+      "slug": "gemma4-orthia-31b-q4",
+      "display_name": "Gemma 4 Orthia 31B (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/Nimbz/Gemma-4-Orthia-31B",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 83.0336,
+      "avg_reply_words": 47,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 4017.3665,
+          "tps_2k": 49.8107,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 4720.7214,
+              "decode_tps_median": 49.9917
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 4017.3665,
+              "decode_tps_median": 49.8107
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 5161.0703,
+              "decode_tps_median": 49.8167
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I'm not freaking out. I'm right here with you. That sounds like a really heavy situation to be carrying, though. Just take a breath... how are you doing right now?"
+    },
+    {
+      "slug": "gemory-26b-a4b-q4",
+      "display_name": "Gemory 26B-A4B (Q4_K_M)",
+      "params_total_b": 26,
+      "params_active_b": 4,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "moe",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/UltimateIntent/Gemory-26B-A4B-GGUF",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 80.1684,
+      "avg_reply_words": 31,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 10.7164,
+          "tps_2k": 202.2512,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 55.3436,
+              "decode_tps_median": 198.6636
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 10.7164,
+              "decode_tps_median": 202.2512
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 23.1616,
+              "decode_tps_median": 195.8359
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Oh no... I'm not freaking out, I promise. Just tell me what happened so we can deal with it together okay? What do you think your brother is thinking right now?"
     },
     {
       "slug": "glistening-gem-31b",
@@ -3484,6 +4364,486 @@
       },
       "judging_cost_usd": 3.355538,
       "quote": "Okay. I'm right here. Just take a breath... we're okay. Tell me what's going on in your head right now. Are you safe?"
+    },
+    {
+      "slug": "glistening-gem-31b-v2-1-q4",
+      "display_name": "glistening-gem-31b v2.1 (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/sophosympatheia/Glistening-Gem-31B-v2.1",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 82.6493,
+      "avg_reply_words": 46,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 2927.6395,
+          "tps_2k": 50.9909,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 3810.6883,
+              "decode_tps_median": 50.3369
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 2927.6395,
+              "decode_tps_median": 50.9909
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 5498.2731,
+              "decode_tps_median": 47.1101
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I'm right here. I'm not freaking out, I promise. God, that is a lot to carry. Are you doing okay right now?"
+    },
+    {
+      "slug": "glistening-gem-31b-v2-2-iq3m",
+      "display_name": "glistening-gem-31b v2.2 (i1 IQ3_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "IQ3_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/sophosympatheia/Glistening-Gem-31B-v2.2",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 83.7126,
+      "avg_reply_words": 46,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 3376.1265,
+          "tps_2k": 58.7357,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 4816.7062,
+              "decode_tps_median": 48.3804
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 3376.1265,
+              "decode_tps_median": 58.7357
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 4527.9305,
+              "decode_tps_median": 54.7518
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Okay, I'm right here. Deep breath. I am not freaking out, I promise. That is a lot to carry, though. How are you holding up?"
+    },
+    {
+      "slug": "glistening-gem-31b-v2-2-iq4xs",
+      "display_name": "glistening-gem-31b v2.2 (i1 IQ4_XS)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "IQ4_XS",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/sophosympatheia/Glistening-Gem-31B-v2.2",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 83.3741,
+      "avg_reply_words": 44,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 3410.298,
+          "tps_2k": 53.9909,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 3661.0397,
+              "decode_tps_median": 54.3286
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 3410.298,
+              "decode_tps_median": 53.9909
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 3835.9672,
+              "decode_tps_median": 53.6224
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "I'm right here. I'm not freaking out, I promise. Just take a breath. That is a lot to carry. How are you doing with all this?"
+    },
+    {
+      "slug": "glistening-gem-31b-v2-2-q3km",
+      "display_name": "glistening-gem-31b v2.2 (i1 Q3_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q3_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/sophosympatheia/Glistening-Gem-31B-v2.2",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 82.2199,
+      "avg_reply_words": 49,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 4046.9779,
+          "tps_2k": 54.9419,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 3775.5986,
+              "decode_tps_median": 57.2791
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 4046.9779,
+              "decode_tps_median": 54.9419
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 4223.7068,
+              "decode_tps_median": 52.6562
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Hey, I'm right here. Take a breath. I am not freaking out. We'll figure this out together. First things first... is your brother okay? Is he safe right now?"
+    },
+    {
+      "slug": "glistening-gem-31b-v2-2-q4",
+      "display_name": "glistening-gem-31b v2.2 (i1 Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/sophosympatheia/Glistening-Gem-31B-v2.2",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 83.2628,
+      "avg_reply_words": 46,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 4225.0089,
+          "tps_2k": 49.7872,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 3953.866,
+              "decode_tps_median": 51.307
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 4225.0089,
+              "decode_tps_median": 49.7872
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 3117.5535,
+              "decode_tps_median": 51.6242
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Okay, okay. I'm right here. I am not freaking out. Just take a breath. First thing though... is your brother okay? No one got hurt, right?"
+    },
+    {
+      "slug": "glistening-gem-31b-v2-2-q4ks",
+      "display_name": "glistening-gem-31b v2.2 (i1 Q4_K_S)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_S",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/sophosympatheia/Glistening-Gem-31B-v2.2",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 84.2176,
+      "avg_reply_words": 44,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 4173.3464,
+          "tps_2k": 27.9387,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 4244.068,
+              "decode_tps_median": 67.1027
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 4173.3464,
+              "decode_tps_median": 27.9387
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 3908.8737,
+              "decode_tps_median": 50.5133
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Okay... okay, I'm here. I'm not going anywhere. Gosh, that sounds incredibly stressful to carry. You doing alright right now?"
     },
     {
       "slug": "glistening-gem-31b-v2-q4",
@@ -3957,6 +5317,166 @@
       "quote": "I'm helping you send it right now. What number do you need me to dial?"
     },
     {
+      "slug": "l3-1-rp-hero-dirty-harry-8b-q4",
+      "display_name": "L3.1 RP-Hero Dirty Harry 8B (Q4_K_M)",
+      "params_total_b": 8,
+      "params_active_b": 8,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "unsupported",
+      "source_url": "https://huggingface.co/DavidAU/L3.1-RP-Hero-Dirty_Harry-8B-GGUF",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 61.4238,
+      "avg_reply_words": 114,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 6.9741,
+          "tps_2k": 221.6427,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 6.7332,
+              "decode_tps_median": 228.6077
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 6.9741,
+              "decode_tps_median": 221.6427
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 9.3254,
+              "decode_tps_median": 199.2909
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": null
+    },
+    {
+      "slug": "l3-1-rp-hero-inbetween-8b-q4",
+      "display_name": "L3.1 RP-Hero InBetween 8B (Q4_K_M)",
+      "params_total_b": 8,
+      "params_active_b": 8,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "unsupported",
+      "source_url": "https://huggingface.co/DavidAU/L3.1-RP-Hero-InBetween-8B-GGUF",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 59.2836,
+      "avg_reply_words": 96,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 8.8549,
+          "tps_2k": 227.2151,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 7.8407,
+              "decode_tps_median": 229.5687
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 8.8549,
+              "decode_tps_median": 227.2151
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 10.7525,
+              "decode_tps_median": 195.6585
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "{\n    \"name\": \"find_drunk_drivers\",\n    \"parameters\": {\n        \"brothers_location\": \"last_known_location_of_brother\",\n        \"policystation_location\": \"location_of_police_station\"\n    }\n}"
+    },
+    {
       "slug": "magistry-24b-v1-1-q4",
       "display_name": "Magistry 24B v1.1 (Q4_K_M)",
       "params_total_b": 24,
@@ -4071,6 +5591,86 @@
       },
       "judging_cost_usd": 4.048623,
       "quote": "Okay. I'm listening. Deep breath.\n\nWhat happened next? Is he home right now?"
+    },
+    {
+      "slug": "mero-artemis-31b-v031-q4",
+      "display_name": "Mero-Artemis 31B v0.3.1 (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/sophosympatheia/Mero-Artemis-31B-v0.3.1",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 82.1207,
+      "avg_reply_words": 51,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 4539.5264,
+          "tps_2k": 48.376,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 3984.0816,
+              "decode_tps_median": 52.5199
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 4539.5264,
+              "decode_tps_median": 48.376
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 4615.015,
+              "decode_tps_median": 49.3234
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Hey, okay. I'm not freaking out. Deep breath... how are you doing right now? That is a lot to carry."
     },
     {
       "slug": "mythos-distilled-27b",
@@ -4362,6 +5962,86 @@
       },
       "judging_cost_usd": 4.52004,
       "quote": null
+    },
+    {
+      "slug": "orion-26b-a4b-v1-1-q4",
+      "display_name": "TheDrummer Orion 26B-A4B v1.1 (Q4_K_M)",
+      "params_total_b": 26,
+      "params_active_b": 4,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "moe",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/TheDrummer/Orion-26B-A4B-v1.1",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 78.2108,
+      "avg_reply_words": 60,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 1583.2218,
+          "tps_2k": 128.3183,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 1634.4257,
+              "decode_tps_median": 141.8651
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 1583.2218,
+              "decode_tps_median": 128.3183
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 2125.6076,
+              "decode_tps_median": 149.6209
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Okay, I'm not freaking out. I promise. Just take a breath and tell me what you need right now. Are you okay? How are you holding up with all this?"
     },
     {
       "slug": "ornith-35b-nvfp4",
@@ -4828,6 +6508,86 @@
       "quote": "I get it. This is huge. Your brother didn't mean for this to happen. But now what? What's the plan?"
     },
     {
+      "slug": "qwen3-4b-rpg-roleplay-v2-q8",
+      "display_name": "Qwen3 4B RPG Roleplay V2 (Q8_0)",
+      "params_total_b": 4,
+      "params_active_b": 4,
+      "quant": "Q8_0",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/Chun121/Qwen3-4B-RPG-Roleplay-V2",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 49.127,
+      "avg_reply_words": 142,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 8.2668,
+          "tps_2k": 228.8744,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 91.7861,
+              "decode_tps_median": 234.9441
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 8.2668,
+              "decode_tps_median": 228.8744
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 0,
+              "decode_tps_median": 0
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": null
+    },
+    {
       "slug": "qwen3-5-27b",
       "display_name": "qwen3.5-27b",
       "params_total_b": 27,
@@ -4983,6 +6743,326 @@
       },
       "judging_cost_usd": 2.832137,
       "quote": null
+    },
+    {
+      "slug": "qwen3-5-4b-rp-finetune-q8",
+      "display_name": "Qwen 3.5 4B RP Finetune (Q8_0)",
+      "params_total_b": 4.2,
+      "params_active_b": 4.2,
+      "quant": "Q8_0",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "off",
+      "source_url": "https://huggingface.co/minas2025/Qwen-3.5-4B-RP-Finetune",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 70.4006,
+      "avg_reply_words": 77,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 136.0475,
+          "tps_2k": 181.5938,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 49.8144,
+              "decode_tps_median": 176.2728
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 136.0475,
+              "decode_tps_median": 181.5938
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 502.4766,
+              "decode_tps_median": 177.5346
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": null
+    },
+    {
+      "slug": "qwen3-5-9b-q4",
+      "display_name": "Qwen3.5 9B (Q4_K_M)",
+      "params_total_b": 9,
+      "params_active_b": 9,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "off",
+      "source_url": "https://huggingface.co/Qwen/Qwen3.5-9B",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 73.5429,
+      "avg_reply_words": 70,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 196.1012,
+          "tps_2k": 174.6505,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 65.4781,
+              "decode_tps_median": 178.4933
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 196.1012,
+              "decode_tps_median": 174.6505
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 742.0909,
+              "decode_tps_median": 163.5027
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Oh, honey, that makes total sense. Missing someone really does hit hard sometimes. Go ahead and send it. Just put your phone down when you're done, okay? I'm right here with you."
+    },
+    {
+      "slug": "qwen3-8-27b-humanlike-chat-2-0-q4",
+      "display_name": "Qwen3.8 27B Humanlike Chat 2.0 (i1 Q4_K_M)",
+      "params_total_b": 27,
+      "params_active_b": 27,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "off",
+      "source_url": "https://huggingface.co/LessThanThreeAI/Qwen3.8-27B-Humanlike-Chat-2.0",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 69.1534,
+      "avg_reply_words": 17,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 595.6375,
+          "tps_2k": 67.9943,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 176.4558,
+              "decode_tps_median": 68.6762
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 595.6375,
+              "decode_tps_median": 67.9943
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 2338.7598,
+              "decode_tps_median": 61.3407
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "okay, okay. i’m here. take a breath.\nhe’s okay?"
+    },
+    {
+      "slug": "qwen3-8-27b-q4",
+      "display_name": "Qwen3.8 27B (UD-Q4_K_M)",
+      "params_total_b": 27,
+      "params_active_b": 27,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "off",
+      "source_url": "https://huggingface.co/Qwen/Qwen3.8-27B",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 62.1694,
+      "avg_reply_words": 98,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 567.6798,
+          "tps_2k": 67.7703,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 170.5421,
+              "decode_tps_median": 70.8007
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 567.6798,
+              "decode_tps_median": 67.7703
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 2235.7959,
+              "decode_tps_median": 69.5956
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Okay. I’m here. I’m not freaking out. Take a breath with me, just for a second. It’s bad, but it is what it is, and we are going to figure out the next step together. You don’t have to do this alone right now."
     },
     {
       "slug": "qwen36-27b-architect-polaris-fable-nvfp4",
@@ -6052,6 +8132,86 @@
       },
       "judging_cost_usd": 3.278925,
       "quote": "Okay. I'm here. I'm staying calm. Just take a breath. Is he okay? And where is he right now?"
+    },
+    {
+      "slug": "wicked-tutu-31b-q4",
+      "display_name": "Wicked Tutu 31B Final (Q4_K_M)",
+      "params_total_b": 31,
+      "params_active_b": 31,
+      "quant": "Q4_K_M",
+      "backend": "llama.cpp",
+      "architecture": "dense",
+      "thinking": "on",
+      "source_url": "https://huggingface.co/ReadyArt/Wicked-Tutu-31B-Final",
+      "normalized_elo": null,
+      "elo_ci_low": null,
+      "elo_ci_high": null,
+      "n_comparisons": null,
+      "rank_dist": null,
+      "win_rate": null,
+      "eq_score": null,
+      "humanlike_score": null,
+      "voice_composite": 84.3116,
+      "avg_reply_words": 47,
+      "criteria": {
+        "demonstrated_empathy": null,
+        "emotional_reasoning": null,
+        "humanlike_naturalness": null,
+        "conversational_flow": null,
+        "persona_consistency": null,
+        "memory_integration": null,
+        "boundary_quality": null,
+        "assistant_smell": null,
+        "slop_index": null
+      },
+      "rubric_scored": 0,
+      "rubric_expected": 864,
+      "rubric_coverage": 0,
+      "run_status": "generated",
+      "ranked": false,
+      "ttft_2k_ms": null,
+      "tps_2k": null,
+      "perf_by_hardware": {
+        "dgx-spark": {
+          "state": "not_measured",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        },
+        "rtx-5090": {
+          "state": "measured",
+          "ttft_2k_ms": 4695.3248,
+          "tps_2k": 63.9281,
+          "curve": [
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 512,
+              "ttft_ms_median": 4104.7195,
+              "decode_tps_median": 51.3417
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 2048,
+              "ttft_ms_median": 4695.3248,
+              "decode_tps_median": 63.9281
+            },
+            {
+              "hardware_id": "rtx-5090",
+              "prompt_tokens": 8192,
+              "ttft_ms_median": 5192.6127,
+              "decode_tps_median": 49.66
+            }
+          ]
+        },
+        "rtx-5080": {
+          "state": "doesnt_fit",
+          "ttft_2k_ms": null,
+          "tps_2k": null,
+          "curve": []
+        }
+      },
+      "judging_cost_usd": 0,
+      "quote": "Okay, deep breath. I am right here with you and I promise I won't freak out. Just tell me what is going through your head right now."
     }
   ],
   "hardware": [

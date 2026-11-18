@@ -18,6 +18,8 @@
       "languages_sort": 70,
       "runs_on": "Cloud only",
       "latency_note": "75 ms model-only, explicitly excluding network",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Peak expressivity, dialogue and character work; the broadest ecosystem and SDK coverage.",
       "watch": "Most expensive flagship per character. v3 is capped at 5,000 chars per request and is not a realtime model. Trains on your content by default — the opt-out is in account settings and is not retroactive.",
       "standout": "Broadest SDK ecosystem plus dialogue mode across 70 languages",
@@ -68,7 +70,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 10
+      "rating_rank": 10,
+      "additional_ratings": []
     },
     {
       "name": "Cartesia",
@@ -84,6 +87,8 @@
       "languages_sort": 37,
       "runs_on": "Cloud; deployable into your own AWS account via SageMaker JumpStart",
       "latency_note": "sub-90 ms per Cartesia's docs; ~188 ms P50 independently measured",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Telephony and realtime agents — native μ-law 8 kHz output makes it drop-in for phone lines.",
       "watch": "The credit-to-character rate is not published anywhere, so true cost per million characters cannot be computed from primary sources. Concurrency caps at 15 even on the $299 plan. Trains on customer content by default.",
       "standout": "Native mu-law 8 kHz telephony output plus a 54-emotion enum",
@@ -129,7 +134,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 5
+      "rating_rank": 5,
+      "additional_ratings": []
     },
     {
       "name": "Deepgram",
@@ -145,6 +151,8 @@
       "languages_sort": 7,
       "runs_on": "Cloud plus a genuine self-hosted deployment",
       "latency_note": "sub-200 ms stated on the product page",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "High-volume English contact centres. The best concurrency-per-dollar of any major Western vendor, and a real self-host escape hatch.",
       "watch": "Narrowest language coverage of the serious contenders, and no cloning or emotion mechanism at all — rules it out for character or media work.",
       "standout": "Genuine on-prem self-host with the segment's highest self-serve concurrency",
@@ -187,7 +195,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Rime",
@@ -203,6 +212,8 @@
       "languages_sort": 6,
       "runs_on": "Cloud, on-prem or VPC",
       "latency_note": "sub-100 ms model plus 25–50 ms network, stated separately",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "US contact centres wanting naturalistic conversational American English, with the most honest latency disclosure in the segment.",
       "watch": "The pricing page contradicts itself on the starter rate. Arcana sunsets 15 August 2026 with automatic migration to Coda; after that it serves Sinhala only.",
       "standout": "Publishes model and network latency separately, the segment's most honest disclosure",
@@ -246,7 +257,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 53
+      "rating_rank": 53,
+      "additional_ratings": []
     },
     {
       "name": "Hume",
@@ -262,6 +274,8 @@
       "languages_sort": 11,
       "runs_on": "Cloud only",
       "latency_note": "~100 ms (Octave 2); ~200 ms (Octave 1) — verified in Hume's docs",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Character work, audio drama and empathic agents where how a line is said is the product.",
       "watch": "Perpetual, irrevocable, sublicensable licence over your input with no opt-out identified — the most aggressive data grant in the segment. Concurrency is 1–30. Max 5,000 chars per utterance.",
       "standout": "Delivery directed in plain-English prose rather than an emotion enum",
@@ -307,7 +321,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 49
+      "rating_rank": 49,
+      "additional_ratings": []
     },
     {
       "name": "Inworld",
@@ -323,6 +338,8 @@
       "languages_sort": 100,
       "runs_on": "Cloud only",
       "latency_note": "P90 under 250 ms (TTS-2), under 130 ms (1.5 Mini) — one of only two vendors publishing a percentile",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Games, NPCs and multilingual agents. Concurrency scales 5 → 500, the widest published range in the segment.",
       "watch": "Publishes its own competitive benchmark ranking rivals, so treat its comparative claims as vendor-adjacent.",
       "standout": "Self-serve concurrency spans 5 to 500, a 100x published range",
@@ -367,7 +384,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 9
+      "rating_rank": 9,
+      "additional_ratings": []
     },
     {
       "name": "Speechify",
@@ -383,6 +401,8 @@
       "languages_sort": 30,
       "runs_on": "Cloud only",
       "latency_note": "sub-100 ms claimed, no percentile or conditions",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Cheapest premium-tier English at volume, with all-inclusive voice-agent minutes that beat assembling STT + LLM + TTS yourself.",
       "watch": "The API still defaults to the legacy simba-english model when you omit the model parameter — naive integrations silently get the oldest and worst model. Set it explicitly.",
       "standout": "Top Artificial Analysis Elo at roughly a tenth of ElevenLabs' price",
@@ -430,7 +450,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 1
+      "rating_rank": 1,
+      "additional_ratings": []
     },
     {
       "name": "LMNT",
@@ -446,6 +467,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only",
       "latency_note": "Marketed on low latency; no figure published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Teams needing many distinct cloned voices without per-voice fees.",
       "watch": "States \"no concurrency or rate limits\" on paid tiers — unusual enough to confirm contractually before relying on it.",
       "standout": "Unlimited voice clones on every tier including free, no per-voice fee",
@@ -486,7 +509,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Fish Audio",
@@ -502,6 +526,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only — s2.1-pro is API-only with no released weights",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The cheapest credible per-character rate with genuine pay-as-you-go and no subscription.",
       "watch": "Billing is per UTF-8 BYTE, not per character. Chinese, Japanese, Korean, Cyrillic and Indic characters take 2–3 bytes each, so a million CJK characters costs $30–45 — a hidden penalty on exactly the languages Fish is strongest in.",
       "standout": "A free hosted tier running the same model as the paid one — but announced only through 31 Aug 2026, with no SLA",
@@ -546,7 +572,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 14
+      "rating_rank": 14,
+      "additional_ratings": []
     },
     {
       "name": "Camb.ai",
@@ -562,6 +589,8 @@
       "languages_sort": 150,
       "runs_on": "Cloud; MARS-Nano is an on-device variant",
       "latency_note": "~100 ms (Flash) · ~50 ms on-device (Nano), vendor-stated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Dubbing and localisation into long-tail languages, and live broadcast — verified deployments include Ligue 1, NASCAR, FanCode cricket, MLS and Eurovision Sport.",
       "watch": "The credit system obscures cost — the same credit buys 2.2× more MARS-Flash than MARS-Instruct, and no simple per-character rate is published.",
       "standout": "Owns live broadcast dubbing (Ligue 1, NASCAR, Eurovision) across 150+ languages",
@@ -603,7 +632,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Typecast",
@@ -619,6 +649,8 @@
       "languages_sort": 35,
       "runs_on": "Cloud only",
       "latency_note": "~200 ms TTFB, vendor-stated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Korean, Japanese and Vietnamese at native quality — an underserved niche most Western vendors handle poorly. 500+ preset voices.",
       "watch": "Expensive per character without a corresponding quality lead in English, and only 6 of the 35+ languages are native-quality.",
       "standout": "Native-quality Korean, Japanese and Vietnamese, a gap Western vendors leave",
@@ -663,7 +695,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Sarvam",
@@ -679,6 +712,8 @@
       "languages_sort": 11,
       "runs_on": "India-hosted cloud",
       "latency_note": "Explicitly absent from the documentation",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Any product serving Indian-language users — 11 Indic languages, India data residency, rupee billing and native Hinglish handling, which no Western vendor replicates.",
       "watch": "Max input is 2,500 characters per request, the tightest limit in the segment. Streaming is capped at 24 kHz. Pricing pages block automated access, so rates are secondary-sourced.",
       "standout": "India data residency, rupee billing and 10 Indic languages with Hinglish",
@@ -720,7 +755,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Resemble AI",
@@ -736,6 +772,8 @@
       "languages_sort": 100,
       "runs_on": "Cloud; on-premises and air-gapped at Enterprise",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The only vendor selling neural watermarking and deepfake detection as first-class paid products alongside TTS — the right pick when provenance is a requirement.",
       "watch": "Visibly repositioned toward deepfake detection; TTS pricing has been removed from the pricing page entirely.",
       "standout": "Sells verifiable PerTh watermarking and deepfake detection as priced products",
@@ -782,7 +820,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "WellSaid Labs",
@@ -798,6 +837,8 @@
       "languages_sort": 1,
       "runs_on": "Cloud only",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Regulated enterprise narration and e-learning — 96 kHz output, SSO, seat-based governance and Adobe Premiere integration.",
       "watch": "Bills per minute of audio rather than per character, and publishes no API rate at all, so it cannot be compared without a sales conversation.",
       "standout": "96 kHz output with seat-based governance and an Adobe Premiere integration",
@@ -840,7 +881,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Murf AI",
@@ -856,6 +898,8 @@
       "languages_sort": 20,
       "runs_on": "Cloud only",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Corporate e-learning, explainer video and IVR prompts where a large library of polished business-narration voices matters more than expressivity.",
       "watch": "API billing is a separate cost centre from a Murf Studio subscription — a Studio plan grants you no API characters, which surprises buyers.",
       "standout": null,
@@ -898,7 +942,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 73
+      "rating_rank": 73,
+      "additional_ratings": []
     },
     {
       "name": "Smallest.ai",
@@ -914,6 +959,8 @@
       "languages_sort": null,
       "runs_on": "Cloud; dedicated infrastructure at Enterprise",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "A single vendor for the whole voice-agent loop with genuinely itemised per-component pricing rather than one opaque blended rate.",
       "watch": "No per-character rate is published anywhere, so it cannot be compared against character-billed vendors without deriving one. PII removal is a paid add-on rather than default.",
       "standout": "Itemised per-component agent pricing: TTS, STT, LLM and hosting separately",
@@ -955,7 +1002,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 8
+      "rating_rank": 8,
+      "additional_ratings": []
     },
     {
       "name": "Unreal Speech",
@@ -971,6 +1019,8 @@
       "languages_sort": 8,
       "runs_on": "Cloud; the underlying model is freely self-hostable",
       "latency_note": "~0.3 s to first audio on the /stream endpoint (vendor-published on the homepage as \"0.3s Latency\" / \"Stream audio in 300ms\", and in the /stream API reference as \"stream back audio data in 0.3 seconds\"). No percentile, region or payload-size breakdown published.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Bulk cost-dominated work — audiobook drafts, article-to-audio, accessibility readers — where per-character cost is the binding constraint.",
       "watch": "Unreal Speech's own pricing page and site footer state \"Powered by Kokoro TTS\" and link hexgrad/Kokoro-82M, which is Apache-2.0 — so the identical model can be self-hosted for free and the vendor's value is operational convenience. Note the served build's parameters and exact checkpoint are not published, so equivalence is the vendor's claim, not a verified fact.",
       "standout": "Resells Apache-2.0 Kokoro; the identical model self-hosts for free",
@@ -1013,7 +1063,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Voicemaker",
@@ -1029,6 +1080,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Low-budget batch voiceover for video and e-learning where a flat monthly subscription beats metered billing.",
       "watch": "The 4× credit multiplier on the good voices makes advertised character allowances misleading — a plan billed as 1,000,000 characters delivers 250,000 if you use the expressive tier.",
       "standout": null,
@@ -1068,7 +1121,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Neuphonic",
@@ -1084,6 +1138,8 @@
       "languages_sort": 9,
       "runs_on": "Cloud API, on-premises, and on-device via separate downloadable models",
       "latency_note": "Not published for the hosted API",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Edge, embedded and air-gapped deployments. The only vendor here offering a true offline on-device path with a matching cloud API.",
       "watch": "Both pricing URLs return 404 — cost cannot be evaluated without a sales conversation. No parameter count is published for the hosted service; the ~60 M active figure circulating for this vendor belongs to the on-device NeuTTS-2M model, not to the API.",
       "standout": "True offline CPU-only on-device execution with a matching cloud API",
@@ -1127,7 +1183,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "PlayHT / PlayAI",
@@ -1143,6 +1200,8 @@
       "languages_sort": null,
       "runs_on": "Nothing",
       "latency_note": "—",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Nothing — listed only as a migration warning.",
       "watch": "Acquihired by Meta in July 2025 and permanently deleted on 31 December 2025, taking every customer voice clone with it and no export path. The domain no longer resolves. Any 2026-dated roundup still recommending it was not researched.",
       "standout": "The cautionary tale: every customer voice clone deleted, no export path",
@@ -1182,7 +1241,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure Neural TTS",
@@ -1198,6 +1258,8 @@
       "languages_sort": 150,
       "runs_on": "Cloud, Docker container, embedded SDK, and disconnected operation",
       "latency_note": "under 300 ms, Microsoft-measured",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Highest-volume enterprise TTS, the broadest locale coverage, the richest markup surface anywhere, and the only major hyperscaler path to genuinely air-gapped deployment.",
       "watch": "Widely quoted at $16 / 1M — the retail price API returns $15.00 across 35 commercial regions. Per-character billing counts SSML markup. Commitment discounts exclude HD, custom and personal voices.",
       "standout": "only hyperscaler TTS with a container and fully disconnected air-gapped deployment",
@@ -1247,7 +1309,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 64
+      "rating_rank": 64,
+      "additional_ratings": []
     },
     {
       "name": "Azure Neural HD",
@@ -1263,6 +1326,8 @@
       "languages_sort": 100,
       "runs_on": "Cloud only, 7 regions, no container path",
       "latency_note": "under 300 ms",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Expressive narration, podcasts and emotionally aware customer service.",
       "watch": "Cut from $30 to $22 in March 2026, making it cheaper than Google Chirp 3 HD. But the SSML surface is severely reduced — prosody, emphasis and background audio are gone, and Omni additionally drops break and phoneme.",
       "standout": "8-voice multi-talker dialogue across nine languages, with cloning explicitly disabled",
@@ -1310,7 +1375,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 22
+      "rating_rank": 22,
+      "additional_ratings": []
     },
     {
       "name": "Azure Personal Voice",
@@ -1326,6 +1392,8 @@
       "languages_sort": 91,
       "runs_on": "Cloud only, in enabled regions",
       "latency_note": "Not separately published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Consumer and prosumer voice replication at scale where 90+ language cross-lingual output from one short sample matters.",
       "watch": "The strongest consent architecture of any commercial vendor — and correspondingly gated. Only customers with a direct Microsoft account team relationship are eligible, and every voice requires a recorded acknowledgement.",
       "standout": "biometric speaker verification plus recorded consent — the strictest cloning gate here",
@@ -1370,7 +1438,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Google Chirp 3",
@@ -1386,6 +1455,8 @@
       "languages_sort": 50,
       "runs_on": "Cloud; us and eu endpoints keep data in-continent at rest and in use",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Broad-locale generative TTS with true bidirectional streaming and a genuinely useful perpetual free tier.",
       "watch": "SSML is unsupported in streaming mode entirely — if you need pronunciation control in a live agent on Google, you must use a legacy voice or handle it upstream.",
       "standout": "bidirectional streaming with a perpetual 1M-character monthly free tier",
@@ -1429,7 +1500,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 50
+      "rating_rank": 50,
+      "additional_ratings": []
     },
     {
       "name": "Google Instant Custom Voice",
@@ -1445,6 +1517,8 @@
       "languages_sort": 30,
       "runs_on": "Cloud; the voice key is held client-side, not stored on Google's servers",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Per-end-user voice cloning without server-side voice storage, which simplifies retention and deletion.",
       "watch": "The most expensive mainstream cloud tier apart from Google Studio. A 10-second scripted consent clip is weak identity proof, and the docs do not state that Google cross-matches it against the reference voice.",
       "standout": "voice key held client-side; Google never stores the cloned voice",
@@ -1487,7 +1561,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Google Gemini TTS",
@@ -1503,6 +1578,8 @@
       "languages_sort": 80,
       "runs_on": "Cloud; streaming only on the 3.1 preview model",
       "latency_note": "Not published numerically",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Podcast and dialogue generation, and any workflow where writing a stage direction in English beats hand-authoring SSML.",
       "watch": "No SSML at all, maximum 2 speakers, and no streaming except on one preview model. Token billing makes cost-per-character non-obvious — audio tokens run at 25 per second of audio.",
       "standout": "stage-direction prompting instead of SSML, with two-speaker dialogue",
@@ -1548,7 +1625,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 3
+      "rating_rank": 3,
+      "additional_ratings": []
     },
     {
       "name": "Amazon Polly",
@@ -1564,6 +1642,8 @@
       "languages_sort": 41,
       "runs_on": "Cloud plus GovCloud (Standard and Neural only)",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "IVR and high-throughput work. Uniquely, SSML tags are EXCLUDED from the billed character count and generated speech may be cached and replayed free — which drives marginal cost to zero for a finite prompt set.",
       "watch": "Throughput drops from 80 TPS on Standard to 8 TPS on Neural, Generative and Long-Form, with async batch at just 1 TPS for the latter two.",
       "standout": "SSML excluded from billing and cached audio replayable free — marginal cost zero",
@@ -1612,7 +1692,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 42
+      "rating_rank": 42,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI",
@@ -1628,6 +1709,8 @@
       "languages_sort": 1,
       "runs_on": "Cloud only",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Directable delivery without SSML, with the safest data posture available — no training by default, zero-retention for approved customers, and HIPAA BAAs.",
       "watch": "Three separate ways to get speech out of OpenAI with three different price structures; choosing wrongly is a 4× cost error. Snapshot churn is real — one TTS snapshot was retired in July 2026.",
       "standout": "free-text instructions field, plus HIPAA BAA and zero-retention data posture",
@@ -1671,7 +1754,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "IBM Watson TTS",
@@ -1687,6 +1771,8 @@
       "languages_sort": 15,
       "runs_on": "Cloud, Cloud Pak on-prem, and an embeddable containerised library licensable to ISVs",
       "latency_note": "Expressive voices documented as slightly higher; no absolute figure",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Regulated enterprises needing genuinely portable on-prem or hybrid TTS and a redistributable embed licence — the strongest OEM story of any vendor here.",
       "watch": "Smallest language footprint of any major vendor, at a price above Azure and Polly Neural. Its differentiation is deployment portability, not breadth.",
       "standout": "redistributable embedded container licence — the only OEM-able on-prem TTS here",
@@ -1733,7 +1819,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Alibaba Qwen3-TTS",
@@ -1749,6 +1836,8 @@
       "languages_sort": 30,
       "runs_on": "Cloud — separate Singapore and Beijing deployments",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The price leader that no comparison table names. Cheaper than Azure standard neural while being an LLM-era model, with by far the deepest Chinese-dialect coverage anywhere.",
       "watch": "Two pricing regimes with materially different rates for the same model, free quotas that expire after 90 days, and a compliance posture Western enterprises must diligence separately.",
       "standout": "billed per input character with output audio free; ~21 Chinese dialects",
@@ -1793,7 +1882,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 79
+      "rating_rank": 79,
+      "additional_ratings": []
     },
     {
       "name": "Anthropic",
@@ -1809,6 +1899,8 @@
       "languages_sort": null,
       "runs_on": "—",
       "latency_note": "—",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Nothing in this segment. Pair the Claude API with a third-party TTS, or run Claude on Bedrock or Vertex alongside Polly or Chirp.",
       "watch": "Verified, not assumed — neither the models overview nor the API overview contains any occurrence of TTS, text-to-speech, audio, speech or voice as a product capability. A complete gap versus every other frontier lab.",
       "standout": "the only frontier lab here with no speech product at all",
@@ -1847,7 +1939,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Meta",
@@ -1863,6 +1956,8 @@
       "languages_sort": 101,
       "runs_on": "Self-hosted GPU; Meta operates no TTS API",
       "latency_note": "~2 s for streaming translation, not TTS",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Speech-to-speech translation research, including expression transfer and simultaneous streaming translation.",
       "watch": "Meta has shipped nothing in speech since December 2023 — every 2025–26 release from the facebook org is vision, 3D or robotics. CC-BY-NC prohibits commercial use outright; this is a hard block, not a \"verify first\".",
       "standout": "expressive and simultaneous speech-to-speech translation across ~100 input languages — but non-commercial licence",
@@ -1905,7 +2000,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Meta MMS-TTS",
@@ -1921,6 +2017,8 @@
       "languages_sort": 1107,
       "runs_on": "CPU or GPU — 36.3 M-parameter checkpoint; Hugging Face's official VITS example runs it in plain PyTorch with no accelerator specified",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Text-to-speech in long-tail languages nothing else covers. It is frequently the only way to synthesise a given language at all, and each checkpoint is small enough to run without a GPU. Research and other non-commercial use only.",
       "watch": "CC-BY-NC 4.0 forbids commercial use — a hard block, not a 'verify first', and the same block that applies to Seamless. Output is 16 kHz (config.json sampling_rate: 16000), well below the 24–48 kHz of current TTS models. Training data is drawn largely from religious texts (arXiv 2305.13516), so register and vocabulary skew accordingly. Per-language quality across the 1,107-language tail is uneven and, for most of that tail, unbenchmarked.",
       "standout": "1,107 languages as real TTS checkpoints at 36 M parameters each — for most of that tail, the only way to synthesise the language at all",
@@ -1964,7 +2062,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "VoxCPM2",
@@ -1980,6 +2079,8 @@
       "languages_sort": 30,
       "runs_on": "GPU, ~8 GB VRAM",
       "latency_note": "RTF 0.30 on an RTX 4090; 0.13 with Nano-vLLM",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The strongest genuinely commercial-usable open model of 2026 — native 48 kHz with no external upsampler, 1.0 M downloads a month.",
       "watch": "The 8 GB VRAM floor rules out CPU and most edge deployment, and no ONNX or GGUF export is documented.",
       "standout": "Tokenizer-free and codec-free, native 48 kHz with no external upsampler",
@@ -2025,7 +2126,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "VoxCPM-0.5B",
@@ -2041,6 +2143,8 @@
       "languages_sort": 2,
       "runs_on": "CUDA GPU, ~5 GB VRAM. Not the CPU-friendly sibling of VoxCPM2 that its size implies.",
       "latency_note": "RTF \"as low as\" 0.17 streaming on an RTX 4090 (vendor); ~0.10 under Nano-vLLM",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Reproducing or citing arXiv:2509.24650 (ICLR 2026), which evaluates this checkpoint specifically, and small bilingual zh/en cloning where cleanly Apache-2.0 weights matter more than output bandwidth. For anything new, start at VoxCPM2 instead.",
       "watch": "Officially Legacy — the vendor's own table says so, and it has been superseded twice (VoxCPM1.5 Dec 2025, VoxCPM2 Apr 2026). You will learn none of that from the Hugging Face page you land on: main has not moved since 2025-09-19 and the community PR adding the pointer has sat open for two months. Hard ceiling of 16 kHz output against VoxCPM2's 48 kHz. Licence and vendor advice also diverge — the GitHub README markets it as free for commercial use while the model card's Risks section calls it a research release.",
       "standout": "The exact checkpoint the VoxCPM paper evaluates — the one to cite or reproduce.",
@@ -2084,7 +2188,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-TTS",
@@ -2100,6 +2205,8 @@
       "languages_sort": 10,
       "runs_on": "GPU; the 0.6 B variant is the small-footprint option",
       "latency_note": "97 ms claimed, with no hardware stated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Commercial realtime voice agents at the 1–2 B scale — Apache-2.0, 3-second cloning and streaming from a single model.",
       "watch": "Alibaba has since pivoted its flagship audio models to a closed API, so long-term open support is uncertain.",
       "standout": "Apache-2.0 3-second cloning, voice design and streaming from one 0.6-1.7 B model",
@@ -2148,7 +2255,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MOSS-TTS",
@@ -2164,6 +2272,8 @@
       "languages_sort": 31,
       "runs_on": "8 B needs a datacentre GPU; the 0.1 B Nano runs realtime on a single CPU core",
       "latency_note": "180 ms TTFB with RTF 0.51 (Realtime variant), no hardware stated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Covering the whole size range from one family, with native 48 kHz STEREO output — essentially unique among open TTS.",
       "watch": "Release-date documentation is inconsistent across the repo, paper and community trackers, and the family naming is confusing.",
       "standout": "One Apache-2.0 family from an 8 B datacentre model down to 0.1 B on one CPU core",
@@ -2211,7 +2321,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MOSS-TTS-Realtime",
@@ -2227,6 +2338,8 @@
       "languages_sort": 20,
       "runs_on": "One CUDA GPU. Vendor latency is measured on a single NVIDIA L20 with SDPA + torch.compile; the bf16 checkpoint is 4.66 GB on disk. No official VRAM floor is published.",
       "latency_note": "TTFB 180 ms after warm-up, RTF 0.51, on a single NVIDIA L20 with SDPA + torch.compile",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Giving an open LLM voice agent its speech leg — streaming text in, streaming 24 kHz out at ~180 ms TTFB, conditioned on prior turns so voice and prosody stay coherent across a 40-minute conversation. Choose it over batch MOSS-TTS when turn latency and cross-turn consistency matter more than single-shot fidelity.",
       "watch": "Named \"Realtime\" but it is NOT full-duplex speech-to-speech. The words \"duplex\", \"barge\" and \"interrupt\" appear nowhere in any of the four primary documents — there is no listening and no interruption. This is the TTS leg of an agent, not the agent. The headline 377 ms already assumes a separate LLM, and the vendor's own decomposition says so — 197 ms (Qwen3.5-9B on vLLM, first sentence) + 180 ms (TTS). The 180 ms is also explicitly \"after warm up\".",
       "standout": "The only MOSS family member with published latency figures — and they name their hardware.",
@@ -2271,7 +2384,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "dots.tts",
@@ -2287,6 +2401,8 @@
       "languages_sort": 24,
       "runs_on": "GPU; VRAM not published",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Speaker similarity as the top priority — the highest average across 24 languages of any open model, with no codec bottleneck at 48 kHz.",
       "watch": "Very low adoption, so few community integrations and little third-party validation. Low-resource languages show notably higher error rates.",
       "standout": "Highest average speaker similarity across 24 languages of any open model",
@@ -2330,7 +2446,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "LongCat-AudioDiT",
@@ -2346,6 +2463,8 @@
       "languages_sort": 2,
       "runs_on": "GPU; VRAM not published",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Maximum clone fidelity with genuinely clean licensing — diffusion directly in waveform latent space, no mel intermediate.",
       "watch": "Holds the best similarity scores in the open ecosystem and gets roughly a thousandth of XTTS-v2's downloads. Adoption tracks tooling, not benchmarks.",
       "standout": "Diffuses directly in waveform latent space, no mel intermediate; MIT weights",
@@ -2388,7 +2507,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Chatterbox",
@@ -2404,6 +2524,8 @@
       "languages_sort": 23,
       "runs_on": "CUDA, CPU or Apple MPS — the README loads ChatterboxTTS and ChatterboxMultilingualTTS with device=\"cuda\" | \"cpu\" | \"mps\". No CPU throughput figure is published for the 0.5 B models.",
       "latency_note": "75 ms and 6× realtime claimed for Turbo, with no GPU named",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The only major open model shipping neural watermarking by default — the single best answer to the EU AI Act marking duty if you self-host.",
       "watch": "The watermark is a property of the official repository, not the weights; an MIT fork can strip the call in one line, and forks that do exist.",
       "standout": "The only major open model shipping neural watermarking by default",
@@ -2449,7 +2571,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Chatterbox Nano",
@@ -2465,6 +2588,8 @@
       "languages_sort": 1,
       "runs_on": "CPU or GPU. Vendor claims 3x realtime on 8 CPU cores (8 threads) and 10x realtime on GPU — no CPU model and no GPU model named for either figure. Loaded as ChatterboxTurboTTS.from_pretrained(device=\"cpu\" | \"cuda\", nano=True).",
       "latency_note": "No time-to-first-audio figure published. Only throughput multiples — 3x realtime on 8 CPU threads, 10x realtime on GPU — neither with hardware named, so neither is reproducible.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "On-device, mobile and air-gapped English TTS where the memory and latency budget rules out a GPU. Resemble's own Model Zoo files it under \"On-device / CPU inference, tight latency & memory budgets\", and it is the only Chatterbox checkpoint with a published CPU throughput figure.",
       "watch": "The 110 M headline is the backbone only — the actual load is ~1.9 GB across three files, which is the number that decides whether it fits your device. Neither speed claim names hardware, so neither is reproducible. English only: if you need any other language you want Multilingual V3, which is a different checkpoint at 5x the size. Every output is PerTh-watermarked by default.",
       "standout": "Chatterbox's paralinguistic tags and zero-shot cloning at CPU speed — the family's only edge-targeted checkpoint",
@@ -2511,7 +2636,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Chatterbox Turbo",
@@ -2527,6 +2653,8 @@
       "languages_sort": 1,
       "runs_on": "GPU, materially less than Multilingual V3 at 350 M",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Low-latency English voice agents where the 10-step diffusion decoder of the multilingual model is the bottleneck. The distilled single-step decoder is the reason to pick it; if you need any language other than English, this is the wrong row.",
       "watch": "Do not attach Resemble's \"sub 200 ms\" figure to these weights — the card attributes that latency to their hosted commercial service, not the downloadable model. No self-hosted latency figure is published.",
       "standout": "One decoder step instead of ten — the distillation is the whole product.",
@@ -2570,7 +2698,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Fish Audio S2 Pro",
@@ -2586,6 +2715,8 @@
       "languages_sort": 80,
       "runs_on": "GPU, ~10 GB class",
       "latency_note": "RTF 0.195 and ~100 ms TTFA on an H200 — one of the few models publishing hardware",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Research and evaluation. Best Seed-TTS-eval error rates of any open model, at 0.54% Chinese CER and 0.99% English WER.",
       "watch": "Fish Audio Research License (the HF licence tag is literally \"other\"). Non-commercial and research use only; commercial use requires a separate licence from business@fish.audio. Routinely reported as MIT — it is not, and Fish's own blog says \"open weights, not open source by the OSI definition\".",
       "standout": "15,000+ free-form natural-language tags — the most controllable open TTS shipped",
@@ -2634,7 +2765,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Higgs Audio v3",
@@ -2650,6 +2782,8 @@
       "languages_sort": 102,
       "runs_on": "GPU; VRAM not published",
       "latency_note": "RTF 0.262 on an H100",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The broadest language coverage of any open model, with genuine inline emotion control.",
       "watch": "Production, hosted APIs and revenue-generating deployment all require a separate commercial licence. The Creator Use Grant is unusual and requires crediting Boson AI.",
       "standout": "102 languages, 85 under 5 % error — broadest open language coverage",
@@ -2696,7 +2830,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 58
+      "rating_rank": 58,
+      "additional_ratings": []
     },
     {
       "name": "Kimi-Audio 7B",
@@ -2712,6 +2847,8 @@
       "languages_sort": 2,
       "runs_on": "Single NVIDIA GPU only. The inference API hardcodes torch.cuda.current_device() and loads in bf16 — no CPU, MPS or quantised path exists in the reference implementation. ~9.77 B at bf16 is roughly 20 GB of LLM weights before activations, with a Whisper-large-v3 encoder, a flow-matching detokenizer and a BigVGAN vocoder loading alongside.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Self-hosted products and research needing one model to LISTEN in English or Mandarin — ASR, audio question answering, captioning, speech emotion recognition, sound-event classification — and optionally reply out loud in the same turn. It is in this matrix to correct a mis-route, not because it is a synthesiser.",
       "watch": "IT IS NOT A TTS ENGINE, and Hugging Face says otherwise: both repos carry pipeline_tag text-to-speech, which routes text-to-speech shoppers straight to it. Every documented example takes an AUDIO input; there is no text-in/speech-out quick start, no TTS mode, no voice or speaker control, and two open issues asking for a real TTS path sit unanswered. The weights licence is also undocumented — an MIT tag with no LICENSE file and a README that scopes itself to code. Key the row to the Instruct checkpoint: the base repo is ~3% of downloads and its own card says it \"cannot be used directly\".",
       "standout": "Listens far better than it speaks — an ASR-first model that HF mis-tags as text-to-speech.",
@@ -2754,7 +2891,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "IndexTTS",
@@ -2770,6 +2908,8 @@
       "languages_sort": 4,
       "runs_on": "GPU",
       "latency_note": "2.5 claims a 2.28× improvement over 2, with no absolute figure",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Emotion- and duration-controlled dubbing and localisation, where separating who is speaking from how they feel is the whole job.",
       "watch": "Widely reported as Apache-2.0. It is not — the licence carries MAU and revenue thresholds, prohibited-use clauses covering medical, military and biometric surveillance, a bar on improving other commercial AI models, and PRC governing law.",
       "standout": "Speaker identity disentangled from emotion, plus 0–1 emotion intensity vectors",
@@ -2814,7 +2954,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Step-Audio-EditX",
@@ -2830,6 +2971,8 @@
       "languages_sort": 6,
       "runs_on": "12 GB VRAM, or 6–8 GB with the official AWQ 4-bit build",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Post-hoc emotion and style editing of existing audio — the only open model doing true iterative editing well.",
       "watch": "Hard 30-second limit per inference, and no streaming.",
       "standout": "Iterative re-editing of already-generated audio — 14 emotions, 30+ speaking styles",
@@ -2874,7 +3017,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 25
+      "rating_rank": 25,
+      "additional_ratings": []
     },
     {
       "name": "VibeVoice",
@@ -2890,6 +3034,8 @@
       "languages_sort": 2,
       "runs_on": "GPU; VRAM not published",
       "latency_note": "Not published — the VibeVoice-1.5B model card gives no latency figure",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Long-form multi-speaker generation — 90 minutes with 4 distinct speakers in a single pass, an outlier by more than an order of magnitude.",
       "watch": "Microsoft removed the VibeVoice-TTS code on 2025-09-05, two weeks after release, citing use 'inconsistent with the stated intent'. That takedown has since been partially reversed: vibevoice/modular/modeling_vibevoice.py is back on main (its header records that it was copied back from the community fork vibevoice-community/VibeVoice) and docs/vibevoice-tts.md is live. But the 1.5B still shows 'Disabled' under Quick Try in the repo README, no TTS demo script ships in demo/, and VibeVoice-Large weights remain withdrawn (HF 404). Upstream continuity is better than it was, and still not whole.",
       "standout": "90 minutes with four distinct speakers in one pass — an order-of-magnitude outlier",
@@ -2934,7 +3080,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 75
+      "rating_rank": 75,
+      "additional_ratings": []
     },
     {
       "name": "VibeVoice-Realtime-0.5B",
@@ -2950,6 +3097,8 @@
       "languages_sort": 1,
       "runs_on": "GPU or Apple Silicon — Microsoft reports NVIDIA T4 and Mac M4 Pro both reach real-time in its own tests, and warns weaker devices may need further optimisation. No VRAM figure published; the bf16 checkpoint is a single 2.04 GB safetensors file. Docker via NVIDIA PyTorch Container 24.07+ is the documented path.",
       "latency_note": "~300 ms to first audible speech per the HF model card. Microsoft's own repo doc says ~200 ms in its key-features list and ~300 ms for the first speech chunk in the websocket demo note — the two figures are not reconciled. Hardware dependent.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Agent and live-narration front-ends where speech must start before the text is finished, on hardware as modest as a T4 or an M4 Pro laptop. The streaming counterpart to the 1.5B, not a smaller version of it.",
       "watch": "Three catches. (1) No cloning — the acoustic tokenizer was deliberately removed, so you get Microsoft's voices or nothing. (2) 'Streaming text input' is partly aspirational: Microsoft's own TODO in docs/vibevoice-realtime-0.5b.md still has 'Implement streaming text input function to feed new tokens while audio is still being generated' UNCHECKED, so incremental token feeding is not yet a shipped API. (3) The first-audible-latency figure is stated as both ~200 ms and ~300 ms across Microsoft's two pages.",
       "standout": "Speech starts in ~300 ms on a T4 or an M4 Pro — but the voice is Microsoft's, not yours",
@@ -2994,7 +3143,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ZONOS2",
@@ -3010,6 +3160,8 @@
       "languages_sort": 30,
       "runs_on": "GPU; 8 B total parameters must be resident despite 900 M active",
       "latency_note": "4× throughput over its predecessor, no absolute figure",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Permissively-licensed multilingual cloning with genuine continuous emotion control. The only sparse mixture-of-experts TTS in the open ecosystem.",
       "watch": "Resolve the licence discrepancy against the repository's LICENSE file before commercial reliance. Byte-level input removes the phonemizer dependency entirely, which also sidesteps the eSpeak GPL question.",
       "standout": "The only sparse MoE TTS in open weights; byte-level input kills the eSpeak GPL exposure",
@@ -3055,7 +3207,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Fun-CosyVoice 3.0",
@@ -3071,6 +3224,8 @@
       "languages_sort": 9,
       "runs_on": "GPU; 0.5 B is modest",
       "latency_note": "150 ms with bi-streaming, no hardware stated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Chinese-first commercial products needing dialect coverage and bidirectional streaming at only 0.5 B parameters.",
       "watch": "The repository naming across CosyVoice2 and Fun-CosyVoice3 is confusing, and adoption is lower than its quality warrants.",
       "standout": "Bidirectional streaming plus 18 Chinese dialects at only 0.5 B parameters",
@@ -3116,7 +3271,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Voxtral TTS",
@@ -3132,6 +3288,8 @@
       "languages_sort": 9,
       "runs_on": "GPU; a Q4_K GGUF build is ~7.43 GB",
       "latency_note": "70 ms for a typical prompt, no hardware stated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Non-commercial European-language voice work, and evaluation before buying the commercial licence. The first major European lab open-weights TTS.",
       "watch": "A hard 2-minute native generation ceiling. Mistral's hosted API papers over it with interleaving; self-hosting does not.",
       "standout": "First major European-lab open-weights TTS, capped at two minutes native",
@@ -3174,7 +3332,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OmniVoice",
@@ -3190,6 +3349,8 @@
       "languages_sort": 600,
       "runs_on": "GPU; RTF 0.0115 at batch 8 on an H100",
       "latency_note": "RTF 0.025 single-request, 0.0115 batched on an H100",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Low-resource language coverage and extremely fast batched inference. 862 k downloads a month within four months of release.",
       "watch": "The Apache-2.0 code licence does not extend to the weights, which are CC-BY-NC. This catches people out constantly.",
       "standout": "600+ languages, the broadest zero-shot coverage anywhere, but NC weights",
@@ -3236,7 +3397,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "GPT-SoVITS",
@@ -3252,6 +3414,8 @@
       "languages_sort": 5,
       "runs_on": "CUDA, Apple Silicon and CPU — RTF 0.014 on a 4090, 0.526 on an M4 CPU",
       "latency_note": "RTF 0.014 (RTX 4090) · 0.028 (4060 Ti) · 0.526 (M4 CPU) — a rare per-device table",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Fine-tuning one specific character voice from about a minute of data, with the best fine-tuning ergonomics in open TTS.",
       "watch": "No tagged release since June 2025, and despite frequent references there is no v5.",
       "standout": "One-click WebUI fine-tuning of one voice from a minute of audio",
@@ -3296,7 +3460,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "F5-TTS",
@@ -3312,6 +3477,8 @@
       "languages_sort": 2,
       "runs_on": "GPU; CPU slowly; ROCm support added in 2026",
       "latency_note": "RTF ~0.15 on an RTX 4090, commonly cited",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Retraining on your own licensed data — the most-forked TTS architecture of the era and the base of much of the fine-tuning tooling ecosystem.",
       "watch": "Reported as MIT almost everywhere. The code is MIT; the released checkpoints are CC-BY-NC because of the Emilia training corpus, so commercial use requires retraining.",
       "standout": "Most-forked open TTS architecture; base of the community fine-tuning ecosystem",
@@ -3355,7 +3522,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "XTTS-v2",
@@ -3371,6 +3539,8 @@
       "languages_sort": 17,
       "runs_on": "GPU ~4 GB fp16, and CPU",
       "latency_note": "under 200 ms streaming, commonly cited",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Legacy compatibility and the widest single-toolkit model catalogue.",
       "watch": "A December 2023 model still pulling 9.16 M downloads a month. CPML restricts commercial use of both the model AND the generated audio — the most commonly misreported licence in the segment.",
       "standout": "9.16 M downloads a month on a Dec-2023 checkpoint whose licence bans commercial audio",
@@ -3417,7 +3587,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 82
+      "rating_rank": 82,
+      "additional_ratings": []
     },
     {
       "name": "MegaTTS 3",
@@ -3433,6 +3604,8 @@
       "languages_sort": 2,
       "runs_on": "GPU",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Little, practically. Included as the clearest example of nominal versus effective openness.",
       "watch": "ByteDance withholds the WaveVAE encoder weights \"for security issues\", so inference only runs from latents ByteDance provides. No update since March 2025.",
       "standout": "Apache-2.0 on paper, unusable in practice — the encoder is withheld",
@@ -3474,7 +3647,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Orpheus TTS",
@@ -3490,6 +3664,8 @@
       "languages_sort": 1,
       "runs_on": "GPU, 3 B class",
       "latency_note": "~200 ms streaming, ~100 ms with input streaming, no hardware stated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Apache-2.0 realtime English agents where a large hosted-inference ecosystem matters more than cutting-edge quality.",
       "watch": "The OPEN WEIGHTS are frozen, but the product is not dead — read those two facts separately. Weights: HF repo lastModified 2025-05-06, newest canopylabs upload 2025-04-08, and the GitHub repo has never cut a release (last push 2025-12-05, 126 open issues). Product: Canopy shipped a CLOSED, commercially-hosted Orpheus v1 on GroqCloud on 2026-04-09 with claimed quality improvements and no corresponding open release. The promised 1B, 400M and 150M variants never shipped despite appearing in comparison tables.",
       "standout": "Apache-2.0 English realtime with the widest hosted-inference footprint (Groq, Together, Baseten)",
@@ -3534,7 +3710,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Dia / Dia2",
@@ -3550,6 +3727,8 @@
       "languages_sort": 1,
       "runs_on": "RTX 4090 measured at ~4.4 GB bf16, 2.1× realtime with torch.compile",
       "latency_note": "2.1–2.2× realtime on an RTX 4090",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "English two-speaker dialogue and podcast generation at low VRAM.",
       "watch": "No 2026 release. The team self-describes as one full-time and one part-time engineer, and a waitlist for larger models suggests the best ones will not be open.",
       "standout": "Two-speaker dialogue from [S1]/[S2] transcript tags at 4.4 GB VRAM",
@@ -3596,7 +3775,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ZipVoice",
@@ -3612,6 +3792,8 @@
       "languages_sort": 2,
       "runs_on": "GPU and CPU ONNX int8 — but explicitly not ONNX on GPU",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The smallest model achieving competitive similarity at 123 M parameters, with a genuinely rare stereo dialogue variant that puts one speaker per channel.",
       "watch": "The k2-fsa team's attention has clearly moved to OmniVoice; no 2026 release.",
       "standout": "Stereo dialogue variant putting each speaker on its own channel at 123 M params",
@@ -3656,7 +3838,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Sesame CSM-1B",
@@ -3672,6 +3855,8 @@
       "languages_sort": 1,
       "runs_on": "GPU, ~1 B class",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Research into context-aware conversational speech, and as a base architecture — Marvis-TTS and others are built on it.",
       "watch": "Base weights unchanged since the 2025-03-13 release; the repo was last touched 2025-12-01 for Transformers-native packaging (sharded safetensors and a chat template), which is not a new model. The viral Maya demo used larger internal models that were never released, so demo quality is not what you get. English-only in practice — the card says non-English works only \"due to data contamination in the training data, but it likely won't do well\". It also cannot generate text, so it needs a separate LLM in the loop.",
       "standout": "Conditions on prior conversational audio, not just text — a dialogue base architecture",
@@ -3714,7 +3899,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OuteTTS 1.0",
@@ -3730,6 +3916,8 @@
       "languages_sort": 12,
       "runs_on": "llama.cpp, vLLM, ExLlamaV2, and CPU via GGUF",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Running TTS inside an existing llama.cpp or vLLM stack — as a pure language model it inherits the entire quantisation ecosystem for free.",
       "watch": "Frequently listed as Apache-2.0. The model card's own front-matter says CC-BY-NC-SA-4.0, which is non-commercial and imposes share-alike on derivatives.",
       "standout": "A pure LM with no adapters — inherits the whole llama.cpp quantisation ecosystem free",
@@ -3775,7 +3963,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Parler-TTS",
@@ -3791,6 +3980,8 @@
       "languages_sort": 1,
       "runs_on": "GPU and CPU",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Fully auditable training pipelines. Historically important for pioneering the description-conditioned mechanism that Maya1, Qwen3-VoiceDesign and VoxCPM2 now use.",
       "watch": "Dormant since August 2024 and well behind 2026 quality. Use it as a reference implementation, not in production.",
       "standout": "Only entry releasing datasets, training code AND weights permissively — fully auditable",
@@ -3836,7 +4027,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "StyleTTS 2",
@@ -3852,6 +4044,8 @@
       "languages_sort": 14,
       "runs_on": "GPU and CPU",
       "latency_note": "Faster than realtime; no canonical figure",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Understanding or forking the architecture that underlies Kokoro.",
       "watch": "Effectively unmaintained since 2024, and superseded by its own derivative. The pretrained-model condition requiring you to inform listeners the speech is synthetic is non-standard.",
       "standout": "The architecture underneath Kokoro-82M — worth forking, not shipping",
@@ -3896,7 +4090,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 85
+      "rating_rank": 85,
+      "additional_ratings": []
     },
     {
       "name": "Piper",
@@ -3912,6 +4107,8 @@
       "languages_sort": 39,
       "runs_on": "CPU on x86 and ARM, Raspberry Pi 3/4/5, embedded; also via sherpa-onnx on Android, iOS and RISC-V",
       "latency_note": "0.54× core-hour ratio on a Ryzen 7 5700X (Picovoice, July 2026)",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The default and safest choice for offline neural TTS on Pi-class hardware, and the Home Assistant default. Best language breadth among tiny engines.",
       "watch": "Relicensed from MIT to GPL-3.0; the MIT-era repository is archived read-only. Anyone who embedded old Piper in a proprietary product cannot simply upgrade.",
       "standout": "39 locales of tiny CPU voices; the Home Assistant default",
@@ -3958,7 +4155,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Supertonic 3",
@@ -3974,6 +4172,8 @@
       "languages_sort": 31,
       "runs_on": "CPU via ONNX, browser via WebGPU, servers, Raspberry Pi, even e-readers",
       "latency_note": "RTF 0.012–0.015 on an M4 Pro; RTF ~0.3 on a Raspberry Pi",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The fastest genuinely-good on-device TTS available as open weights, at 44.1 kHz with 31 languages and no GPU required.",
       "watch": "OpenRAIL-M is not an OSI licence and carries use-based restrictions that some legal teams reject. Streaming is not documented.",
       "standout": "31 languages at 44.1 kHz, CPU-fast, and browser-deployable",
@@ -4020,7 +4220,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Kyutai pocket-tts",
@@ -4036,6 +4237,8 @@
       "languages_sort": null,
       "runs_on": "CPU; a Core ML port targets Apple Silicon",
       "latency_note": "~200 ms to first audio and ~6× realtime on a MacBook Air M4 using only 2 CPU cores",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "True 80 ms frame streaming on-device — one of the two current state-of-the-art options for speed-at-quality on a laptop.",
       "watch": "The Core ML English pack is 766 MB at fp16. Only part of the pipeline runs on the Neural Engine; the language model falls back to GPU.",
       "standout": "80 ms-frame token-level streaming at ~6x realtime on two CPU cores",
@@ -4079,7 +4282,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Kokoro-82M",
@@ -4095,6 +4299,8 @@
       "languages_sort": 8,
       "runs_on": "CPU, CUDA, Apple Silicon, browser via WASM and WebGPU, sherpa-onnx, MLX",
       "latency_note": "1.4× core-hour ratio — SLOWER than realtime on one core (Picovoice, July 2026)",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Best naturalness-per-megabyte for offline synthesis, and the default pick for browser-side TTS. 11.3 M downloads a month.",
       "watch": "Frozen since January 2025 with no successor, no cloning and no emotion control. That download figure is momentum, not currency — and it is not really a Raspberry-Pi-class model.",
       "standout": "the browser TTS default: WASM/WebGPU at 82 M, 11.3 M downloads monthly",
@@ -4141,7 +4347,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 48
+      "rating_rank": 48,
+      "additional_ratings": []
     },
     {
       "name": "NeuTTS Air",
@@ -4157,6 +4364,8 @@
       "languages_sort": 1,
       "runs_on": "CPU via llama.cpp GGUF — 20 tok/s on a Galaxy A25 5G phone, 111 on an iMac M4 16 GB, 119 on an AMD Ryzen 9 HX 370 (Q4_0, speech-LM only)",
       "latency_note": "Throughput published per device; first-audio latency is not",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The closest thing to a local ElevenLabs workflow — instant voice cloning that fits on a laptop CPU or a mid-range phone, with true token-level streaming.",
       "watch": "A hard ~30-second generation ceiling from the 2,048-token context, and the reference audio counts against it. Ships Perth watermarking by default.",
       "standout": "3-second voice cloning running on a mid-range Android phone CPU",
@@ -4201,7 +4410,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NeuTTS Nano",
@@ -4217,6 +4427,8 @@
       "languages_sort": 4,
       "runs_on": "CPU-first. Vendor claim: 'built for real-time or better-than-real-time generation on laptop-class CPUs', 'Designed for mobile and embedded devices'. GGUF/GGML-friendly for CPU-first tooling.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Squeezing zero-shot cloning onto a phone or embedded target where Air is too big — or serving one of Spanish, French or German on-device, which Air cannot do at all.",
       "watch": "This is the checkpoint that breaks the Apache assumption people carry over from NeuTTS Air. The NeuTTS Open License cuts off commercial use at $5 M annual revenue, which surfaces long after integration. Two more traps: the 2,048-token context caps generation at about 30 seconds INCLUDING the reference prompt, and 'multilingual' means four separate models to ship and test, not one.",
       "standout": "About 3x smaller than NeuTTS Air and roughly twice as fast on the same phone CPU, still with 3-second voice cloning",
@@ -4261,7 +4473,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NeuTTS 2E",
@@ -4277,6 +4490,8 @@
       "languages_sort": 1,
       "runs_on": "CPU-first — the vendor claims real-time or better on laptop-class CPUs. Official Q8 and Q4 GGUF builds ship alongside the safetensors.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Shipping a small English voice on a laptop or edge device where you specifically do NOT want cloning — no reference-audio handling, no consent question, and a fixed cast you can test against.",
       "watch": "Not Apache-2.0. NeuTTS Air is; this is not. The bespoke NeuTTS Open License gates commercial use above a revenue threshold, which is exactly the kind of term that surfaces after integration. Also note the params figure that matters for a device budget is the larger one: the 472 MB checkpoint reflects ~236 M total, not the ~125 M active the card leads with. PerTh watermarking is on by default.",
       "standout": "A no-cloning model in a field where everything clones — four fixed voices, on a laptop CPU.",
@@ -4322,7 +4537,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MOSS-TTS-Nano",
@@ -4338,6 +4554,8 @@
       "languages_sort": 20,
       "runs_on": "Realtime on a SINGLE CPU core on a MacBook Air M4 via ONNX; no GPU required",
       "latency_note": "Realtime on one CPU core; no RTF table published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The best CPU-only option that still has multilingual coverage and voice cloning, at 48 kHz stereo from 0.1 B parameters.",
       "watch": "Quality at 0.1 B will not match 1 B+ models, and the project is young with limited third-party validation.",
       "standout": "cloning plus 20 languages from 0.1 B, realtime on one CPU core",
@@ -4381,7 +4599,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "KittenTTS",
@@ -4397,6 +4616,8 @@
       "languages_sort": 1,
       "runs_on": "CPU only; the int8 Nano is 25 MB total",
       "latency_note": "5.1× SLOWER than realtime on a Ryzen 7 5700X (Picovoice, July 2026)",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The smallest credible neural TTS binary in wide use, for IoT and anywhere 25 MB is the hard budget.",
       "watch": "Small does not mean fast — the 25 MB darling of every roundup measured among the slowest engines tested. Known failures on numerals; pre-expand numbers to words.",
       "standout": "25 MB int8 total — the smallest credible neural TTS shipping",
@@ -4442,7 +4663,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Marvis-TTS",
@@ -4458,6 +4680,8 @@
       "languages_sort": 3,
       "runs_on": "Apple Silicon first-class via MLX; ~500 MB quantised",
       "latency_note": "Streaming as text arrives; no numeric RTF published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The best-integrated Apple Silicon and iOS on-device TTS with voice cloning.",
       "watch": "Only three languages, no emotion control, and disk-size figures conflict badly between the model card and the launch blog.",
       "standout": "voice cloning that actually ships on iPhone and iPad via MLX",
@@ -4501,7 +4725,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Picovoice Orca",
@@ -4517,6 +4742,8 @@
       "languages_sort": null,
       "runs_on": "CPU and embedded — 7 MB model, 29 MB peak memory",
       "latency_note": "128 ms first-token-to-speech, 0.16× core-hour ratio on a Ryzen 7 5700X",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The only on-device engine that consumes an LLM token stream directly — genuine streaming input, which Android's own API cannot do.",
       "watch": "The benchmark establishing these figures is authored by Picovoice, and Orca wins it. The methodology is transparent, but read the framing critically.",
       "standout": "the only on-device engine consuming an LLM token stream directly",
@@ -4561,7 +4788,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Apple Personal Voice",
@@ -4577,6 +4805,8 @@
       "languages_sort": 3,
       "runs_on": "iOS and macOS, entirely on-device",
       "latency_note": "OS-native",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The only consumer-grade on-device voice banking, exposed to apps through the standard speech-synthesis API.",
       "watch": "No supported export path to third-party AAC hardware, which is exactly where a banked voice is most needed. Beta reports of English voices silently switching language and breaking.",
       "standout": "on-device voice banking from ten prompts, exposed to any app",
@@ -4619,7 +4849,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Android TextToSpeech",
@@ -4635,6 +4866,8 @@
       "languages_sort": null,
       "runs_on": "Android",
       "latency_note": "OS-native",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Baseline accessibility and read-aloud on Android with zero dependencies.",
       "watch": "Requires the COMPLETE utterance before synthesis — it cannot consume a token stream, which is a structural blocker for LLM voice agents. And Gemini Nano does NOT provide on-device TTS; its audio tasks are recognition, not generation.",
       "standout": "present on every Play-Services Android device since 1.6, zero dependencies",
@@ -4677,7 +4910,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Web Speech API",
@@ -4693,6 +4927,8 @@
       "languages_sort": null,
       "runs_on": "Most browsers — but NOT Opera Android or Android WebView, which breaks Cordova and Capacitor apps",
       "latency_note": "Varies by OS voice",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Quick wins where a rough read-aloud with no dependencies is enough.",
       "watch": "A compatibility shim, not an engine. Chrome truncates past ~200–250 characters, background tabs are throttled, and SOME BROWSER VOICES ARE CLOUD VOICES — the text leaves the device, defeating the point for privacy-sensitive apps.",
       "standout": "TTS from a web page with nothing installed and no model",
@@ -4733,7 +4969,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI Realtime",
@@ -4749,6 +4986,8 @@
       "languages_sort": null,
       "runs_on": "Cloud, over WebRTC or WebSocket",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Latency-sensitive agents where the model should hear tone rather than a transcript, and where WebRTC browser delivery matters.",
       "watch": "Cached audio input is $0.40 per 1M against $32 fresh — an ~80× reduction, so any cost comparison ignoring prompt caching overstates by multiples. The voice cannot be changed once a session has emitted audio.",
       "standout": "Native WebRTC transport plus an ~80× cached-audio-input discount.",
@@ -4791,7 +5030,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Google Gemini Live",
@@ -4807,6 +5047,8 @@
       "languages_sort": 70,
       "runs_on": "Cloud, bidirectional WebSocket",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Roughly an order of magnitude cheaper per audio token than OpenAI Realtime, and unusually transparent in publishing both per-token and per-minute rates.",
       "watch": "All the Live models are Preview and subject to change. The newer 3.1 dropped the non-blocking function calling that lets an agent keep talking while a tool runs.",
       "standout": "Order-of-magnitude cheaper audio tokens than OpenAI Realtime, with a free tier.",
@@ -4850,7 +5092,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Amazon Nova 2 Sonic",
@@ -4866,6 +5109,8 @@
       "languages_sort": null,
       "runs_on": "Cloud, Bedrock event-driven bidirectional stream",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "AWS-native agents needing graceful interruption, background-noise robustness and asynchronous tool calling in one model.",
       "watch": "Nova Sonic v1 has a hard end-of-life of 14 September 2026. v2 is ~12% cheaper on speech but 5.5× dearer on text input and 11× on text output, which penalises tool-heavy agents.",
       "standout": "Asynchronous tool calling inside a native speech-to-speech model on Bedrock.",
@@ -4907,7 +5152,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Moshi",
@@ -4923,6 +5169,8 @@
       "languages_sort": 1,
       "runs_on": "Self-hosted GPU",
       "latency_note": "160 ms theoretical, ~200 ms measured on an L4",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Genuine full-duplex conversation — simultaneous listening and speaking, not merely barge-in. The foundation of the Mimi codec lineage.",
       "watch": "No tool calling at all, which is the biggest functional gap of the open full-duplex models versus hosted APIs.",
       "standout": "Simultaneous listen-and-speak duplex with a text inner-monologue stream.",
@@ -4966,7 +5214,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA PersonaPlex",
@@ -4982,6 +5231,8 @@
       "languages_sort": 1,
       "runs_on": "~8 GB VRAM per hands-on reports; a CPU-offload flag exists",
       "latency_note": "Not confirmed in the repository",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The best open full-duplex conversational feel, and the only open model evaluated on backchanneling.",
       "watch": "No tool calling. Latency and VRAM figures circulate widely but are not stated in the repository itself.",
       "standout": "The only open model benchmarked on backchanneling — 91% FullDuplexBench.",
@@ -5025,7 +5276,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MiniCPM-o 4.5",
@@ -5041,6 +5293,8 @@
       "languages_sort": null,
       "runs_on": "11 GB INT4 or 19 GB BF16; runs full-duplex on a 16 GB M3 Mac and supports phone deployment",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Full omni-modal understanding and generation WITH voice cloning, self-hosted at a genuinely reachable VRAM floor.",
       "watch": "Dynamic mid-conversation context injection is untested, and zero-shot cloning will not match a fine-tuned voice.",
       "standout": "Apache-2.0 full-duplex omni model that clones, at an 11 GB INT4 floor.",
@@ -5084,7 +5338,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Step-Audio 2",
@@ -5100,6 +5355,8 @@
       "languages_sort": null,
       "runs_on": "Self-hosted GPU",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Almost uniquely among open speech-to-speech models, it ships first-class tool calling — with its own benchmark for it.",
       "watch": "Barge-in rather than genuine full-duplex.",
       "standout": "Almost uniquely among open S2S models, it ships first-class tool calling.",
@@ -5142,7 +5399,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Ultravox",
@@ -5158,6 +5416,8 @@
       "languages_sort": null,
       "runs_on": "Cloud or self-host",
       "latency_note": "~150 ms time-to-first-token, secondary sources only",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Replacing STT and the LLM in one model while keeping full control of the voice.",
       "watch": "This is SPEECH-IN, TEXT-OUT — you still need a separate TTS stage. It is very commonly miscategorised as speech-to-speech.",
       "standout": "Speech-in, text-out — it replaces STT+LLM only and still needs a TTS.",
@@ -5198,7 +5458,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "RVC / Applio",
@@ -5214,6 +5475,8 @@
       "languages_sort": null,
       "runs_on": "2–4 GB VRAM",
       "latency_note": "90 ms with ASIO, 170 ms standard",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The community standard. Stack it after any TTS for a similarity boost of roughly 0.03–0.08 — usually a bigger gain than switching TTS models.",
       "watch": "Requires per-speaker training rather than zero-shot, so it is a pipeline step, not a drop-in.",
       "standout": "+0.03–0.08 speaker similarity stacked on any TTS — more than switching TTS.",
@@ -5255,7 +5518,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Seed-VC v2",
@@ -5271,6 +5535,8 @@
       "languages_sort": null,
       "runs_on": "4–8 GB VRAM",
       "latency_note": "300–400 ms added",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The best published zero-shot voice-conversion quality.",
       "watch": "300–400 ms of added latency is borderline for a sub-500 ms conversational budget, and GPL-3.0 matters for products.",
       "standout": "Best published zero-shot conversion quality; fine-tunes in 100 steps.",
@@ -5312,7 +5578,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure Voice Conversion",
@@ -5328,6 +5595,8 @@
       "languages_sort": null,
       "runs_on": "Cloud",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The only hyperscaler pricing standalone timbre transfer as a product.",
       "watch": "Requires a custom voice, which is itself Limited Access.",
       "standout": "The only hyperscaler pricing standalone timbre transfer as its own product.",
@@ -5368,7 +5637,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenVoice v2",
@@ -5384,6 +5654,8 @@
       "languages_sort": null,
       "runs_on": "~2 GB",
       "latency_note": "~100–200 ms added",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The simplest permissively-licensed option.",
       "watch": "Converts tone colour rather than full voice identity — expect noticeably less than RVC.",
       "standout": "MIT zero-shot timbre transfer in ~2 GB.",
@@ -5424,7 +5696,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 77
+      "rating_rank": 77,
+      "additional_ratings": []
     },
     {
       "name": "MeanVC",
@@ -5440,6 +5713,8 @@
       "languages_sort": null,
       "runs_on": "Under 1 GB at 14 M parameters",
       "latency_note": "~212 ms including recognition",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The smallest streaming-capable voice conversion, single-step and genuinely fast.",
       "watch": "Very new, with little independent validation.",
       "standout": "14 M single-step conversion — the only streaming VC under 1 GB.",
@@ -5482,7 +5757,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "eSpeak NG",
@@ -5498,6 +5774,8 @@
       "languages_sort": 127,
       "runs_on": "Essentially anything — Linux, Windows, macOS, Android, RISC-V, WASM, microcontroller-class",
       "latency_note": "Effectively instantaneous; orders of magnitude faster than realtime",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Screen readers at 400–800 words per minute, where latency and rate-scalability beat naturalness completely. Also the phonemizer inside Piper, Kokoro, StyleTTS 2 and much of this table.",
       "watch": "A transitive GPL-3.0 exposure nobody discusses — products shipping Piper or Kokoro should check whether they are linking GPL code.",
       "standout": "The GPL-3.0 phonemizer hiding inside Piper, Kokoro and StyleTTS 2.",
@@ -5548,7 +5826,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Flite / Festival",
@@ -5564,6 +5843,8 @@
       "languages_sort": 9,
       "runs_on": "Very small embedded systems upward; under 1 MB runtime memory",
       "latency_note": "Sub-realtime on very weak CPUs",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Hard-constrained embedded systems with no ML runtime, deterministic memory budgets and genuinely permissive licensing.",
       "watch": "In maintenance mode, and audibly dated.",
       "standout": "Under 1 MB runtime RAM, BSD-licensed, no ML runtime at all.",
@@ -5609,7 +5890,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Festival",
@@ -5625,6 +5907,8 @@
       "languages_sort": 3,
       "runs_on": "Workstation and server class Unix - Solaris, SunOS, FreeBSD, Linux; Windows via Cygwin. ~16-20 MB runtime memory. Not an embedded target - that is Flite.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Voice building and speech research on a workstation: the FestVox toolchain, a Scheme-scriptable engine and four synthesis back ends. Choose Flite instead wherever size or speed is the constraint.",
       "watch": "Last release 2.4, December 2014. The UK lexicon (OALD) is non-commercial, so the British and Spanish voices cannot ship in a commercial product - only the US voices kal and ked are free of that restriction.",
       "standout": "The Scheme-scriptable research toolchain - with a UK lexicon you may not ship commercially.",
@@ -5670,7 +5954,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ETI-Eloquence",
@@ -5686,6 +5971,8 @@
       "languages_sort": null,
       "runs_on": "Windows, inside screen readers",
       "latency_note": "Effectively instantaneous",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Still shipping in JAWS 2026 and still winning on merit at 800 words per minute — the clearest evidence that naturalness is not the objective function in accessibility.",
       "watch": "A 1990s formant synthesiser. It sounds like one, and its users do not care.",
       "standout": "Still winning at 800 words per minute for screen-reader users.",
@@ -5729,7 +6016,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "VITS / Matcha / Glow-TTS",
@@ -5745,6 +6033,8 @@
       "languages_sort": 1100,
       "runs_on": "CPU-viable at RTF under 0.1; ONNX exports standard; Raspberry Pi class",
       "latency_note": "Well under RTF 0.1 on modest CPU",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The actual workhorses of production offline TTS — every Home Assistant install, every accessibility tool, every embedded product. Boring, tiny, permissive and reliable.",
       "watch": "No cloning, no emotion, and per-voice models must be trained individually.",
       "standout": "RTF under 0.1 on a Raspberry Pi, MIT, ~1,100 languages.",
@@ -5792,7 +6082,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "LiveKit Agents",
@@ -5808,6 +6099,8 @@
       "languages_sort": null,
       "runs_on": "Self-host the SFU and agents on Kubernetes or Docker, or LiveKit Cloud",
       "latency_note": "Turn detector v1 (audio) returns a prediction within ~1 s, falling back to v1-mini on timeout; the deprecated text detector ran 50–160 ms per turn on typical hardware",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Production voice agents at scale where you want to swap providers freely, own the transport and keep a self-host path. The strongest turn-taking tooling in the segment — adaptive interruption mode distinguishes genuine interruptions from backchannelling, so 'mm-hmm' does not stop the agent, and false-interruption recovery resumes speech once silence confirms no real interruption.",
       "watch": "The $0.0100/min agent-session fee is orchestration only and is a small fraction of true all-in cost — you assemble and pay for every component separately. The turn-detector models ship under a bespoke, non-OSI LiveKit Model License, not the framework's Apache-2.0, so verify it before commercial redistribution. Self-hosting the SFU brings WebRTC operational complexity.",
       "standout": "Adaptive interruption that tells backchannels from genuine interruptions.",
@@ -5849,7 +6142,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Pipecat / Pipecat Cloud",
@@ -5865,6 +6159,8 @@
       "languages_sort": null,
       "runs_on": "Self-host anywhere Python runs, or Pipecat Cloud; Smart Turn v3 runs on CPU",
       "latency_note": "Smart Turn v3 endpointing ~12 ms CPU inference, ~65 ms end-to-end on a standard Pipecat Cloud 1x instance via LocalSmartTurnAnalyzerV3",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Teams that want maximum provider optionality under the most permissive licence in the segment, or that want the reserved-instance pricing model for always-warm agents. Free 1:1 WebRTC voice transport is a genuine cost advantage over LiveKit's data-transfer billing.",
       "watch": "Pipecat Cloud's per-minute price covers the agent container only — every model call is billed by the underlying vendor, so the headline rate is nowhere near all-in. Python-only. Turn-taking event tooling is less mature than LiveKit's, with no published backchannel-versus-interruption discrimination mode.",
       "standout": "BSD-2 including its bundled 8 M turn detector, ~12 ms on CPU.",
@@ -5907,7 +6203,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Vapi",
@@ -5923,6 +6220,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only",
       "latency_note": "Average under 500 ms, claimed on Vapi's own homepage with no measurement conditions",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The fastest managed path to production telephony agents with enterprise compliance — SOC 2, HIPAA, PCI, SSO/OAuth/RBAC and data residency — without building orchestration yourself.",
       "watch": "The headline $0.05/min is a platform fee, not all-in — model costs stack on top and true cost is typically 2–5×. Bringing your own provider API keys waives the pass-through entirely, turning Vapi into a pure $0.05/min orchestration layer; that is the cheapest way to use it and is easy to miss. HIPAA at $2,000/month and Zero Data Retention at $1,000/month are steep fixed adders for regulated buyers, and Build retains calls for only 14 days.",
       "standout": "Bring your own keys and it becomes a pure $0.05/min orchestrator.",
@@ -5963,7 +6262,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Retell AI",
@@ -5979,6 +6279,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Buyers who need to model unit economics precisely. The published per-component per-minute table is the most itemised pricing in the segment and the best public dataset anywhere for reasoning about voice-agent cost, because it converts token pricing into minutes for you.",
       "watch": "The $0.07–$0.31 range is almost entirely an LLM-selection artifact: GPT-5.5 at $0.16/min is 27× Gemini 2.5 Flash Lite at $0.006/min, so the model you pick, not the platform, decides your unit cost. No latency figure is published anywhere.",
       "standout": "Fully itemised per-component per-minute pricing — the best public voice-agent cost data.",
@@ -6019,7 +6321,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Bland AI",
@@ -6035,6 +6338,8 @@
       "languages_sort": null,
       "runs_on": "Bland's own infrastructure; on-premises or VPC at Enterprise",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Buyers who want one predictable per-minute number with no model pass-throughs, and regulated buyers who need on-prem or VPC deployment — rare among managed voice platforms.",
       "watch": "The latency claim has no number, no conditions and no third-party verification. Vertical integration is the trade: you cannot swap in a better LLM or TTS, and no model details, language list or voice-cloning capability are published at all. $0.11–$0.14/min all-in is higher than a tuned LiveKit or Pipecat stack, but it is one number rather than five.",
       "standout": "One all-in per-minute rate, no pass-throughs, plus Enterprise on-prem.",
@@ -6075,7 +6380,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Phonic",
@@ -6091,6 +6397,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only; low-latency inference on Modal per Modal's public statement",
       "latency_note": "Sub-500 ms speech-in to speech-out per the current docs; the 2025 launch press release said 300 ms end-to-end. The docs figure is newer and more conservative.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Regulated verticals needing native speech-to-speech without building it, and workloads dominated by alphanumeric capture — patient IDs, order numbers, email addresses — which is the classic failure mode of generic STT in voice agents.",
       "watch": null,
       "standout": "Proprietary native speech-to-speech, tuned for alphanumeric capture.",
@@ -6131,7 +6439,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Twilio ConversationRelay",
@@ -6147,6 +6456,8 @@
       "languages_sort": null,
       "runs_on": "Twilio cloud; you host your own LLM and agent logic and connect over a WebSocket",
       "latency_note": "Median under 0.5 s and 95th percentile under 0.725 s, published by Twilio with a 'results may vary' caveat",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Anyone whose telephony already runs on Twilio and who wants to keep full control — and full cost control — of the LLM. The cheapest way to add voice AI to an existing Twilio Programmable Voice deployment.",
       "watch": "The $0.07/min sits on top of Programmable Voice minutes (US outbound commonly ~$0.013–0.014/min), so the true floor is nearer $0.085/min before any LLM cost. There is no native speech-to-speech option, you must host the LLM and agent logic yourself, and you are locked to Twilio telephony.",
       "standout": "Publishes a p95 — one of two vendor latency figures with percentiles.",
@@ -6187,7 +6498,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Agora Conversational AI Engine",
@@ -6203,6 +6515,8 @@
       "languages_sort": null,
       "runs_on": "Agora's global RTC network; cloud only",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Apps already on Agora RTC, especially in Asia-Pacific where its network coverage is strongest, and teams that want one flat per-minute number with the models included.",
       "watch": "The most expensive flat orchestration rate in the segment, and the documentation contradicts third-party billing analysis about what the rate covers: Agora's docs state a single $0.10/min including ASR, LLM and TTS, while third-party analysis reports per-component billing (CAI Audio Basic $0.0099 plus ARES ASR $0.0166) and that conversational AI, STT and translation fall outside the free RTC bucket. Verify against a live invoice. The bundled provider list is also dated — GPT-4o-mini and TTS-1.",
       "standout": "ASR, LLM and TTS bundled into one rate on Agora's RTC network.",
@@ -6243,7 +6557,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Deepgram Voice Agent API",
@@ -6259,6 +6574,8 @@
       "languages_sort": null,
       "runs_on": "Fully managed, dedicated single-tenant, in-VPC, or genuinely self-hosted",
       "latency_note": "Flux end-of-turn detection 260 ms P50, median under 300 ms with p95 at 1.5 s — Deepgram's own figures, conditions unstated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Teams where endpointing latency is the bottleneck, and regulated buyers needing in-VPC or fully self-hosted voice agents — the deployment range is unmatched among managed voice platforms.",
       "watch": "The Advanced tier costs more than double Standard and the differentiator is not clearly documented. Aura has no voice cloning at all and is generally rated below ElevenLabs and Cartesia on voice quality by third parties. The p95 on Flux end-of-turn detection is 1.5 s — a long tail worth stress-testing on your own traffic before believing the 260 ms median.",
       "standout": "The only managed voice-agent stack that also ships fully self-hosted.",
@@ -6300,7 +6617,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Cartesia Line",
@@ -6316,6 +6634,8 @@
       "languages_sort": null,
       "runs_on": "Cloud; on-premises at Enterprise, terms not published",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Teams already using Cartesia models throughout, where $0.06/min plus $0.014/min for telephony is a clean all-in number that undercuts Deepgram's Voice Agent API and a Vapi-plus-models stack.",
       "watch": null,
       "standout": "A model vendor selling the whole agent loop on its own models.",
@@ -6356,7 +6676,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ElevenLabs Agents",
@@ -6372,6 +6693,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only",
       "latency_note": "TTS time-to-first-audio only: ~75 ms on Flash/Turbo, ~250–300 ms on Multilingual v2/v3 — not end-to-end voice-to-voice, and conditions unstated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Agents where voice quality is the product, and anything needing broad language coverage with cloned voices.",
       "watch": "An $0.08/min agent fee plus per-character TTS is one of the more expensive combinations in the segment. The Flash-versus-Multilingual choice is a hard latency-quality trade with no middle option — ~75 ms against ~250–300 ms. ElevenLabs' agent product naming has changed repeatedly; the $0.08/min 'Speech Engine' line was read off the API pricing page and the mapping to the Agents product should be confirmed before budgeting.",
       "standout": "Inline audio tags and market-reference cloning inside the agent loop.",
@@ -6414,7 +6737,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "TEN Framework",
@@ -6430,6 +6754,8 @@
       "languages_sort": null,
       "runs_on": "Self-host; a plugin architecture for STT, TTS and LLM providers",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Self-hosted realtime agents that need video as well as voice — avatars and vision agents — and teams already on Agora who want an open escape hatch. TEN VAD and TEN Turn Detection are separately usable open models and a third distinct approach to endpointing alongside LiveKit's turn-detector and Pipecat's Smart Turn.",
       "watch": "'Apache-2.0 with additional restrictions' is not Apache-2.0, and the restrictions bite on commercial redistribution — read the LICENSE before assuming Apache freedom. Documentation and the Western community are thinner than Pipecat's or LiveKit's, and no latency benchmark is published anywhere.",
       "standout": "The self-hosted agent framework that does video and avatars, not just voice.",
@@ -6471,7 +6797,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Vocode (vocode-core)",
@@ -6487,6 +6814,8 @@
       "languages_sort": null,
       "runs_on": "Self-host, Python; a hosted product also existed",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Little in 2026 — historical reference only. Listed as a deprecation warning, because many 2025-era roundups still present Vocode as a live option.",
       "watch": "Effectively unmaintained. The last vocode-core commit landed in November 2024 and the project is publicly seeking community maintainers; the repo sits at roughly two open issues, which signals abandonment rather than health. Attention appears to have moved to the hosted product, whose pricing is unpublished. Do not start new work here — Pipecat (near-daily development, v1.0, BSD-2), LiveKit Agents (1.5.x) and TEN Framework are all live alternatives.",
       "standout": "Carried only as a deprecation warning — nothing here to pick.",
@@ -6528,7 +6857,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Windows SAPI 5 / OneCore / Narrator natural voices",
@@ -6544,6 +6874,8 @@
       "languages_sort": 11,
       "runs_on": "Windows 10 and 11. Natural voices run on-device with no internet connection once downloaded.",
       "latency_note": "Not published. SAPI 5 and OneCore are effectively instant; natural voices carry a perceptible synthesis delay, which is precisely why many screen-reader users stay on eSpeak NG or Eloquence.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Free system TTS on Windows with a genuinely modern-sounding on-device neural option for accessibility and read-aloud. SAPI 5 remains the universal integration point for legacy applications and screen readers.",
       "watch": "Three overlapping stacks with different APIs and different voice inventories is the whole problem. The good voices — Narrator natural — are by default reachable only by Narrator; most third-party apps speak SAPI 5 only and cannot see them, or even see OneCore. The community NaturalVoiceSAPIAdapter shim bridges the gap, and its own wiki now advises pinning older voice versions because current Narrator natural voices break some programs.",
       "standout": "free on-device neural voices, but only Narrator can see them",
@@ -6588,7 +6920,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "macOS say & system voices",
@@ -6604,6 +6937,8 @@
       "languages_sort": null,
       "runs_on": "macOS, entirely offline once voices and software are installed",
       "latency_note": "Not published; local voices are effectively instant",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Scriptable, free, offline TTS on a Mac with genuinely good voices. `say -v 'Siri Voice 1' -o out.aiff` is the fastest high-quality local pipeline that requires zero installation.",
       "watch": "The CLI's default voice is the low-quality compact one until you change it, and Enhanced, Premium and Siri voices must be downloaded through System Settings before `say` can reach them at all. Naming a Siri voice directly has historically required selecting it as the system voice instead — not verified for macOS 26.",
       "standout": "scriptable offline CLI synthesis to file with Siri-grade voices",
@@ -6646,7 +6981,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Linux speech-dispatcher",
@@ -6662,6 +6998,8 @@
       "languages_sort": null,
       "runs_on": "Any Linux desktop; packaged in Ubuntu, Arch and Fedora",
       "latency_note": "Effectively instant on the eSpeak NG module. The Piper generic module adds process startup plus a file or pipe handoff per utterance; no measurement of that overhead was found.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The single integration point for Linux TTS — implement a speech-dispatcher module and every accessibility application on the system can use your voice.",
       "watch": "Neural engines are second-class citizens here. Piper is supported only through the GENERIC module — a shell command plus an external audio player — which costs a process spawn per utterance and gives no real streaming. The out-of-the-box default on most distributions is still eSpeak NG, which is why 'Linux TTS sounds terrible' remains the common 2026 experience.",
       "standout": "one module, and every Linux accessibility app can use your voice",
@@ -6704,7 +7042,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Silero TTS v5",
@@ -6720,6 +7059,8 @@
       "languages_sort": null,
       "runs_on": "CPU with PyTorch 1.12+ and the Python standard library only; requires a modern x86-64 CPU with AVX2 or an ARM equivalent",
       "latency_note": "No RTF or thread-count figure published. The project describes a '10x faster' synthesis improvement with no stated baseline.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "By far the widest coverage of Russian, Turkic, Caucasian and CIS languages in a small offline package, and the standard choice for Russian with automatic stress and homograph resolution.",
       "watch": null,
       "standout": "Turkic, Caucasian and CIS coverage nothing else offers offline",
@@ -6766,7 +7107,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "RHVoice",
@@ -6782,6 +7124,8 @@
       "languages_sort": 12,
       "runs_on": "Windows via SAPI 5, Linux via speech-dispatcher, Android as a system TTS engine; low CPU and RAM, usable on very modest hardware",
       "latency_note": "Low; no published RTF numbers",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Screen-reader and accessibility work in languages neural TTS ignores — Georgian, Kyrgyz, Tatar, Macedonian, Albanian, Esperanto — and the standard Russian accessibility voice.",
       "watch": "The voices are CC BY-NC-ND 4.0: no commercial use and no derivatives. The engine being open source buys you nothing if you need to ship the voices, and the engine's own licence is not stated in the README.",
       "standout": "Georgian, Kyrgyz, Tatar and Albanian screen-reader voices no neural engine ships",
@@ -6829,7 +7173,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Mimic 3",
@@ -6845,6 +7190,8 @@
       "languages_sort": null,
       "runs_on": "CPU, historically including Raspberry Pi 4",
       "latency_note": "A project marketing claim of faster than real time on a Raspberry Pi 4; no primary benchmark table found",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Nothing new. Carried only because stale roundups still list it as a current option.",
       "watch": "Discontinued. The repository's own README states the project is no longer actively maintained and names Piper as its spiritual successor, and Mycroft AI itself shut down. piwheels was still rebuilding mycroft-mimic3-tts as recently as 2026-05-13 — that is automated build activity, not maintenance, and it is why 2026-dated roundups keep listing it. AGPL-3.0 is a hard blocker for most commercial use. Migrate to Piper.",
       "standout": null,
@@ -6890,7 +7237,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Balacoon",
@@ -6906,6 +7254,8 @@
       "languages_sort": null,
       "runs_on": "Linux-first Python wheels; positioned for on-device and embedded use. Non-Linux compatibility is an open question in the vendor's own Hugging Face discussion thread.",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Historically an MIT-licensed drop-in on-device engine with pre-packaged voices. Today it is mainly of archival interest.",
       "watch": "The project appears dormant — the on-device blog URL now 404s and there is no evidence of 2026 activity. Everything except the MIT licence is unverified: model sizes, RTF, RAM, language coverage and platform support. Check huggingface.co/balacoon/tts directly before building anything new on it, and treat performance claims found elsewhere as unsourced.",
       "standout": "MIT across models, packages and containers alike",
@@ -6945,7 +7295,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Cerence Embedded TTS",
@@ -6961,6 +7312,8 @@
       "languages_sort": null,
       "runs_on": "Automotive head units and embedded devices, consolidated under the Cerence Edge SDKs. Modular architecture falls back to on-device embedded TTS when the vehicle is offline and uses cloud neural TTS when connected.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Not established from the sources reviewed.",
       "watch": "Not obtainable by an individual developer: an OEM and tier-1 sales motion with no self-serve API and no public pricing. The Cerence TTS datasheet URL 404s, so no public footprint table exists. The May 2024 rename from Vocalizer Expressive fragmented the documentation and disrupted the accessibility add-on ecosystem that depended on Vocalizer.",
       "standout": "the offline fallback tier inside shipping automotive head units",
@@ -7001,7 +7354,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Acapela embedded TTS",
@@ -7017,6 +7371,8 @@
       "languages_sort": 30,
       "runs_on": "Not established from the sources reviewed.",
       "latency_note": "Not published; synthesis is local with no network dependency",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "AAC devices and automotive work where per-voice memory budgets are explicit and you need a large catalogue of languages and character voices, including child voices.",
       "watch": "The only concrete footprint numbers anywhere — Low Footprint 15–30 MB per voice, High Quality Medium 40–150 MB per voice — come from a vendor marketing summary rather than a datasheet, and the automotive product page 404s. Some live product pages are stale enough to still cover Windows Mobile. Closed and OEM-only, with no public pricing.",
       "standout": "the only published per-voice embedded memory budgets, 15–150 MB",
@@ -7058,7 +7414,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Vocalizer Expressive",
@@ -7074,6 +7431,8 @@
       "languages_sort": null,
       "runs_on": "Windows, inside screen readers",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The high-naturalness option inside JAWS 2026, sitting alongside Eloquence so one product gives a user both the ultra-low-latency robotic voice and a natural-sounding one.",
       "watch": "Superseded upstream. Cerence replaced Vocalizer Expressive with Cerence Embedded TTS in May 2024, so the voices still shipping in JAWS 2026 and sold as NVDA add-ons sit on a discontinued product line — a real long-term question over the JAWS voice supply chain. Premium voices must be installed one at a time through an in-app Add/Remove Voices utility, and Tiflotecnia's Vocalizer-for-NVDA page 404s, so add-on pricing could not be retrieved.",
       "standout": "the natural voice bundled in JAWS 2026 alongside Eloquence",
@@ -7114,7 +7473,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MeloTTS",
@@ -7130,6 +7490,8 @@
       "languages_sort": 6,
       "runs_on": "CPU is sufficient for real-time inference per the project's own claim; also GPU. Packaged in sherpa-onnx as vits-melo-tts-zh_en, which inherits Android, iOS, RISC-V and WASM deployment.",
       "latency_note": "No published RTF or first-audio figure on named hardware — the docs state only that CPU is sufficient for real-time inference",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Commercially unencumbered multilingual offline TTS — the go-to when Piper's GPL-3.0 and Supertonic's OpenRAIL-M are both blockers. Its Chinese-English code-mixing within a single utterance still beats many larger models.",
       "watch": null,
       "standout": "MIT escape hatch when GPL and OpenRAIL both block you",
@@ -7175,7 +7537,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Talkie (ESP32 / Arduino LPC)",
@@ -7191,6 +7554,8 @@
       "languages_sort": 1,
       "runs_on": "ESP32 (dual-core Xtensa, ~520 KB SRAM) driving the onboard DAC into a PAM8403 amplifier; Arduino-class boards. No ML runtime required.",
       "latency_note": "Instantaneous — this is decoding of a pre-encoded bank, not synthesis of arbitrary text",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Alerts, sensor announcements, robotics, kiosks and assistive devices that need a fixed vocabulary spoken with zero network and zero latency, on a microcontroller far below anything a neural model can reach.",
       "watch": "It cannot say arbitrary text. Talkie decodes a pre-encoded word and allophone bank, so anything outside that vocabulary is impossible, and it sounds like a 1980s Speak & Spell. There is no neural TTS running on an ESP32 in 2026 — every offline ESP32 text-to-speech project surveyed uses this LPC approach, and anything claiming neural TTS on an ESP32 is almost certainly doing cloud synthesis or streaming audio from a host. For arbitrary text on an MCU, stream PCM from a companion SBC or phone.",
       "standout": "speech on a 520 KB microcontroller with no ML runtime",
@@ -7235,7 +7600,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Tencent Cloud TTS",
@@ -7251,6 +7617,8 @@
       "languages_sort": null,
       "runs_on": "Cloud (Tencent Cloud); regional availability not stated on the international product page",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Chinese-market applications already on Tencent Cloud, particularly gaming and social products where the ecosystem integration is the reason you are there in the first place.",
       "watch": "No per-character rate is published anywhere in English. The international product page states only that TTS is \"charged by usage\" with \"daily billing\" and defers to a Purchase Guide; the three billing document URLs tried on 31 Jul 2026 returned HTTP 404 or rendered empty. Expect a sales conversation rather than self-serve, and do not quote a Tencent price without re-verifying it live.",
       "standout": null,
@@ -7291,7 +7659,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Baidu Speech Synthesis",
@@ -7307,6 +7676,8 @@
       "languages_sort": null,
       "runs_on": "Cloud (Baidu AI Cloud), Chinese market",
       "latency_note": "Not published as a number",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Chinese-language long-form production — audiobook and reading apps, where a 100,000-character single request, bidirectional streaming and few-second cloning combine unusually well.",
       "watch": "Pricing could not be verified: the product page links to a pricing document that rendered empty on 31 Jul 2026, and rates are denominated in CNY. Documentation is Chinese-only in practice, there is no published international region availability and no data-residency story, which rules it out for most Western enterprises regardless of price.",
       "standout": "100,000-character single request paired with bidirectional streaming",
@@ -7351,7 +7722,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Yandex SpeechKit",
@@ -7367,6 +7739,8 @@
       "languages_sort": null,
       "runs_on": "Cloud (Yandex Cloud / Yandex AI Studio); primary region Russia",
       "latency_note": "Not verified",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Russian-language TTS and Russian-market deployments, where SpeechKit has historically been the strongest option.",
       "watch": "Everything about the current offering — price, voices, languages, latency, streaming and cloning — is unverified, because both the old documentation URL and its redirect target served a Yandex SmartCaptcha bot-check on 31 Jul 2026 and the CAPTCHA was not bypassed. Sanctions and data residency put it out of reach for most Western buyers in any case.",
       "standout": "the only Russian-market row; every capability field is unverified",
@@ -7406,7 +7780,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MiniMax Speech 2.6",
@@ -7422,6 +7797,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only — MiniMax's international platform, plus resale through Replicate, Together AI, AIMLAPI and WaveSpeedAI",
       "latency_note": "Under 250 ms end-to-end, vendor-claimed, with no measurement point stated and no allowance for trans-Pacific network latency",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Mandarin and wider CJK content at the top quality tier, and teams already on MiniMax's LLM and video stack. The aggregators make it trialable without a China-entity contract.",
       "watch": null,
       "standout": "resold via Replicate and Together — trialable without a China-entity contract",
@@ -7464,7 +7841,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 18
+      "rating_rank": 18,
+      "additional_ratings": []
     },
     {
       "name": "Google Cloud TTS legacy tier",
@@ -7480,6 +7858,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only",
       "latency_note": "Not published per tier",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Cost-sensitive bulk synthesis — $4 per 1M characters with 4M free every month is the cheapest mainstream cloud TTS — and full SSML control, which Chirp 3 does not offer in streaming at all.",
       "watch": "Google reclassified all five of these as \"Legacy TTS models\" on its pricing page in 2026, and WaveNet now bills at exactly the Standard rate under the same SKU. Treat the tier as managed decline and a deprecation risk for new builds. Studio at $160 per 1M is the most expensive per-character TTS of any major vendor, and Polyglot has been in Preview for years.",
       "standout": "full SSML at $4/1M — the control surface Chirp 3 drops in streaming",
@@ -7523,7 +7903,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 39
+      "rating_rank": 39,
+      "additional_ratings": []
     },
     {
       "name": "Azure Custom Neural Voice",
@@ -7539,6 +7920,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only — a dedicated hosted endpoint, up to 50 custom endpoints per resource",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Brand voices for regulated enterprises that need a bespoke, contractually owned voice with full SSML control and Microsoft-managed consent compliance.",
       "watch": "Endpoint hosting at $4.032 per model per hour dominates total cost at low volume — roughly $2,900 a month for one always-on voice, before a single character is synthesised. Eligibility is gated to customers with a direct Microsoft account-team relationship, and the product is excluded from every commitment discount tier.",
       "standout": "contractually owned brand voice, priced by always-on endpoint hour not volume",
@@ -7583,7 +7966,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure Voice Live",
@@ -7599,6 +7983,8 @@
       "languages_sort": 150,
       "runs_on": "Cloud only",
       "latency_note": "Marketed as low-latency; no numeric TTFB published on the overview page",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Enterprises that want an OpenAI-Realtime-compatible voice agent but with Azure's voice catalogue, custom voice, avatars and compliance posture — and the option to bring their own LLM and pay only for the speech legs.",
       "watch": "Which tier you land in is decided by the LLM you pick, and Microsoft explicitly reserves the right to add and retire models within a tier — tier pricing is not a stable contract. Token billing also makes forecasting materially harder than per-character TTS, and avatar output is billed separately through the TTS Avatar meters.",
       "standout": "BYO tier bills the speech legs alone, unbundled from the LLM",
@@ -7641,7 +8027,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Azure TTS Avatar",
@@ -7657,6 +8044,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Video-first synthetic presenters, localised training content and live interpretation, where a per-minute price fits the workload better than per-character billing.",
       "watch": "Batch avatar throughput is capped at 2 REST requests per minute, which makes a large video library slow to produce however much you are willing to spend. Custom avatar is Limited Access with talent-consent obligations, and per-minute pricing gets expensive fast on long-form.",
       "standout": "the only row billed per minute of rendered video, not characters",
@@ -7698,7 +8087,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "OpenAI tts-1 / tts-1-hd",
@@ -7714,6 +8104,8 @@
       "languages_sort": null,
       "runs_on": "Cloud only",
       "latency_note": "OpenAI states tts-1 is the lower-latency and lower-quality of the two; no numeric figure published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Simple, predictable per-character TTS on OpenAI — a flat rate rather than token maths, for workloads that need no style control.",
       "watch": "Only 9 of the 13 speech-endpoint voices are available, and the two OpenAI itself recommends for quality — marin and cedar — are not among them. Neither model is on the deprecations page, but OpenAI's own guide steers new work to gpt-4o-mini-tts, so continued availability should not be assumed indefinitely.",
       "standout": "flat per-character billing on OpenAI, with no token arithmetic",
@@ -7755,7 +8147,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 26
+      "rating_rank": 26,
+      "additional_ratings": []
     },
     {
       "name": "Amazon Nova Sonic v1",
@@ -7771,6 +8164,8 @@
       "languages_sort": 5,
       "runs_on": "Cloud — Bedrock in us-east-1, eu-north-1 and ap-northeast-1 only, with no cross-region inference",
       "latency_note": "Not published. One AWS case study (Roojoom) reports max latency falling from ~7 s to ~2 s and min from ~2 s to ~300 ms after moving off a cascaded stack — a customer anecdote about one workload, not a model spec.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Nothing new — the row exists as a migration warning. New AWS voice-agent work should start on Nova 2 Sonic.",
       "watch": "AWS marks the model Legacy with a hard end-of-life of 14 September 2026 on the Bedrock model card. Any 2026 comparison still recommending it has not checked the lifecycle field.",
       "standout": "a dated migration warning — hard end-of-life 14 September 2026",
@@ -7812,7 +8207,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Alibaba CosyVoice (hosted)",
@@ -7828,6 +8224,8 @@
       "languages_sort": null,
       "runs_on": "Cloud — separate Singapore and Beijing deployments",
       "latency_note": "Not published as a number",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Voice design from a text description with no reference audio, combined with SSML support — an unusual pairing — and the -flash tiers are among the cheapest cloning-capable endpoints anywhere.",
       "watch": "Version fragmentation is severe: capability, language coverage and price all differ across five concurrently-sold versions, v3.5 is listed only under Chinese-mainland pricing, and v3.5 ships no system voices at all — you must clone or design a voice before you can synthesise anything.",
       "standout": "text-description voice design plus SSML and LaTeX reading — a unique pairing",
@@ -7873,7 +8271,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Alibaba Qwen3-TTS-VC / VD",
@@ -7889,6 +8288,8 @@
       "languages_sort": null,
       "runs_on": "Cloud — separate Singapore and Beijing deployments",
       "latency_note": "Not published as a number",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Per-user voice cloning at genuinely low cost — $0.01 a clone with 1,000 free, then $11.50 per 1M characters, against $60/1M at Google Instant Custom Voice and $24/1M plus profile storage at Azure Personal Voice.",
       "watch": "No published consent or anti-abuse framework comparable to Microsoft's Limited Access gating or Google's mandatory consent recording. That is a compliance exposure rather than a feature, and it is the dimension that should outrank price if deepfake liability matters to you.",
       "standout": "$0.01 per clone with 1,000 free — cheapest per-user cloning here",
@@ -7933,7 +8334,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Maya1",
@@ -7949,6 +8351,8 @@
       "languages_sort": 1,
       "runs_on": "Single GPU with 16 GB+ VRAM — A100, H100 or RTX 4090",
       "latency_note": "Sub-100 ms claimed, specific to a vLLM deployment with automatic prefix caching; hardware not stated",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Describing a character voice in words instead of cloning one, under a licence you can actually ship. Games, NPCs and character work where no reference recording exists.",
       "watch": null,
       "standout": "Apache-2.0 voice design from a text description plus 20+ inline emotion tags",
@@ -7994,7 +8398,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 56
+      "rating_rank": 56,
+      "additional_ratings": []
     },
     {
       "name": "Spark-TTS",
@@ -8010,6 +8415,8 @@
       "languages_sort": 2,
       "runs_on": "GPU; ~3 GB VRAM per the corpus cloning table",
       "latency_note": "RTF 0.07 only at 4× concurrency on an NVIDIA L20 with TensorRT-LLM; single-stream is ~0.14",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "An Apache-2.0-code zh/en baseline at 0.5 B with explicit gender, pitch and rate control. Mainly an architectural reference now — the 'LLM predicts codes, codec reconstructs directly' pattern started here.",
       "watch": "The widely-quoted Apache-2.0 covers the code; the corpus's dual-licence table puts the weights and their outputs under CC-BY-NC-SA. Static since March 2025 — the training code and the 100 k-hour VoxBox dataset were promised and never shipped. And the headline RTF 0.07 is a 4×-concurrency number; single-stream is roughly double that.",
       "standout": "BiCodec's decoupled design exposes direct gender/pitch/rate attribute control at 0.5 B",
@@ -8052,7 +8459,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "FireRedTTS2",
@@ -8068,6 +8476,8 @@
       "languages_sort": 7,
       "runs_on": "GPU; ~12 GB VRAM per the corpus cloning table",
       "latency_note": "140 ms first packet on an NVIDIA L20 — one of only four open models publishing latency with the hardware named",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Low-latency streaming dialogue for podcasts and chatbots, where you need Apache-2.0 weights and a latency figure that actually names its GPU.",
       "watch": "No parameter count published, no VRAM figure from the authors, and no 2026 activity at all. At 1.4 k stars there are almost no third-party integrations or independent validation, which is a strange place for a model with measured latency, streaming and seven languages to sit.",
       "standout": "Apache-2.0 streaming dialogue with first-packet latency measured on a named GPU",
@@ -8111,7 +8521,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Llasa",
@@ -8127,6 +8538,8 @@
       "languages_sort": 2,
       "runs_on": "GPU; ~16 GB VRAM for the 8 B per the corpus cloning table",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Research into LLM scaling laws for speech, and non-commercial zh/en cloning where the 8 B's inference-time resampling can be spent to push speaker similarity higher.",
       "watch": "Two licences stack and both bite — CC BY-NC 4.0 blocks commercial use and the Llama 3.2 Community License rides underneath it. Stagnant since May 2025, with Llasa-3B down to roughly 1.2 k downloads a month.",
       "standout": "Inference-time compute scaling — resample low-similarity generations against a verifier model",
@@ -8169,7 +8582,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MaskGCT",
@@ -8185,6 +8599,8 @@
       "languages_sort": 6,
       "runs_on": "GPU",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "A non-autoregressive comparison point for research, and offline zero-shot cloning where speaker similarity matters more than speed and the work is non-commercial.",
       "watch": null,
       "standout": "Fully non-autoregressive masked decoding — no alignment or duration model needed",
@@ -8226,7 +8642,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Echo-TTS",
@@ -8242,6 +8659,8 @@
       "languages_sort": 1,
       "runs_on": "GPU; a community app targets 12 GB VRAM",
       "latency_note": "30 seconds of audio in ~1.45 s on an A100, given a 120-second audio prompt",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Non-commercial high-fidelity cloning when you have plenty of reference audio — the two-minute conditioning window is what makes its speaker fidelity strong.",
       "watch": "The weights are CC-BY-NC-SA-4.0: non-commercial and share-alike on derivatives, the most restrictive weights licence in this segment. Generation is capped at 30 seconds per segment despite accepting a two-minute reference, and it is a solo-maintainer project.",
       "standout": "Accepts a two-minute speaker reference, far beyond the 3–10 s norm",
@@ -8284,7 +8703,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "GLM-TTS",
@@ -8300,6 +8720,8 @@
       "languages_sort": 2,
       "runs_on": "GPU; ~10 GB VRAM per the corpus cloning table",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "zh/en work needing Chinese dialect coverage from a major lab, and as the reference point for data-efficient training — it reaches these numbers on 100 k hours where CosyVoice 3 used 1 M.",
       "watch": "Nobody in the corpus could read the actual weights licence off Hugging Face. Check it yourself before building on it: the CC BY 4.0 you will find on arXiv covers the paper, not the model. No latency, no VRAM and no streaming data published either.",
       "standout": "Matches CosyVoice 3 quality on 100 k training hours instead of 1 M",
@@ -8340,7 +8762,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Audio8-TTS-Preview-0.6B",
@@ -8356,6 +8779,8 @@
       "languages_sort": 11,
       "runs_on": "CUDA GPU through an SGLang-Omni adapter; CPU through an official ONNX INT4 build, which is the notable path — 44.1 kHz output in roughly 1 GiB resident on an Apple M2. The vendor publishes no GPU VRAM figure at all.",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "An Apache-2.0 reimplementation of the Fish S2 Pro dual-AR architecture at roughly an eighth of the size, with an offline CPU path — the commercially-safe way to get that design. Treat it as a prototyping and benchmarking candidate rather than a production commitment until it is older than a few weeks.",
       "watch": "This is days old — weights landed 2026-07-28, the repo 2026-07-29, and the authors label it a Preview. Every star, download and SOTA claim you will read about it is launch-week material. The benchmark table is vendor-self-reported and its comparators span 1.5 B to 8.5 B; its English WER does lead that table, but its Hard-ZH CER of 11.510 is the WORST figure of every comparator with a value, and speaker similarity of 63.2% sits well below LongCat-AudioDiT (81.8%) and dots.tts (81.0%). Streaming is path-dependent: the ONNX CPU runtime streams, the SGLang serving adapter does not, so an OpenAI-compatible deployment gets no streaming today.",
       "standout": "Apache-2.0 rebuild of Fish S2 Pro's dual-AR at an eighth the size, plus a CPU INT4 path",
@@ -8400,7 +8825,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "KaniTTS",
@@ -8416,6 +8842,8 @@
       "languages_sort": 7,
       "runs_on": "~3 GB VRAM — 2.566 GB measured on an RTX 6000. Optimised for NVIDIA Blackwell; MLX build for Apple Silicon.",
       "latency_note": "RTF 0.190 on an RTX 5090, 0.600 on an RTX 3060, ~0.2 on an RTX 5080 — one of the very few models publishing RTF against named consumer GPUs",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Consumer-GPU deployment inside a 3 GB VRAM budget with a specialist model per language, where you want per-device RTF numbers you can plan against rather than a single unqualified figure.",
       "watch": "Three stacked licences, including the non-standard lfm1.0, make this genuinely hard to clear for commercial use. Cloning is the weak spot — an independent reviewer's verdict was that the TTS is fine and the cloning is not. Output is 22 kHz, and structure degrades on text longer than about 15 seconds.",
       "standout": "Per-language models under 3 GB with RTF published on named consumer GPUs",
@@ -8458,7 +8886,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Bark",
@@ -8474,6 +8903,8 @@
       "languages_sort": 13,
       "runs_on": "GPU, with smaller variants for low-VRAM devices; CPU is possible but slow",
       "latency_note": "Slow — historically far from realtime; no current published figures",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Creative and experimental audio generation where you want sound effects and music alongside speech. A historical reference, not a production engine.",
       "watch": "Abandoned since May 2023 — Suno pivoted entirely to music generation and the repo sits at 83 commits with 238 open issues and 30 open PRs. The 39.2 k stars are historical momentum, not currency, and they are the main reason newcomers still start here. Output is non-deterministic and can deviate unpredictably from the prompt.",
       "standout": "Generates music and sound effects alongside speech — text-to-audio, not just TTS",
@@ -8517,7 +8948,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Tortoise TTS",
@@ -8533,6 +8965,8 @@
       "languages_sort": 1,
       "runs_on": "GPU; 4 GB VRAM achievable with optimised forks",
       "latency_note": "RTF 0.25–0.3 on 4 GB VRAM with optimisations; streaming forks reach under 500 ms. Base Tortoise is famously slow — the name is the joke.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Offline high-quality English cloning where speed genuinely does not matter, and as the architectural ancestor of IndexTTS, XTTS and much of the AR-TTS lineage.",
       "watch": "Unmaintained upstream since roughly 2023, with 324 open issues and 24 open PRs. Use it only through a maintained fork — tortoise-tts-fast, TTS-WebUI or idiap coqui-ai-TTS. The upstream repo is a historical artefact, not a starting point.",
       "standout": "The AR+diffusion ancestor of XTTS and IndexTTS; usable only through forks",
@@ -8575,7 +9009,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Soprano TTS",
@@ -8591,6 +9026,8 @@
       "languages_sort": null,
       "runs_on": "CPU",
       "latency_note": "1,590 ms first token to speech and a 5.7× core-hour ratio on an AMD Ryzen 7 5700X (Picovoice benchmark, 14 July 2026)",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Apache-2.0 on-device speech with genuine token/frame-level streaming — but only after you have measured it yourself on the hardware you intend to ship.",
       "watch": "The only independently measured figures in the corpus refute the vendor's own claims. Picovoice's reproducible 14 July 2026 benchmark measured 1,590 ms to first speech and a 5.7× core-hour ratio, against vendor claims of '<250 ms' and '20× realtime on CPU' — off by roughly 6× and 30×. That benchmark is vendor-authored and Picovoice's own engine wins it, so read the framing critically, but its methodology is disclosed and the harness is public, which is more than the roundups offer.",
       "standout": "The only row whose vendor claims a public reproducible benchmark actively refutes",
@@ -8632,7 +9069,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Inflect-Micro-v2",
@@ -8648,6 +9086,8 @@
       "languages_sort": 1,
       "runs_on": "CPU and CUDA — 6.28× faster than realtime on CPU, CPU model unspecified",
       "latency_note": "6.28× realtime on CPU; the CPU is not named",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Ultra-low-footprint deterministic English narration on CPU, where a reproducible seed matters more than having a choice of voice.",
       "watch": "One fixed voice, English only, no cloning, no emotion. Every quality claim is self-reported by a solo maintainer with no track record. And despite being the #1 and #3 trending TTS models on Hugging Face they draw only ~1.4 k and ~800 downloads a month — they are trending on likes, not use.",
       "standout": "Deterministic seeded English narration from 9 M parameters at 6× realtime on CPU",
@@ -8691,7 +9131,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Zonos-v0.1",
@@ -8707,6 +9148,8 @@
       "languages_sort": null,
       "runs_on": "GPU; ~6 GB VRAM per the corpus cloning table",
       "latency_note": "RTF ~2× on an RTX 4090 per the corpus, which glosses the same figure as 'slower than real-time' — the ratio and the gloss contradict each other",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The first open-source SSM-hybrid audio model and 44 kHz native output at 1.6 B. In 2026 it is mainly of interest as the architectural predecessor to ZONOS2.",
       "watch": "Superseded by ZONOS2 in June 2026, which claims 4× the throughput. Zonos-v0.1 sits at 1000 Elo, overall rank 72, in the 31 July 2026 Artificial Analysis snapshot — near the bottom of the open-weight subset. Check whether you want the predecessor at all before wiring it in.",
       "standout": "First open-source Mamba2-SSM-hybrid audio model, 44 kHz native for its era",
@@ -8749,7 +9192,8 @@
       "rating_url": "https://artificialanalysis.ai/text-to-speech/leaderboard",
       "rating_as_of": "2026-07-31",
       "rating_votes": "~133,700 pairwise across the board",
-      "rating_rank": 72
+      "rating_rank": 72,
+      "additional_ratings": []
     },
     {
       "name": "Higgs Audio v2",
@@ -8765,6 +9209,8 @@
       "languages_sort": null,
       "runs_on": "GPU, ~18–24 GB VRAM. Boson AI claims the smallest variant runs on a Jetson Orin Nano.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Offline cloning where listeners consistently prefer the output to what the published metrics suggest — GitHub reports rate it above IndexTTS 1.5, CosyVoice 2 and Chatterbox, particularly for male speakers.",
       "watch": "Superseded by Higgs Audio v3, whose README explicitly tells you not to clone the v2 repo. The licence is not as clean as the comparison tables suggest — Apache-2.0 covers the generation weights, the tokenizer may not be covered, and the Llama-3.2 backbone brings its own terms. The much-quoted 75.7 % win rate is against gpt-4o-mini-tts, in the Emotions category of EmergentTTS-Eval only; the Questions category is 55.7 %.",
       "standout": "Listener preference well above its published metrics, particularly for male speakers",
@@ -8806,7 +9252,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "hertz-dev",
@@ -8822,6 +9269,8 @@
       "languages_sort": 1,
       "runs_on": "Self-hosted GPU — benchmarked on a single RTX 4090",
       "latency_note": "80 ms theoretical, 120 ms measured on a single RTX 4090",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Research on full-duplex audio, and a permissively-licensed base to fine-tune. It is the clearest demonstration that ~120 ms conversational latency is reachable on one consumer GPU.",
       "watch": "There is no text path at all — you cannot inject a prompt, a persona, or output from a separate brain LLM. It is also a base model rather than an assistant: no instruction following, no tool calling, so it needs substantial fine-tuning before it is a product. One corpus table buckets its licence as research-only against Apache-2.0 everywhere else — check the repository before you ship.",
       "standout": "120 ms full-duplex on one RTX 4090, with no text path anywhere.",
@@ -8865,7 +9314,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Qwen3-Omni",
@@ -8881,6 +9331,8 @@
       "languages_sort": 10,
       "runs_on": "Self-hosted, multi-GPU in practice; also hosted via Alibaba DashScope",
       "latency_note": "234 ms theoretical first packet (model card); ~702 ms audio-to-audio measured on Alibaba's own DashScope Realtime API",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Multilingual open-weights voice agents that also need vision, under a licence with genuinely no strings. The Thinker/Talker split is useful on its own — deploy Thinker as a fast speech-understanding LLM and pair it with a cheaper external TTS.",
       "watch": "The VRAM is the decisive fact: the model card gives ~79 GB BF16 for 15 s of video, ~108 GB for 60 s and ~145 GB for 120 s, which is multi-GPU territory and by a wide margin the most expensive open model in this section to host. Measured latency runs about 3× the 234 ms theoretical claim. Full-duplex is not claimed — it does low-latency turn-taking and barge-in, not simultaneous listen-and-speak.",
       "standout": "Ungated Apache-2.0 omni weights — but 79–145 GB to host.",
@@ -8924,7 +9376,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "GLM-4-Voice",
@@ -8940,6 +9393,8 @@
       "languages_sort": 2,
       "runs_on": "Self-hosted GPU, ~18 GB bf16",
       "latency_note": "~800 ms minimum per the corpus tables; the authors publish no wall-clock figure",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Chinese–English bilingual open speech-to-speech, and a readable reference implementation of speech tokenisation plus flow-matching decoding.",
       "watch": "Effectively unmaintained since December 2024 with no successor found — Zhipu's GLM 4.6 now turns up as a backbone inside Ultravox rather than being extended into voice. The code is Apache-2.0 but the weights carry a separate GLM model licence, so the commonly-repeated 'Apache' label is wrong for anything you would actually ship. English quality is the weak side of the bilingual pair.",
       "standout": "Generation starts after 10 speech tokens; Chinese–English reference implementation.",
@@ -8981,7 +9436,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Freeze-Omni",
@@ -8997,6 +9453,8 @@
       "languages_sort": null,
       "runs_on": "Self-hosted GPU — the repo recommends high-performance GPUs, CUDA and Python 3.10+",
       "latency_note": "Not published — the repository breaks end-to-end latency down by component but gives no headline figure",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Research on adding speech to an existing text LLM without retraining it. Freezing the backbone is the cleanest published demonstration that speech training need not cost you text intelligence, and it is a template for bolting voice onto any text model you already trust.",
       "watch": "You may not use it commercially. It is routinely listed as open source and one corpus licence table records it as Apache-2.0; on inspection the repository licence is academic and research use only. Nothing has shipped since November 2024, and its chunk-level duplex is weaker than the continuous duplex in Moshi or PersonaPlex.",
       "standout": "Adds speech to a text LLM without touching the backbone's weights.",
@@ -9038,7 +9496,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "VITA-Audio",
@@ -9054,6 +9513,8 @@
       "languages_sort": 2,
       "runs_on": "Self-hosted GPU — PyTorch plus DeepSpeed",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "A technique to steal rather than a product to deploy. If you are building a speech-to-speech model and first-audio-token latency is your bottleneck, MCTP is the published answer.",
       "watch": "You may not use it commercially — it is widely described as open source, and one corpus licence table lists it as research-only while others quietly treat it as open. It is a research artifact with no duplex, no cloning and no tool calling, and nothing has shipped since May 2025.",
       "standout": "MCTP cuts first-audio-token latency from 236 ms to 53 ms.",
@@ -9096,7 +9557,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Kyutai TTS / Unmute",
@@ -9112,6 +9574,8 @@
       "languages_sort": 2,
       "runs_on": "Self-host only — CUDA GPU with ≥16 GB VRAM, x86_64, Linux or WSL",
       "latency_note": "TTS ~750 ms with STT, LLM and TTS sharing one L40S; ~450 ms split across separate GPUs",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "A completely self-hosted, no-vendor voice agent on a single 16 GB GPU, with genuinely streaming STT and TTS under permissive licences — the right pick when audio must stay on-prem.",
       "watch": "x86_64 Linux or WSL only: ARM64 is explicitly not planned and native Windows and macOS are unsupported. The STT choice is a trap — stt-1b-en_fr carries a 0.5 s model-level delay while stt-2.6b-en carries 2.5 s, so teams pick the bigger model for accuracy and then wonder why the agent feels slow. It is a reference implementation, not a hardened product, and being cascaded it has no true full-duplex or backchanneling.",
       "standout": "A complete self-hosted STT+LLM+TTS agent on one 16 GB GPU.",
@@ -9154,7 +9618,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA Riva / Magpie TTS / Nemotron Speech",
@@ -9170,6 +9635,8 @@
       "languages_sort": 12,
       "runs_on": "Self-host on NVIDIA GPUs with compute capability 8.0 or higher. The TTS NIM support matrix lists A2, A10, A16, A30, A40, A100, H100, L4, L40, GeForce RTX 40xx, GeForce RTX 50xx, Blackwell RTX 60xx and DGX Spark, all at FP16. Linux; Ubuntu 22.04 or later recommended. Riva SDK additionally covers embedded L4T (Jetson Thor, Jetson Orin).",
       "latency_note": "~500 ms server-side voice-to-voice on an RTX 5090 for the full cascade, excluding network and playout",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The cheapest route to sub-second voice-to-voice if you already own the silicon — a fully self-hosted cascade with no per-minute vendor anywhere in it, and the fastest published endpointing in this survey.",
       "watch": "Zero-shot cloning was removed from the flagship multilingual model for security reasons, so the open weights cannot clone; a separate magpie-tts-zeroshot NIM exists but requires access approval. The licence position is contradictory on NVIDIA's own model card: the body states 'This model is ready for commercial use', while the Hugging Face access gate on the same repo requires ticking 'I agree to use this model for non-commercial use ONLY', with the gated use-case picker offering only Research, Education or Other. Get this resolved in writing with NVIDIA before shipping commercially on the open weights.",
       "standout": "~500 ms voice-to-voice on silicon you already own, no per-minute vendor.",
@@ -9216,7 +9683,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "NVIDIA Magpie TTS Zeroshot / Riva Zero Shot TTS",
@@ -9232,6 +9700,8 @@
       "languages_sort": 12,
       "runs_on": "Self-host on NVIDIA GPUs with compute capability >= 8.0 — A2, A10, A16, A30, A40, A100, H100, L4, L40, GeForce RTX 40xx, GeForce RTX 50xx, Blackwell RTX 60xx and DGX Spark, FP16 — via the NIM container. Also reachable as a hosted endpoint on build.nvidia.com with no local GPU. DGX Spark support was added for Zeroshot in release 26.07.0.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Voice cloning on NVIDIA silicon once you discover the open Magpie weights cannot do it. The only Magpie artefact that still clones, and the one a buyer filtering this table for zero-shot cloning would otherwise never find — but you must apply for access first, so it is not a drop-in and cannot be evaluated on demand.",
       "watch": "Access is restricted: you must be approved through NVIDIA's form before you can pull the container or use the endpoint, so this cannot be trialled on demand like the open weights. There are no open weights at all — unlike Magpie Multilingual there is no Hugging Face checkpoint, so nothing here is covered by the NVIDIA Open Model License and there is no artefact you can inspect or fine-tune. NVIDIA's own published surfaces disagree with each other: the build.nvidia.com model card describes an English-only v1 on Riva 2.19 with a T5-TTS architecture, while the Speech NIM support matrix documents 12 languages at magpie-tts-zeroshot:1.2.0. Prefer the NIM docs; the build card is stale.",
       "standout": "The one Magpie that still clones — and you have to apply to get it.",
@@ -9276,7 +9746,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "sherpa-onnx",
@@ -9292,6 +9763,8 @@
       "languages_sort": null,
       "runs_on": "Linux, macOS, Windows, Android, iOS, HarmonyOS, WebAssembly and Node.js; x86, x86_64, ARM32, aarch64 and RISC-V; Raspberry Pi, NVIDIA Jetson Orin NX, Jetson Nano B01 and Rockchip RV1126; NPU backends for Rockchip RKNN, Qualcomm QNN, Ascend and Axera",
       "latency_note": "Model-dependent; the project publishes no per-board figures",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Shipping any of the open small TTS models to a phone, SBC, RISC-V board, NPU device or browser without writing your own runtime, and getting 12 language bindings for free. The most important deployment layer in open TTS and the one most consistently left out of comparison tables.",
       "watch": null,
       "standout": "The only runtime shipping TTS to RISC-V, NPUs and 12 language bindings.",
@@ -9335,7 +9808,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "audio.cpp / audio.cpp-gguf",
@@ -9351,6 +9825,8 @@
       "languages_sort": null,
       "runs_on": "CPU-first via GGUF quantisation",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Running large TTS models quantised on CPU — Voxtral 4B fits in 7.43 GB at Q4_K. The emerging GGUF story for speech, and the closest thing the segment has to what llama.cpp did for text.",
       "watch": null,
       "standout": "GGUF for speech — a 4 B TTS model in 7.43 GB.",
@@ -9391,7 +9867,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ExecuTorch (PyTorch Edge)",
@@ -9407,6 +9884,8 @@
       "languages_sort": null,
       "runs_on": "Smartphones down to microcontrollers — a ~50 KB core runtime with 12+ hardware backends. Cortex-M was promoted to a first-class embedded target in v1.2.0 with CMSIS-NN accelerated kernels; CUDA and Metal GPU backends arrived in v1.1.0, and Arm, CUDA, Metal and Vulkan improved across v1.3.x.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Shipping PyTorch-authored speech models to phones and microcontrollers with a tiny runtime — the only mainstream path from PyTorch straight to a Cortex-M class device.",
       "watch": "TTS support in the official model set is thin, and no TTS model is documented as running on the Cortex-M backend at all — so the headline embedded story does not yet reach speech synthesis. Export and quantisation work is non-trivial, and for most on-device TTS you will still reach for ONNX Runtime or sherpa-onnx instead.",
       "standout": "The only PyTorch-to-microcontroller path — though not yet for TTS.",
@@ -9448,7 +9927,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "ONNX Runtime Web / Transformers.js",
@@ -9464,6 +9944,8 @@
       "languages_sort": null,
       "runs_on": "Any browser with WebAssembly; WebGPU acceleration by setting device 'webgpu' — broadly available on Chrome and Edge, uneven on Safari and Firefox. Also Node.js on CPU.",
       "latency_note": "No published cross-browser figures. Hugging Face states that with WebGPU models 'should easily have realtime generation on the web' — a vendor claim with no conditions attached.",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Genuinely private, zero-server browser TTS at modern model quality — the only way to get Kokoro-class output in a web page without an API call.",
       "watch": "Model download is the whole story. The smallest useful Kokoro build is 86 MB at q8f16 and fp32 is 326 MB, which is a hard first-load cost and a caching problem on mobile. WebGPU can silently fall back to WASM at a large speed penalty, and iOS Safari memory limits will kill larger models.",
       "standout": "Kokoro-class TTS in a web page, no server and no API call.",
@@ -9507,7 +9989,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "MLX / mlx-audio",
@@ -9523,6 +10006,8 @@
       "languages_sort": null,
       "runs_on": "Apple Silicon Macs (M1, M2, M3, M4) only, Python 3.10+; ffmpeg is needed only for MP3, FLAC and OGG output, WAV works without it",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The fastest path to running 20+ modern TTS models natively on a Mac with unified-memory GPU acceleration and aggressive quantisation, behind an OpenAI-compatible REST API that drops into existing tooling.",
       "watch": "Apple Silicon only — there is no Linux, Windows, Android or iOS path, so nothing you build on it ports to a phone or an SBC. No benchmark numbers are published in the repo at all, and support quality varies widely because many entries are community conversions.",
       "standout": "20+ TTS models on a Mac behind an OpenAI-compatible REST API.",
@@ -9564,7 +10049,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "kNN-VC",
@@ -9580,6 +10066,8 @@
       "languages_sort": null,
       "runs_on": "~2 GB VRAM",
       "latency_note": "Offline only — the corpus records no realtime path",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Understanding why a conversion sounds the way it does. The k-nearest-neighbour matching step is directly inspectable, which makes it the interpretable option for research and analysis rather than production.",
       "watch": "Not real-time — it is an offline batch method, and it wants several utterances of the target where one-shot systems want one. The corpus files it under research-only licensing, so confirm the terms on the specific release before shipping anything with it.",
       "standout": "The one conversion whose matching step you can inspect directly.",
@@ -9620,7 +10108,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "FreeVC",
@@ -9636,6 +10125,8 @@
       "languages_sort": null,
       "runs_on": "~2 GB VRAM",
       "latency_note": "Offline only — the corpus records no realtime path",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "The cheapest way to find out whether a conversion stage helps at all. One utterance, no training, ~2 GB — test the idea before committing to an RVC training pipeline.",
       "watch": "Offline only, so it cannot sit in a realtime loop, and the corpus files it under research-only licensing rather than a named permissive licence.",
       "standout": "One utterance, no training, ~2 GB — the cheapest conversion test.",
@@ -9676,7 +10167,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Amphion Vevo",
@@ -9692,6 +10184,8 @@
       "languages_sort": null,
       "runs_on": "8–12 GB VRAM",
       "latency_note": "Not published",
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Cross-lingual voice conversion and accent control — converting accented speech into a target speaker while choosing independently whether the accent comes along. Nothing else in this section separates timbre from style explicitly.",
       "watch": null,
       "standout": "The only converter separating timbre from style, so accent travel is optional.",
@@ -9734,7 +10228,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Amphion Vevo2",
@@ -9750,6 +10245,8 @@
       "languages_sort": 6,
       "runs_on": "Not established from the sources reviewed.",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Singing as a first-class output. Text-to-singing, singing voice synthesis, singing voice conversion, singing style conversion, and humming- or instrument-to-singing, alongside ordinary zero-shot TTS and voice conversion — all from one checkpoint.",
       "watch": "The weights are CC-BY-NC-ND-4.0, stricter than Vevo's CC-BY-NC-4.0. NoDerivatives means you may redistribute the checkpoint unmodified but are not granted the right to publish a fine-tune or adaptation. The MIT licence on the Amphion repo covers the code only and grants nothing over the weights.",
       "standout": "Speech and singing from one checkpoint — and weights that forbid derivatives.",
@@ -9793,7 +10290,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Respeecher",
@@ -9809,6 +10307,8 @@
       "languages_sort": null,
       "runs_on": "Hosted service — no deployment detail published",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Not established from the sources reviewed.",
       "watch": "The corpus records Respeecher on one axis only — how it gates cloning. No price, language count, latency or model detail was captured, so it cannot be compared technically without a sales conversation. The per-replication signed agreement also means every new use is a new negotiation, not an API call.",
       "standout": "Per-replication signed agreements — every new use is a fresh negotiation.",
@@ -9848,7 +10348,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     },
     {
       "name": "Descript Overdub",
@@ -9864,6 +10365,8 @@
       "languages_sort": null,
       "runs_on": "Hosted service — no deployment detail published",
       "latency_note": null,
+      "ttfa_ms_sort": null,
+      "rtfx_sort": null,
       "best_for": "Not established from the sources reviewed.",
       "watch": "The consent gate is paperwork, not proof — with no biometric cross-match, the vendor cannot tell whether the person who read the consent statement is the person being cloned. It ranks sixth of eight on consent strength in the corpus. No watermark is disclosed on the output either, so there is nothing in the audio to establish provenance later.",
       "standout": "Consent is contractual only — nothing cross-matches it against the training audio.",
@@ -9904,7 +10407,8 @@
       "rating_url": null,
       "rating_as_of": null,
       "rating_votes": null,
-      "rating_rank": null
+      "rating_rank": null,
+      "additional_ratings": []
     }
   ],
   "corrections": [
